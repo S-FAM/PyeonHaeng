@@ -14,6 +14,7 @@
 		BA27024228CF60A30039D9EA /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = BA27024128CF60A30039D9EA /* RxCocoa */; };
 		BA27024428CF60A30039D9EA /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BA27024328CF60A30039D9EA /* RxSwift */; };
 		BA27024728CF61020039D9EA /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = BA27024628CF61020039D9EA /* Kingfisher */; };
+		BA27024928CF618E0039D9EA /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA27024828CF618E0039D9EA /* HomeCoordinator.swift */; };
 		E505D9EB28CF5B4A00EEFC65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505D9EA28CF5B4A00EEFC65 /* AppDelegate.swift */; };
 		E505D9ED28CF5B4A00EEFC65 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505D9EC28CF5B4A00EEFC65 /* SceneDelegate.swift */; };
 		E505D9EF28CF5B4A00EEFC65 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505D9EE28CF5B4A00EEFC65 /* ViewController.swift */; };
@@ -23,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		BA27023028CF5DCD0039D9EA /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		BA27024828CF618E0039D9EA /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		E505D9E728CF5B4A00EEFC65 /* PPAK_CVS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PPAK_CVS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E505D9EA28CF5B4A00EEFC65 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E505D9EC28CF5B4A00EEFC65 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				E505D9EE28CF5B4A00EEFC65 /* ViewController.swift */,
+				BA27024828CF618E0039D9EA /* HomeCoordinator.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 			files = (
 				BA27023128CF5DCD0039D9EA /* Coordinator.swift in Sources */,
 				E505D9EF28CF5B4A00EEFC65 /* ViewController.swift in Sources */,
+				BA27024928CF618E0039D9EA /* HomeCoordinator.swift in Sources */,
 				E505D9EB28CF5B4A00EEFC65 /* AppDelegate.swift in Sources */,
 				E505D9ED28CF5B4A00EEFC65 /* SceneDelegate.swift in Sources */,
 			);
