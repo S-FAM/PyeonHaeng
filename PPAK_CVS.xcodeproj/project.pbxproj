@@ -77,6 +77,7 @@
 				E505D9E328CF5B4A00EEFC65 /* Sources */,
 				E505D9E428CF5B4A00EEFC65 /* Frameworks */,
 				E505D9E528CF5B4A00EEFC65 /* Resources */,
+				BA27022F28CF5C1A0039D9EA /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -132,6 +133,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		BA27022F28CF5C1A0039D9EA /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint >/dev/null; then\n    if [ \"$CONFIGURATION\" ]; then\n        HOOKS_PATH=$(git config --get core.hooksPath)\n        if [ \".githooks\" != \"$HOOKS_PATH\" ]; then\n            git config core.hooksPath .githooks\n        fi\n    fi\n    swiftlint --fix && swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E505D9E328CF5B4A00EEFC65 /* Sources */ = {
