@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let window = UIWindow(windowScene: scene)
     self.window = window
 
-    let navVC = UINavigationController(rootViewController: HomeViewController())
+    let navVC = UINavigationController()
     let coordinator = HomeCoordinator(navigationController: navVC)
     coordinator.start()
 
