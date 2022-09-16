@@ -2,7 +2,7 @@
 //  TopCurveView.swift
 //  PPAK_CVS
 //
-//  Created by 김응철 on 2022/09/15.
+//  Created by 김응철 on 2022/09/16.
 //
 
 import UIKit
