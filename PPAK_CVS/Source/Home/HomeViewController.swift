@@ -7,9 +7,14 @@
 
 import UIKit
 import SnapKit
+import Then
 
 final class HomeViewController: BaseViewController {
   // MARK: - Properties
+  lazy var pageControl = PageControl().then {
+    $0.delegate = self
+  }
+
   let topCurveView = TopCurveView()
   let bottomCurveView = BottomCurveView()
 
@@ -17,15 +22,15 @@ final class HomeViewController: BaseViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
   }
-  
+
   // MARK: - Setup
   override func setupLayouts() {
-    [ topCurveView, bottomCurveView ]
+    [ topCurveView, bottomCurveView, pageControl ]
       .forEach { view.addSubview($0) }
   }
 
   override func setupStyles() {
-    view.backgroundColor = .white
+    view.backgroundColor = .blue
     topCurveView.backgroundColor = .systemRed
     bottomCurveView.backgroundColor = .systemRed
   }
@@ -40,5 +45,17 @@ final class HomeViewController: BaseViewController {
       make.bottom.leading.trailing.equalToSuperview()
       make.height.equalTo(400)
     }
+
+    pageControl.snp.makeConstraints { make in
+      make.centerY.equalToSuperview()
+      make.leading.trailing.equalToSuperview().inset(40)
+      make.height.equalTo(70)
+    }
+  }
+}
+
+extension HomeViewController: PageControlDelegate {
+  func didChangedSelectedIndex(index: Int) {
+    print(index)
   }
 }
