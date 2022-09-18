@@ -14,9 +14,10 @@ protocol PageControlDelegate: AnyObject {
 
 final class PageControl: UIControl {
   // MARK: - Properties
-  private var labels: [UILabel] = []
   let items: [String] = ["All", "1+1", "2+1"]
-  let focusedView = UIView()
+
+  var labels: [UILabel] = []
+  var focusedView: UIView!
 
   weak var delegate: PageControlDelegate?
 
@@ -83,11 +84,13 @@ final class PageControl: UIControl {
   }
 
   private func setupFocusView() {
+    let focusView = UIView()
+    self.focusedView = focusView
     self.insertSubview(focusedView, at: 0)
     focusedView.backgroundColor = .blue
     focusedView.layer.cornerRadius = 20.0
   }
-  
+
   // MARK: - Helpers
   private func updateFocusView() {
     let label = labels[selectedIndex]

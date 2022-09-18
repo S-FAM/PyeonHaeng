@@ -17,6 +17,7 @@ final class HomeViewController: BaseViewController {
 
   let topCurveView = TopCurveView()
   let bottomCurveView = BottomCurveView()
+  let searchBar = SearchBar()
 
   // MARK: - LifeCycle
   override func viewDidLoad() {
@@ -25,13 +26,13 @@ final class HomeViewController: BaseViewController {
 
   // MARK: - Setup
   override func setupLayouts() {
-    [ topCurveView, bottomCurveView, pageControl ]
+    [ topCurveView, bottomCurveView, pageControl, searchBar ]
       .forEach { view.addSubview($0) }
   }
 
   override func setupStyles() {
     view.backgroundColor = .blue
-    topCurveView.backgroundColor = .systemRed
+    topCurveView.backgroundColor = .white
     bottomCurveView.backgroundColor = .systemRed
   }
 
@@ -50,6 +51,11 @@ final class HomeViewController: BaseViewController {
       make.centerY.equalToSuperview()
       make.leading.trailing.equalToSuperview().inset(40)
       make.height.equalTo(70)
+    }
+
+    searchBar.snp.makeConstraints { make in
+      make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(40)
+      make.height.equalTo(50)
     }
   }
 }
