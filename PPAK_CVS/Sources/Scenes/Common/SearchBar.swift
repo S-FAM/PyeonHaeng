@@ -8,11 +8,14 @@
 import UIKit
 
 final class SearchBar: UIView {
+
   // MARK: - Properties
+
   var imageView: UIImageView!
   var textField: UITextField!
 
   // MARK: - Init
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupStyles()
@@ -25,6 +28,7 @@ final class SearchBar: UIView {
   }
 
   // MARK: - LifeCycle
+
   override func layoutSubviews() {
     super.layoutSubviews()
 
@@ -36,6 +40,7 @@ final class SearchBar: UIView {
   }
 
   // MARK: - Setup
+
   private func setupStyles() {
     self.backgroundColor = .white
     self.layer.cornerRadius = 18.0

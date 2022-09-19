@@ -24,7 +24,7 @@ final class TopCurveView: UIView {
 
     let maskLayer = CAShapeLayer()
     maskLayer.frame = self.bounds
-    maskLayer.path = path.reversing().cgPath
+    maskLayer.path = path.cgPath
     self.layer.mask = maskLayer
   }
 }

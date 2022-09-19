@@ -1,37 +1,42 @@
 //
-//  ViewController.swift
+//  HomeViewController.swift
 //  PPAK_CVS
 //
 //  Created by 김응철 on 2022/09/12.
 //
 
 import UIKit
+
 import SnapKit
 import Then
 
 final class HomeViewController: BaseViewController {
+
   // MARK: - Properties
-  lazy var pageControl = PageControl().then {
+
+  private lazy var pageControl = PageControl().then {
     $0.delegate = self
   }
 
-  let topCurveView = TopCurveView()
-  let bottomCurveView = BottomCurveView()
-  let searchBar = SearchBar()
+  private let topCurveView = TopCurveView()
+  private let bottomCurveView = BottomCurveView()
+  private let searchBar = SearchBar()
 
   // MARK: - LifeCycle
+
   override func viewDidLoad() {
     super.viewDidLoad()
   }
 
   // MARK: - Setup
+
   override func setupLayouts() {
-    [ topCurveView, bottomCurveView, pageControl, searchBar ]
+    [topCurveView, bottomCurveView, pageControl, searchBar]
       .forEach { view.addSubview($0) }
   }
 
   override func setupStyles() {
-    view.backgroundColor = .blue
+    view.backgroundColor = .systemGray
     topCurveView.backgroundColor = .white
     bottomCurveView.backgroundColor = .systemRed
   }
@@ -62,6 +67,7 @@ final class HomeViewController: BaseViewController {
 
 extension HomeViewController: PageControlDelegate {
   func didChangedSelectedIndex(index: Int) {
-    print(index)
+    // TODO: All 1+1, 2+1 settings
+    // FIXME: Hello
   }
 }

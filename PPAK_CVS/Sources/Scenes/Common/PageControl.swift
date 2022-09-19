@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 import SnapKit
 
 protocol PageControlDelegate: AnyObject {
@@ -13,7 +14,9 @@ protocol PageControlDelegate: AnyObject {
 }
 
 final class PageControl: UIControl {
+
   // MARK: - Properties
+
   let items: [String] = ["All", "1+1", "2+1"]
 
   var labels: [UILabel] = []
@@ -29,6 +32,7 @@ final class PageControl: UIControl {
   }
 
   // MARK: - Init
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupStyles()
@@ -41,6 +45,7 @@ final class PageControl: UIControl {
   }
 
   // MARK: - LifeCycle
+
   override func layoutSubviews() {
     super.layoutSubviews()
 
@@ -66,6 +71,7 @@ final class PageControl: UIControl {
   }
 
   // MARK: - Setup
+
   private func setupLabels() {
     for index in 0..<items.count {
       let label = UILabel(frame: self.bounds)
@@ -92,6 +98,7 @@ final class PageControl: UIControl {
   }
 
   // MARK: - Helpers
+
   private func updateFocusView() {
     let label = labels[selectedIndex]
     self.focusedView.center = label.center
@@ -100,15 +107,8 @@ final class PageControl: UIControl {
   override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
     let location = touch.location(in: self)
 
-    var calculatedIndex: Int?
-    for (index, item) in labels.enumerated() {
-      if item.frame.contains(location) {
-        calculatedIndex = index
-      }
-    }
-
-    if calculatedIndex != nil {
-      self.selectedIndex = calculatedIndex!
+    for (index, item) in labels.enumerated() where item.frame.contains(location) {
+      self.selectedIndex = index
     }
 
     return false
