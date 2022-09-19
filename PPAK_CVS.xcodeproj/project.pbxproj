@@ -18,9 +18,13 @@
 		BAA0581028D36F75000CDD11 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA0580F28D36F75000CDD11 /* BaseViewController.swift */; };
 		E505D9EB28CF5B4A00EEFC65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505D9EA28CF5B4A00EEFC65 /* AppDelegate.swift */; };
 		E505D9ED28CF5B4A00EEFC65 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505D9EC28CF5B4A00EEFC65 /* SceneDelegate.swift */; };
-		E505D9EF28CF5B4A00EEFC65 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505D9EE28CF5B4A00EEFC65 /* HomeViewController.swift */; };
+		E505D9EF28CF5B4A00EEFC65 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505D9EE28CF5B4A00EEFC65 /* HomeVC.swift */; };
 		E505D9F428CF5B4B00EEFC65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E505D9F328CF5B4B00EEFC65 /* Assets.xcassets */; };
 		E505D9F728CF5B4B00EEFC65 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E505D9F528CF5B4B00EEFC65 /* LaunchScreen.storyboard */; };
+		E5467E4A28D45DF40031B785 /* TopCurveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5467E4928D45DF40031B785 /* TopCurveView.swift */; };
+		E5467E4C28D45DFE0031B785 /* BottomCurveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5467E4B28D45DFE0031B785 /* BottomCurveView.swift */; };
+		E55BEBE128D6A82400804FCB /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55BEBE028D6A82400804FCB /* SearchBar.swift */; };
+		E5A877C028D4A34D002A2402 /* PageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A877BF28D4A34D002A2402 /* PageControl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,10 +34,14 @@
 		E505D9E728CF5B4A00EEFC65 /* PPAK_CVS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PPAK_CVS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E505D9EA28CF5B4A00EEFC65 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E505D9EC28CF5B4A00EEFC65 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E505D9EE28CF5B4A00EEFC65 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		E505D9EE28CF5B4A00EEFC65 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		E505D9F328CF5B4B00EEFC65 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E505D9F628CF5B4B00EEFC65 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E505D9F828CF5B4B00EEFC65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E5467E4928D45DF40031B785 /* TopCurveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCurveView.swift; sourceTree = "<group>"; };
+		E5467E4B28D45DFE0031B785 /* BottomCurveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCurveView.swift; sourceTree = "<group>"; };
+		E55BEBE028D6A82400804FCB /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		E5A877BF28D4A34D002A2402 /* PageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,16 +70,16 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
-		BA27023328CF5EFF0039D9EA /* Source */ = {
+		BA27023328CF5EFF0039D9EA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				E505D9EA28CF5B4A00EEFC65 /* AppDelegate.swift */,
 				BAA0580F28D36F75000CDD11 /* BaseViewController.swift */,
 				BA27023028CF5DCD0039D9EA /* Coordinator.swift */,
 				E505D9EC28CF5B4A00EEFC65 /* SceneDelegate.swift */,
-				BA27023628CF5F580039D9EA /* Home */,
+				E584487C28D55B9000E25265 /* Scenes */,
 			);
-			path = Source;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		BA27023428CF5F0D0039D9EA /* Assets */ = {
@@ -94,9 +102,20 @@
 			isa = PBXGroup;
 			children = (
 				BA27024828CF618E0039D9EA /* HomeCoordinator.swift */,
-				E505D9EE28CF5B4A00EEFC65 /* HomeViewController.swift */,
+				E505D9EE28CF5B4A00EEFC65 /* HomeVC.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		BA3B763C28D89E6F00CC32BE /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				E5467E4B28D45DFE0031B785 /* BottomCurveView.swift */,
+				E5A877BF28D4A34D002A2402 /* PageControl.swift */,
+				E55BEBE028D6A82400804FCB /* SearchBar.swift */,
+				E5467E4928D45DF40031B785 /* TopCurveView.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		E505D9DE28CF5B4A00EEFC65 = {
@@ -119,10 +138,19 @@
 			isa = PBXGroup;
 			children = (
 				BA27023228CF5EF30039D9EA /* Configuration */,
-				BA27023328CF5EFF0039D9EA /* Source */,
+				BA27023328CF5EFF0039D9EA /* Sources */,
 				E505D9F828CF5B4B00EEFC65 /* Info.plist */,
 			);
 			path = PPAK_CVS;
+			sourceTree = "<group>";
+		};
+		E584487C28D55B9000E25265 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				BA3B763C28D89E6F00CC32BE /* Common */,
+				BA27023628CF5F580039D9EA /* Home */,
+			);
+			path = Scenes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,10 +261,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA27023128CF5DCD0039D9EA /* Coordinator.swift in Sources */,
-				E505D9EF28CF5B4A00EEFC65 /* HomeViewController.swift in Sources */,
+				E505D9EF28CF5B4A00EEFC65 /* HomeVC.swift in Sources */,
+				E5A877C028D4A34D002A2402 /* PageControl.swift in Sources */,
 				BA27024928CF618E0039D9EA /* HomeCoordinator.swift in Sources */,
 				E505D9EB28CF5B4A00EEFC65 /* AppDelegate.swift in Sources */,
 				E505D9ED28CF5B4A00EEFC65 /* SceneDelegate.swift in Sources */,
+				E5467E4C28D45DFE0031B785 /* BottomCurveView.swift in Sources */,
+				E55BEBE128D6A82400804FCB /* SearchBar.swift in Sources */,
+				E5467E4A28D45DF40031B785 /* TopCurveView.swift in Sources */,
 				BAA0581028D36F75000CDD11 /* BaseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
