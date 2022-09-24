@@ -14,11 +14,11 @@ final class FTUXStorage {
 
   public init() {}
 
-  public func getFTUXStatus() -> Bool {
-    userDefaults.bool(forKey: key)
+  public func isAlreadyCome() -> Bool {
+    self.userDefaults.bool(forKey: key)
   }
 
-  public func setFTUXStatus() {
-    userDefaults.set(true, forKey: key)
+  public func saveFTUXStatus() {
+    self.userDefaults.set(true, forKey: key)
   }
 }

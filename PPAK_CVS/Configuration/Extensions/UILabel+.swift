@@ -12,20 +12,14 @@ extension UILabel {
   /// OnboardingVC에 사용되는 설명 Label
   /// - Parameters:
   ///   - text: 텍스트
-  ///   - alpha: 텍스트 투명도 (기본: 100%)
-  ///   - fontSize: 폰트 크기
-  ///   - fontWeight: 폰트 굵기
-  func onboardingExplainLabel(
-    text: String,
-    alpha: CGFloat = 1,
-    fontSize: CGFloat,
-    fontWeight: UIFont.Weight
-  ) {
+  ///   - textColor: 텍스트 색상
+  ///   - font: 폰트
+  func onboardingExplainLabel(text: String, textColor: UIColor, font: UIFont) {
     let label = self
     label.text = text
-    label.textColor = .white.withAlphaComponent(alpha)
+    label.textColor = textColor
     label.numberOfLines = 2
     label.textAlignment = .center
-    label.font = .systemFont(ofSize: fontSize, weight: fontWeight)
+    label.font = font
   }
 }

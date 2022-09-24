@@ -5,9 +5,9 @@
 //  Created by 김민지 on 2022/09/24.
 //
 
-struct Strings {
+enum Strings {
 
-  struct Onboarding {
+  enum Onboarding {
     static let next = "다음"
     static let skip = "건너뛰기"
     static let start = "시작하기 →"

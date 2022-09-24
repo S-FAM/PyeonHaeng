@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var coordinator: Coordinator
 
 //    /// 처음 들어왔으면 false, 아니면 true
-//    let isAlreadyCome = FTUXStorage().getFTUXStatus()
+//    let isAlreadyCome = FTUXStorage().isAlreadyCome()
 //    if isAlreadyCome {
 //      coordinator = HomeCoordinator(navigationController: navVC)
 //    } else {

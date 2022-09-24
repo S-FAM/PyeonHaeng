@@ -6,44 +6,48 @@
 //
 
 import Foundation
+import UIKit
+
 import SnapKit
 import Then
-import UIKit
 
 final class OnboardingViewController: BaseViewController {
 
   // MARK: - Properties
 
   private lazy var bottomCurveView = BottomCurveView().then {
-    $0.backgroundColor = .black
+    $0.backgroundColor = Color.bottomCurveViewBgColor
   }
 
   private lazy var titleLabel = UILabel().then {
     $0.onboardingExplainLabel(
       text: Strings.Onboarding.explainTitle1,
-      fontSize: 22,
-      fontWeight: .heavy
+      textColor: Color.titleLabel,
+      font: Font.titleLabel
     )
   }
 
   private lazy var descLabel = UILabel().then {
     $0.onboardingExplainLabel(
       text: Strings.Onboarding.explainDesc1,
-      alpha: 0.5,
-      fontSize: 15,
-      fontWeight: .regular
+      textColor: Color.descLabel,
+      font: Font.descLabel
     )
   }
 
   private lazy var skipButton = UIButton().then {
-    $0.withAlphaButton(title: Strings.Onboarding.skip)
+    $0.withAlphaButton(title: Strings.Onboarding.skip, font: Font.smallButton)
   }
   private lazy var nextButton = UIButton().then {
-    $0.withAlphaButton(title: Strings.Onboarding.next)
+    $0.withAlphaButton(title: Strings.Onboarding.next, font: Font.smallButton)
   }
 
   private lazy var startButton = UIButton().then {
-    $0.withAlphaButton(title: Strings.Onboarding.start, fontSize: 20, radius: 30)
+    $0.withAlphaButton(
+      title: Strings.Onboarding.start,
+      font: Font.largeButton,
+      radius: Radius.largeButton
+    )
     $0.isHidden = true
   }
 
@@ -53,7 +57,7 @@ final class OnboardingViewController: BaseViewController {
     super.viewDidLoad()
 
     // TODO: 건너띄기나 시작하기 버튼을 클릭했을 때 Userdefaults 값을 저장하도록 변경하기
-    FTUXStorage().setFTUXStatus()
+    FTUXStorage().saveFTUXStatus()
   }
 
   // MARK: - Setup
@@ -61,7 +65,13 @@ final class OnboardingViewController: BaseViewController {
   override func setupLayouts() {
     super.setupLayouts()
 
-    [bottomCurveView, titleLabel, descLabel, skipButton, nextButton, startButton].forEach {
+    [self.bottomCurveView,
+     self.titleLabel,
+     self.descLabel,
+     self.skipButton,
+     self.nextButton,
+     self.startButton
+    ].forEach {
       view.addSubview($0)
     }
   }
@@ -69,48 +79,90 @@ final class OnboardingViewController: BaseViewController {
   override func setupConstraints() {
     super.setupConstraints()
 
-    let bottomInset: CGFloat = 70
-
-    bottomCurveView.snp.makeConstraints { make in
+    self.bottomCurveView.snp.makeConstraints { make in
       make.leading.trailing.bottom.equalToSuperview()
-      make.height.equalTo(view.frame.size.height * 0.6)
+      make.height.equalTo(view.frame.size.height * Ratio.bottomCurveViewHeight)
     }
 
-    titleLabel.snp.makeConstraints { make in
+    self.titleLabel.snp.makeConstraints { make in
       make.centerX.equalToSuperview()
-      make.top.equalTo(bottomCurveView.snp.top).inset(150)
+      make.top.equalTo(bottomCurveView.snp.top).inset(Inset.top)
     }
 
-    descLabel.snp.makeConstraints { make in
+    self.descLabel.snp.makeConstraints { make in
       make.centerX.equalToSuperview()
-      make.top.equalTo(titleLabel.snp.bottom).offset(30)
+      make.top.equalTo(titleLabel.snp.bottom).offset(Inset.label)
     }
 
-    skipButton.snp.makeConstraints { make in
-      make.leading.equalToSuperview().inset(20)
-      make.bottom.equalTo(view.safeAreaLayoutGuide).inset(bottomInset)
-      make.width.equalTo(100)
-      make.height.equalTo(50)
+    self.skipButton.snp.makeConstraints { make in
+      make.leading.equalToSuperview().inset(Inset.side)
+      make.bottom.equalTo(view.safeAreaLayoutGuide).inset(Inset.bottom)
+      make.width.equalTo(Width.smallButton)
+      make.height.equalTo(Height.smallButton)
     }
 
-    nextButton.snp.makeConstraints { make in
-      make.trailing.equalToSuperview().inset(20)
-      make.bottom.equalTo(view.safeAreaLayoutGuide).inset(bottomInset)
-      make.width.equalTo(100)
-      make.height.equalTo(50)
+    self.nextButton.snp.makeConstraints { make in
+      make.trailing.equalToSuperview().inset(Inset.side)
+      make.bottom.equalTo(view.safeAreaLayoutGuide).inset(Inset.bottom)
+      make.width.equalTo(Width.smallButton)
+      make.height.equalTo(Height.smallButton)
     }
 
-    startButton.snp.makeConstraints { make in
+    self.startButton.snp.makeConstraints { make in
       make.centerX.equalToSuperview()
-      make.bottom.equalTo(view.safeAreaLayoutGuide).inset(bottomInset)
-      make.width.equalTo(180)
-      make.height.equalTo(70)
+      make.bottom.equalTo(view.safeAreaLayoutGuide).inset(Inset.bottom)
+      make.width.equalTo(Width.largeButton)
+      make.height.equalTo(Height.largeButton)
     }
   }
 
   override func setupStyles() {
     super.setupStyles()
 
-    view.backgroundColor = .white
+    view.backgroundColor = Color.viewBgColor
+  }
+}
+
+// MARK: - Constant Collection
+
+extension OnboardingViewController {
+
+  private enum Font {
+    static let titleLabel = UIFont.systemFont(ofSize: 22, weight: .heavy)
+    static let descLabel = UIFont.systemFont(ofSize: 15, weight: .regular)
+    static let smallButton = UIFont.systemFont(ofSize: 15, weight: .semibold)
+    static let largeButton = UIFont.systemFont(ofSize: 20, weight: .semibold)
+  }
+
+  private enum Color {
+    static let viewBgColor = UIColor.white
+    static let bottomCurveViewBgColor = UIColor.black
+    static let titleLabel = UIColor.white
+    static let descLabel = UIColor.white.withAlphaComponent(0.5)
+  }
+  
+  private enum Radius {
+    static let largeButton = 30
+  }
+
+  private enum Width {
+    static let smallButton = 100
+    static let largeButton = 180
+  }
+
+  private enum Height {
+    static let smallButton = 50
+    static let largeButton = 70
+  }
+
+  private enum Inset {
+    static let top = 150
+    static let bottom = 70
+    static let side = 20
+    static let label = 30
+  }
+
+  private enum Ratio {
+    static let bottomCurveViewHeight = 0.6
   }
 }
