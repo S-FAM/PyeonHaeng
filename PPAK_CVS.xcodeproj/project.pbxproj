@@ -10,6 +10,9 @@
 		A5F8288228DEAE3C00C5D6A2 /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288128DEAE3C00C5D6A2 /* OnboardingVC.swift */; };
 		A5F8288528DEB03A00C5D6A2 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288428DEB03A00C5D6A2 /* OnboardingCoordinator.swift */; };
 		A5F8288728DEB63D00C5D6A2 /* FTUXStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288628DEB63D00C5D6A2 /* FTUXStorage.swift */; };
+		A5F8288A28DEC0CF00C5D6A2 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288928DEC0CF00C5D6A2 /* UIButton+.swift */; };
+		A5F8288C28DECEE700C5D6A2 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288B28DECEE700C5D6A2 /* Strings.swift */; };
+		A5F8288E28DED76700C5D6A2 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288D28DED76700C5D6A2 /* UILabel+.swift */; };
 		BA27023128CF5DCD0039D9EA /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA27023028CF5DCD0039D9EA /* Coordinator.swift */; };
 		BA27023928CF60570039D9EA /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = BA27023828CF60570039D9EA /* SnapKit */; };
 		BA27023C28CF606A0039D9EA /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = BA27023B28CF606A0039D9EA /* Then */; };
@@ -34,6 +37,9 @@
 		A5F8288128DEAE3C00C5D6A2 /* OnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
 		A5F8288428DEB03A00C5D6A2 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
 		A5F8288628DEB63D00C5D6A2 /* FTUXStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUXStorage.swift; sourceTree = "<group>"; };
+		A5F8288928DEC0CF00C5D6A2 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
+		A5F8288B28DECEE700C5D6A2 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		A5F8288D28DED76700C5D6A2 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		BA27023028CF5DCD0039D9EA /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		BA27024828CF618E0039D9EA /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		BAA0580F28D36F75000CDD11 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -77,11 +83,21 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		A5F8288828DEC09B00C5D6A2 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A5F8288928DEC0CF00C5D6A2 /* UIButton+.swift */,
+				A5F8288D28DED76700C5D6A2 /* UILabel+.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		BA27023228CF5EF30039D9EA /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
 				BA27023428CF5F0D0039D9EA /* Assets */,
 				BA27023528CF5F180039D9EA /* Base */,
+				A5F8288828DEC09B00C5D6A2 /* Extensions */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -129,6 +145,7 @@
 				E5467E4B28D45DFE0031B785 /* BottomCurveView.swift */,
 				E5A877BF28D4A34D002A2402 /* PageControl.swift */,
 				E55BEBE028D6A82400804FCB /* SearchBar.swift */,
+				A5F8288B28DECEE700C5D6A2 /* Strings.swift */,
 				E5467E4928D45DF40031B785 /* TopCurveView.swift */,
 			);
 			path = Common;
@@ -278,11 +295,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5F8288728DEB63D00C5D6A2 /* FTUXStorage.swift in Sources */,
+				A5F8288A28DEC0CF00C5D6A2 /* UIButton+.swift in Sources */,
+				A5F8288E28DED76700C5D6A2 /* UILabel+.swift in Sources */,
 				BA27023128CF5DCD0039D9EA /* Coordinator.swift in Sources */,
 				A5F8288528DEB03A00C5D6A2 /* OnboardingCoordinator.swift in Sources */,
 				E505D9EF28CF5B4A00EEFC65 /* HomeVC.swift in Sources */,
 				E5A877C028D4A34D002A2402 /* PageControl.swift in Sources */,
 				BA27024928CF618E0039D9EA /* HomeCoordinator.swift in Sources */,
+				A5F8288C28DECEE700C5D6A2 /* Strings.swift in Sources */,
 				E505D9EB28CF5B4A00EEFC65 /* AppDelegate.swift in Sources */,
 				E505D9ED28CF5B4A00EEFC65 /* SceneDelegate.swift in Sources */,
 				A5F8288228DEAE3C00C5D6A2 /* OnboardingVC.swift in Sources */,
