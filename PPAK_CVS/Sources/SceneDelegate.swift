@@ -23,16 +23,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let navVC = UINavigationController()
     var coordinator: Coordinator
 
-//    /// 처음 들어왔으면 false, 아니면 true
-//    let isAlreadyCome = FTUXStorage().isAlreadyCome()
-//    if isAlreadyCome {
-//      coordinator = HomeCoordinator(navigationController: navVC)
-//    } else {
-//      coordinator = OnboardingCoordinator(navigationController: navVC)
-//    }
+    /// 처음 들어왔으면 false, 아니면 true
+    let isAlreadyCome = FTUXStorage().isAlreadyCome()
+    if isAlreadyCome {
+      coordinator = HomeCoordinator(navigationController: navVC)
+    } else {
+      coordinator = OnboardingCoordinator(navigationController: navVC)
+    }
 
-    // TODO: 원래대로 되돌리기
-    coordinator = OnboardingCoordinator(navigationController: navVC)
     coordinator.start()
 
     window.rootViewController = navVC

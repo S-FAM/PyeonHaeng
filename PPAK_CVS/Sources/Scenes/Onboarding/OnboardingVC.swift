@@ -56,7 +56,7 @@ final class OnboardingViewController: BaseViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    // TODO: 건너띄기나 시작하기 버튼을 클릭했을 때 Userdefaults 값을 저장하도록 변경하기
+    // TODO: 건너뛰기나 시작하기 버튼을 클릭했을 때 Userdefaults 값을 저장하도록 변경하기
     FTUXStorage().saveFTUXStatus()
   }
 
@@ -128,10 +128,10 @@ final class OnboardingViewController: BaseViewController {
 extension OnboardingViewController {
 
   private enum Font {
-    static let titleLabel = UIFont.systemFont(ofSize: 22, weight: .heavy)
-    static let descLabel = UIFont.systemFont(ofSize: 15, weight: .regular)
-    static let smallButton = UIFont.systemFont(ofSize: 15, weight: .semibold)
-    static let largeButton = UIFont.systemFont(ofSize: 20, weight: .semibold)
+    static let titleLabel = UIFont.systemFont(ofSize: 22.0, weight: .heavy)
+    static let descLabel = UIFont.systemFont(ofSize: 15.0, weight: .regular)
+    static let smallButton = UIFont.systemFont(ofSize: 15.0, weight: .semibold)
+    static let largeButton = UIFont.systemFont(ofSize: 20.0, weight: .semibold)
   }
 
   private enum Color {
@@ -140,26 +140,26 @@ extension OnboardingViewController {
     static let titleLabel = UIColor.white
     static let descLabel = UIColor.white.withAlphaComponent(0.5)
   }
-  
+
   private enum Radius {
-    static let largeButton = 30
+    static let largeButton = 30.0
   }
 
   private enum Width {
-    static let smallButton = 100
-    static let largeButton = 180
+    static let smallButton = 100.0
+    static let largeButton = 180.0
   }
 
   private enum Height {
-    static let smallButton = 50
-    static let largeButton = 70
+    static let smallButton = 50.0
+    static let largeButton = 70.0
   }
 
   private enum Inset {
-    static let top = 150
-    static let bottom = 70
-    static let side = 20
-    static let label = 30
+    static let top = 150.0
+    static let bottom = 70.0
+    static let side = 20.0
+    static let label = 30.0
   }
 
   private enum Ratio {
