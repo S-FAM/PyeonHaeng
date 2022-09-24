@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A5F8288228DEAE3C00C5D6A2 /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288128DEAE3C00C5D6A2 /* OnboardingVC.swift */; };
+		A5F8288528DEB03A00C5D6A2 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288428DEB03A00C5D6A2 /* OnboardingCoordinator.swift */; };
+		A5F8288728DEB63D00C5D6A2 /* FTUXStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288628DEB63D00C5D6A2 /* FTUXStorage.swift */; };
 		BA27023128CF5DCD0039D9EA /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA27023028CF5DCD0039D9EA /* Coordinator.swift */; };
 		BA27023928CF60570039D9EA /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = BA27023828CF60570039D9EA /* SnapKit */; };
 		BA27023C28CF606A0039D9EA /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = BA27023B28CF606A0039D9EA /* Then */; };
@@ -30,6 +32,8 @@
 
 /* Begin PBXFileReference section */
 		A5F8288128DEAE3C00C5D6A2 /* OnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
+		A5F8288428DEB03A00C5D6A2 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
+		A5F8288628DEB63D00C5D6A2 /* FTUXStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUXStorage.swift; sourceTree = "<group>"; };
 		BA27023028CF5DCD0039D9EA /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		BA27024828CF618E0039D9EA /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		BAA0580F28D36F75000CDD11 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -66,7 +70,9 @@
 		A5F8288328DEAE4300C5D6A2 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				A5F8288428DEB03A00C5D6A2 /* OnboardingCoordinator.swift */,
 				A5F8288128DEAE3C00C5D6A2 /* OnboardingVC.swift */,
+				A5F8288628DEB63D00C5D6A2 /* FTUXStorage.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -271,7 +277,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5F8288728DEB63D00C5D6A2 /* FTUXStorage.swift in Sources */,
 				BA27023128CF5DCD0039D9EA /* Coordinator.swift in Sources */,
+				A5F8288528DEB03A00C5D6A2 /* OnboardingCoordinator.swift in Sources */,
 				E505D9EF28CF5B4A00EEFC65 /* HomeVC.swift in Sources */,
 				E5A877C028D4A34D002A2402 /* PageControl.swift in Sources */,
 				BA27024928CF618E0039D9EA /* HomeCoordinator.swift in Sources */,
