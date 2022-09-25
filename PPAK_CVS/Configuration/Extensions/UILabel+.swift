@@ -14,9 +14,8 @@ extension UILabel {
   ///   - text: 텍스트
   ///   - textColor: 텍스트 색상
   ///   - font: 폰트
-  func onboardingExplainLabel(text: String, textColor: UIColor, font: UIFont) {
+  func onboardingExplainLabel(textColor: UIColor, font: UIFont) {
     let label = self
-    label.text = text
     label.textColor = textColor
     label.numberOfLines = 2
     label.textAlignment = .center
