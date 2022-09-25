@@ -11,7 +11,6 @@ extension UILabel {
 
   /// OnboardingVC에 사용되는 설명 Label
   /// - Parameters:
-  ///   - text: 텍스트
   ///   - textColor: 텍스트 색상
   ///   - font: 폰트
   func onboardingExplainLabel(textColor: UIColor, font: UIFont) {
