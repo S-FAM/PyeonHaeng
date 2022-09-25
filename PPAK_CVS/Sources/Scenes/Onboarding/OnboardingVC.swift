@@ -47,6 +47,7 @@ final class OnboardingViewController: BaseViewController {
     didSet {
       self.pageControl.currentPage = currentPage
       self.setCurrentPageUI()
+      self.startLottieAnimation()
     }
   }
 
@@ -60,6 +61,7 @@ final class OnboardingViewController: BaseViewController {
 
     self.setOnboardingData()
     self.setCurrentPageUI()
+    self.setGesture()
   }
 
   override func viewDidAppear(_ animated: Bool) {
@@ -172,6 +174,36 @@ extension OnboardingViewController {
   private func startLottieAnimation() {
     self.animationView.play()
     self.animationView.loopMode = .loop
+  }
+
+  private func setGesture() {
+    let leftSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(_:)))
+    leftSwipeRecognizer.direction = .left
+
+    let rightSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(_:)))
+    rightSwipeRecognizer.direction = .right
+
+    self.view.addGestureRecognizer(leftSwipeRecognizer)
+    self.view.addGestureRecognizer(rightSwipeRecognizer)
+  }
+
+  @objc func swipeAction(_ gesture: UIGestureRecognizer) {
+    guard let swipeGesture = gesture as? UISwipeGestureRecognizer else {
+      return
+    }
+
+    switch swipeGesture.direction {
+    case .left:
+      if self.currentPage < 2 {
+        self.currentPage += 1
+      }
+    case .right:
+      if self.currentPage > 0 {
+        self.currentPage -= 1
+      }
+    default:
+      break
+    }
   }
 }
 
