@@ -14,60 +14,77 @@ final class HomeViewController: BaseViewController {
 
   // MARK: - Properties
 
-  private lazy var pageControl = PageControl().then {
+  private lazy var collectionView = UICollectionView(
+    frame: .zero,
+    collectionViewLayout: UICollectionViewFlowLayout().then {
+      $0.headerReferenceSize = CGSize(width: self.view.frame.width, height: 320)
+      $0.itemSize = CGSize(width: self.view.frame.width, height: 125)
+      $0.sectionInset = UIEdgeInsets(top: 24, left: 0, bottom: 16, right: 0)
+    }
+  ).then {
+    $0.contentInsetAdjustmentBehavior = .never
+    $0.bounces = false
+    $0.dataSource = self
     $0.delegate = self
+    $0.register(HomeCollectionHeaderView.self,
+                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                withReuseIdentifier: HomeCollectionHeaderView.id)
+    $0.register(GoodsCell.self,
+                forCellWithReuseIdentifier: GoodsCell.id)
   }
-
-  private let topCurveView = TopCurveView()
-  private let bottomCurveView = BottomCurveView()
-  private let searchBar = SearchBar()
 
   // MARK: - LifeCycle
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-  }
-
   // MARK: - Setup
 
   override func setupLayouts() {
-    [topCurveView, bottomCurveView, pageControl, searchBar]
-      .forEach { view.addSubview($0) }
+    super.setupLayouts()
+    view.addSubview(collectionView)
   }
 
   override func setupStyles() {
-    view.backgroundColor = .systemGray
-    topCurveView.backgroundColor = .white
-    bottomCurveView.backgroundColor = .systemRed
+    navigationController?.isNavigationBarHidden = true
+    view.backgroundColor = .white
   }
 
   override func setupConstraints() {
-    topCurveView.snp.makeConstraints { make in
+    collectionView.snp.makeConstraints { make in
       make.top.leading.trailing.equalToSuperview()
-      make.height.equalTo(400)
-    }
-
-    bottomCurveView.snp.makeConstraints { make in
-      make.bottom.leading.trailing.equalToSuperview()
-      make.height.equalTo(400)
-    }
-
-    pageControl.snp.makeConstraints { make in
-      make.centerY.equalToSuperview()
-      make.leading.trailing.equalToSuperview().inset(40)
-      make.height.equalTo(70)
-    }
-
-    searchBar.snp.makeConstraints { make in
-      make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(40)
-      make.height.equalTo(50)
+      make.bottom.equalTo(view.safeAreaLayoutGuide)
     }
   }
 }
 
-extension HomeViewController: PageControlDelegate {
-  func didChangedSelectedIndex(index: Int) {
-    // TODO: All 1+1, 2+1 settings
-    // FIXME: Hello
+// MARK: - CollectionView Setup
+extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    guard let cell = collectionView.dequeueReusableCell(
+      withReuseIdentifier: GoodsCell.id,
+      for: indexPath
+    ) as? GoodsCell else {
+      return UICollectionViewCell()
+    }
+    return cell
   }
+
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 10
+  }
+
+  func collectionView(
+    _ collectionView: UICollectionView,
+    viewForSupplementaryElementOfKind kind: String,
+    at indexPath: IndexPath
+  ) -> UICollectionReusableView {
+    guard let header = collectionView.dequeueReusableSupplementaryView(
+      ofKind: UICollectionView.elementKindSectionHeader,
+      withReuseIdentifier: HomeCollectionHeaderView.id,
+      for: indexPath
+    ) as? HomeCollectionHeaderView else { return UICollectionReusableView() }
+    return header
+  }
+}
+
+// MARK: - PageControl Setup
+extension HomeViewController: PageControlDelegate {
+  func didChangedSelectedIndex(index: Int) {}
 }
