@@ -57,7 +57,6 @@ final class GoodsCell: UICollectionViewCell {
   // MARK: - Init
   override init(frame: CGRect) {
     super.init(frame: frame)
-    setupStackViews()
     setupLayouts()
     setupConstraints()
   }
