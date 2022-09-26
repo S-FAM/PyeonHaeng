@@ -21,7 +21,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     self.window = window
 
     let navVC = UINavigationController()
-    let coordinator = HomeCoordinator(navigationController: navVC)
+    var coordinator: Coordinator
+
+    /// 처음 들어왔으면 false, 아니면 true
+    let isAlreadyCome = FTUXStorage().isAlreadyCome()
+    if isAlreadyCome {
+      coordinator = HomeCoordinator(navigationController: navVC)
+    } else {
+      coordinator = OnboardingCoordinator(navigationController: navVC)
+    }
+
     coordinator.start()
 
     window.rootViewController = navVC
