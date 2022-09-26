@@ -12,9 +12,4 @@ struct OnboardingDataModel {
   let title: String
   let description: String
 
-  init(lottieName: String, title: String, description: String) {
-    self.lottieName = lottieName
-    self.title = title
-    self.description = description
-  }
 }
