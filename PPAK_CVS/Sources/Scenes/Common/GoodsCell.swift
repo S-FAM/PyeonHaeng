@@ -76,18 +76,6 @@ final class GoodsCell: UICollectionViewCell {
   }
 
   // MARK: - Setup
-  private func setupStackViews() {
-    let horiStack = UIStackView(arrangedSubviews: [priceLabel, descriptionLabel])
-    horiStack.axis = .horizontal
-    horiStack.spacing = 2.0
-
-    let stackView = UIStackView(arrangedSubviews: [goodsLabel, horiStack])
-    stackView.axis = .vertical
-    stackView.spacing = 4.0
-    stackView.alignment = .leading
-
-    self.stackView = stackView
-  }
 
   private func setupLayouts() {
     [containerView, logoView]
