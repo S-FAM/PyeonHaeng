@@ -52,7 +52,17 @@ final class GoodsCell: UICollectionViewCell {
     $0.backgroundColor = .blue
   }
 
-  var stackView: UIStackView!
+  private lazy var stackView = UIStackView().then { stackView in
+    let horiStack = UIStackView(arrangedSubviews: [priceLabel, descriptionLabel])
+    horiStack.axis = .horizontal
+    horiStack.spacing = 2.0
+    [goodsLabel, horiStack].forEach {
+      stackView.addArrangedSubview($0)
+    }
+      stackView.axis = .vertical
+      stackView.spacing = 4.0
+      stackView.alignment = .leading
+  }
 
   // MARK: - Init
   override init(frame: CGRect) {
