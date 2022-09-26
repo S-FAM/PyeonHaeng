@@ -14,14 +14,12 @@ final class HomeViewController: BaseViewController {
 
   // MARK: - Properties
 
-  private lazy var collectionView = UICollectionView(
-    frame: .zero,
-    collectionViewLayout: UICollectionViewFlowLayout().then {
+  private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then {
+    $0.collectionViewLayout = UICollectionViewFlowLayout().then {
       $0.headerReferenceSize = CGSize(width: self.view.frame.width, height: 320)
       $0.itemSize = CGSize(width: self.view.frame.width, height: 125)
       $0.sectionInset = UIEdgeInsets(top: 24, left: 0, bottom: 16, right: 0)
     }
-  ).then {
     $0.contentInsetAdjustmentBehavior = .never
     $0.bounces = false
     $0.dataSource = self
