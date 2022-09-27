@@ -15,9 +15,15 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
   // MAKR: - Properties
   static let id = "HomeCollectionViewHeader"
 
-  private lazy var pageControl = PageControl()
-  private lazy var topCurveView = TopCurveView()
-  private lazy var searchBar = SearchBar()
+  lazy var pageControl = PageControl()
+  lazy var topCurveView = TopCurveView()
+  lazy var searchBar = SearchBar()
+  lazy var cvsDropdownView = CVSDropdownView()
+
+  lazy var mockButton = UIButton().then {
+    $0.layer.cornerRadius = 20
+    $0.backgroundColor = .white
+  }
 
   private lazy var filterButton = UIButton().then {
     $0.setImage(UIImage(named: "filter"), for: .normal)
@@ -47,7 +53,7 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
   }
 
   private func setupLayouts() {
-    [topCurveView, pageControl, searchBar, filterButton, logoLabel]
+    [topCurveView, pageControl, searchBar, filterButton, logoLabel, mockButton, cvsDropdownView]
       .forEach { self.addSubview($0) }
   }
 
@@ -79,7 +85,18 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
       make.centerX.equalToSuperview()
       make.top.equalTo(self.safeAreaLayoutGuide).inset(8)
     }
-  }
 
-  // MARK: - Helpers
+    mockButton.snp.makeConstraints { make in
+      make.top.equalTo(safeAreaLayoutGuide).inset(8)
+      make.leading.equalToSuperview().inset(16)
+      make.width.height.equalTo(40)
+    }
+
+    cvsDropdownView.snp.makeConstraints { make in
+      make.top.equalTo(mockButton.snp.bottom).offset(16)
+      make.leading.equalToSuperview().inset(16)
+      make.width.equalTo(64)
+      make.height.equalTo(376)
+    }
+  }
 }
