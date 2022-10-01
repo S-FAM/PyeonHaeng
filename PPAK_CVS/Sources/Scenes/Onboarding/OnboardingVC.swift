@@ -8,6 +8,7 @@
 import UIKit
 
 import Lottie
+import RxCocoa
 import SnapKit
 import Then
 
@@ -55,9 +56,6 @@ final class OnboardingViewController: BaseViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    // TODO: 건너뛰기나 시작하기 버튼을 클릭했을 때 Userdefaults 값을 저장하도록 변경하기
-    FTUXStorage().saveFTUXStatus()
 
     self.setOnboardingData()
     self.setCurrentPageUI()
@@ -137,6 +135,24 @@ final class OnboardingViewController: BaseViewController {
 
     view.backgroundColor = Color.viewBgColor
   }
+
+  override func bind() {
+    self.skipButton.rx.tap
+      .bind { [weak self] in
+        self?.navigateToHomeVC()
+      }
+      .disposed(by: disposeBag)
+
+    self.nextButton.rx.tap
+      .bind { [weak self] in
+        if self?.currentPage == 2 {
+          self?.navigateToHomeVC()
+        } else {
+          self?.currentPage += 1
+        }
+      }
+      .disposed(by: disposeBag)
+  }
 }
 
 // MARK: - Custom Functions
@@ -187,7 +203,7 @@ extension OnboardingViewController {
     self.view.addGestureRecognizer(rightSwipeRecognizer)
   }
 
-  @objc func swipeAction(_ gesture: UIGestureRecognizer) {
+  @objc private func swipeAction(_ gesture: UIGestureRecognizer) {
     guard let swipeGesture = gesture as? UISwipeGestureRecognizer else {
       return
     }
@@ -204,6 +220,13 @@ extension OnboardingViewController {
     default:
       break
     }
+  }
+
+  private func navigateToHomeVC() {
+    FTUXStorage().saveFTUXStatus()
+
+    let coordinator = HomeCoordinator(navigationController: self.navigationController ?? UINavigationController())
+    coordinator.start()
   }
 }
 
