@@ -8,7 +8,6 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
   var window: UIWindow?
 
   func scene(
@@ -28,7 +27,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     if isAlreadyCome {
       coordinator = HomeCoordinator(navigationController: navVC)
     } else {
-      coordinator = OnboardingCoordinator(navigationController: navVC)
+      coordinator = HomeCoordinator(navigationController: navVC)
+//      coordinator = OnboardingCoordinator(navigationController: navVC)
     }
 
     coordinator.start()

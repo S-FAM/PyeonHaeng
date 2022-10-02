@@ -7,6 +7,8 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
 import SnapKit
 import Then
 
@@ -31,7 +33,9 @@ final class HomeViewController: BaseViewController {
                 forCellWithReuseIdentifier: GoodsCell.id)
   }
 
-  // MARK: - LifeCycle
+  let viewModel = HomeViewModel()
+  var header: HomeCollectionHeaderView!
+
   // MARK: - Setup
 
   override func setupLayouts() {
@@ -50,9 +54,56 @@ final class HomeViewController: BaseViewController {
       make.bottom.equalTo(view.safeAreaLayoutGuide)
     }
   }
+
+  // MARK: - Event
+
+  private func bindHeader() {
+    // -----------------------------------
+    // ---------------INPUT---------------
+    // -----------------------------------
+
+    // 편의점 로고 버튼 클릭
+    header.cvsButton.rx.tap
+      .bind(to: viewModel.input.cvsButtonTapped)
+      .disposed(by: disposeBag)
+
+    // 필터 버튼 클릭
+    header.filterButton.rx.tap
+      .bind(to: viewModel.input.filterButtonTapped)
+      .disposed(by: disposeBag)
+
+    // -----------------------------------
+    // ---------------OUTPUT--------------
+    // -----------------------------------
+
+    // 편의점 로고 드롭다운 애니메이션 동작
+    viewModel.output.cvsDropdownState
+      .bind(onNext: { [weak self] state in
+        guard let self = self else { return }
+        if state {
+          CVSDropdownView.showDropdown(self.header.cvsDropdownView)
+        } else {
+          CVSDropdownView.hideDropdown(self.header.cvsDropdownView)
+        }
+      })
+      .disposed(by: disposeBag)
+
+    // 필터 드롭다운 애니메이션 동작
+    viewModel.output.filterDropdownState
+      .bind(onNext: { [weak self] state in
+        guard let self = self else { return }
+        if state {
+          FilterDropdownView.showDropdown(self.header.filterDropdownView)
+        } else {
+          FilterDropdownView.hideDropdown(self.header.filterDropdownView)
+        }
+      })
+      .disposed(by: disposeBag)
+  }
 }
 
 // MARK: - CollectionView Setup
+
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let cell = collectionView.dequeueReusableCell(
@@ -78,11 +129,18 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       withReuseIdentifier: HomeCollectionHeaderView.id,
       for: indexPath
     ) as? HomeCollectionHeaderView else { return UICollectionReusableView() }
+    header.pageControl.delegate = self
+    self.header = header
+    bindHeader()
+
+    // TODO: Header에 대한 Event처리는 여기서 처리할 것인지?
+
     return header
   }
 }
 
 // MARK: - PageControl Setup
+
 extension HomeViewController: PageControlDelegate {
   func didChangedSelectedIndex(index: Int) {}
 }

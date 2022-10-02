@@ -10,7 +10,6 @@ import UIKit
 import SnapKit
 import Then
 
-/// width: 64, height: 376
 final class CVSDropdownView: UIView {
 
   // MARK: - Properties
@@ -96,6 +95,7 @@ final class CVSDropdownView: UIView {
 
   // MARK: - Helpers
 
+  // 임시 메서드입니다.
   private func mockView() -> UIView {
     let view = UIView()
     view.backgroundColor = .blue
@@ -104,18 +104,19 @@ final class CVSDropdownView: UIView {
     return view
   }
 
-  func showDropdown() {
-    self.isHidden = false
+  static func showDropdown(_ view: UIView) {
+    view.isHidden = false
     UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut) {
-      self.layer.opacity = 1
+      view.layer.opacity = 1
     }
   }
 
-  func hideDropdown() {
-    UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut) {
-      self.layer.opacity = 0
+  static func hideDropdown(_ view: UIView) {
+    UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut) {
+      view.layer.opacity = 0
     } completion: { _ in
-      self.isHidden = true
+      view.isHidden = true
     }
   }
 }
+

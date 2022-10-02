@@ -9,12 +9,11 @@ import UIKit
 
 import SnapKit
 
-/// Width: 130 , Height: 100
 final class FilterDropdownView: UIView {
 
   // MARK: - Properties
 
-  var stackView: UIStackView!
+  var stackView: UIStackView! // Then이 프로퍼티 인식을 못하는 것 같아요 ...
 
   // MARK: - Init
 
@@ -57,9 +56,11 @@ final class FilterDropdownView: UIView {
     stackView.spacing = 4
     self.stackView = stackView
   }
+}
 
-  // MARK: - Helpers
+// MARK: - Helpers
 
+extension FilterDropdownView {
   private func createButton(_ title: String) -> UIButton {
     var config = UIButton.Configuration.plain()
     var container = AttributeContainer()
@@ -69,5 +70,20 @@ final class FilterDropdownView: UIView {
     let button = UIButton(configuration: config)
 
     return button
+  }
+
+  static func showDropdown(_ view: UIView) {
+    view.isHidden = false
+    UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut) {
+      view.layer.opacity = 1
+    }
+  }
+
+  static func hideDropdown(_ view: UIView) {
+    UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut) {
+      view.layer.opacity = 0
+    } completion: { _ in
+      view.isHidden = true
+    }
   }
 }
