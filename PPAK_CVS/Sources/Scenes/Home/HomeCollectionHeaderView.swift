@@ -15,15 +15,22 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
   // MAKR: - Properties
   static let id = "HomeCollectionViewHeader"
 
-  private lazy var pageControl = PageControl()
-  private lazy var topCurveView = TopCurveView()
-  private lazy var searchBar = SearchBar()
+  lazy var pageControl = PageControl()
+  lazy var topCurveView = TopCurveView()
+  lazy var searchBar = SearchBar()
+  lazy var cvsDropdownView = CVSDropdownView()
+  lazy var filterDropdownView = FilterDropdownView()
 
-  private lazy var filterButton = UIButton().then {
+  lazy var cvsButton = UIButton().then {
+    $0.layer.cornerRadius = 20
+    $0.backgroundColor = .white
+  }
+
+  lazy var filterButton = UIButton().then {
     $0.setImage(UIImage(named: "filter"), for: .normal)
   }
 
-  private lazy var logoLabel = UILabel().then {
+  lazy var logoLabel = UILabel().then {
     $0.text = "logo"
     $0.textColor = .white
     $0.font = .systemFont(ofSize: 32.0, weight: .heavy)
@@ -44,10 +51,12 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
   // MARK: - Setup
   private func setupStyles() {
     topCurveView.backgroundColor = .blue
+    cvsDropdownView.isHidden = true
+    filterDropdownView.isHidden = true
   }
 
   private func setupLayouts() {
-    [topCurveView, pageControl, searchBar, filterButton, logoLabel]
+    [topCurveView, pageControl, searchBar, filterButton, logoLabel, cvsButton, cvsDropdownView, filterDropdownView]
       .forEach { self.addSubview($0) }
   }
 
@@ -79,7 +88,25 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
       make.centerX.equalToSuperview()
       make.top.equalTo(self.safeAreaLayoutGuide).inset(8)
     }
-  }
 
-  // MARK: - Helpers
+    cvsButton.snp.makeConstraints { make in
+      make.top.equalTo(safeAreaLayoutGuide).inset(8)
+      make.leading.equalToSuperview().inset(16)
+      make.width.height.equalTo(40)
+    }
+
+    cvsDropdownView.snp.makeConstraints { make in
+      make.top.equalTo(cvsButton.snp.bottom).offset(16)
+      make.leading.equalToSuperview().inset(16)
+      make.width.equalTo(64)
+      make.height.equalTo(376)
+    }
+
+    filterDropdownView.snp.makeConstraints { make in
+      make.top.equalTo(filterButton.snp.bottom).offset(12)
+      make.trailing.equalToSuperview().inset(16)
+      make.width.equalTo(130)
+      make.height.equalTo(100)
+    }
+  }
 }
