@@ -56,5 +56,5 @@ extension UIColor {
     static let msFontColor = UIColor.colorFromHex(hex: "#F0F0F0")
     static let emBackGroundColor = UIColor.colorFromHex(hex: "#56555B")
     static let emFontColor = UIColor.colorFromHex(hex: "#FFB41D")
-
+    static let HomeBackGroundColor = UIColor.colorFromHex(hex: "#030026")
 }
