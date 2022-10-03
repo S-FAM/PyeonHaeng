@@ -7,20 +7,27 @@
 
 import UIKit
 
+import Then
 import SnapKit
 
 final class FilterDropdownView: UIView {
 
   // MARK: - Properties
 
-  var stackView: UIStackView! // Then이 프로퍼티 인식을 못하는 것 같아요 ...
+  lazy var stackView = UIStackView().then {
+    let ascendingButton = createButton("낮은가격순 ↓")
+    let descendingButton = createButton("높은가격순 ↑")
+    $0.addArrangedSubview(ascendingButton)
+    $0.addArrangedSubview(descendingButton)
+    $0.axis = .vertical
+    $0.spacing = 4.0
+  }
 
   // MARK: - Init
 
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupStyles()
-    setupStackView()
     setupLayout()
     setupConstraints()
   }
@@ -46,15 +53,6 @@ final class FilterDropdownView: UIView {
     stackView.snp.makeConstraints { make in
       make.center.equalToSuperview()
     }
-  }
-
-  private func setupStackView() {
-    let ascendingButton = createButton("낮은가격순 ↓")
-    let descendingButton = createButton("높은가격순 ↑")
-    let stackView = UIStackView(arrangedSubviews: [ascendingButton, descendingButton])
-    stackView.axis = .vertical
-    stackView.spacing = 4
-    self.stackView = stackView
   }
 }
 

@@ -27,8 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     if isAlreadyCome {
       coordinator = HomeCoordinator(navigationController: navVC)
     } else {
-      coordinator = HomeCoordinator(navigationController: navVC)
-//      coordinator = OnboardingCoordinator(navigationController: navVC)
+      coordinator = OnboardingCoordinator(navigationController: navVC)
     }
 
     coordinator.start()
