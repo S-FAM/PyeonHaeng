@@ -15,6 +15,7 @@ import Then
 final class OnboardingViewController: BaseViewController {
 
   // MARK: - Properties
+  private let viewModel = OnboardingViewModel()
 
   private lazy var animationView = AnimationView()
 
@@ -137,18 +138,23 @@ final class OnboardingViewController: BaseViewController {
   }
 
   override func bind() {
+    
+    // 건너뛰기 버튼 클릭
     self.skipButton.rx.tap
       .bind { [weak self] in
-        self?.navigateToHomeVC()
+        guard let self = self else { return }
+        self.viewModel.navigateToHomeVC(self.navigationController ?? UINavigationController())
       }
       .disposed(by: disposeBag)
 
+    // 다음 버튼 클릭
     self.nextButton.rx.tap
       .bind { [weak self] in
-        if self?.currentPage == 2 {
-          self?.navigateToHomeVC()
+        guard let self = self else { return }
+        if self.currentPage == 2 {
+          self.viewModel.navigateToHomeVC(self.navigationController ?? UINavigationController())
         } else {
-          self?.currentPage += 1
+          self.currentPage += 1
         }
       }
       .disposed(by: disposeBag)
@@ -220,13 +226,6 @@ extension OnboardingViewController {
     default:
       break
     }
-  }
-
-  private func navigateToHomeVC() {
-    FTUXStorage().saveFTUXStatus()
-
-    let coordinator = OnboardingCoordinator(navigationController: self.navigationController ?? UINavigationController())
-    coordinator.navigateToHomeVC()
   }
 }
 
