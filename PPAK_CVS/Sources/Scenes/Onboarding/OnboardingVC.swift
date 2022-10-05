@@ -225,8 +225,8 @@ extension OnboardingViewController {
   private func navigateToHomeVC() {
     FTUXStorage().saveFTUXStatus()
 
-    let coordinator = HomeCoordinator(navigationController: self.navigationController ?? UINavigationController())
-    coordinator.start()
+    let coordinator = OnboardingCoordinator(navigationController: self.navigationController ?? UINavigationController())
+    coordinator.navigateToHomeVC()
   }
 }
 

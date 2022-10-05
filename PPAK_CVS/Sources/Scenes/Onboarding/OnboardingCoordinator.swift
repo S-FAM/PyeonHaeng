@@ -19,4 +19,9 @@ final class OnboardingCoordinator: Coordinator {
     let viewController = OnboardingViewController()
     self.navigationController.setViewControllers([viewController], animated: true)
   }
+
+  func navigateToHomeVC() {
+    let coordinator = HomeCoordinator(navigationController: self.navigationController)
+    coordinator.start()
+  }
 }
