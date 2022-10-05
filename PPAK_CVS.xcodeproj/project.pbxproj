@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A57D32E428EDBA0200944C7E /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57D32E328EDBA0200944C7E /* OnboardingViewModel.swift */; };
+		A57D32E728EDBDDF00944C7E /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = A57D32E628EDBDDF00944C7E /* RxGesture */; };
 		A5932EA028E0435200457AD3 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = A5932E9F28E0435200457AD3 /* Lottie */; };
 		A5932EA328E044CB00457AD3 /* onboarding1.json in Resources */ = {isa = PBXBuildFile; fileRef = A5932EA228E044CB00457AD3 /* onboarding1.json */; };
 		A5932EA528E045EF00457AD3 /* onboarding3.json in Resources */ = {isa = PBXBuildFile; fileRef = A5932EA428E045EF00457AD3 /* onboarding3.json */; };
@@ -80,6 +81,7 @@
 			files = (
 				BA27024728CF61020039D9EA /* Kingfisher in Frameworks */,
 				A5932EA028E0435200457AD3 /* Lottie in Frameworks */,
+				A57D32E728EDBDDF00944C7E /* RxGesture in Frameworks */,
 				BA27023F28CF60830039D9EA /* Alamofire in Frameworks */,
 				BA27023928CF60570039D9EA /* SnapKit in Frameworks */,
 				BA27024428CF60A30039D9EA /* RxSwift in Frameworks */,
@@ -254,6 +256,7 @@
 				BA27024328CF60A30039D9EA /* RxSwift */,
 				BA27024628CF61020039D9EA /* Kingfisher */,
 				A5932E9F28E0435200457AD3 /* Lottie */,
+				A57D32E628EDBDDF00944C7E /* RxGesture */,
 			);
 			productName = PPAK_CVS;
 			productReference = E505D9E728CF5B4A00EEFC65 /* PPAK_CVS.app */;
@@ -290,6 +293,7 @@
 				BA27024028CF60A30039D9EA /* XCRemoteSwiftPackageReference "RxSwift" */,
 				BA27024528CF61020039D9EA /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				A5932E9E28E0435200457AD3 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				A57D32E528EDBDDF00944C7E /* XCRemoteSwiftPackageReference "RxGesture" */,
 			);
 			productRefGroup = E505D9E828CF5B4A00EEFC65 /* Products */;
 			projectDirPath = "";
@@ -572,6 +576,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A57D32E528EDBDDF00944C7E /* XCRemoteSwiftPackageReference "RxGesture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		A5932E9E28E0435200457AD3 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -623,6 +635,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A57D32E628EDBDDF00944C7E /* RxGesture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A57D32E528EDBDDF00944C7E /* XCRemoteSwiftPackageReference "RxGesture" */;
+			productName = RxGesture;
+		};
 		A5932E9F28E0435200457AD3 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A5932E9E28E0435200457AD3 /* XCRemoteSwiftPackageReference "lottie-ios" */;

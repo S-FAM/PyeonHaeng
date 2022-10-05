@@ -8,7 +8,7 @@
 import UIKit
 
 final class OnboardingViewModel {
-  
+
   func navigateToHomeVC(_ navigationController: UINavigationController) {
     FTUXStorage().saveFTUXStatus()
 
