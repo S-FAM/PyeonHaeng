@@ -9,19 +9,30 @@ import UIKit
 
 import Then
 import SnapKit
+import RxSwift
+import RxCocoa
+
+enum FilterDropdownCase {
+  case ascending
+  case descending
+}
 
 final class FilterDropdownView: UIView {
 
   // MARK: - Properties
 
+  lazy var ascendingButton = createButton("낮은가격순 ↓")
+  lazy var descendingButton = createButton("높은가격순 ↑")
+
   lazy var stackView = UIStackView().then {
-    let ascendingButton = createButton("낮은가격순 ↓")
-    let descendingButton = createButton("높은가격순 ↑")
     $0.addArrangedSubview(ascendingButton)
     $0.addArrangedSubview(descendingButton)
     $0.axis = .vertical
     $0.spacing = 4.0
   }
+
+  let disposeBag = DisposeBag()
+  let buttonEventSubject = PublishSubject<FilterDropdownCase>()
 
   // MARK: - Init
 
@@ -30,6 +41,7 @@ final class FilterDropdownView: UIView {
     setupStyles()
     setupLayout()
     setupConstraints()
+    bind()
   }
 
   required init?(coder: NSCoder) {
@@ -37,6 +49,7 @@ final class FilterDropdownView: UIView {
   }
 
   // MARK: - Setup
+
   private func setupStyles() {
     backgroundColor = .white
     layer.shadowOpacity = 0.2
@@ -53,6 +66,23 @@ final class FilterDropdownView: UIView {
     stackView.snp.makeConstraints { make in
       make.center.equalToSuperview()
     }
+  }
+
+  // MARK: - Bind
+
+  private func bind() {
+
+    // 낮은가격순 터치
+    ascendingButton.rx.tap
+      .map { FilterDropdownCase.ascending }
+      .bind(to: buttonEventSubject)
+      .disposed(by: disposeBag)
+
+    // 높은가격순 터치
+    descendingButton.rx.tap
+      .map { FilterDropdownCase.descending }
+      .bind(to: buttonEventSubject)
+      .disposed(by: disposeBag)
   }
 }
 

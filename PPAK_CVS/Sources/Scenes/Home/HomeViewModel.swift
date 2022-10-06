@@ -10,8 +10,12 @@ import RxCocoa
 
 final class HomeViewModel {
   struct Input {
-    let cvsButtonTapped = PublishSubject<Void>()
+    let ignoreReusableView = BehaviorRelay<Bool>(value: false)
+    let currentCVSButtonTapped = PublishSubject<Void>()
     let filterButtonTapped = PublishSubject<Void>()
+    let dropdownCVSButtonTapped = PublishSubject<CVSDropdownCase>()
+    let dropdownFilterButtonTapped = PublishSubject<FilterDropdownCase>()
+    let didScrollEvent = PublishSubject<Void>()
   }
 
   struct Output {
@@ -29,8 +33,8 @@ final class HomeViewModel {
 
   func bind() {
 
-    // 편의점 로고 버튼 이벤트 -> 드롭다운 애니메이션
-    input.cvsButtonTapped
+    // 현재 편의점 로고 버튼 이벤트 -> 드롭다운 애니메이션
+    input.currentCVSButtonTapped
       .map { [unowned self] in
         !self.output.cvsDropdownState.value
       }
@@ -43,6 +47,26 @@ final class HomeViewModel {
         !self.output.filterDropdownState.value
       }
       .bind(to: output.filterDropdownState)
+      .disposed(by: disposeBag)
+
+    // 드롭다운 편의점 로고 버튼 이벤트 -> 드롭다운 숨기기
+    input.dropdownCVSButtonTapped
+      .map { _ in false }
+      .bind(to: output.cvsDropdownState)
+      .disposed(by: disposeBag)
+
+    // 드롭다운 필터 버튼 이벤트 -> 드롭다운 숨기기
+    input.dropdownFilterButtonTapped
+      .map { _ in false }
+      .bind(to: output.filterDropdownState)
+      .disposed(by: disposeBag)
+
+    // 스크롤 반응 이벤트 -> 드롬다운 숨기기
+    input.didScrollEvent
+      .bind(onNext: { [unowned self] in
+        self.output.filterDropdownState.accept(false)
+        self.output.cvsDropdownState.accept(false)
+      })
       .disposed(by: disposeBag)
   }
 }

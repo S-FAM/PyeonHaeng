@@ -8,28 +8,26 @@
 import UIKit
 
 import SnapKit
-
-protocol PageControlDelegate: AnyObject {
-  func didChangedSelectedIndex(index: Int)
-}
+import RxSwift
+import RxCocoa
 
 final class PageControl: UIControl {
 
   // MARK: - Properties
 
-  let items: [String] = ["All", "1+1", "2+1"]
+  private let items: [String] = ["All", "1+1", "2+1"]
 
-  var labels: [UILabel] = []
-  var focusedView: UIView!
+  private var labels: [UILabel] = []
+  private var focusedView: UIView!
 
-  weak var delegate: PageControlDelegate?
-
-  var selectedIndex: Int = 0 {
+  private var selectedIndex: Int = 0 {
     didSet {
       updateFocusView()
-      delegate?.didChangedSelectedIndex(index: selectedIndex)
+      pageIndexSubject.accept(selectedIndex)
     }
   }
+
+  let pageIndexSubject = BehaviorRelay<Int>(value: 0)
 
   // MARK: - Init
 

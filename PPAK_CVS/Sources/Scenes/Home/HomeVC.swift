@@ -33,8 +33,11 @@ final class HomeViewController: BaseViewController {
                 forCellWithReuseIdentifier: GoodsCell.id)
   }
 
-  let viewModel = HomeViewModel()
+  private lazy var cvsDropdownView = CVSDropdownView()
+  private lazy var filterDropdownView = FilterDropdownView()
   var header: HomeCollectionHeaderView!
+
+  let viewModel = HomeViewModel()
 
   // MARK: - Setup
 
@@ -55,21 +58,69 @@ final class HomeViewController: BaseViewController {
     }
   }
 
+  func setupDropdown() {
+    [cvsDropdownView, filterDropdownView]
+      .forEach {
+        view.addSubview($0)
+        $0.isHidden = true
+      }
+
+    cvsDropdownView.snp.makeConstraints { make in
+      make.top.equalTo(header.cvsButton.snp.bottom).offset(16)
+      make.leading.equalToSuperview().inset(16)
+      make.width.equalTo(64)
+      make.height.equalTo(376)
+    }
+
+    filterDropdownView.snp.makeConstraints { make in
+      make.top.equalTo(header.filterButton.snp.bottom).offset(12)
+      make.trailing.equalToSuperview().inset(16)
+      make.width.equalTo(130)
+      make.height.equalTo(100)
+    }
+  }
+
   // MARK: - Event
 
   private func bindHeader() {
+
     // -----------------------------------
     // ---------------INPUT---------------
     // -----------------------------------
 
-    // 편의점 로고 버튼 클릭
+    // 콜렉션뷰 헤더 최초 생성
+    viewModel.input.ignoreReusableView.accept(true)
+
+    // 현재 편의점 로고 버튼 클릭
     header.cvsButton.rx.tap
-      .bind(to: viewModel.input.cvsButtonTapped)
+      .bind(to: viewModel.input.currentCVSButtonTapped)
       .disposed(by: disposeBag)
 
     // 필터 버튼 클릭
     header.filterButton.rx.tap
       .bind(to: viewModel.input.filterButtonTapped)
+      .disposed(by: disposeBag)
+
+    // 편의점 드롭다운 리스트 버튼 클릭
+    cvsDropdownView.buttonEventSubject
+      .bind(to: viewModel.input.dropdownCVSButtonTapped)
+      .disposed(by: disposeBag)
+
+    // 필터 드롭다운 리스트 버튼 클릭
+    filterDropdownView.buttonEventSubject
+      .bind(to: viewModel.input.dropdownFilterButtonTapped)
+      .disposed(by: disposeBag)
+
+    // 스크롤 감지 이벤트
+    collectionView.rx.didScroll
+      .bind(to: viewModel.input.didScrollEvent)
+      .disposed(by: disposeBag)
+
+    // 페이지 컨트롤 인덱스 감지
+    header.pageControl.pageIndexSubject
+      .bind(onNext: {
+        print($0)
+      })
       .disposed(by: disposeBag)
 
     // -----------------------------------
@@ -81,9 +132,9 @@ final class HomeViewController: BaseViewController {
       .bind(onNext: { [weak self] state in
         guard let self = self else { return }
         if state {
-          CVSDropdownView.showDropdown(self.header.cvsDropdownView)
+          CVSDropdownView.showDropdown(self.cvsDropdownView)
         } else {
-          CVSDropdownView.hideDropdown(self.header.cvsDropdownView)
+          CVSDropdownView.hideDropdown(self.cvsDropdownView)
         }
       })
       .disposed(by: disposeBag)
@@ -93,9 +144,9 @@ final class HomeViewController: BaseViewController {
       .bind(onNext: { [weak self] state in
         guard let self = self else { return }
         if state {
-          FilterDropdownView.showDropdown(self.header.filterDropdownView)
+          FilterDropdownView.showDropdown(self.filterDropdownView)
         } else {
-          FilterDropdownView.hideDropdown(self.header.filterDropdownView)
+          FilterDropdownView.hideDropdown(self.filterDropdownView)
         }
       })
       .disposed(by: disposeBag)
@@ -129,18 +180,13 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       withReuseIdentifier: HomeCollectionHeaderView.id,
       for: indexPath
     ) as? HomeCollectionHeaderView else { return UICollectionReusableView() }
-    header.pageControl.delegate = self
-    self.header = header
-    bindHeader()
 
-    // TODO: Header에 대한 Event처리는 여기서 처리할 것인지?
+    if viewModel.input.ignoreReusableView.value == false {
+      self.header = header
+      bindHeader()
+      setupDropdown()
+    }
 
     return header
   }
-}
-
-// MARK: - PageControl Setup
-
-extension HomeViewController: PageControlDelegate {
-  func didChangedSelectedIndex(index: Int) {}
 }
