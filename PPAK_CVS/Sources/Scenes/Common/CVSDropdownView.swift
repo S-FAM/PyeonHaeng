@@ -19,6 +19,18 @@ enum CVSDropdownCase {
   case emart
   case ministop
   case setting
+
+  var imageName: String {
+    switch self {
+    case .all: return "lgoo_all"
+    case .sevenEleven: return "logo_7eleven"
+    case .gs: return "logo_gs25"
+    case .cu: return "logo_cu"
+    case .emart: return "logo_emart24"
+    case .ministop: return "logo_ministop"
+    case .setting: return "setting"
+    }
+  }
 }
 
 final class CVSDropdownView: UIView {

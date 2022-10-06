@@ -20,8 +20,7 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
   lazy var searchBar = SearchBar()
 
   lazy var cvsButton = UIButton().then {
-    $0.layer.cornerRadius = 20
-    $0.backgroundColor = .white
+    $0.setImage(UIImage(named: "logo_all"), for: .normal)
   }
 
   lazy var filterButton = UIButton().then {
@@ -32,6 +31,12 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
     $0.text = "logo"
     $0.textColor = .white
     $0.font = .systemFont(ofSize: 32.0, weight: .heavy)
+  }
+
+  lazy var bookmarkButton = UIButton().then {
+    let image = UIImage(systemName: "heart.circle.fill")?.applyingSymbolConfiguration(.init(pointSize: 40))
+    $0.setImage(image, for: .normal)
+    $0.tintColor = .white
   }
 
   // MARK: - Init
@@ -54,7 +59,7 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
   }
 
   private func setupLayouts() {
-    [topCurveView, pageControl, searchBar, filterButton, logoLabel, cvsButton]
+    [topCurveView, pageControl, searchBar, filterButton, logoLabel, cvsButton, bookmarkButton]
       .forEach { self.addSubview($0) }
   }
 
@@ -91,6 +96,11 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
       make.top.equalTo(safeAreaLayoutGuide).inset(8)
       make.leading.equalToSuperview().inset(16)
       make.width.height.equalTo(40)
+    }
+
+    bookmarkButton.snp.makeConstraints { make in
+      make.centerY.equalTo(cvsButton)
+      make.trailing.equalToSuperview().inset(16)
     }
   }
 }

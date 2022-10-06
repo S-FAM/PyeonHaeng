@@ -11,16 +11,19 @@ import RxCocoa
 final class HomeViewModel {
   struct Input {
     let ignoreReusableView = BehaviorRelay<Bool>(value: false)
+
     let currentCVSButtonTapped = PublishSubject<Void>()
     let filterButtonTapped = PublishSubject<Void>()
+    let touchBackgroundEvent = PublishSubject<Void>()
+    let pageControlIndexEvent = PublishSubject<Int>()
     let dropdownCVSButtonTapped = PublishSubject<CVSDropdownCase>()
     let dropdownFilterButtonTapped = PublishSubject<FilterDropdownCase>()
-    let didScrollEvent = PublishSubject<Void>()
   }
 
   struct Output {
     let cvsDropdownState = BehaviorRelay<Bool>(value: false)
     let filterDropdownState = BehaviorRelay<Bool>(value: false)
+    let cvsButtonImage = PublishSubject<String>()
   }
 
   let input = Input()
@@ -33,7 +36,7 @@ final class HomeViewModel {
 
   func bind() {
 
-    // 현재 편의점 로고 버튼 이벤트 -> 드롭다운 애니메이션
+    // 현재 편의점 로고 버튼 이벤트 -> 드롭다운 토글
     input.currentCVSButtonTapped
       .map { [unowned self] in
         !self.output.cvsDropdownState.value
@@ -41,7 +44,7 @@ final class HomeViewModel {
       .bind(to: output.cvsDropdownState)
       .disposed(by: disposeBag)
 
-    // 필터 버튼 이벤트 -> 드롭다운 애니메이션
+    // 필터 버튼 이벤트 -> 드롭다운 토글
     input.filterButtonTapped
       .map { [unowned self] in
         !self.output.filterDropdownState.value
@@ -61,12 +64,18 @@ final class HomeViewModel {
       .bind(to: output.filterDropdownState)
       .disposed(by: disposeBag)
 
-    // 스크롤 반응 이벤트 -> 드롬다운 숨기기
-    input.didScrollEvent
+    // 빈 공간 터치 -> 드롭다운 모두 숨기기
+    input.touchBackgroundEvent
       .bind(onNext: { [unowned self] in
-        self.output.filterDropdownState.accept(false)
         self.output.cvsDropdownState.accept(false)
+        self.output.filterDropdownState.accept(false)
       })
+      .disposed(by: disposeBag)
+
+    // 편의점 드롭다운 요소 클릭 -> 현재 편의점 버튼 이미지 변경
+    input.dropdownCVSButtonTapped
+      .map { $0.imageName }
+      .bind(to: output.cvsButtonImage)
       .disposed(by: disposeBag)
   }
 }

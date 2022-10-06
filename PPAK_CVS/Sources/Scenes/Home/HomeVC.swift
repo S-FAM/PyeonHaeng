@@ -9,6 +9,7 @@ import UIKit
 
 import RxSwift
 import RxCocoa
+import RxGesture
 import SnapKit
 import Then
 
@@ -111,16 +112,15 @@ final class HomeViewController: BaseViewController {
       .bind(to: viewModel.input.dropdownFilterButtonTapped)
       .disposed(by: disposeBag)
 
-    // 스크롤 감지 이벤트
-    collectionView.rx.didScroll
-      .bind(to: viewModel.input.didScrollEvent)
-      .disposed(by: disposeBag)
-
     // 페이지 컨트롤 인덱스 감지
     header.pageControl.pageIndexSubject
-      .bind(onNext: {
-        print($0)
-      })
+      .bind(to: viewModel.input.pageControlIndexEvent)
+      .disposed(by: disposeBag)
+
+    // 빈공간 터치 감지
+    view.rx.tapGesture()
+      .map { _ in Void() }
+      .bind(to: viewModel.input.touchBackgroundEvent)
       .disposed(by: disposeBag)
 
     // -----------------------------------
@@ -148,6 +148,14 @@ final class HomeViewController: BaseViewController {
         } else {
           FilterDropdownView.hideDropdown(self.filterDropdownView)
         }
+      })
+      .disposed(by: disposeBag)
+
+    // 현재 선택된 편의점 로고 이미지 변경
+    viewModel.output.cvsButtonImage
+      .bind(onNext: { [weak self] imageName in
+        guard let self = self else { return }
+        self.header.cvsButton.setImage(UIImage(named: imageName), for: .normal)
       })
       .disposed(by: disposeBag)
   }
