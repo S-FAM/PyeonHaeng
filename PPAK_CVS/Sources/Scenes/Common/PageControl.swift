@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import RxGesture
 
 final class PageControl: UIControl {
 
@@ -28,6 +29,7 @@ final class PageControl: UIControl {
   }
 
   let pageIndexSubject = BehaviorRelay<Int>(value: 0)
+  let disposeBag = DisposeBag()
 
   // MARK: - Init
 
@@ -36,6 +38,7 @@ final class PageControl: UIControl {
     setupStyles()
     setupLabels()
     setupFocusView()
+    bind()
   }
 
   required init?(coder: NSCoder) {
@@ -95,6 +98,36 @@ final class PageControl: UIControl {
     focusedView.layer.cornerRadius = 20.0
   }
 
+  // MARK: - Bind
+
+  private func bind() {
+    let allLabel = labels[0]
+    let oneplusLabel = labels[1]
+    let twoPlusLabel = labels[2]
+
+    oneplusLabel.rx.tapGesture()
+      .map { _ in 1 }
+      .bind(to: pageIndexSubject)
+      .disposed(by: disposeBag)
+
+    twoPlusLabel.rx.tapGesture()
+      .map { _ in 2 }
+      .bind(to: pageIndexSubject)
+      .disposed(by: disposeBag)
+
+    allLabel.rx.tapGesture()
+      .map { _ in 0 }
+      .bind(to: pageIndexSubject)
+      .disposed(by: disposeBag)
+
+    pageIndexSubject
+      .bind(onNext: { [unowned self] index in
+        let label = labels[index]
+        self.focusedView.center = label.center
+      })
+      .disposed(by: disposeBag)
+  }
+
   // MARK: - Helpers
 
   private func updateFocusView() {
@@ -102,13 +135,13 @@ final class PageControl: UIControl {
     self.focusedView.center = label.center
   }
 
-  override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-    let location = touch.location(in: self)
-
-    for (index, item) in labels.enumerated() where item.frame.contains(location) {
-      self.selectedIndex = index
-    }
-
-    return false
-  }
+//  override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+//    let location = touch.location(in: self)
+//
+//    for (index, item) in labels.enumerated() where item.frame.contains(location) {
+//      self.selectedIndex = index
+//    }
+//
+//    return false
+//  }
 }

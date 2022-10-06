@@ -114,11 +114,15 @@ final class HomeViewController: BaseViewController {
 
     // 페이지 컨트롤 인덱스 감지
     header.pageControl.pageIndexSubject
+      .skip(1)
+      .distinctUntilChanged()
       .bind(to: viewModel.input.pageControlIndexEvent)
       .disposed(by: disposeBag)
 
     // 빈공간 터치 감지
-    view.rx.tapGesture()
+    view.rx.tapGesture(configuration: { _, delegate in
+      delegate.simultaneousRecognitionPolicy = .never
+    })
       .map { _ in Void() }
       .bind(to: viewModel.input.touchBackgroundEvent)
       .disposed(by: disposeBag)
