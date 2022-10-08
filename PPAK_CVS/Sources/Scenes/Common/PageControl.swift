@@ -102,10 +102,10 @@ final class PageControl: UIControl {
 
   private func bind() {
     let allLabel = labels[0]
-    let oneplusLabel = labels[1]
+    let onePlusLabel = labels[1]
     let twoPlusLabel = labels[2]
 
-    oneplusLabel.rx.tapGesture()
+    onePlusLabel.rx.tapGesture()
       .map { _ in 1 }
       .bind(to: pageIndexSubject)
       .disposed(by: disposeBag)
@@ -134,14 +134,4 @@ final class PageControl: UIControl {
     let label = labels[selectedIndex]
     self.focusedView.center = label.center
   }
-
-//  override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-//    let location = touch.location(in: self)
-//
-//    for (index, item) in labels.enumerated() where item.frame.contains(location) {
-//      self.selectedIndex = index
-//    }
-//
-//    return false
-//  }
 }

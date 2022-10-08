@@ -8,6 +8,7 @@
 import UIKit
 
 import SnapKit
+import Then
 import RxSwift
 import RxCocoa
 
@@ -22,7 +23,7 @@ enum CVSDropdownCase {
 
   var imageName: String {
     switch self {
-    case .all: return "lgoo_all"
+    case .all: return "logo_all"
     case .sevenEleven: return "logo_7eleven"
     case .gs: return "logo_gs25"
     case .cu: return "logo_cu"
@@ -37,13 +38,20 @@ final class CVSDropdownView: UIView {
 
   // MARK: - Properties
 
-  private lazy var allButton = createLogoButton("logo_all")
-  private lazy var elevenButton = createLogoButton("logo_7eleven")
-  private lazy var cuButton = createLogoButton("logo_cu")
-  private lazy var emartButton = createLogoButton("logo_emart24")
-  private lazy var gsButton = createLogoButton("logo_gs25")
-  private lazy var ministopButton = createLogoButton("logo_ministop")
-  private lazy var settingButton = createLogoButton("heart")
+  private lazy var allButton = createLogoButton(CVSDropdownCase.all.imageName)
+  private lazy var elevenButton = createLogoButton(CVSDropdownCase.sevenEleven.imageName)
+  private lazy var cuButton = createLogoButton(CVSDropdownCase.cu.imageName)
+  private lazy var emartButton = createLogoButton(CVSDropdownCase.emart.imageName)
+  private lazy var gsButton = createLogoButton(CVSDropdownCase.gs.imageName)
+  private lazy var ministopButton = createLogoButton(CVSDropdownCase.ministop.imageName)
+  private lazy var settingButton = createLogoButton(CVSDropdownCase.setting.imageName)
+
+  private lazy var stackView = UIStackView(
+    arrangedSubviews: [allButton, cuButton, gsButton, elevenButton, ministopButton, emartButton, settingButton]
+  ).then {
+    $0.spacing = 12
+    $0.axis = .vertical
+  }
 
   let buttonEventSubject = PublishSubject<CVSDropdownCase>()
   let disposeBag = DisposeBag()
@@ -72,51 +80,13 @@ final class CVSDropdownView: UIView {
   }
 
   private func setupLayout() {
-    [allButton, cuButton, gsButton, elevenButton, ministopButton, emartButton, settingButton]
-      .forEach { addSubview($0) }
+    addSubview(stackView)
   }
 
   private func setupConstraints() {
-    allButton.snp.makeConstraints { make in
+    stackView.snp.makeConstraints { make in
       make.centerX.equalToSuperview()
       make.top.equalToSuperview().inset(12)
-      make.width.height.equalTo(40)
-    }
-
-    cuButton.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(allButton.snp.bottom).offset(12)
-      make.width.height.equalTo(40)
-    }
-
-    gsButton.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(cuButton.snp.bottom).offset(12)
-      make.width.height.equalTo(40)
-    }
-
-    elevenButton.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(gsButton.snp.bottom).offset(12)
-      make.width.height.equalTo(40)
-    }
-
-    ministopButton.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(elevenButton.snp.bottom).offset(12)
-      make.width.height.equalTo(40)
-    }
-
-    emartButton.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(ministopButton.snp.bottom).offset(12)
-      make.width.height.equalTo(40)
-    }
-
-    settingButton.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(emartButton.snp.bottom).offset(12)
-      make.width.height.equalTo(40)
     }
   }
 
@@ -172,6 +142,9 @@ final class CVSDropdownView: UIView {
   private func createLogoButton(_ name: String) -> UIButton {
     let button = UIButton()
     button.setImage(UIImage(named: name), for: .normal)
+    button.snp.makeConstraints { make in
+      make.width.height.equalTo(40)
+    }
 
     return button
   }

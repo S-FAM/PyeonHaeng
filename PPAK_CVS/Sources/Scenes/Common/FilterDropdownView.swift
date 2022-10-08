@@ -21,8 +21,8 @@ final class FilterDropdownView: UIView {
 
   // MARK: - Properties
 
-  lazy var ascendingButton = createButton("낮은가격순 ↓")
-  lazy var descendingButton = createButton("높은가격순 ↑")
+  private lazy var ascendingButton = createButton("낮은가격순 ↓")
+  private lazy var descendingButton = createButton("높은가격순 ↑")
 
   lazy var stackView = UIStackView().then {
     $0.addArrangedSubview(ascendingButton)
