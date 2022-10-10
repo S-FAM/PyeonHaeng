@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9C798F8A28EAE9DA00FE250C /* TitleLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C798F8928EAE9DA00FE250C /* TitleLogoView.swift */; };
-		9C798F8C28EAEC5D00FE250C /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C798F8B28EAEC5D00FE250C /* Enum.swift */; };
+		9C798F8C28EAEC5D00FE250C /* CvsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C798F8B28EAEC5D00FE250C /* CvsType.swift */; };
+		9CCFA4FE28F4585E00963A95 /* EventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFA4FD28F4585E00963A95 /* EventType.swift */; };
 		A5932EA028E0435200457AD3 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = A5932E9F28E0435200457AD3 /* Lottie */; };
 		A5932EA328E044CB00457AD3 /* onboarding1.json in Resources */ = {isa = PBXBuildFile; fileRef = A5932EA228E044CB00457AD3 /* onboarding1.json */; };
 		A5932EA528E045EF00457AD3 /* onboarding3.json in Resources */ = {isa = PBXBuildFile; fileRef = A5932EA428E045EF00457AD3 /* onboarding3.json */; };
@@ -45,7 +46,8 @@
 
 /* Begin PBXFileReference section */
 		9C798F8928EAE9DA00FE250C /* TitleLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleLogoView.swift; sourceTree = "<group>"; };
-		9C798F8B28EAEC5D00FE250C /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
+		9C798F8B28EAEC5D00FE250C /* CvsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvsType.swift; sourceTree = "<group>"; };
+		9CCFA4FD28F4585E00963A95 /* EventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventType.swift; sourceTree = "<group>"; };
 		A5932EA228E044CB00457AD3 /* onboarding1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding1.json; sourceTree = "<group>"; };
 		A5932EA428E045EF00457AD3 /* onboarding3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding3.json; sourceTree = "<group>"; };
 		A5932EA628E0472B00457AD3 /* onboarding2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding2.json; sourceTree = "<group>"; };
@@ -93,6 +95,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9CCFA4FB28F457E100963A95 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				9CCFA4FC28F4584400963A95 /* Enum */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		9CCFA4FC28F4584400963A95 /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				9C798F8B28EAEC5D00FE250C /* CvsType.swift */,
+				9CCFA4FD28F4585E00963A95 /* EventType.swift */,
+			);
+			path = Enum;
+			sourceTree = "<group>";
+		};
 		A5932EA128E044BF00457AD3 /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
@@ -138,7 +157,7 @@
 				BA27023528CF5F180039D9EA /* Base */,
 				A5F8288828DEC09B00C5D6A2 /* Extensions */,
 				A5932EA128E044BF00457AD3 /* Lottie */,
-				9C798F8B28EAEC5D00FE250C /* Enum.swift */,
+				9CCFA4FB28F457E100963A95 /* Constants */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -349,7 +368,7 @@
 				A5F8288728DEB63D00C5D6A2 /* FTUXStorage.swift in Sources */,
 				A5F8288A28DEC0CF00C5D6A2 /* UIButton+.swift in Sources */,
 				A5F8288E28DED76700C5D6A2 /* UILabel+.swift in Sources */,
-				9C798F8C28EAEC5D00FE250C /* Enum.swift in Sources */,
+				9C798F8C28EAEC5D00FE250C /* CvsType.swift in Sources */,
 				BA27023128CF5DCD0039D9EA /* Coordinator.swift in Sources */,
 				A5F8288528DEB03A00C5D6A2 /* OnboardingCoordinator.swift in Sources */,
 				E505D9EF28CF5B4A00EEFC65 /* HomeVC.swift in Sources */,
@@ -367,6 +386,7 @@
 				E55BEBE128D6A82400804FCB /* SearchBar.swift in Sources */,
 				E5467E4A28D45DF40031B785 /* TopCurveView.swift in Sources */,
 				BAA0581028D36F75000CDD11 /* BaseViewController.swift in Sources */,
+				9CCFA4FE28F4585E00963A95 /* EventType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
