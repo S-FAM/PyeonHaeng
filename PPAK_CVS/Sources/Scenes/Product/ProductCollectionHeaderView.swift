@@ -12,11 +12,29 @@ final class ProductCollectionHeaderView: UICollectionReusableView {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    backgroundColor = .link // for test
+    setupLayouts()
+    setupConstraints()
+    setupStyles()
   }
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+}
+
+// MARK: - setup
+
+extension ProductCollectionHeaderView {
+  private func setupLayouts() {
+
+  }
+
+  private func setupConstraints() {
+
+  }
+
+  private func setupStyles() {
+    
   }
 }
 
