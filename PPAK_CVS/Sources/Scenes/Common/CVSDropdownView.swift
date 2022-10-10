@@ -9,18 +9,52 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
+
+enum CVSDropdownCase {
+  case all
+  case sevenEleven
+  case gs
+  case cu
+  case emart
+  case ministop
+  case setting
+
+  var imageName: String {
+    switch self {
+    case .all: return "logo_all"
+    case .sevenEleven: return "logo_7eleven"
+    case .gs: return "logo_gs25"
+    case .cu: return "logo_cu"
+    case .emart: return "logo_emart24"
+    case .ministop: return "logo_ministop"
+    case .setting: return "setting"
+    }
+  }
+}
 
 final class CVSDropdownView: UIView {
 
   // MARK: - Properties
 
-  private lazy var mock1 = mockView()
-  private lazy var mock2 = mockView()
-  private lazy var mock3 = mockView()
-  private lazy var mock4 = mockView()
-  private lazy var mock5 = mockView()
-  private lazy var mock6 = mockView()
-  private lazy var mock7 = mockView()
+  private lazy var allButton = createLogoButton(CVSDropdownCase.all.imageName)
+  private lazy var elevenButton = createLogoButton(CVSDropdownCase.sevenEleven.imageName)
+  private lazy var cuButton = createLogoButton(CVSDropdownCase.cu.imageName)
+  private lazy var emartButton = createLogoButton(CVSDropdownCase.emart.imageName)
+  private lazy var gsButton = createLogoButton(CVSDropdownCase.gs.imageName)
+  private lazy var ministopButton = createLogoButton(CVSDropdownCase.ministop.imageName)
+  private lazy var settingButton = createLogoButton(CVSDropdownCase.setting.imageName)
+
+  private lazy var stackView = UIStackView(
+    arrangedSubviews: [allButton, cuButton, gsButton, elevenButton, ministopButton, emartButton, settingButton]
+  ).then {
+    $0.spacing = 12
+    $0.axis = .vertical
+  }
+
+  let buttonEventSubject = PublishSubject<CVSDropdownCase>()
+  let disposeBag = DisposeBag()
 
   // MARK: - LifeCycle
 
@@ -29,6 +63,7 @@ final class CVSDropdownView: UIView {
     setupStyles()
     setupLayout()
     setupConstraints()
+    bind()
   }
 
   required init?(coder: NSCoder) {
@@ -45,63 +80,73 @@ final class CVSDropdownView: UIView {
   }
 
   private func setupLayout() {
-    [mock1, mock2, mock3, mock4, mock5, mock6, mock7]
-      .forEach { addSubview($0) }
+    addSubview(stackView)
   }
 
   private func setupConstraints() {
-    mock1.snp.makeConstraints { make in
+    stackView.snp.makeConstraints { make in
       make.centerX.equalToSuperview()
       make.top.equalToSuperview().inset(12)
-      make.width.height.equalTo(40)
     }
+  }
 
-    mock2.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(mock1.snp.bottom).offset(12)
-      make.width.height.equalTo(40)
-    }
+  // MARK: - Bind
 
-    mock3.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(mock2.snp.bottom).offset(12)
-      make.width.height.equalTo(40)
-    }
+  private func bind() {
 
-    mock4.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(mock3.snp.bottom).offset(12)
-      make.width.height.equalTo(40)
-    }
+    // All 버튼 이벤트
+    allButton.rx.tap
+      .map { CVSDropdownCase.all }
+      .bind(to: buttonEventSubject)
+      .disposed(by: disposeBag)
 
-    mock5.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(mock4.snp.bottom).offset(12)
-      make.width.height.equalTo(40)
-    }
+    // CU 버튼 이벤트
+    cuButton.rx.tap
+      .map { CVSDropdownCase.cu }
+      .bind(to: buttonEventSubject)
+      .disposed(by: disposeBag)
 
-    mock6.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(mock5.snp.bottom).offset(12)
-      make.width.height.equalTo(40)
-    }
+    // GS 버튼 이벤트
+    gsButton.rx.tap
+      .map { CVSDropdownCase.gs }
+      .bind(to: buttonEventSubject)
+      .disposed(by: disposeBag)
 
-    mock7.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(mock6.snp.bottom).offset(12)
-      make.width.height.equalTo(40)
-    }
+    // Emart 버튼 이벤트
+    emartButton.rx.tap
+      .map { CVSDropdownCase.emart }
+      .bind(to: buttonEventSubject)
+      .disposed(by: disposeBag)
+
+    // Ministop 버튼 이벤트
+    ministopButton.rx.tap
+      .map { CVSDropdownCase.ministop }
+      .bind(to: buttonEventSubject)
+      .disposed(by: disposeBag)
+
+    // 7Eleven 버튼 이벤트
+    elevenButton.rx.tap
+      .map { CVSDropdownCase.sevenEleven }
+      .bind(to: buttonEventSubject)
+      .disposed(by: disposeBag)
+
+    // Setting 버튼 이벤트
+    settingButton.rx.tap
+      .map { CVSDropdownCase.setting }
+      .bind(to: buttonEventSubject)
+      .disposed(by: disposeBag)
   }
 
   // MARK: - Helpers
 
-  // 임시 메서드입니다.
-  private func mockView() -> UIView {
-    let view = UIView()
-    view.backgroundColor = .blue
-    view.layer.cornerRadius = 20
+  private func createLogoButton(_ name: String) -> UIButton {
+    let button = UIButton()
+    button.setImage(UIImage(named: name), for: .normal)
+    button.snp.makeConstraints { make in
+      make.width.height.equalTo(40)
+    }
 
-    return view
+    return button
   }
 
   static func showDropdown(_ view: UIView) {
