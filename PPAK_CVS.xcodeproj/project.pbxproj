@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C798F8A28EAE9DA00FE250C /* TitleLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C798F8928EAE9DA00FE250C /* TitleLogoView.swift */; };
+		9C798F8C28EAEC5D00FE250C /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C798F8B28EAEC5D00FE250C /* Enum.swift */; };
 		A5932EA028E0435200457AD3 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = A5932E9F28E0435200457AD3 /* Lottie */; };
 		A5932EA328E044CB00457AD3 /* onboarding1.json in Resources */ = {isa = PBXBuildFile; fileRef = A5932EA228E044CB00457AD3 /* onboarding1.json */; };
 		A5932EA528E045EF00457AD3 /* onboarding3.json in Resources */ = {isa = PBXBuildFile; fileRef = A5932EA428E045EF00457AD3 /* onboarding3.json */; };
@@ -42,6 +44,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9C798F8928EAE9DA00FE250C /* TitleLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleLogoView.swift; sourceTree = "<group>"; };
+		9C798F8B28EAEC5D00FE250C /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
 		A5932EA228E044CB00457AD3 /* onboarding1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding1.json; sourceTree = "<group>"; };
 		A5932EA428E045EF00457AD3 /* onboarding3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding3.json; sourceTree = "<group>"; };
 		A5932EA628E0472B00457AD3 /* onboarding2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding2.json; sourceTree = "<group>"; };
@@ -134,6 +138,7 @@
 				BA27023528CF5F180039D9EA /* Base */,
 				A5F8288828DEC09B00C5D6A2 /* Extensions */,
 				A5932EA128E044BF00457AD3 /* Lottie */,
+				9C798F8B28EAEC5D00FE250C /* Enum.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -186,6 +191,7 @@
 				A5F8288B28DECEE700C5D6A2 /* Strings.swift */,
 				E5467E4928D45DF40031B785 /* TopCurveView.swift */,
 				E580BF2228E0646200BE7ADC /* GoodsCell.swift */,
+				9C798F8928EAE9DA00FE250C /* TitleLogoView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -343,6 +349,7 @@
 				A5F8288728DEB63D00C5D6A2 /* FTUXStorage.swift in Sources */,
 				A5F8288A28DEC0CF00C5D6A2 /* UIButton+.swift in Sources */,
 				A5F8288E28DED76700C5D6A2 /* UILabel+.swift in Sources */,
+				9C798F8C28EAEC5D00FE250C /* Enum.swift in Sources */,
 				BA27023128CF5DCD0039D9EA /* Coordinator.swift in Sources */,
 				A5F8288528DEB03A00C5D6A2 /* OnboardingCoordinator.swift in Sources */,
 				E505D9EF28CF5B4A00EEFC65 /* HomeVC.swift in Sources */,
@@ -350,6 +357,7 @@
 				BA27024928CF618E0039D9EA /* HomeCoordinator.swift in Sources */,
 				BA8CFD7D28E1E4AB00ADC4A8 /* UIColor+.swift in Sources */,
 				A5F8288C28DECEE700C5D6A2 /* Strings.swift in Sources */,
+				9C798F8A28EAE9DA00FE250C /* TitleLogoView.swift in Sources */,
 				E505D9EB28CF5B4A00EEFC65 /* AppDelegate.swift in Sources */,
 				E505D9ED28CF5B4A00EEFC65 /* SceneDelegate.swift in Sources */,
 				E580BF2528E0649E00BE7ADC /* HomeCollectionHeaderView.swift in Sources */,
@@ -497,7 +505,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2ZQR76M3UH;
+				DEVELOPMENT_TEAM = 69J4V4ULVW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PPAK_CVS/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -524,7 +532,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2ZQR76M3UH;
+				DEVELOPMENT_TEAM = 69J4V4ULVW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PPAK_CVS/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
