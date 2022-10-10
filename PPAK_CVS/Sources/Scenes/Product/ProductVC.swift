@@ -12,6 +12,20 @@ import Then
 
 final class ProductViewController: BaseViewController {
 
+  private lazy var collectionView = UICollectionView(
+    frame: .zero,
+    collectionViewLayout: .init()
+  ).then {
+    $0.collectionViewLayout = UICollectionViewFlowLayout().then { layout in
+      layout.headerReferenceSize = CGSize(width: view.bounds.width, height: 460)
+      layout.itemSize = CGSize(width: self.view.bounds.width, height: 125)
+      layout.sectionInset = UIEdgeInsets(top: 24, left: 0, bottom: 16, right: 0)
+    }
+    $0.contentInsetAdjustmentBehavior = .never
+    $0.register(GoodsCell.self, forCellWithReuseIdentifier: GoodsCell.id)
+    $0.dataSource = self
+    $0.backgroundColor = .systemPurple
+  }
   override func viewDidLoad() {
     super.viewDidLoad()
   }
@@ -30,5 +44,33 @@ final class ProductViewController: BaseViewController {
     navigationItem.titleView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 50)).then {
       $0.backgroundColor = .systemGray
     }
+
+    // add views
+    view.addSubview(collectionView)
+  }
+
+  override func setupConstraints() {
+    super.setupConstraints()
+
+    collectionView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
+    }
   }
 }
+
+extension ProductViewController: UICollectionViewDataSource {
+
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 10
+  }
+
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    guard let cell = collectionView.dequeueReusableCell(
+      withReuseIdentifier: GoodsCell.id,
+      for: indexPath
+    ) as? GoodsCell else {
+      fatalError("GoodsCell을 생성할 수 없습니다.")
+    }
+    return cell
+  }
+ }
