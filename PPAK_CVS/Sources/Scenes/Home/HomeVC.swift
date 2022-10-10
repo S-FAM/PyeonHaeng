@@ -7,6 +7,9 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+import RxGesture
 import SnapKit
 import Then
 
@@ -31,7 +34,12 @@ final class HomeViewController: BaseViewController {
                 forCellWithReuseIdentifier: GoodsCell.id)
   }
 
-  // MARK: - LifeCycle
+  private lazy var cvsDropdownView = CVSDropdownView()
+  private lazy var filterDropdownView = FilterDropdownView()
+  var header: HomeCollectionHeaderView!
+
+  let viewModel = HomeViewModel()
+
   // MARK: - Setup
 
   override func setupLayouts() {
@@ -50,9 +58,115 @@ final class HomeViewController: BaseViewController {
       make.bottom.equalTo(view.safeAreaLayoutGuide)
     }
   }
+
+  func setupDropdown() {
+    [cvsDropdownView, filterDropdownView]
+      .forEach {
+        view.addSubview($0)
+        $0.isHidden = true
+      }
+
+    cvsDropdownView.snp.makeConstraints { make in
+      make.top.equalTo(header.cvsButton.snp.bottom).offset(16)
+      make.leading.equalToSuperview().inset(16)
+      make.width.equalTo(64)
+      make.height.equalTo(376)
+    }
+
+    filterDropdownView.snp.makeConstraints { make in
+      make.top.equalTo(header.filterButton.snp.bottom).offset(12)
+      make.trailing.equalToSuperview().inset(16)
+      make.width.equalTo(130)
+      make.height.equalTo(100)
+    }
+  }
+
+  // MARK: - Event
+
+  private func bindHeader() {
+
+    // -----------------------------------
+    // ---------------INPUT---------------
+    // -----------------------------------
+
+    // 콜렉션뷰 헤더 최초 생성
+    viewModel.input.ignoreReusableView.accept(true)
+
+    // 현재 편의점 로고 버튼 클릭
+    header.cvsButton.rx.tap
+      .bind(to: viewModel.input.currentCVSButtonTapped)
+      .disposed(by: disposeBag)
+
+    // 필터 버튼 클릭
+    header.filterButton.rx.tap
+      .bind(to: viewModel.input.filterButtonTapped)
+      .disposed(by: disposeBag)
+
+    // 편의점 드롭다운 리스트 버튼 클릭
+    cvsDropdownView.buttonEventSubject
+      .bind(to: viewModel.input.dropdownCVSButtonTapped)
+      .disposed(by: disposeBag)
+
+    // 필터 드롭다운 리스트 버튼 클릭
+    filterDropdownView.buttonEventSubject
+      .bind(to: viewModel.input.dropdownFilterButtonTapped)
+      .disposed(by: disposeBag)
+
+    // 페이지 컨트롤 인덱스 감지
+    header.pageControl.pageIndexSubject
+      .skip(1)
+      .distinctUntilChanged()
+      .bind(to: viewModel.input.pageControlIndexEvent)
+      .disposed(by: disposeBag)
+
+    // 빈공간 터치 감지
+    view.rx.tapGesture(configuration: { _, delegate in
+      delegate.simultaneousRecognitionPolicy = .never
+    })
+      .map { _ in Void() }
+      .bind(to: viewModel.input.touchBackgroundEvent)
+      .disposed(by: disposeBag)
+
+    // -----------------------------------
+    // ---------------OUTPUT--------------
+    // -----------------------------------
+
+    // 편의점 로고 드롭다운 애니메이션 동작
+    viewModel.output.cvsDropdownState
+      .bind(onNext: { [weak self] state in
+        guard let self = self else { return }
+        if state {
+          CVSDropdownView.showDropdown(self.cvsDropdownView)
+        } else {
+          CVSDropdownView.hideDropdown(self.cvsDropdownView)
+        }
+      })
+      .disposed(by: disposeBag)
+
+    // 필터 드롭다운 애니메이션 동작
+    viewModel.output.filterDropdownState
+      .bind(onNext: { [weak self] state in
+        guard let self = self else { return }
+        if state {
+          FilterDropdownView.showDropdown(self.filterDropdownView)
+        } else {
+          FilterDropdownView.hideDropdown(self.filterDropdownView)
+        }
+      })
+      .disposed(by: disposeBag)
+
+    // 현재 선택된 편의점 로고 이미지 변경
+    viewModel.output.cvsButtonImage
+      .bind(onNext: { [weak self] imageName in
+        guard let self = self else { return }
+        self.header.cvsButton.setImage(UIImage(named: imageName), for: .normal)
+      })
+      .disposed(by: disposeBag)
+  }
 }
 
 // MARK: - CollectionView Setup
+
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let cell = collectionView.dequeueReusableCell(
@@ -78,11 +192,13 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       withReuseIdentifier: HomeCollectionHeaderView.id,
       for: indexPath
     ) as? HomeCollectionHeaderView else { return UICollectionReusableView() }
+
+    if viewModel.input.ignoreReusableView.value == false {
+      self.header = header
+      bindHeader()
+      setupDropdown()
+    }
+
     return header
   }
-}
-
-// MARK: - PageControl Setup
-extension HomeViewController: PageControlDelegate {
-  func didChangedSelectedIndex(index: Int) {}
 }
