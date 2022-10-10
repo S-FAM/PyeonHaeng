@@ -23,6 +23,11 @@ final class ProductViewController: BaseViewController {
     }
     $0.contentInsetAdjustmentBehavior = .never
     $0.register(GoodsCell.self, forCellWithReuseIdentifier: GoodsCell.id)
+    $0.register(
+      ProductCollectionHeaderView.self,
+      forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+      withReuseIdentifier: ProductCollectionHeaderView.id
+    )
     $0.dataSource = self
     $0.backgroundColor = .systemPurple
   }
@@ -73,4 +78,22 @@ extension ProductViewController: UICollectionViewDataSource {
     }
     return cell
   }
- }
+
+  func collectionView(
+    _ collectionView: UICollectionView,
+    viewForSupplementaryElementOfKind kind: String,
+    at indexPath: IndexPath
+  ) -> UICollectionReusableView {
+    guard case UICollectionView.elementKindSectionHeader = kind,
+          let headerView = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: ProductCollectionHeaderView.id,
+            for: indexPath
+          ) as? ProductCollectionHeaderView
+    else {
+      fatalError()
+    }
+
+    return headerView
+  }
+}
