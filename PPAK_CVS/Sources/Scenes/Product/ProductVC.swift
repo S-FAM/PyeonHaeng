@@ -58,7 +58,7 @@ final class ProductViewController: BaseViewController {
     super.setupConstraints()
 
     collectionView.snp.makeConstraints { make in
-      make.edges.equalToSuperview()
+      make.edges.equalTo(view.safeAreaLayoutGuide)
     }
   }
 }
