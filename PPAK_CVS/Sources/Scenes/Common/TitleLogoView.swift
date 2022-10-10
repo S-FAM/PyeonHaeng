@@ -1,5 +1,5 @@
 //
-//  LogoTagView.swift
+//  TitleLogoView.swift
 //  PPAK_CVS
 //
 //  Created by hyeonseok on 2022/10/03.
@@ -7,7 +7,7 @@
 
 import UIKit
 
- class LogoTagView: UIView {
+ class TitleLogoView: UIView {
 
      var titleLabel =  UILabel()
      var cvsType: CVSType
