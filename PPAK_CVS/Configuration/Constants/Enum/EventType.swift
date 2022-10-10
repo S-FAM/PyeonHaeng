@@ -20,8 +20,8 @@ enum EventType {
     switch self {
     case .onePlusOne: return "1 + 1"
     case .twoPlusOne: return "2 + 1"
-    case .allEnText: return "All"
-    case .allKrText: return "전체"
+    case .allEn: return "All"
+    case .allKr: return "전체"
     }
   }
   
