@@ -9,14 +9,14 @@ import UIKit
 
 import Lottie
 import RxCocoa
-import RxGesture
+// import RxGesture
 import SnapKit
 import Then
 
 final class OnboardingViewController: BaseViewController {
 
   // MARK: - Properties
-  private let viewModel = OnboardingViewModel()
+  var viewModel: OnboardingViewModel
 
   private lazy var animationView = AnimationView()
 
@@ -46,21 +46,11 @@ final class OnboardingViewController: BaseViewController {
   }
 
   private var onboardingData: [OnboardingDataModel] = []
-  private var currentPage: Int = 0 {
-    didSet {
-      self.pageControl.currentPage = currentPage
-      self.setCurrentPageUI()
-      self.startLottieAnimation()
-    }
-  }
 
   // MARK: - Life Cycle
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    self.setOnboardingData()
-    self.setCurrentPageUI()
   }
 
   override func viewDidAppear(_ animated: Bool) {
@@ -70,6 +60,15 @@ final class OnboardingViewController: BaseViewController {
   }
 
   // MARK: - Setup
+
+  init(viewModel: OnboardingViewModel) {
+    self.viewModel = viewModel
+    super.init(nibName: nil, bundle: nil)
+  }
+
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   override func setupLayouts() {
     super.setupLayouts()
@@ -138,27 +137,21 @@ final class OnboardingViewController: BaseViewController {
   }
 
   override func bind() {
+    self.setOnboardingData()
+
+    // --- INPUT---
 
     // 건너뛰기 버튼 클릭
     self.skipButton.rx.tap
-      .bind { [weak self] in
-        guard let self = self else { return }
-        self.viewModel.navigateToHomeVC(self.navigationController ?? UINavigationController())
-      }
-      .disposed(by: disposeBag)
+      .bind(to: self.viewModel.input.skipButtonEvent)
+      .disposed(by: self.disposeBag)
 
     // 다음 버튼 클릭
     self.nextButton.rx.tap
-      .bind { [weak self] in
-        guard let self = self else { return }
-        if self.currentPage == 2 {
-          self.viewModel.navigateToHomeVC(self.navigationController ?? UINavigationController())
-        } else {
-          self.currentPage += 1
-        }
-      }
+      .bind(to: viewModel.input.nextButtonEvent)
       .disposed(by: disposeBag)
 
+    /*
     // 스와이프 제스처
     self.view.rx
       .swipeGesture([.left, .right])
@@ -168,18 +161,26 @@ final class OnboardingViewController: BaseViewController {
 
         switch gesture.direction {
         case .left:
-          if self.currentPage < 2 {
-            self.currentPage += 1
-          }
+          self.viewModel.input.swipeGestureDetector.onNext(.left)
         case .right:
-          if self.currentPage > 0 {
-            self.currentPage -= 1
-          }
+          self.viewModel.input.swipeGestureDetector.onNext(.right)
         default:
           break
         }
       })
       .disposed(by: disposeBag)
+     */
+
+    // --- OUTPUT ---
+
+    // currentPage가 변할 때 마다 적용
+    self.viewModel.output.currentPage
+      .bind { [weak self] currentPage in
+        guard let self = self else { return }
+        self.pageControl.currentPage = currentPage
+        self.setCurrentPageUI()
+        self.startLottieAnimation()
+      }
   }
 }
 
@@ -208,11 +209,12 @@ extension OnboardingViewController {
   }
 
   private func setCurrentPageUI() {
-    let lottieName = self.onboardingData[self.currentPage].lottieName
+    let currentPage = self.pageControl.currentPage
+    let lottieName = self.onboardingData[currentPage].lottieName
 
     self.animationView.animation = Animation.named(lottieName)
-    self.titleLabel.text = self.onboardingData[self.currentPage].title
-    self.descLabel.text = self.onboardingData[self.currentPage].description
+    self.titleLabel.text = self.onboardingData[currentPage].title
+    self.descLabel.text = self.onboardingData[currentPage].description
   }
 
   private func startLottieAnimation() {
