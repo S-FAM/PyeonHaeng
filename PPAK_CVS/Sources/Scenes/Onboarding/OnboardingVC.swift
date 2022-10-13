@@ -8,12 +8,15 @@
 import UIKit
 
 import Lottie
+import RxCocoa
+// import RxGesture
 import SnapKit
 import Then
 
 final class OnboardingViewController: BaseViewController {
 
   // MARK: - Properties
+  var viewModel: OnboardingViewModel
 
   private lazy var animationView = AnimationView()
 
@@ -43,25 +46,11 @@ final class OnboardingViewController: BaseViewController {
   }
 
   private var onboardingData: [OnboardingDataModel] = []
-  private var currentPage: Int = 0 {
-    didSet {
-      self.pageControl.currentPage = currentPage
-      self.setCurrentPageUI()
-      self.startLottieAnimation()
-    }
-  }
 
   // MARK: - Life Cycle
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    // TODO: 건너뛰기나 시작하기 버튼을 클릭했을 때 Userdefaults 값을 저장하도록 변경하기
-    FTUXStorage().saveFTUXStatus()
-
-    self.setOnboardingData()
-    self.setCurrentPageUI()
-    self.setGesture()
   }
 
   override func viewDidAppear(_ animated: Bool) {
@@ -71,6 +60,15 @@ final class OnboardingViewController: BaseViewController {
   }
 
   // MARK: - Setup
+
+  init(viewModel: OnboardingViewModel) {
+    self.viewModel = viewModel
+    super.init(nibName: nil, bundle: nil)
+  }
+
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   override func setupLayouts() {
     super.setupLayouts()
@@ -137,6 +135,53 @@ final class OnboardingViewController: BaseViewController {
 
     view.backgroundColor = Color.viewBgColor
   }
+
+  override func bind() {
+    self.setOnboardingData()
+
+    // --- INPUT---
+
+    // 건너뛰기 버튼 클릭
+    self.skipButton.rx.tap
+      .bind(to: self.viewModel.input.skipButtonEvent)
+      .disposed(by: self.disposeBag)
+
+    // 다음 버튼 클릭
+    self.nextButton.rx.tap
+      .bind(to: viewModel.input.nextButtonEvent)
+      .disposed(by: disposeBag)
+
+    /*
+    // 스와이프 제스처
+    self.view.rx
+      .swipeGesture([.left, .right])
+      .when(.recognized)
+      .subscribe(onNext: { [weak self] gesture in
+        guard let self = self else { return }
+
+        switch gesture.direction {
+        case .left:
+          self.viewModel.input.swipeGestureDetector.onNext(.left)
+        case .right:
+          self.viewModel.input.swipeGestureDetector.onNext(.right)
+        default:
+          break
+        }
+      })
+      .disposed(by: disposeBag)
+     */
+
+    // --- OUTPUT ---
+
+    // currentPage가 변할 때 마다 적용
+    self.viewModel.output.currentPage
+      .bind { [weak self] currentPage in
+        guard let self = self else { return }
+        self.pageControl.currentPage = currentPage
+        self.setCurrentPageUI()
+        self.startLottieAnimation()
+      }
+  }
 }
 
 // MARK: - Custom Functions
@@ -164,46 +209,17 @@ extension OnboardingViewController {
   }
 
   private func setCurrentPageUI() {
-    let lottieName = self.onboardingData[self.currentPage].lottieName
+    let currentPage = self.pageControl.currentPage
+    let lottieName = self.onboardingData[currentPage].lottieName
 
     self.animationView.animation = Animation.named(lottieName)
-    self.titleLabel.text = self.onboardingData[self.currentPage].title
-    self.descLabel.text = self.onboardingData[self.currentPage].description
+    self.titleLabel.text = self.onboardingData[currentPage].title
+    self.descLabel.text = self.onboardingData[currentPage].description
   }
 
   private func startLottieAnimation() {
     self.animationView.play()
     self.animationView.loopMode = .loop
-  }
-
-  private func setGesture() {
-    let leftSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(_:)))
-    leftSwipeRecognizer.direction = .left
-
-    let rightSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(_:)))
-    rightSwipeRecognizer.direction = .right
-
-    self.view.addGestureRecognizer(leftSwipeRecognizer)
-    self.view.addGestureRecognizer(rightSwipeRecognizer)
-  }
-
-  @objc func swipeAction(_ gesture: UIGestureRecognizer) {
-    guard let swipeGesture = gesture as? UISwipeGestureRecognizer else {
-      return
-    }
-
-    switch swipeGesture.direction {
-    case .left:
-      if self.currentPage < 2 {
-        self.currentPage += 1
-      }
-    case .right:
-      if self.currentPage > 0 {
-        self.currentPage -= 1
-      }
-    default:
-      break
-    }
   }
 }
 
