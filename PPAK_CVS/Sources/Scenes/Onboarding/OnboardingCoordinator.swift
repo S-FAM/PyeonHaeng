@@ -11,7 +11,6 @@ import RxSwift
 
 final class OnboardingCoordinator: Coordinator {
 
-  private var onboardingViewModel: OnboardingViewModel = OnboardingViewModel()
   private var disposeBag = DisposeBag()
 
   var navigationController: UINavigationController
@@ -21,22 +20,22 @@ final class OnboardingCoordinator: Coordinator {
   }
 
   func start() {
-    let onboardingVC = OnboardingViewController(viewModel: self.onboardingViewModel)
+    let onboardingViewModel: OnboardingViewModel = OnboardingViewModel()
+    let onboardingVC = OnboardingViewController(viewModel: onboardingViewModel)
     self.navigationController.setViewControllers([onboardingVC], animated: true)
 
-    self.setupBindings()
+    self.bind(onboardingViewModel)
   }
 
-  private func setupBindings() {
+  private func bind(_ viewModel: OnboardingViewModel) {
 
     // 홈 화면으로 이동하기
-    self.onboardingViewModel.output.navigateToHomeVC
+    viewModel.output.navigateToHomeVC
       .subscribe { [weak self] _ in
         guard let self = self else { return }
         let coordinator = HomeCoordinator(navigationController: self.navigationController)
         coordinator.start()
       }
       .disposed(by: disposeBag)
-
   }
 }
