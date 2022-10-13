@@ -24,11 +24,15 @@ final class BookmarkViewController: BaseViewController {
     $0.bounces = false
     $0.dataSource = self
     $0.delegate = self
-    $0.register(BookmarkCollectionHeaderView.self,
-                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                withReuseIdentifier: BookmarkCollectionHeaderView.id)
-    $0.register(GoodsCell.self,
-                forCellWithReuseIdentifier: GoodsCell.id)
+    $0.register(
+      BookmarkCollectionHeaderView.self,
+      forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+      withReuseIdentifier: BookmarkCollectionHeaderView.id
+    )
+    $0.register(
+      GoodsCell.self,
+      forCellWithReuseIdentifier: GoodsCell.id
+    )
   }
 
   private lazy var filterDropdownView = FilterDropdownView()
@@ -76,7 +80,10 @@ final class BookmarkViewController: BaseViewController {
 // MARK: - CollectionView Setup
 
 extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    cellForItemAt indexPath: IndexPath
+  ) -> UICollectionViewCell {
     guard let cell = collectionView.dequeueReusableCell(
       withReuseIdentifier: GoodsCell.id,
       for: indexPath
@@ -86,7 +93,10 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
     return cell
   }
 
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    numberOfItemsInSection section: Int
+  ) -> Int {
     return 10
   }
 
