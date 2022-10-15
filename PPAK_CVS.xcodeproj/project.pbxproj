@@ -19,6 +19,7 @@
 		A5F8288A28DEC0CF00C5D6A2 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288928DEC0CF00C5D6A2 /* UIButton+.swift */; };
 		A5F8288C28DECEE700C5D6A2 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288B28DECEE700C5D6A2 /* Strings.swift */; };
 		A5F8288E28DED76700C5D6A2 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288D28DED76700C5D6A2 /* UILabel+.swift */; };
+		BA1CCAC228FAFE500002FD8C /* WeakMapTable in Frameworks */ = {isa = PBXBuildFile; productRef = BA1CCAC128FAFE500002FD8C /* WeakMapTable */; };
 		BA27023128CF5DCD0039D9EA /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA27023028CF5DCD0039D9EA /* Coordinator.swift */; };
 		BA27023928CF60570039D9EA /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = BA27023828CF60570039D9EA /* SnapKit */; };
 		BA27023C28CF606A0039D9EA /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = BA27023B28CF606A0039D9EA /* Then */; };
@@ -102,6 +103,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA27024728CF61020039D9EA /* Kingfisher in Frameworks */,
+				BA1CCAC228FAFE500002FD8C /* WeakMapTable in Frameworks */,
 				A5932EA028E0435200457AD3 /* Lottie in Frameworks */,
 				E5F9CCA228EF10EA0084CD63 /* RxGesture in Frameworks */,
 				BA27023F28CF60830039D9EA /* Alamofire in Frameworks */,
@@ -306,6 +308,7 @@
 				BA27024628CF61020039D9EA /* Kingfisher */,
 				A5932E9F28E0435200457AD3 /* Lottie */,
 				E5F9CCA128EF10EA0084CD63 /* RxGesture */,
+				BA1CCAC128FAFE500002FD8C /* WeakMapTable */,
 			);
 			productName = PPAK_CVS;
 			productReference = E505D9E728CF5B4A00EEFC65 /* PPAK_CVS.app */;
@@ -343,6 +346,7 @@
 				BA27024528CF61020039D9EA /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				A5932E9E28E0435200457AD3 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				E5F9CCA028EF10EA0084CD63 /* XCRemoteSwiftPackageReference "RxGesture" */,
+				BA1CCAC028FAFE500002FD8C /* XCRemoteSwiftPackageReference "WeakMapTable" */,
 			);
 			productRefGroup = E505D9E828CF5B4A00EEFC65 /* Products */;
 			projectDirPath = "";
@@ -644,6 +648,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		BA1CCAC028FAFE500002FD8C /* XCRemoteSwiftPackageReference "WeakMapTable" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactorKit/WeakMapTable";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		BA27023728CF60570039D9EA /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -699,6 +711,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A5932E9E28E0435200457AD3 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		BA1CCAC128FAFE500002FD8C /* WeakMapTable */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BA1CCAC028FAFE500002FD8C /* XCRemoteSwiftPackageReference "WeakMapTable" */;
+			productName = WeakMapTable;
 		};
 		BA27023828CF60570039D9EA /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
