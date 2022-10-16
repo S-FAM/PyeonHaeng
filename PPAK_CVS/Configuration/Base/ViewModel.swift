@@ -64,11 +64,15 @@ private enum MapTables {
 
 extension ViewModel {
 
+  private var _action: PublishSubject<Action> {
+    return MapTables.action.forceCastedValue(forKey: self, default: .init())
+  }
+
   public var action: PublishSubject<Action> {
     // Creates a state stream automatically
     _ = self.state
 
-    return MapTables.action.forceCastedValue(forKey: self, default: .init())
+    return self._action
   }
 
   public internal(set) var currentState: State {
@@ -76,20 +80,24 @@ extension ViewModel {
     set { MapTables.currentState.setValue(newValue, forKey: self) }
   }
 
-  public var state: Observable<State> {
+  private var _state: Observable<State> {
     return MapTables.state.forceCastedValue(forKey: self, default: self.createStateStream())
+  }
+
+  public var state: Observable<State> {
+    return self._state
   }
 
   public var scheduler: Scheduler {
     return MainScheduler.instance
   }
 
-  private var disposeBag: DisposeBag {
+  fileprivate var disposeBag: DisposeBag {
     return MapTables.disposeBag.value(forKey: self, default: DisposeBag())
   }
 
   public func createStateStream() -> Observable<State> {
-    let action = self.action.asObservable()
+    let action = self._action.asObservable()
     let transformedAction = self.transform(action: action)
     let mutation = transformedAction
       .flatMap { [weak self] action -> Observable<Mutation> in
