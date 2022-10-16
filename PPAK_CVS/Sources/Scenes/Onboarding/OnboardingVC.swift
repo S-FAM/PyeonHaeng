@@ -9,7 +9,7 @@ import UIKit
 
 import Lottie
 import RxCocoa
-// import RxGesture
+ import RxGesture
 import SnapKit
 import Then
 
@@ -151,7 +151,6 @@ final class OnboardingViewController: BaseViewController {
       .bind(to: viewModel.input.nextButtonEvent)
       .disposed(by: disposeBag)
 
-    /*
     // 스와이프 제스처
     self.view.rx
       .swipeGesture([.left, .right])
@@ -169,7 +168,6 @@ final class OnboardingViewController: BaseViewController {
         }
       })
       .disposed(by: disposeBag)
-     */
 
     // --- OUTPUT ---
 
