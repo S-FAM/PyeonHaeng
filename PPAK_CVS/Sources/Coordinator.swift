@@ -1,6 +1,6 @@
 import UIKit
 
-protocol Coordinator {
+protocol Coordinator: AnyObject {
 
   var navigationController: UINavigationController { get set }
   var childCoordinators: [Coordinator] { get set }
