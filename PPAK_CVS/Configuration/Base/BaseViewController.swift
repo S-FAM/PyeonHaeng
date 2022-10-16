@@ -12,7 +12,7 @@ class BaseViewController: UIViewController {
     setupLayouts()
     setupConstraints()
     setupStyles()
-    bind()
+    bind() // deprecated soon
   }
 
   /// UI 프로퍼티를 view에 할당합니다.
@@ -64,5 +64,6 @@ class BaseViewController: UIViewController {
   ///   // codes..
   /// }
   /// ```
+  @available(*, deprecated, renamed: "bind(viewModel:)")
   func bind() { }
 }
