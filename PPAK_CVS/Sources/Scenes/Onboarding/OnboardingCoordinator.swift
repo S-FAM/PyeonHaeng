@@ -33,6 +33,7 @@ final class OnboardingCoordinator: Coordinator {
     viewModel.output.navigateToHomeVC
       .subscribe { [weak self] _ in
         guard let self = self else { return }
+        FTUXStorage().saveFTUXStatus()
         let coordinator = HomeCoordinator(navigationController: self.navigationController)
         coordinator.start()
       }
