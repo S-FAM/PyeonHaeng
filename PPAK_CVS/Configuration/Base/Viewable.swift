@@ -14,13 +14,13 @@ private enum MapTables {
 public protocol Viewable: AnyObject {
   associatedtype ViewModel: PPAK_CVS.ViewModel
 
-  /// A dispose bag. It is disposed each time the `reactor` is assigned.
+  /// A dispose bag. It is disposed each time the `viewModel` is assigned.
   var disposeBag: DisposeBag { get set }
 
   /// A view's reactor. `bind(reactor:)` gets called when the new value is assigned to this property.
   var viewModel: ViewModel? { get set }
 
-  /// Creates RxSwift bindings. This method is called each time the `reactor` is assigned.
+  /// Creates RxSwift bindings. This method is called each time the `viewModel` is assigned.
   ///
   /// Here is a typical implementation example:
   ///
