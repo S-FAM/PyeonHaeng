@@ -1,6 +1,13 @@
+//
+//  BookmarkCoordinator.swift
+//  PPAK_CVS
+//
+//  Created by 김응철 on 2022/10/08.
+//
+
 import UIKit
 
-final class HomeCoordinator: Coordinator {
+final class BookmarkCoordinator: Coordinator {
 
   var navigationController: UINavigationController
 
@@ -9,7 +16,7 @@ final class HomeCoordinator: Coordinator {
   }
 
   func start() {
-    let viewController = HomeViewController()
+    let viewController = BookmarkViewController()
     self.navigationController.setViewControllers([viewController], animated: true)
   }
 }
