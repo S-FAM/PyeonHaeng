@@ -20,6 +20,7 @@
 		A5F8288C28DECEE700C5D6A2 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288B28DECEE700C5D6A2 /* Strings.swift */; };
 		A5F8288E28DED76700C5D6A2 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288D28DED76700C5D6A2 /* UILabel+.swift */; };
 		BA1CCAC228FAFE500002FD8C /* WeakMapTable in Frameworks */ = {isa = PBXBuildFile; productRef = BA1CCAC128FAFE500002FD8C /* WeakMapTable */; };
+		BA1CCACB28FB01DE0002FD8C /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1CCACA28FB01DE0002FD8C /* ViewModel.swift */; };
 		BA27023128CF5DCD0039D9EA /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA27023028CF5DCD0039D9EA /* Coordinator.swift */; };
 		BA27023928CF60570039D9EA /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = BA27023828CF60570039D9EA /* SnapKit */; };
 		BA27023C28CF606A0039D9EA /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = BA27023B28CF606A0039D9EA /* Then */; };
@@ -67,6 +68,7 @@
 		A5F8288928DEC0CF00C5D6A2 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		A5F8288B28DECEE700C5D6A2 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		A5F8288D28DED76700C5D6A2 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		BA1CCACA28FB01DE0002FD8C /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		BA27023028CF5DCD0039D9EA /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		BA27024828CF618E0039D9EA /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		BA5A433B28F2FF15008DCDCC /* ProductVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductVC.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			children = (
 				E505D9F528CF5B4B00EEFC65 /* LaunchScreen.storyboard */,
 				BA27023028CF5DCD0039D9EA /* Coordinator.swift */,
+				BA1CCACA28FB01DE0002FD8C /* ViewModel.swift */,
 				BAA0580F28D36F75000CDD11 /* BaseViewController.swift */,
 			);
 			path = Base;
@@ -424,6 +427,7 @@
 				E5B9965B28E2A16D00E39566 /* FilterDropdownView.swift in Sources */,
 				A5F8288228DEAE3C00C5D6A2 /* OnboardingVC.swift in Sources */,
 				E54D9C4428F1A19000D028B2 /* BookmarkCoordinator.swift in Sources */,
+				BA1CCACB28FB01DE0002FD8C /* ViewModel.swift in Sources */,
 				E5467E4C28D45DFE0031B785 /* BottomCurveView.swift in Sources */,
 				E54D9C4628F1A19B00D028B2 /* BookmarkViewModel.swift in Sources */,
 				E54D9C4828F1A1A300D028B2 /* BookmarkVC.swift in Sources */,
