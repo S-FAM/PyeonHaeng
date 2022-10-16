@@ -18,7 +18,7 @@ public protocol Viewable: AnyObject {
   var disposeBag: DisposeBag { get set }
 
   /// A view's reactor. `bind(reactor:)` gets called when the new value is assigned to this property.
-  var reactor: ViewModel? { get set }
+  var viewModel: ViewModel? { get set }
 
   /// Creates RxSwift bindings. This method is called each time the `reactor` is assigned.
   ///
