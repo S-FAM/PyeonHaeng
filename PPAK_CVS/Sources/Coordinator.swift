@@ -13,7 +13,7 @@ protocol Coordinator: AnyObject {
 
 extension Coordinator {
   func start(coordinator: Coordinator) {
-    childCoordinators.append(coordinator)
+    self.childCoordinators.append(coordinator)
     coordinator.parentCoordinator = self
     coordinator.start()
   }
