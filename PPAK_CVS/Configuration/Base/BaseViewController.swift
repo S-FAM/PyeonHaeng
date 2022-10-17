@@ -5,7 +5,7 @@ import class RxSwift.DisposeBag
 class BaseViewController: UIViewController {
 
   /// A dispose bag. 각 ViewController에 종속적이다.
-  final let disposeBag = DisposeBag()
+  final var disposeBag = DisposeBag()
 
   /// A coordinator used to navigate`ViewControllers`
   weak var coordinator: Coordinator?
@@ -15,7 +15,7 @@ class BaseViewController: UIViewController {
     setupLayouts()
     setupConstraints()
     setupStyles()
-    bind()
+    bind() // deprecated soon
   }
 
   /// UI 프로퍼티를 view에 할당합니다.
@@ -67,5 +67,6 @@ class BaseViewController: UIViewController {
   ///   // codes..
   /// }
   /// ```
+  @available(*, deprecated, renamed: "bind(viewModel:)")
   func bind() { }
 }
