@@ -21,4 +21,9 @@ final class AppCoordinator: BaseCoordinator {
 
     start(coordinator: coordinator)
   }
+
+  func switchToMain(coordinator: OnboardingCoordinator) {
+    finish(coordinator: coordinator)
+    start()
+  }
 }
