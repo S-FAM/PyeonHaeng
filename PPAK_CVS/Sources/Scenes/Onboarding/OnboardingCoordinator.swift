@@ -9,18 +9,12 @@ import UIKit
 
 import RxSwift
 
-final class OnboardingCoordinator: Coordinator {
+final class OnboardingCoordinator: BaseCoordinator {
 
-  private var disposeBag = DisposeBag()
+  private let disposeBag = DisposeBag()
 
-  var navigationController: UINavigationController
-
-  init(navigationController: UINavigationController) {
-    self.navigationController = navigationController
-  }
-
-  func start() {
-    let onboardingViewModel: OnboardingViewModel = OnboardingViewModel()
+  override func start() {
+    let onboardingViewModel = OnboardingViewModel()
     let onboardingVC = OnboardingViewController(viewModel: onboardingViewModel)
     self.navigationController.setViewControllers([onboardingVC], animated: true)
 
@@ -32,9 +26,10 @@ final class OnboardingCoordinator: Coordinator {
     // 홈 화면으로 이동하기
     viewModel.output.navigateToHomeVC
       .subscribe { [weak self] _ in
-        guard let self = self else { return }
-        let coordinator = HomeCoordinator(navigationController: self.navigationController)
-        coordinator.start()
+        guard let self = self,
+              let parentCoordinator = self.parentCoordinator as? AppCoordinator else { return }
+        FTUXStorage().saveFTUXStatus()
+        parentCoordinator.switchToHome(coordinator: self)
       }
       .disposed(by: disposeBag)
   }

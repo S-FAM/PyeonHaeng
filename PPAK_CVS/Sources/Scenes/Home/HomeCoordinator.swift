@@ -1,14 +1,8 @@
 import UIKit
 
-final class HomeCoordinator: Coordinator {
+final class HomeCoordinator: BaseCoordinator {
 
-  var navigationController: UINavigationController
-
-  init(navigationController: UINavigationController) {
-    self.navigationController = navigationController
-  }
-
-  func start() {
+  override func start() {
     let viewController = HomeViewController()
     self.navigationController.setViewControllers([viewController], animated: true)
   }
