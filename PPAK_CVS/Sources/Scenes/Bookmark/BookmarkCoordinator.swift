@@ -7,15 +7,9 @@
 
 import UIKit
 
-final class BookmarkCoordinator: Coordinator {
+final class BookmarkCoordinator: BaseCoordinator {
 
-  var navigationController: UINavigationController
-
-  init(navigationController: UINavigationController) {
-    self.navigationController = navigationController
-  }
-
-  func start() {
+  override func start() {
     let viewController = BookmarkViewController()
     self.navigationController.setViewControllers([viewController], animated: true)
   }

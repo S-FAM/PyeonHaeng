@@ -34,6 +34,8 @@
 		BA5A433E28F2FF47008DCDCC /* ProductCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5A433D28F2FF47008DCDCC /* ProductCoordinator.swift */; };
 		BA8CFD7D28E1E4AB00ADC4A8 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8CFD7C28E1E4AB00ADC4A8 /* UIColor+.swift */; };
 		BAA0581028D36F75000CDD11 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA0580F28D36F75000CDD11 /* BaseViewController.swift */; };
+		BAA0F53128FCF88300B632AC /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA0F53028FCF88300B632AC /* BaseCoordinator.swift */; };
+		BAA0F53528FD353500B632AC /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA0F53428FD353500B632AC /* AppCoordinator.swift */; };
 		BABC84B228F58F5A00D6DF45 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABC84B128F58F5A00D6DF45 /* Preview.swift */; };
 		BAEF774928F412FA006B0274 /* ProductCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEF774828F412FA006B0274 /* ProductCollectionHeaderView.swift */; };
 		E505D9EB28CF5B4A00EEFC65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505D9EA28CF5B4A00EEFC65 /* AppDelegate.swift */; };
@@ -77,6 +79,8 @@
 		BA5A433D28F2FF47008DCDCC /* ProductCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCoordinator.swift; sourceTree = "<group>"; };
 		BA8CFD7C28E1E4AB00ADC4A8 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		BAA0580F28D36F75000CDD11 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		BAA0F53028FCF88300B632AC /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
+		BAA0F53428FD353500B632AC /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		BABC84B128F58F5A00D6DF45 /* Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
 		BAEF774828F412FA006B0274 /* ProductCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCollectionHeaderView.swift; sourceTree = "<group>"; };
 		E505D9E728CF5B4A00EEFC65 /* PPAK_CVS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PPAK_CVS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -175,7 +179,9 @@
 		BA27023328CF5EFF0039D9EA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				BAA0F53428FD353500B632AC /* AppCoordinator.swift */,
 				E505D9EA28CF5B4A00EEFC65 /* AppDelegate.swift */,
+				BAA0F53028FCF88300B632AC /* BaseCoordinator.swift */,
 				E505D9EC28CF5B4A00EEFC65 /* SceneDelegate.swift */,
 				A5932EA828E047B400457AD3 /* Models */,
 				E584487C28D55B9000E25265 /* Scenes */,
@@ -194,10 +200,10 @@
 		BA27023528CF5F180039D9EA /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				E505D9F528CF5B4B00EEFC65 /* LaunchScreen.storyboard */,
-				BA27023028CF5DCD0039D9EA /* Coordinator.swift */,
-				BA1CCACA28FB01DE0002FD8C /* ViewModel.swift */,
 				BAA0580F28D36F75000CDD11 /* BaseViewController.swift */,
+				BA27023028CF5DCD0039D9EA /* Coordinator.swift */,
+				E505D9F528CF5B4B00EEFC65 /* LaunchScreen.storyboard */,
+				BA1CCACA28FB01DE0002FD8C /* ViewModel.swift */,
 				BA1CCACC28FB9A450002FD8C /* Viewable.swift */,
 			);
 			path = Base;
@@ -407,6 +413,7 @@
 			files = (
 				A5932EAA28E047E000457AD3 /* OnboardingDataModel.swift in Sources */,
 				E5C9025228E2DB480086BDE9 /* HomeViewModel.swift in Sources */,
+				BAA0F53528FD353500B632AC /* AppCoordinator.swift in Sources */,
 				BA1CCACD28FB9A450002FD8C /* Viewable.swift in Sources */,
 				A5F8288728DEB63D00C5D6A2 /* FTUXStorage.swift in Sources */,
 				A5F8288A28DEC0CF00C5D6A2 /* UIButton+.swift in Sources */,
@@ -438,6 +445,7 @@
 				E55BEBE128D6A82400804FCB /* SearchBar.swift in Sources */,
 				E5467E4A28D45DF40031B785 /* TopCurveView.swift in Sources */,
 				A57D32E428EDBA0200944C7E /* OnboardingViewModel.swift in Sources */,
+				BAA0F53128FCF88300B632AC /* BaseCoordinator.swift in Sources */,
 				BAA0581028D36F75000CDD11 /* BaseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

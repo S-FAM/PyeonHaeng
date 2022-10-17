@@ -7,15 +7,9 @@
 
 import UIKit
 
-final class ProductCoordinator: Coordinator {
+final class ProductCoordinator: BaseCoordinator {
 
-  var navigationController: UINavigationController
-
-  init(navigationController: UINavigationController) {
-    self.navigationController = navigationController
-  }
-
-  func start() {
+  override func start() {
     let viewController = ProductViewController()
     self.navigationController.pushViewController(viewController, animated: true)
   }
