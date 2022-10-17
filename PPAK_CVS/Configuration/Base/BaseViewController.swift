@@ -5,14 +5,14 @@ import class RxSwift.DisposeBag
 class BaseViewController: UIViewController {
 
   /// A dispose bag. 각 ViewController에 종속적이다.
-  final let disposeBag = DisposeBag()
+  final var disposeBag = DisposeBag()
 
   override func viewDidLoad() {
     super.viewDidLoad()
     setupLayouts()
     setupConstraints()
     setupStyles()
-    bind()
+    bind() // deprecated soon
   }
 
   /// UI 프로퍼티를 view에 할당합니다.
@@ -64,5 +64,6 @@ class BaseViewController: UIViewController {
   ///   // codes..
   /// }
   /// ```
+  @available(*, deprecated, renamed: "bind(viewModel:)")
   func bind() { }
 }
