@@ -6,6 +6,9 @@ class BaseViewController: UIViewController {
 
   /// A dispose bag. 각 ViewController에 종속적이다.
   final let disposeBag = DisposeBag()
+  
+  /// A coordinator used to navigate`ViewControllers`
+  weak var coordinator: Coordinator?
 
   override func viewDidLoad() {
     super.viewDidLoad()
