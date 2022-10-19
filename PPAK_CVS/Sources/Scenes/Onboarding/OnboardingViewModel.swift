@@ -51,14 +51,12 @@ final class OnboardingViewModel {
 
     // 다음 버튼 이벤트(1) -> 마지막 페이지일 때 홈 화면으로 이동
     self.input.nextButtonEvent
-      .debug()
       .filter { self.currentPage == 2 }
       .bind(to: self.output.navigateToHomeVC)
       .disposed(by: disposeBag)
 
     // 다음 버튼 이벤트(2) -> 페이지 1씩 증가
     self.input.nextButtonEvent
-      .debug()
       .filter { self.currentPage < 2 }
       .bind { [weak self] in
         guard let self = self else { return }
