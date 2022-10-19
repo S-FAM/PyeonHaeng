@@ -10,6 +10,7 @@ import UIKit
 final class AppCoordinator: BaseCoordinator {
 
   override func start() {
+    self.navigationController.delegate = self
 
     // == first launch check ==
     let coordinator: Coordinator
