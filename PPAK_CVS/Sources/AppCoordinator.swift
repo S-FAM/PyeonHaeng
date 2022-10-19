@@ -27,3 +27,23 @@ final class AppCoordinator: BaseCoordinator {
     start()
   }
 }
+
+// MARK: - Delegates
+
+extension AppCoordinator: UINavigationControllerDelegate {
+
+  func navigationController(
+    _ navigationController: UINavigationController,
+    didShow viewController: UIViewController,
+    animated: Bool
+  ) {
+    guard let fromVC = navigationController.transitionCoordinator?.viewController(forKey: .from) else { return }
+
+    if navigationController.viewControllers.contains(fromVC) { return }
+
+    if let viewController = fromVC as? BaseViewController,
+       let coordinator = viewController.coordinator {
+      finish(coordinator: coordinator)
+    }
+  }
+}
