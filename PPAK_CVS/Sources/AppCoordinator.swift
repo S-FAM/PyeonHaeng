@@ -25,7 +25,7 @@ final class AppCoordinator: BaseCoordinator {
 
   func switchToHome(coordinator: OnboardingCoordinator) {
     finish(coordinator: coordinator)
-    start()
+    start(coordinator: HomeCoordinator(navigationController: self.navigationController))
   }
 }
 
