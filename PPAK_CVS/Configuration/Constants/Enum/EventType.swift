@@ -13,15 +13,15 @@ enum EventType {
   
   case onePlusOne
   case twoPlusOne
-  case allEnText
-  case allKrText
+  case allSelectEn
+  case allSelectKr
   
   var eventTitle: String {
     switch self {
     case .onePlusOne: return "1 + 1"
     case .twoPlusOne: return "2 + 1"
-    case .allEn: return "All"
-    case .allKr: return "전체"
+    case .allSelectEn: return "All"
+    case .allSelectKr: return "전체"
     }
   }
   
