@@ -10,6 +10,7 @@ import UIKit
 final class AppCoordinator: BaseCoordinator {
 
   override func start() {
+    self.navigationController.delegate = self
 
     // == first launch check ==
     let coordinator: Coordinator
@@ -19,11 +20,33 @@ final class AppCoordinator: BaseCoordinator {
       coordinator = OnboardingCoordinator(navigationController: self.navigationController)
     }
 
-    start(coordinator: coordinator)
+    start(childCoordinator: coordinator)
   }
 
   func switchToHome(coordinator: OnboardingCoordinator) {
-    finish(coordinator: coordinator)
-    start()
+    finish(childCoordinator: coordinator)
+    start(childCoordinator: HomeCoordinator(navigationController: self.navigationController))
+  }
+}
+
+// MARK: - Delegates
+
+extension AppCoordinator: UINavigationControllerDelegate {
+
+  func navigationController(
+    _ navigationController: UINavigationController,
+    didShow viewController: UIViewController,
+    animated: Bool
+  ) {
+    guard let fromVC = navigationController.transitionCoordinator?.viewController(forKey: .from) as? BaseViewController,
+          let coordinator = fromVC.coordinator
+    else { return }
+
+    if navigationController.viewControllers.contains(fromVC) { return }
+
+    // Coordinators must have their own parents except for the `AppCoordinator`.
+    assert(coordinator.parentCoordinator != nil)
+
+    coordinator.parentCoordinator?.finish(childCoordinator: coordinator)
   }
 }
