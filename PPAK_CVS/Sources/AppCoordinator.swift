@@ -38,13 +38,16 @@ extension AppCoordinator: UINavigationControllerDelegate {
     didShow viewController: UIViewController,
     animated: Bool
   ) {
-    guard let fromVC = navigationController.transitionCoordinator?.viewController(forKey: .from) else { return }
+
+    guard let fromVC = navigationController.transitionCoordinator?.viewController(forKey: .from) as? BaseViewController,
+          let coordinator = fromVC.coordinator
+    else { return }
 
     if navigationController.viewControllers.contains(fromVC) { return }
 
-    if let viewController = fromVC as? BaseViewController,
-       let coordinator = viewController.coordinator {
-      finish(coordinator: coordinator)
-    }
+    // Coordinators must have their own parents except for the `AppCoordinator`.
+    assert(coordinator.parentCoordinator != nil)
+
+    coordinator.parentCoordinator?.finish(coordinator: coordinator)
   }
 }
