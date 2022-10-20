@@ -9,6 +9,7 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   var window: UIWindow?
+  var coordinator: AppCoordinator?
 
   func scene(
     _ scene: UIScene,
@@ -20,17 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     self.window = window
 
     let navVC = UINavigationController()
-    var coordinator: Coordinator
-
-    /// 처음 들어왔으면 false, 아니면 true
-    let isAlreadyCome = FTUXStorage().isAlreadyCome()
-    if isAlreadyCome {
-      coordinator = HomeCoordinator(navigationController: navVC)
-    } else {
-      coordinator = OnboardingCoordinator(navigationController: navVC)
-    }
-
-    coordinator.start()
+    self.coordinator = AppCoordinator(navigationController: navVC)
+    self.coordinator?.start()
 
     window.rootViewController = navVC
     window.makeKeyAndVisible()
