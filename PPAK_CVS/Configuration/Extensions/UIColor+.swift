@@ -20,8 +20,8 @@ extension UIColor {
 }
 
 extension UIColor {
-  static func colorFromHex(hex: String) -> UIColor {
-    var cString: String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+  static func convertFromHex(_ hexValue: String) -> UIColor {
+    var cString: String = hexValue.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
     
     if cString.hasPrefix("#") {
       cString.remove(at: cString.startIndex)
@@ -46,16 +46,16 @@ extension UIColor {
 // MARK: - Store's SymbolColor
 extension UIColor {
   
-  static let cuBackGroundColor = UIColor.colorFromHex(hex: "#751485")
-  static let cuFontColor = UIColor.colorFromHex(hex: "#9DC92A")
-  static let gsBackGroundColor = UIColor.colorFromHex(hex: "#63514D")
-  static let gsFontColor = UIColor.colorFromHex(hex: "#00D7F1")
-  static let seBackGroundColor = UIColor.colorFromHex(hex: "#FF8329")
-  static let seFontColor = UIColor.colorFromHex(hex: "#005B45")
-  static let msBackGroundColor = UIColor.colorFromHex(hex: "#003893")
-  static let msFontColor = UIColor.colorFromHex(hex: "#F0F0F0")
-  static let emBackGroundColor = UIColor.colorFromHex(hex: "#56555B")
-  static let emFontColor = UIColor.colorFromHex(hex: "#FFB41D")
-  static let HomeBackGroundColor = UIColor.colorFromHex(hex: "#030026")
+  static let cuBackGroundColor = UIColor.convertFromHex("#751485")
+  static let cuFontColor = UIColor.convertFromHex("#9DC92A")
+  static let gsBackGroundColor = UIColor.convertFromHex("#63514D")
+  static let gsFontColor = UIColor.convertFromHex("#00D7F1")
+  static let seBackGroundColor = UIColor.convertFromHex("#FF8329")
+  static let seFontColor = UIColor.convertFromHex("#005B45")
+  static let msBackGroundColor = UIColor.convertFromHex("#003893")
+  static let msFontColor = UIColor.convertFromHex("#F0F0F0")
+  static let emBackGroundColor = UIColor.convertFromHex("#56555B")
+  static let emFontColor = UIColor.convertFromHex("#FFB41D")
+  static let HomeBackGroundColor = UIColor.convertFromHex("#030026")
   
 }
