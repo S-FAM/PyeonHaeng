@@ -181,7 +181,6 @@
 			children = (
 				BAA0F53428FD353500B632AC /* AppCoordinator.swift */,
 				E505D9EA28CF5B4A00EEFC65 /* AppDelegate.swift */,
-				BAA0F53028FCF88300B632AC /* BaseCoordinator.swift */,
 				E505D9EC28CF5B4A00EEFC65 /* SceneDelegate.swift */,
 				A5932EA828E047B400457AD3 /* Models */,
 				E584487C28D55B9000E25265 /* Scenes */,
@@ -200,6 +199,7 @@
 		BA27023528CF5F180039D9EA /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				BAA0F53028FCF88300B632AC /* BaseCoordinator.swift */,
 				BAA0580F28D36F75000CDD11 /* BaseViewController.swift */,
 				BA27023028CF5DCD0039D9EA /* Coordinator.swift */,
 				E505D9F528CF5B4B00EEFC65 /* LaunchScreen.storyboard */,
