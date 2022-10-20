@@ -7,15 +7,15 @@ protocol Coordinator: AnyObject {
   var parentCoordinator: Coordinator? { get set }
 
   func start()
-  func start(coordinator: Coordinator)
+  func start(childCoordinator: Coordinator)
   func finish(childCoordinator: Coordinator)
 }
 
 extension Coordinator {
-  func start(coordinator: Coordinator) {
-    self.childCoordinators.append(coordinator)
-    coordinator.parentCoordinator = self
-    coordinator.start()
+  func start(childCoordinator: Coordinator) {
+    self.childCoordinators.append(childCoordinator)
+    childCoordinator.parentCoordinator = self
+    childCoordinator.start()
   }
 
   func finish(childCoordinator: Coordinator) {
