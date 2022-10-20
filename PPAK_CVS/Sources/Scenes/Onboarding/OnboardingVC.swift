@@ -179,6 +179,7 @@ final class OnboardingViewController: BaseViewController {
         self.setCurrentPageUI()
         self.startLottieAnimation()
       }
+      .disposed(by: disposeBag)
   }
 }
 
