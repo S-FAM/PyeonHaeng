@@ -24,7 +24,7 @@ final class AppCoordinator: BaseCoordinator {
   }
 
   func switchToHome(coordinator: OnboardingCoordinator) {
-    finish(coordinator: coordinator)
+    finish(childCoordinator: coordinator)
     start(coordinator: HomeCoordinator(navigationController: self.navigationController))
   }
 }
@@ -38,7 +38,6 @@ extension AppCoordinator: UINavigationControllerDelegate {
     didShow viewController: UIViewController,
     animated: Bool
   ) {
-
     guard let fromVC = navigationController.transitionCoordinator?.viewController(forKey: .from) as? BaseViewController,
           let coordinator = fromVC.coordinator
     else { return }
@@ -48,6 +47,6 @@ extension AppCoordinator: UINavigationControllerDelegate {
     // Coordinators must have their own parents except for the `AppCoordinator`.
     assert(coordinator.parentCoordinator != nil)
 
-    coordinator.parentCoordinator?.finish(coordinator: coordinator)
+    coordinator.parentCoordinator?.finish(childCoordinator: coordinator)
   }
 }

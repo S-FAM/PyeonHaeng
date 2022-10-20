@@ -8,7 +8,7 @@ protocol Coordinator: AnyObject {
 
   func start()
   func start(coordinator: Coordinator)
-  func finish(coordinator: Coordinator)
+  func finish(childCoordinator: Coordinator)
 }
 
 extension Coordinator {
@@ -18,7 +18,7 @@ extension Coordinator {
     coordinator.start()
   }
 
-  func finish(coordinator: Coordinator) {
-    childCoordinators = childCoordinators.filter { $0 !== coordinator }
+  func finish(childCoordinator: Coordinator) {
+    childCoordinators = childCoordinators.filter { $0 !== childCoordinator }
   }
 }
