@@ -1,81 +1,67 @@
-//
-//  HomeViewModel.swift
-//  PPAK_CVS
-//
-//  Created by 김응철 on 2022/09/27.
-//
-
 import RxSwift
 import RxCocoa
 
-final class HomeViewModel {
-  struct Input {
-    let ignoreReusableView = BehaviorRelay<Bool>(value: false)
-
-    let currentCVSButtonTapped = PublishSubject<Void>()
-    let filterButtonTapped = PublishSubject<Void>()
-    let touchBackgroundEvent = PublishSubject<Void>()
-    let pageControlIndexEvent = PublishSubject<Int>()
-    let dropdownCVSButtonTapped = PublishSubject<CVSDropdownCase>()
-    let dropdownFilterButtonTapped = PublishSubject<FilterDropdownCase>()
+final class HomeViewModel: ViewModel {
+  
+  enum Action {
+    case currentCvsButtonTapped
+    case filterButtonTapped
+    case backgroundTapped
+    case pageControlIndexEvent(Int)
+    case cvsButtonTapped_InDropdown(CVSDropdownCase)
+    case filterButtonTapped_InDropdown(FilterDropdownCase)
   }
-
-  struct Output {
-    let cvsDropdownState = BehaviorRelay<Bool>(value: false)
-    let filterDropdownState = BehaviorRelay<Bool>(value: false)
-    let cvsButtonImage = PublishSubject<String>()
+  
+  enum Mutation {
+    case toggleCvsDropdown
+    case toggleFilterDropdown
+    case onChangedCvsImage(CVSDropdownCase)
+    case onChangedFilter(FilterDropdownCase)
+    case onChnagedPageIndex(Int)
   }
-
-  let input = Input()
-  let output = Output()
-  let disposeBag = DisposeBag()
-
-  init() {
-    bind()
+  
+  struct State {
+    var isVisibleCvsDropdown: Bool = false
+    var isVisibleFilterDropdown: Bool = false
+    var currentCvsImage: CVSDropdownCase = .all
+    var currentFilter: FilterDropdownCase = .ascending
+    var pageIndex: Int = 0
   }
-
-  func bind() {
-
-    // 현재 편의점 로고 버튼 이벤트 -> 드롭다운 토글
-    input.currentCVSButtonTapped
-      .map { [unowned self] in
-        !self.output.cvsDropdownState.value
-      }
-      .bind(to: output.cvsDropdownState)
-      .disposed(by: disposeBag)
-
-    // 필터 버튼 이벤트 -> 드롭다운 토글
-    input.filterButtonTapped
-      .map { [unowned self] in
-        !self.output.filterDropdownState.value
-      }
-      .bind(to: output.filterDropdownState)
-      .disposed(by: disposeBag)
-
-    // 드롭다운 편의점 로고 버튼 이벤트 -> 드롭다운 숨기기
-    input.dropdownCVSButtonTapped
-      .map { _ in false }
-      .bind(to: output.cvsDropdownState)
-      .disposed(by: disposeBag)
-
-    // 드롭다운 필터 버튼 이벤트 -> 드롭다운 숨기기
-    input.dropdownFilterButtonTapped
-      .map { _ in false }
-      .bind(to: output.filterDropdownState)
-      .disposed(by: disposeBag)
-
-    // 빈 공간 터치 -> 드롭다운 모두 숨기기
-    input.touchBackgroundEvent
-      .bind(onNext: { [unowned self] in
-        self.output.cvsDropdownState.accept(false)
-        self.output.filterDropdownState.accept(false)
-      })
-      .disposed(by: disposeBag)
-
-    // 편의점 드롭다운 요소 클릭 -> 현재 편의점 버튼 이미지 변경
-    input.dropdownCVSButtonTapped
-      .map { $0.imageName }
-      .bind(to: output.cvsButtonImage)
-      .disposed(by: disposeBag)
+  
+  var initialState = State()
+  
+  func mutate(action: Action) -> Observable<Mutation> {
+    switch action {
+    case .currentCvsButtonTapped:
+      return Observable.just(.toggleCvsDropdown)
+    case .filterButtonTapped:
+      return Observable.just(.toggleFilterDropdown)
+    case .backgroundTapped:
+      return Observable.of(.toggleFilterDropdown, .toggleCvsDropdown)
+    case .pageControlIndexEvent(let index):
+      return Observable.just(.onChnagedPageIndex(index))
+    case .cvsButtonTapped_InDropdown(let cvsDropdownCase):
+      return Observable.just(.onChangedCvsImage(cvsDropdownCase))
+    case .filterButtonTapped_InDropdown(let filterDropdownCase):
+      return Observable.just(.onChangedFilter(filterDropdownCase))
+    }
+  }
+  
+  func reduce(state: State, mutation: Mutation) -> State {
+    var nextState = state
+    
+    switch mutation {
+    case .toggleCvsDropdown:
+      nextState.isVisibleCvsDropdown.toggle()
+    case .toggleFilterDropdown:
+      nextState.isVisibleFilterDropdown.toggle()
+    case .onChangedCvsImage(let cvsDropdownCase):
+      nextState.currentCvsImage = cvsDropdownCase
+    case .onChangedFilter(let filterDropdownCase):
+      nextState.currentFilter = filterDropdownCase
+    case .onChnagedPageIndex(let index):
+      nextState.pageIndex = index
+    }
+    return nextState
   }
 }
