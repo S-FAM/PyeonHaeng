@@ -80,9 +80,9 @@ final class HomeViewController: BaseViewController, Viewable {
   }
 
   // MARK: - Event
-  
+
   func bind(viewModel: HomeViewModel) {}
-  
+
   private func bindHeader() {
     guard let viewModel = viewModel else { return }
 
@@ -124,7 +124,7 @@ final class HomeViewController: BaseViewController, Viewable {
     view.rx.tapGesture(configuration: { _, delegate in
       delegate.simultaneousRecognitionPolicy = .never
     })
-      .map { _ in return HomeViewModel.Action.backgroundTapped }
+      .map { _ in HomeViewModel.Action.backgroundTapped }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
@@ -135,9 +135,9 @@ final class HomeViewController: BaseViewController, Viewable {
       .map { $0.isVisibleCVSDropdown }
       .bind(onNext: { [unowned self] isVisible in
         if isVisible {
-          CVSDropdownView.showDropdown(self.cvsDropdownView)
+          cvsDropdownView.willAppearDropdown()
         } else {
-          CVSDropdownView.hideDropdown(self.cvsDropdownView)
+          cvsDropdownView.willDisappearDropdown()
         }
       })
       .disposed(by: disposeBag)
@@ -147,9 +147,9 @@ final class HomeViewController: BaseViewController, Viewable {
       .map { $0.isVisibleFilterDropdown }
       .bind(onNext: { [unowned self] isVisible in
         if isVisible {
-          FilterDropdownView.showDropdown(self.filterDropdownView)
+          filterDropdownView.willAppearDropdown()
         } else {
-          FilterDropdownView.hideDropdown(self.filterDropdownView)
+          filterDropdownView.willDisappearDropdown()
         }
       })
       .disposed(by: disposeBag)
