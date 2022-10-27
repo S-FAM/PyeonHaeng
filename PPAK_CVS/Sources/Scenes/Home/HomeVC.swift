@@ -80,9 +80,9 @@ final class HomeViewController: BaseViewController, Viewable {
   }
 
   // MARK: - Event
-
+  
   func bind(viewModel: HomeViewModel) {}
-
+  
   private func bindHeader() {
     guard let viewModel = viewModel else { return }
 
@@ -90,7 +90,7 @@ final class HomeViewController: BaseViewController, Viewable {
 
     // 현재 편의점 로고 버튼 클릭
     header.cvsButton.rx.tap
-      .map { HomeViewModel.Action.currentCvsButtonTapped }
+      .map { HomeViewModel.Action.currentCVSButtonTapped }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
@@ -132,7 +132,7 @@ final class HomeViewController: BaseViewController, Viewable {
 
     // 편의점 로고 드롭다운 애니메이션 동작
     viewModel.state
-      .map { $0.isVisibleCvsDropdown }
+      .map { $0.isVisibleCVSDropdown }
       .bind(onNext: { [unowned self] isVisible in
         if isVisible {
           CVSDropdownView.showDropdown(self.cvsDropdownView)
@@ -156,7 +156,7 @@ final class HomeViewController: BaseViewController, Viewable {
 
     // 현재 선택된 편의점 로고 이미지 변경
     viewModel.state
-      .map { $0.currentCvsImage.imageName }
+      .map { $0.currentCVSImage.imageName }
       .bind(onNext: { [unowned self] imageName in
         self.header.cvsButton.setImage(UIImage(named: imageName), for: .normal)
       })

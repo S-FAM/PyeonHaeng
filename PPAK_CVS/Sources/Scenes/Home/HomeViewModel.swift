@@ -4,7 +4,7 @@ import RxCocoa
 final class HomeViewModel: ViewModel {
 
   enum Action {
-    case currentCvsButtonTapped
+    case currentCVSButtonTapped
     case filterButtonTapped
     case backgroundTapped
     case pageControlIndexEvent(Int)
@@ -16,15 +16,15 @@ final class HomeViewModel: ViewModel {
     case toggleCvsDropdown
     case toggleFilterDropdown
     case hideDropdown
-    case onChangedCvsImage(CVSDropdownCase)
+    case onChangedCVSImage(CVSDropdownCase)
     case onChangedFilter(FilterDropdownCase)
     case onChnagedPageIndex(Int)
   }
 
   struct State {
-    var isVisibleCvsDropdown: Bool = false
+    var isVisibleCVSDropdown: Bool = false
     var isVisibleFilterDropdown: Bool = false
-    var currentCvsImage: CVSDropdownCase = .all
+    var currentCVSImage: CVSDropdownCase = .all
     var currentFilter: FilterDropdownCase = .ascending
     var pageIndex: Int = 0
   }
@@ -33,7 +33,7 @@ final class HomeViewModel: ViewModel {
 
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
-    case .currentCvsButtonTapped:
+    case .currentCVSButtonTapped:
       return Observable.just(.toggleCvsDropdown)
     case .filterButtonTapped:
       return Observable.just(.toggleFilterDropdown)
@@ -42,7 +42,7 @@ final class HomeViewModel: ViewModel {
     case .pageControlIndexEvent(let index):
       return Observable.just(.onChnagedPageIndex(index))
     case .cvsButtonTappedInDropdown(let cvsDropdownCase):
-      return Observable.just(.onChangedCvsImage(cvsDropdownCase))
+      return Observable.just(.onChangedCVSImage(cvsDropdownCase))
     case .filterButtonTappedInDropdown(let filterDropdownCase):
       return Observable.just(.onChangedFilter(filterDropdownCase))
     }
@@ -53,14 +53,14 @@ final class HomeViewModel: ViewModel {
 
     switch mutation {
     case .toggleCvsDropdown:
-      nextState.isVisibleCvsDropdown.toggle()
+      nextState.isVisibleCVSDropdown.toggle()
     case .toggleFilterDropdown:
       nextState.isVisibleFilterDropdown.toggle()
     case .hideDropdown:
       nextState.isVisibleFilterDropdown = false
-      nextState.isVisibleCvsDropdown = false
-    case .onChangedCvsImage(let cvsDropdownCase):
-      nextState.currentCvsImage = cvsDropdownCase
+      nextState.isVisibleCVSDropdown = false
+    case .onChangedCVSImage(let cvsDropdownCase):
+      nextState.currentCVSImage = cvsDropdownCase
     case .onChangedFilter(let filterDropdownCase):
       nextState.currentFilter = filterDropdownCase
     case .onChnagedPageIndex(let index):
