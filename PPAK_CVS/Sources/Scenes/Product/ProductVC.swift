@@ -33,6 +33,14 @@ final class ProductViewController: BaseViewController {
     $0.dataSource = self
     $0.backgroundColor = .systemPurple
   }
+
+  private var collectionHeaderView: ProductCollectionHeaderView? {
+    willSet {
+      guard let newValue = newValue else { return }
+      newValue.viewModel = ProductHeaderViewViewModel()
+    }
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
   }
@@ -94,6 +102,10 @@ extension ProductViewController: UICollectionViewDataSource {
           ) as? ProductCollectionHeaderView
     else {
       fatalError()
+    }
+
+    if self.collectionHeaderView == nil {
+      self.collectionHeaderView = headerView
     }
 
     return headerView
