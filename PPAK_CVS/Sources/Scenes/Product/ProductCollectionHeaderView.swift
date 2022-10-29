@@ -12,8 +12,10 @@ import RxCocoa
 import SnapKit
 import Then
 
-final class ProductCollectionHeaderView: UICollectionReusableView {
+final class ProductCollectionHeaderView: UICollectionReusableView, Viewable {
   static let id = "ProductCollectionHeaderView"
+
+  var disposeBag = DisposeBag()
 
   private let shareButton = UIButton().then {
     var configuration = UIButton.Configuration.plain()
@@ -125,6 +127,14 @@ extension ProductCollectionHeaderView {
 
   private func setupStyles() {
     backgroundColor = .systemBackground
+  }
+
+  func bind(viewModel: ProductHeaderViewViewModel) {
+    // == Action ==
+    shareButton.rx.tap
+      .map { ViewModel.Action.share }
+      .bind(to: viewModel.action)
+      .disposed(by: disposeBag)
   }
 }
 
