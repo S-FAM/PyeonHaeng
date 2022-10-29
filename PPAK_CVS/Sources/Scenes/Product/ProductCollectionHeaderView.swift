@@ -7,6 +7,11 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+import SnapKit
+import Then
+
 final class ProductCollectionHeaderView: UICollectionReusableView {
   static let id = "ProductCollectionHeaderView"
 
