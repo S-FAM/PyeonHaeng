@@ -77,12 +77,20 @@ final class ProductViewController: BaseViewController {
     guard let headerViewModel = headerView.viewModel else { return }
 
     headerViewModel.state
-      .map { $0.isShareButtonTapped }
-      .filter { $0 == true }
-      .subscribe(onNext: { [weak self] _ in
-        
+      .map { $0.shareImage }
+      .distinctUntilChanged()
+      .compactMap { $0 }
+      .debug()
+      .subscribe(onNext: { [weak self] image in
+        self?.presentShareSheet(items: [image])
       })
       .disposed(by: disposeBag)
+  }
+
+  /// 공유버튼을 눌렀을 때 실행되는 메서드입니다.
+  private func presentShareSheet(items: [Any]) {
+    let shareSheetVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
+    self.present(shareSheetVC, animated: true)
   }
 }
 
