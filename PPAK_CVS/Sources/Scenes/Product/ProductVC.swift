@@ -38,6 +38,7 @@ final class ProductViewController: BaseViewController {
     willSet {
       guard let newValue = newValue else { return }
       newValue.viewModel = ProductHeaderViewViewModel()
+      bind(newValue)
     }
   }
 
@@ -70,6 +71,18 @@ final class ProductViewController: BaseViewController {
     collectionView.snp.makeConstraints { make in
       make.edges.equalTo(view.safeAreaLayoutGuide)
     }
+  }
+
+  func bind(_ headerView: ProductCollectionHeaderView) {
+    guard let headerViewModel = headerView.viewModel else { return }
+
+    headerViewModel.state
+      .map { $0.isShareButtonTapped }
+      .filter { $0 == true }
+      .subscribe(onNext: { [weak self] _ in
+        
+      })
+      .disposed(by: disposeBag)
   }
 }
 
