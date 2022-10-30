@@ -15,7 +15,8 @@ final class OnboardingCoordinator: BaseCoordinator {
 
   override func start() {
     let onboardingViewModel = OnboardingViewModel()
-    let onboardingVC = OnboardingViewController(viewModel: onboardingViewModel)
+    let onboardingVC = OnboardingViewController()
+    onboardingVC.viewModel = onboardingViewModel
     self.navigationController.setViewControllers([onboardingVC], animated: true)
 
     self.bind(onboardingViewModel)
@@ -24,12 +25,16 @@ final class OnboardingCoordinator: BaseCoordinator {
   private func bind(_ viewModel: OnboardingViewModel) {
 
     // 홈 화면으로 이동하기
-    viewModel.output.navigateToHomeVC
-      .subscribe { [weak self] _ in
+    viewModel.state.map { $0.isPushHomeVC }
+      .distinctUntilChanged()
+      .bind { [weak self] isPush in
         guard let self = self,
               let parentCoordinator = self.parentCoordinator as? AppCoordinator else { return }
-        FTUXStorage().saveFTUXStatus()
-        parentCoordinator.switchToHome(coordinator: self)
+
+        if isPush {
+          FTUXStorage().saveFTUXStatus()
+          parentCoordinator.switchToHome(coordinator: self)
+        }
       }
       .disposed(by: disposeBag)
   }
