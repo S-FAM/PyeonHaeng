@@ -13,7 +13,7 @@ final class HomeViewModel: ViewModel {
   }
 
   enum Mutation {
-    case toggleCvsDropdown
+    case toggleCVSDropdown
     case toggleFilterDropdown
     case hideDropdown
     case onChangedCVSImage(CVSDropdownCase)
@@ -34,7 +34,7 @@ final class HomeViewModel: ViewModel {
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
     case .currentCVSButtonTapped:
-      return Observable.just(.toggleCvsDropdown)
+      return Observable.just(.toggleCVSDropdown)
     case .filterButtonTapped:
       return Observable.just(.toggleFilterDropdown)
     case .backgroundTapped:
@@ -52,7 +52,7 @@ final class HomeViewModel: ViewModel {
     var nextState = state
 
     switch mutation {
-    case .toggleCvsDropdown:
+    case .toggleCVSDropdown:
       nextState.isVisibleCVSDropdown.toggle()
     case .toggleFilterDropdown:
       nextState.isVisibleFilterDropdown.toggle()
