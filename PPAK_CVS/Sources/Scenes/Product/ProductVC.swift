@@ -80,7 +80,6 @@ final class ProductViewController: BaseViewController {
       .map { $0.shareImage }
       .distinctUntilChanged()
       .compactMap { $0 }
-      .debug()
       .subscribe(onNext: { [weak self] image in
         self?.presentShareSheet(items: [image])
       })
