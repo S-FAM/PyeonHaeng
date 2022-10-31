@@ -7,6 +7,8 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
 import SnapKit
 import Then
 
@@ -31,6 +33,15 @@ final class ProductViewController: BaseViewController {
     $0.dataSource = self
     $0.backgroundColor = .systemPurple
   }
+
+  private var collectionHeaderView: ProductCollectionHeaderView? {
+    willSet {
+      guard let newValue = newValue else { return }
+      newValue.viewModel = ProductHeaderViewViewModel()
+      bind(newValue)
+    }
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
   }
@@ -60,6 +71,25 @@ final class ProductViewController: BaseViewController {
     collectionView.snp.makeConstraints { make in
       make.edges.equalTo(view.safeAreaLayoutGuide)
     }
+  }
+
+  func bind(_ headerView: ProductCollectionHeaderView) {
+    guard let headerViewModel = headerView.viewModel else { return }
+
+    headerViewModel.state
+      .map { $0.shareImage }
+      .distinctUntilChanged()
+      .compactMap { $0 }
+      .subscribe(onNext: { [weak self] image in
+        self?.presentShareSheet(items: [image])
+      })
+      .disposed(by: disposeBag)
+  }
+
+  /// 공유버튼을 눌렀을 때 실행되는 메서드입니다.
+  private func presentShareSheet(items: [Any]) {
+    let shareSheetVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
+    self.present(shareSheetVC, animated: true)
   }
 }
 
@@ -92,6 +122,10 @@ extension ProductViewController: UICollectionViewDataSource {
           ) as? ProductCollectionHeaderView
     else {
       fatalError()
+    }
+
+    if self.collectionHeaderView == nil {
+      self.collectionHeaderView = headerView
     }
 
     return headerView

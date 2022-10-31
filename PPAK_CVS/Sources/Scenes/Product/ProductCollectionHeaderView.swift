@@ -7,8 +7,15 @@
 
 import UIKit
 
-final class ProductCollectionHeaderView: UICollectionReusableView {
+import RxSwift
+import RxCocoa
+import SnapKit
+import Then
+
+final class ProductCollectionHeaderView: UICollectionReusableView, Viewable {
   static let id = "ProductCollectionHeaderView"
+
+  var disposeBag = DisposeBag()
 
   private let shareButton = UIButton().then {
     var configuration = UIButton.Configuration.plain()
@@ -120,6 +127,20 @@ extension ProductCollectionHeaderView {
 
   private func setupStyles() {
     backgroundColor = .systemBackground
+  }
+
+  func bind(viewModel: ProductHeaderViewViewModel) {
+    // == Action ==
+    shareButton.rx.tap
+      .map { [unowned self] in
+        let renderer = UIGraphicsImageRenderer(bounds: self.wholeStackView.bounds)
+        return renderer.image { rendererContext in
+          self.wholeStackView.layer.render(in: rendererContext.cgContext)
+        }
+      }
+      .map { ViewModel.Action.share($0) }
+      .bind(to: viewModel.action)
+      .disposed(by: disposeBag)
   }
 }
 
