@@ -9,14 +9,13 @@ import UIKit
 
 import Lottie
 import RxCocoa
- import RxGesture
+import RxGesture
 import SnapKit
 import Then
 
-final class OnboardingViewController: BaseViewController {
+final class OnboardingViewController: BaseViewController, Viewable {
 
   // MARK: - Properties
-  var viewModel: OnboardingViewModel
 
   private lazy var animationView = AnimationView()
 
@@ -49,26 +48,12 @@ final class OnboardingViewController: BaseViewController {
 
   // MARK: - Life Cycle
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
-  }
-
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-
     self.startLottieAnimation()
   }
 
   // MARK: - Setup
-
-  init(viewModel: OnboardingViewModel) {
-    self.viewModel = viewModel
-    super.init(nibName: nil, bundle: nil)
-  }
-
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
 
   override func setupLayouts() {
     super.setupLayouts()
@@ -132,52 +117,49 @@ final class OnboardingViewController: BaseViewController {
 
   override func setupStyles() {
     super.setupStyles()
-
     view.backgroundColor = Color.viewBgColor
   }
 
-  override func bind() {
+  func bind(viewModel: OnboardingViewModel) {
     self.setOnboardingData()
 
-    // --- INPUT---
+    // --- Action ---
 
     // 건너뛰기 버튼 클릭
     self.skipButton.rx.tap
-      .bind(to: self.viewModel.input.skipButtonEvent)
-      .disposed(by: self.disposeBag)
+      .map { OnboardingViewModel.Action.skip }
+      .bind(to: viewModel.action)
+      .disposed(by: disposeBag)
 
     // 다음 버튼 클릭
     self.nextButton.rx.tap
-      .bind(to: viewModel.input.nextButtonEvent)
+      .map { OnboardingViewModel.Action.next }
+      .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
-    // 스와이프 제스처
-    self.view.rx
-      .swipeGesture([.left, .right])
+    // 왼쪽 스와이프 제스처
+    self.view.rx.swipeGesture(.left)
       .when(.recognized)
-      .subscribe(onNext: { [weak self] gesture in
-        guard let self = self else { return }
-
-        switch gesture.direction {
-        case .left:
-          self.viewModel.input.swipeGestureDetector.onNext(.left)
-        case .right:
-          self.viewModel.input.swipeGestureDetector.onNext(.right)
-        default:
-          break
-        }
-      })
+      .map { _ in OnboardingViewModel.Action.leftSwipe }
+      .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
-    // --- OUTPUT ---
+    // 오른쪽 스와이프 제스처
+    self.view.rx.swipeGesture(.right)
+      .when(.recognized)
+      .map { _ in OnboardingViewModel.Action.rightSwipe }
+      .bind(to: viewModel.action)
+      .disposed(by: disposeBag)
 
-    // currentPage가 변할 때 마다 적용
-    self.viewModel.output.currentPage
+    // --- State ---
+
+    // 현재 페이지가 변할 때
+    viewModel.state.map { $0.currentPage }
+      .distinctUntilChanged()
       .bind { [weak self] currentPage in
-        guard let self = self else { return }
-        self.pageControl.currentPage = currentPage
-        self.setCurrentPageUI()
-        self.startLottieAnimation()
+        self?.pageControl.currentPage = currentPage
+        self?.setCurrentPageUI()
+        self?.startLottieAnimation()
       }
       .disposed(by: disposeBag)
   }
