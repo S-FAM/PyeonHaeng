@@ -13,7 +13,7 @@ import RxGesture
 import SnapKit
 import Then
 
-final class HomeViewController: BaseViewController {
+final class HomeViewController: BaseViewController, Viewable {
 
   // MARK: - Properties
 
@@ -37,8 +37,6 @@ final class HomeViewController: BaseViewController {
   private lazy var cvsDropdownView = CVSDropdownView()
   private lazy var filterDropdownView = FilterDropdownView()
   var header: HomeCollectionHeaderView!
-
-  let viewModel = HomeViewModel()
 
   // MARK: - Setup
 
@@ -83,82 +81,83 @@ final class HomeViewController: BaseViewController {
 
   // MARK: - Event
 
+  func bind(viewModel: HomeViewModel) {}
+
   private func bindHeader() {
+    guard let viewModel = viewModel else { return }
 
-    // -----------------------------------
-    // ---------------INPUT---------------
-    // -----------------------------------
-
-    // 콜렉션뷰 헤더 최초 생성
-    viewModel.input.ignoreReusableView.accept(true)
+    // MARK: - Input
 
     // 현재 편의점 로고 버튼 클릭
     header.cvsButton.rx.tap
-      .bind(to: viewModel.input.currentCVSButtonTapped)
+      .map { HomeViewModel.Action.currentCVSButtonTapped }
+      .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 필터 버튼 클릭
     header.filterButton.rx.tap
-      .bind(to: viewModel.input.filterButtonTapped)
+      .map { HomeViewModel.Action.filterButtonTapped }
+      .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 편의점 드롭다운 리스트 버튼 클릭
     cvsDropdownView.buttonEventSubject
-      .bind(to: viewModel.input.dropdownCVSButtonTapped)
+      .map { HomeViewModel.Action.cvsButtonTappedInDropdown($0) }
+      .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 필터 드롭다운 리스트 버튼 클릭
     filterDropdownView.buttonEventSubject
-      .bind(to: viewModel.input.dropdownFilterButtonTapped)
+      .map { HomeViewModel.Action.filterButtonTappedInDropdown($0) }
+      .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 페이지 컨트롤 인덱스 감지
     header.pageControl.pageIndexSubject
       .skip(1)
       .distinctUntilChanged()
-      .bind(to: viewModel.input.pageControlIndexEvent)
+      .map { HomeViewModel.Action.pageControlIndexEvent($0) }
+      .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 빈공간 터치 감지
     view.rx.tapGesture(configuration: { _, delegate in
       delegate.simultaneousRecognitionPolicy = .never
     })
-      .map { _ in Void() }
-      .bind(to: viewModel.input.touchBackgroundEvent)
+      .map { _ in HomeViewModel.Action.backgroundTapped }
+      .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
-    // -----------------------------------
-    // ---------------OUTPUT--------------
-    // -----------------------------------
+    // MARK: - State
 
     // 편의점 로고 드롭다운 애니메이션 동작
-    viewModel.output.cvsDropdownState
-      .bind(onNext: { [weak self] state in
-        guard let self = self else { return }
-        if state {
-          CVSDropdownView.showDropdown(self.cvsDropdownView)
+    viewModel.state
+      .map { $0.isVisibleCVSDropdown }
+      .bind(onNext: { [unowned self] isVisible in
+        if isVisible {
+          cvsDropdownView.willAppearDropdown()
         } else {
-          CVSDropdownView.hideDropdown(self.cvsDropdownView)
+          cvsDropdownView.willDisappearDropdown()
         }
       })
       .disposed(by: disposeBag)
 
     // 필터 드롭다운 애니메이션 동작
-    viewModel.output.filterDropdownState
-      .bind(onNext: { [weak self] state in
-        guard let self = self else { return }
-        if state {
-          FilterDropdownView.showDropdown(self.filterDropdownView)
+    viewModel.state
+      .map { $0.isVisibleFilterDropdown }
+      .bind(onNext: { [unowned self] isVisible in
+        if isVisible {
+          filterDropdownView.willAppearDropdown()
         } else {
-          FilterDropdownView.hideDropdown(self.filterDropdownView)
+          filterDropdownView.willDisappearDropdown()
         }
       })
       .disposed(by: disposeBag)
 
     // 현재 선택된 편의점 로고 이미지 변경
-    viewModel.output.cvsButtonImage
-      .bind(onNext: { [weak self] imageName in
-        guard let self = self else { return }
+    viewModel.state
+      .map { $0.currentCVSImage.imageName }
+      .bind(onNext: { [unowned self] imageName in
         self.header.cvsButton.setImage(UIImage(named: imageName), for: .normal)
       })
       .disposed(by: disposeBag)
@@ -178,7 +177,10 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     return cell
   }
 
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    numberOfItemsInSection section: Int
+  ) -> Int {
     return 10
   }
 
@@ -193,7 +195,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       for: indexPath
     ) as? HomeCollectionHeaderView else { return UICollectionReusableView() }
 
-    if viewModel.input.ignoreReusableView.value == false {
+    if self.header == nil {
       self.header = header
       bindHeader()
       setupDropdown()
