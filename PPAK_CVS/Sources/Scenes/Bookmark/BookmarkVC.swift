@@ -85,6 +85,13 @@ final class BookmarkViewController: BaseViewController, Viewable {
 
     // MARK: - Action
 
+    // 뒤로가기 버튼 클릭
+    header.backButton.rx.tap
+      .bind(onNext: { [unowned self] in
+        self.navigationController?.popViewController(animated: true)
+      })
+      .disposed(by: disposeBag)
+
     // 현재 편의점 로고 버튼 클릭
     header.cvsButton.rx.tap
       .map { BookmarkViewModel.Action.currentCVSButtonTapped }
@@ -102,13 +109,13 @@ final class BookmarkViewController: BaseViewController, Viewable {
       .map { BookmarkViewModel.Action.cvsButtonTappedInDropdown($0) }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
-    
+
     // 필터 드롭다운 리스트 버튼 클릭
     filterDropdownView.buttonEventSubject
       .map { BookmarkViewModel.Action.filterButtonTappedInDropdown($0) }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
-    
+
     // 페이지 컨트롤 인덱스 감지
     header.pageControl.pageIndexSubject
       .skip(1)
@@ -121,12 +128,12 @@ final class BookmarkViewController: BaseViewController, Viewable {
     view.rx.tapGesture(configuration: { _, delegate in
       delegate.simultaneousRecognitionPolicy = .never
     })
-      .map { _ in BookmarkViewModel.Action.backgroundTapped }
-      .bind(to: viewModel.action)
-      .disposed(by: disposeBag)
+    .map { _ in BookmarkViewModel.Action.backgroundTapped }
+    .bind(to: viewModel.action)
+    .disposed(by: disposeBag)
 
     // MARK: - State
-    
+
     // 편의점 로고 드롭다운 애니메이션 동작
     viewModel.state
       .map { $0.isVisibleCVSDropdown }

@@ -5,6 +5,7 @@ final class BookmarkViewModel: ViewModel {
   enum Action {
     case currentCVSButtonTapped
     case filterButtonTapped
+    case backButtonTapped
     case backgroundTapped
     case pageControlIndexEvent(Int)
     case cvsButtonTappedInDropdown(CVSDropdownCase)
@@ -14,6 +15,7 @@ final class BookmarkViewModel: ViewModel {
   enum Mutation {
     case toggleCVSDropdown
     case toggleFilterDropdown
+    case toggleShowHomeVC
     case hideDropdown
     case onChangedCVSImage(CVSDropdownCase)
     case onChangedFilter(FilterDropdownCase)
@@ -23,6 +25,7 @@ final class BookmarkViewModel: ViewModel {
   struct State {
     var isVisibleCVSDropdown: Bool = false
     var isVisibleFilterDropdown: Bool = false
+    var showHomeVC: Bool = false
     var currentCVSImage: CVSDropdownCase = .all
     var currentFilter: FilterDropdownCase = .ascending
     var pageIndex: Int = 0
@@ -38,6 +41,8 @@ final class BookmarkViewModel: ViewModel {
       return Observable.just(.toggleFilterDropdown)
     case .backgroundTapped:
       return Observable.just(.hideDropdown)
+    case .backButtonTapped:
+      return Observable.just(.toggleShowHomeVC)
     case .pageControlIndexEvent(let index):
       return Observable.just(.onChnagedPageIndex(index))
     case .cvsButtonTappedInDropdown(let cvsDropdownCase):
@@ -55,6 +60,8 @@ final class BookmarkViewModel: ViewModel {
       nextState.isVisibleCVSDropdown.toggle()
     case .toggleFilterDropdown:
       nextState.isVisibleFilterDropdown.toggle()
+    case .toggleShowHomeVC:
+      nextState.showHomeVC.toggle()
     case .hideDropdown:
       nextState.isVisibleFilterDropdown = false
       nextState.isVisibleCVSDropdown = false
