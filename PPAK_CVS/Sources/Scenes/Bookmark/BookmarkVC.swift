@@ -1,16 +1,12 @@
-//
-//  BookmarkVC.swift
-//  PPAK_CVS
-//
-//  Created by 김응철 on 2022/10/08.
-//
-
 import UIKit
 
 import Then
 import SnapKit
+import RxSwift
+import RxCocoa
+import RxGesture
 
-final class BookmarkViewController: BaseViewController {
+final class BookmarkViewController: BaseViewController, Viewable {
 
   // MARK: - Properties
 
@@ -36,6 +32,7 @@ final class BookmarkViewController: BaseViewController {
   }
 
   private lazy var filterDropdownView = FilterDropdownView()
+  private lazy var cvsDropdownView = CVSDropdownView()
   private var header: BookmarkCollectionHeaderView!
 
   // MARK: - Setup
@@ -59,8 +56,10 @@ final class BookmarkViewController: BaseViewController {
   }
 
   private func setupDropdown() {
-    view.addSubview(filterDropdownView)
-    filterDropdownView.isHidden = true
+    [filterDropdownView, cvsDropdownView].forEach {
+      view.addSubview($0)
+      $0.isHidden = true
+    }
 
     filterDropdownView.snp.makeConstraints { make in
       make.top.equalTo(header.filterButton.snp.bottom).offset(12)
@@ -68,12 +67,97 @@ final class BookmarkViewController: BaseViewController {
       make.width.equalTo(130)
       make.height.equalTo(100)
     }
+
+    cvsDropdownView.snp.makeConstraints { make in
+      make.top.equalTo(header.cvsButton.snp.bottom).offset(16)
+      make.trailing.equalToSuperview().inset(16)
+      make.width.equalTo(64)
+      make.height.equalTo(376)
+    }
   }
 
   // MARK: - Bind
 
-  private func bindHeader() {
+  func bind(viewModel: BookmarkViewModel) {}
 
+  private func bindHeader() {
+    guard let viewModel = viewModel else { return }
+
+    // MARK: - Action
+
+    // 현재 편의점 로고 버튼 클릭
+    header.cvsButton.rx.tap
+      .map { BookmarkViewModel.Action.currentCVSButtonTapped }
+      .bind(to: viewModel.action)
+      .disposed(by: disposeBag)
+
+    // 필터 버튼 클릭
+    header.filterButton.rx.tap
+      .map { BookmarkViewModel.Action.filterButtonTapped }
+      .bind(to: viewModel.action)
+      .disposed(by: disposeBag)
+
+    // 편의점 드롭다운 리스트 버튼 클릭
+    cvsDropdownView.buttonEventSubject
+      .map { BookmarkViewModel.Action.cvsButtonTappedInDropdown($0) }
+      .bind(to: viewModel.action)
+      .disposed(by: disposeBag)
+    
+    // 필터 드롭다운 리스트 버튼 클릭
+    filterDropdownView.buttonEventSubject
+      .map { BookmarkViewModel.Action.filterButtonTappedInDropdown($0) }
+      .bind(to: viewModel.action)
+      .disposed(by: disposeBag)
+    
+    // 페이지 컨트롤 인덱스 감지
+    header.pageControl.pageIndexSubject
+      .skip(1)
+      .distinctUntilChanged()
+      .map { BookmarkViewModel.Action.pageControlIndexEvent($0) }
+      .bind(to: viewModel.action)
+      .disposed(by: disposeBag)
+
+    // 빈공간 터치 감지
+    view.rx.tapGesture(configuration: { _, delegate in
+      delegate.simultaneousRecognitionPolicy = .never
+    })
+      .map { _ in BookmarkViewModel.Action.backgroundTapped }
+      .bind(to: viewModel.action)
+      .disposed(by: disposeBag)
+
+    // MARK: - State
+    
+    // 편의점 로고 드롭다운 애니메이션 동작
+    viewModel.state
+      .map { $0.isVisibleCVSDropdown }
+      .bind(onNext: { [unowned self] isVisible in
+        if isVisible {
+          cvsDropdownView.willAppearDropdown()
+        } else {
+          cvsDropdownView.willDisappearDropdown()
+        }
+      })
+      .disposed(by: disposeBag)
+
+    // 필터 드롭다운 애니메이션 동작
+    viewModel.state
+      .map { $0.isVisibleFilterDropdown }
+      .bind(onNext: { [unowned self] isVisible in
+        if isVisible {
+          filterDropdownView.willAppearDropdown()
+        } else {
+          filterDropdownView.willDisappearDropdown()
+        }
+      })
+      .disposed(by: disposeBag)
+
+    // 현재 선택된 편의점 로고 이미지 변경
+    viewModel.state
+      .map { $0.currentCVSImage.imageName }
+      .bind(onNext: { [unowned self] imageName in
+        self.header.cvsButton.setImage(UIImage(named: imageName), for: .normal)
+      })
+      .disposed(by: disposeBag)
   }
 }
 
@@ -113,9 +197,11 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
       return UICollectionReusableView()
     }
 
-    self.header = header
-    bindHeader()
-    setupDropdown()
+    if self.header == nil {
+      self.header = header
+      bindHeader()
+      setupDropdown()
+    }
 
     return header
   }
