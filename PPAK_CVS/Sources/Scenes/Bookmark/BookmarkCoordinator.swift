@@ -22,9 +22,13 @@ final class BookmarkCoordinator: BaseCoordinator {
       .map { $0.showHomeVC }
       .filter { $0 }
       .bind(onNext: { [unowned self] _ in
-        self.navigationController.popViewController(animated: true)
-        finish(childCoordinator: self)
+        self.toHomeVC()
       })
       .disposed(by: disposeBag)
+  }
+
+  func toHomeVC() {
+    self.navigationController.popViewController(animated: true)
+    parentCoordinator?.finish(childCoordinator: self)
   }
 }
