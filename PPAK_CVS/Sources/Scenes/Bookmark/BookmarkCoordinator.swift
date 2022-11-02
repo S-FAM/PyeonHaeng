@@ -11,6 +11,7 @@ final class BookmarkCoordinator: BaseCoordinator {
 
   override func start() {
     let viewController = BookmarkViewController()
+    viewController.coordinator = self
     self.navigationController.setViewControllers([viewController], animated: true)
   }
 }
