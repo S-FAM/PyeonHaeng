@@ -24,7 +24,7 @@ final class HomeCoordinator: BaseCoordinator {
       .filter { $0 }
       .bind(onNext: { [unowned self] _ in
         let coordinator = BookmarkCoordinator(navigationController: self.navigationController)
-        coordinator.start(childCoordinator: coordinator)
+        self.start(childCoordinator: coordinator)
       })
       .disposed(by: disposeBag)
   }
