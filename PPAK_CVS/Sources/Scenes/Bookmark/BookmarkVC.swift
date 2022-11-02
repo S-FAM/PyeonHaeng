@@ -85,11 +85,10 @@ final class BookmarkViewController: BaseViewController, Viewable {
 
     // MARK: - Action
 
-    // 뒤로가기 버튼 클릭
+    // 뒤로 가기 버튼 클릭
     header.backButton.rx.tap
-      .bind(onNext: { [unowned self] in
-        self.navigationController?.popViewController(animated: true)
-      })
+      .map { BookmarkViewModel.Action.backButtonTapped }
+      .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 현재 편의점 로고 버튼 클릭

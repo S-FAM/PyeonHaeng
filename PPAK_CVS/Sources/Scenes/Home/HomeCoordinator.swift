@@ -23,9 +23,13 @@ final class HomeCoordinator: BaseCoordinator {
       .distinctUntilChanged()
       .filter { $0 }
       .bind(onNext: { [unowned self] _ in
-        let coordinator = BookmarkCoordinator(navigationController: self.navigationController)
-        self.start(childCoordinator: coordinator)
+        self.toBookmarkVC()
       })
       .disposed(by: disposeBag)
+  }
+
+  func toBookmarkVC() {
+    let coordinator = BookmarkCoordinator(navigationController: self.navigationController)
+    self.start(childCoordinator: coordinator)
   }
 }

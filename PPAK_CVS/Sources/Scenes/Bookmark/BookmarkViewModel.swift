@@ -61,7 +61,7 @@ final class BookmarkViewModel: ViewModel {
     case .toggleFilterDropdown:
       nextState.isVisibleFilterDropdown.toggle()
     case .toggleShowHomeVC:
-      nextState.showHomeVC.toggle()
+      nextState.showHomeVC = true
     case .hideDropdown:
       nextState.isVisibleFilterDropdown = false
       nextState.isVisibleCVSDropdown = false

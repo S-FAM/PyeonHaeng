@@ -29,7 +29,7 @@ final class HomeViewController: BaseViewController, Viewable {
 
   private lazy var cvsDropdownView = CVSDropdownView()
   private lazy var filterDropdownView = FilterDropdownView()
-  var header: HomeCollectionHeaderView!
+  private var header: HomeCollectionHeaderView!
 
   // MARK: - Setup
 
