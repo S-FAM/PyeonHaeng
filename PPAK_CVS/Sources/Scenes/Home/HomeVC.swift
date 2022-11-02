@@ -30,7 +30,7 @@ final class HomeViewController: BaseViewController, Viewable {
   private lazy var cvsDropdownView = CVSDropdownView()
   private lazy var filterDropdownView = FilterDropdownView()
   var header: HomeCollectionHeaderView!
-  
+
   // MARK: - Setup
 
   override func setupLayouts() {
@@ -40,6 +40,7 @@ final class HomeViewController: BaseViewController, Viewable {
 
   override func setupStyles() {
     navigationController?.isNavigationBarHidden = true
+    navigationController?.interactivePopGestureRecognizer?.delegate = nil
     view.backgroundColor = .white
   }
 
