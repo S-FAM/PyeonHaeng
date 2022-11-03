@@ -29,6 +29,5 @@ final class BookmarkCoordinator: BaseCoordinator {
 
   func toHomeVC() {
     self.navigationController.popViewController(animated: true)
-    parentCoordinator?.finish(childCoordinator: self)
   }
 }
