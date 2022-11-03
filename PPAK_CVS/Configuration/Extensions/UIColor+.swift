@@ -32,5 +32,4 @@ extension UIColor {
   static let msFontColor = UIColor(hex: 0xF0F0F0)
   static let emBackGroundColor = UIColor(hex: 0x56555B)
   static let emFontColor = UIColor(hex: 0xFFB41D)
-  static let HomeBackGroundColor = UIColor(hex: 0x030026)
 }
