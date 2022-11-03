@@ -16,6 +16,7 @@ final class OnboardingCoordinator: BaseCoordinator {
   override func start() {
     let onboardingViewModel = OnboardingViewModel()
     let onboardingVC = OnboardingViewController()
+    onboardingVC.coordinator = self
     onboardingVC.viewModel = onboardingViewModel
     self.navigationController.setViewControllers([onboardingVC], animated: true)
 
