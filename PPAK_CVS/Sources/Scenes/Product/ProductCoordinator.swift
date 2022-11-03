@@ -11,6 +11,7 @@ final class ProductCoordinator: BaseCoordinator {
 
   override func start() {
     let viewController = ProductViewController()
+    viewController.coordinator = self
     self.navigationController.pushViewController(viewController, animated: true)
   }
 }
