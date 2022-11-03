@@ -9,52 +9,27 @@ import UIKit
 
 extension UIColor {
 
-    /// static let exampleColor = RGB(red: 196, green: 22, blue: 28)
-    static func RGB(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
-        return self.RGBA(red: red, green: green, blue: blue, alpha: 1)
-    }
-
-    static func RGBA(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> UIColor {
-        return UIColor.init(red: red / 255.0, green: green / 255.0, blue: blue / 255.0, alpha: alpha)
-    }
-}
-
-extension UIColor {
-    static func colorFromHex(hex: String) -> UIColor {
-        var cString: String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-
-        if cString.hasPrefix("#") {
-            cString.remove(at: cString.startIndex)
-        }
-
-        if (cString.count) != 6 {
-            return UIColor.gray
-        }
-
-        var rgbValue: UInt64 = 0
-        Scanner(string: cString).scanHexInt64(&rgbValue)
-
-        return UIColor(
-            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-            alpha: CGFloat(1.0)
-        )
-    }
+  convenience init(hex: Int, alpha: CGFloat = 1.0) {
+    let components = (
+      red: CGFloat((hex >> 16) & 0xff) / 255,
+      green: CGFloat((hex >> 08) & 0xff) / 255,
+      blue: CGFloat((hex >> 00) & 0xff) / 255
+    )
+    self.init(red: components.red, green: components.green, blue: components.blue, alpha: alpha)
+  }
 }
 
 // MARK: - Store's SymbolColor
 extension UIColor {
 
-    static let cuBackGroundColor = UIColor.colorFromHex(hex: "#751485")
-    static let cuFontColor = UIColor.colorFromHex(hex: "#9DC92A")
-    static let gsBackGroundColor = UIColor.colorFromHex(hex: "#63514D")
-    static let gsFontColor = UIColor.colorFromHex(hex: "#00D7F1")
-    static let seBackGroundColor = UIColor.colorFromHex(hex: "#FF8329")
-    static let seFontColor = UIColor.colorFromHex(hex: "#005B45")
-    static let msBackGroundColor = UIColor.colorFromHex(hex: "#003893")
-    static let msFontColor = UIColor.colorFromHex(hex: "#F0F0F0")
-    static let emBackGroundColor = UIColor.colorFromHex(hex: "#56555B")
-    static let emFontColor = UIColor.colorFromHex(hex: "#FFB41D")
-
+  static let cuBackGroundColor = UIColor(hex: 0x51485)
+  static let cuFontColor = UIColor(hex: 0x9DC92A)
+  static let gsBackGroundColor = UIColor(hex: 0x63514D)
+  static let gsFontColor = UIColor(hex: 0x00D7F1)
+  static let seBackGroundColor = UIColor(hex: 0xFF8329)
+  static let seFontColor = UIColor(hex: 0x005B45)
+  static let msBackGroundColor = UIColor(hex: 0x003893)
+  static let msFontColor = UIColor(hex: 0xF0F0F0)
+  static let emBackGroundColor = UIColor(hex: 0x56555B)
+  static let emFontColor = UIColor(hex: 0xFFB41D)
 }
