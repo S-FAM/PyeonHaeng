@@ -7,6 +7,7 @@ final class HomeViewModel: ViewModel {
     case currentCVSButtonTapped
     case filterButtonTapped
     case backgroundTapped
+    case bookmarkButtonTapped
     case pageControlIndexEvent(Int)
     case cvsButtonTappedInDropdown(CVSDropdownCase)
     case filterButtonTappedInDropdown(FilterDropdownCase)
@@ -15,15 +16,17 @@ final class HomeViewModel: ViewModel {
   enum Mutation {
     case toggleCVSDropdown
     case toggleFilterDropdown
+    case toggleShowBookmarkVC(Bool)
     case hideDropdown
     case onChangedCVSImage(CVSDropdownCase)
     case onChangedFilter(FilterDropdownCase)
-    case onChnagedPageIndex(Int)
+    case onChangedPageIndex(Int)
   }
 
   struct State {
     var isVisibleCVSDropdown: Bool = false
     var isVisibleFilterDropdown: Bool = false
+    var showBookmarkVC: Bool = false
     var currentCVSImage: CVSDropdownCase = .all
     var currentFilter: FilterDropdownCase = .ascending
     var pageIndex: Int = 0
@@ -39,8 +42,14 @@ final class HomeViewModel: ViewModel {
       return Observable.just(.toggleFilterDropdown)
     case .backgroundTapped:
       return Observable.just(.hideDropdown)
+    case .bookmarkButtonTapped:
+      guard currentState.showBookmarkVC == false else { return .empty() }
+      return Observable.concat([
+        Observable.just(.toggleShowBookmarkVC(true)),
+        Observable.just(.toggleShowBookmarkVC(false))
+      ])
     case .pageControlIndexEvent(let index):
-      return Observable.just(.onChnagedPageIndex(index))
+      return Observable.just(.onChangedPageIndex(index))
     case .cvsButtonTappedInDropdown(let cvsDropdownCase):
       return Observable.just(.onChangedCVSImage(cvsDropdownCase))
     case .filterButtonTappedInDropdown(let filterDropdownCase):
@@ -59,11 +68,13 @@ final class HomeViewModel: ViewModel {
     case .hideDropdown:
       nextState.isVisibleFilterDropdown = false
       nextState.isVisibleCVSDropdown = false
+    case let .toggleShowBookmarkVC(isShowBookmarkVC):
+      nextState.showBookmarkVC = isShowBookmarkVC
     case .onChangedCVSImage(let cvsDropdownCase):
       nextState.currentCVSImage = cvsDropdownCase
     case .onChangedFilter(let filterDropdownCase):
       nextState.currentFilter = filterDropdownCase
-    case .onChnagedPageIndex(let index):
+    case .onChangedPageIndex(let index):
       nextState.pageIndex = index
     }
     return nextState

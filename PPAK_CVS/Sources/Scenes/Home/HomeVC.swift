@@ -1,10 +1,3 @@
-//
-//  HomeViewController.swift
-//  PPAK_CVS
-//
-//  Created by 김응철 on 2022/09/12.
-//
-
 import UIKit
 
 import RxSwift
@@ -36,7 +29,7 @@ final class HomeViewController: BaseViewController, Viewable {
 
   private lazy var cvsDropdownView = CVSDropdownView()
   private lazy var filterDropdownView = FilterDropdownView()
-  var header: HomeCollectionHeaderView!
+  private var header: HomeCollectionHeaderView!
 
   // MARK: - Setup
 
@@ -47,6 +40,7 @@ final class HomeViewController: BaseViewController, Viewable {
 
   override func setupStyles() {
     navigationController?.isNavigationBarHidden = true
+    navigationController?.interactivePopGestureRecognizer?.delegate = nil
     view.backgroundColor = .white
   }
 
@@ -86,7 +80,13 @@ final class HomeViewController: BaseViewController, Viewable {
   private func bindHeader() {
     guard let viewModel = viewModel else { return }
 
-    // MARK: - Input
+    // MARK: - Action
+
+    // 북마크 버튼 클릭
+    header.bookmarkButton.rx.tap
+      .map { HomeViewModel.Action.bookmarkButtonTapped }
+      .bind(to: viewModel.action)
+      .disposed(by: disposeBag)
 
     // 현재 편의점 로고 버튼 클릭
     header.cvsButton.rx.tap
@@ -124,9 +124,9 @@ final class HomeViewController: BaseViewController, Viewable {
     view.rx.tapGesture(configuration: { _, delegate in
       delegate.simultaneousRecognitionPolicy = .never
     })
-      .map { _ in HomeViewModel.Action.backgroundTapped }
-      .bind(to: viewModel.action)
-      .disposed(by: disposeBag)
+    .map { _ in HomeViewModel.Action.backgroundTapped }
+    .bind(to: viewModel.action)
+    .disposed(by: disposeBag)
 
     // MARK: - State
 

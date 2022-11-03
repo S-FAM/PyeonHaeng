@@ -309,8 +309,8 @@
 			isa = PBXGroup;
 			children = (
 				E54D9C4128F1A18100D028B2 /* BookmarkCollectionHeaderView.swift */,
-				E54D9C4328F1A19000D028B2 /* BookmarkCoordinator.swift */,
 				E54D9C4728F1A1A300D028B2 /* BookmarkVC.swift */,
+				E54D9C4328F1A19000D028B2 /* BookmarkCoordinator.swift */,
 				E54D9C4528F1A19B00D028B2 /* BookmarkViewModel.swift */,
 			);
 			path = Bookmark;
