@@ -41,6 +41,7 @@
 		BAA0581028D36F75000CDD11 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA0580F28D36F75000CDD11 /* BaseViewController.swift */; };
 		BAA0F53128FCF88300B632AC /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA0F53028FCF88300B632AC /* BaseCoordinator.swift */; };
 		BAA0F53528FD353500B632AC /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA0F53428FD353500B632AC /* AppCoordinator.swift */; };
+		BAA21ACB29154DE000056DB6 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = BAA21ACA29154DE000056DB6 /* FirebaseFirestore */; };
 		BABC84B228F58F5A00D6DF45 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABC84B128F58F5A00D6DF45 /* Preview.swift */; };
 		BAEF774928F412FA006B0274 /* ProductCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEF774828F412FA006B0274 /* ProductCollectionHeaderView.swift */; };
 		E505D9EB28CF5B4A00EEFC65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505D9EA28CF5B4A00EEFC65 /* AppDelegate.swift */; };
@@ -125,6 +126,7 @@
 				BA27024728CF61020039D9EA /* Kingfisher in Frameworks */,
 				BA1CCAC228FAFE500002FD8C /* WeakMapTable in Frameworks */,
 				A5932EA028E0435200457AD3 /* Lottie in Frameworks */,
+				BAA21ACB29154DE000056DB6 /* FirebaseFirestore in Frameworks */,
 				E5F9CCA228EF10EA0084CD63 /* RxGesture in Frameworks */,
 				BA27023F28CF60830039D9EA /* Alamofire in Frameworks */,
 				BA27023928CF60570039D9EA /* SnapKit in Frameworks */,
@@ -355,6 +357,7 @@
 				A5932E9F28E0435200457AD3 /* Lottie */,
 				E5F9CCA128EF10EA0084CD63 /* RxGesture */,
 				BA1CCAC128FAFE500002FD8C /* WeakMapTable */,
+				BAA21ACA29154DE000056DB6 /* FirebaseFirestore */,
 			);
 			productName = PPAK_CVS;
 			productReference = E505D9E728CF5B4A00EEFC65 /* PPAK_CVS.app */;
@@ -393,6 +396,7 @@
 				A5932E9E28E0435200457AD3 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				E5F9CCA028EF10EA0084CD63 /* XCRemoteSwiftPackageReference "RxGesture" */,
 				BA1CCAC028FAFE500002FD8C /* XCRemoteSwiftPackageReference "WeakMapTable" */,
+				BAA21AC929154DE000056DB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = E505D9E828CF5B4A00EEFC65 /* Products */;
 			projectDirPath = "";
@@ -752,6 +756,14 @@
 				kind = branch;
 			};
 		};
+		BAA21AC929154DE000056DB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		E5F9CCA028EF10EA0084CD63 /* XCRemoteSwiftPackageReference "RxGesture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture.git";
@@ -802,6 +814,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BA27024528CF61020039D9EA /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		BAA21ACA29154DE000056DB6 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BAA21AC929154DE000056DB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 		E5F9CCA128EF10EA0084CD63 /* RxGesture */ = {
 			isa = XCSwiftPackageProductDependency;
