@@ -31,6 +31,6 @@ final class TitleLogoView: UIView {
 
     titleLabel.text = cvsType.title
     titleLabel.textColor = cvsType.fontColor
-    titleLabel.backgroundColor = .link
+    titleLabel.backgroundColor = cvsType.bgColor
   }
 }
