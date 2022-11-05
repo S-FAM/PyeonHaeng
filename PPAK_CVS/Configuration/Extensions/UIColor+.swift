@@ -17,6 +17,24 @@ extension UIColor {
     )
     self.init(red: components.red, green: components.green, blue: components.blue, alpha: alpha)
   }
+  
+  /// 16진수 형태의 문자열로 UIColor를 생성합니다.
+  /// - Parameters:
+  ///   - hex: 16진수 형태의 문자열
+  ///   - alpha: 불투명도, 0부터 1 사이의 값
+  convenience init?(hex: String, alpha: CGFloat = 1.0) {
+    var hexString = hex
+    if hexString.hasPrefix("#") {
+      hexString.removeFirst()
+    }
+    if hexString.hasPrefix("0x") {
+      hexString.removeFirst(2)
+    }
+    
+    guard let hexColor = Int(hexString, radix: 16) else { return nil }
+    
+    self.init(hex: hexColor, alpha: alpha)
+  }
 }
 
 // MARK: - Store's SymbolColor
