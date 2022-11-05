@@ -8,7 +8,11 @@
 import UIKit
 
 extension UIColor {
-
+  
+  /// 16진수의 정수형으로 UIColor를 생성합니다.
+  /// - Parameters:
+  ///   - hex: 16진수
+  ///   - alpha: 불투명도, 0부터 1사이의 값
   convenience init(hex: Int, alpha: CGFloat = 1.0) {
     let components = (
       red: CGFloat((hex >> 16) & 0xff) / 255,
