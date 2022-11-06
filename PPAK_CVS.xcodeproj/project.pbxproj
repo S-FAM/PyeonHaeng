@@ -42,6 +42,7 @@
 		BAA0F53128FCF88300B632AC /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA0F53028FCF88300B632AC /* BaseCoordinator.swift */; };
 		BAA0F53528FD353500B632AC /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA0F53428FD353500B632AC /* AppCoordinator.swift */; };
 		BAA21ACB29154DE000056DB6 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = BAA21ACA29154DE000056DB6 /* FirebaseFirestore */; };
+		BAA21ACE29155E4A00056DB6 /* CVSDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA21ACD29155E4A00056DB6 /* CVSDatabase.swift */; };
 		BABC84B228F58F5A00D6DF45 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABC84B128F58F5A00D6DF45 /* Preview.swift */; };
 		BAEF774928F412FA006B0274 /* ProductCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEF774828F412FA006B0274 /* ProductCollectionHeaderView.swift */; };
 		E505D9EB28CF5B4A00EEFC65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505D9EA28CF5B4A00EEFC65 /* AppDelegate.swift */; };
@@ -93,6 +94,7 @@
 		BAA0580F28D36F75000CDD11 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		BAA0F53028FCF88300B632AC /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		BAA0F53428FD353500B632AC /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		BAA21ACD29155E4A00056DB6 /* CVSDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVSDatabase.swift; sourceTree = "<group>"; };
 		BABC84B128F58F5A00D6DF45 /* Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
 		BAEF774828F412FA006B0274 /* ProductCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCollectionHeaderView.swift; sourceTree = "<group>"; };
 		E505D9E728CF5B4A00EEFC65 /* PPAK_CVS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PPAK_CVS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -216,6 +218,7 @@
 				BAA0F53428FD353500B632AC /* AppCoordinator.swift */,
 				E505D9EA28CF5B4A00EEFC65 /* AppDelegate.swift */,
 				E505D9EC28CF5B4A00EEFC65 /* SceneDelegate.swift */,
+				BAA21ACC29155A0F00056DB6 /* Managers */,
 				A5932EA828E047B400457AD3 /* Models */,
 				E584487C28D55B9000E25265 /* Scenes */,
 			);
@@ -279,6 +282,14 @@
 				BA5A433B28F2FF15008DCDCC /* ProductVC.swift */,
 			);
 			path = Product;
+			sourceTree = "<group>";
+		};
+		BAA21ACC29155A0F00056DB6 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				BAA21ACD29155E4A00056DB6 /* CVSDatabase.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		E505D9DE28CF5B4A00EEFC65 = {
@@ -473,6 +484,7 @@
 				9C798F8A28EAE9DA00FE250C /* TitleLogoView.swift in Sources */,
 				BAEF774928F412FA006B0274 /* ProductCollectionHeaderView.swift in Sources */,
 				BABC84B228F58F5A00D6DF45 /* Preview.swift in Sources */,
+				BAA21ACE29155E4A00056DB6 /* CVSDatabase.swift in Sources */,
 				E505D9EB28CF5B4A00EEFC65 /* AppDelegate.swift in Sources */,
 				E505D9ED28CF5B4A00EEFC65 /* SceneDelegate.swift in Sources */,
 				E580BF2528E0649E00BE7ADC /* HomeCollectionHeaderView.swift in Sources */,

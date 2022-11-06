@@ -17,11 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    
+
     // Configuration
     FirebaseApp.configure()
     let db = Firestore.firestore()
-    
+
     return true
   }
 
