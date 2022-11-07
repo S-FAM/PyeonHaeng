@@ -32,14 +32,13 @@ enum CVSType {
     }
   }
 
-  // TODO: - 나중에 정확한 파일명으로 수정필요
   var image: UIImage? {
     switch self {
-    case .cu: return UIImage(systemName: "CU")
-    case .gs: return UIImage(systemName: "GS25")
-    case .sevenEleven: return UIImage(systemName: "7-ELEVEn")
-    case .miniStop: return UIImage(systemName: "MINISTOP")
-    case .eMart: return UIImage(systemName: "emart24")
+    case .cu: return UIImage(named: "logo_cu")
+    case .gs: return UIImage(named: "logo_gs25")
+    case .sevenEleven: return UIImage(named: "logo_7eleven")
+    case .miniStop: return UIImage(named: "logo_ministop")
+    case .eMart: return UIImage(named: "logo_emart24")
     }
   }
 
