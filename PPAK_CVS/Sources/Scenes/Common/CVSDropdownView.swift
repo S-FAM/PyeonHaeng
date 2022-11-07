@@ -148,19 +148,4 @@ final class CVSDropdownView: UIView {
 
     return button
   }
-
-  static func showDropdown(_ view: UIView) {
-    view.isHidden = false
-    UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut) {
-      view.layer.opacity = 1
-    }
-  }
-
-  static func hideDropdown(_ view: UIView) {
-    UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut) {
-      view.layer.opacity = 0
-    } completion: { _ in
-      view.isHidden = true
-    }
-  }
 }
