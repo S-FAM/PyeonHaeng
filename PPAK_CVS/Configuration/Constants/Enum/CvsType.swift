@@ -21,6 +21,7 @@ enum CVSType {
   case sevenEleven // sevenEleven
   case miniStop // miniStop
   case eMart // eMart
+  case all
 
   var title: String {
     switch self {
@@ -29,6 +30,7 @@ enum CVSType {
     case .sevenEleven: return "7-ELEVEn"
     case .miniStop: return "MINISTOP"
     case .eMart: return "emart24"
+    case .all: return "All"
     }
   }
 
@@ -39,6 +41,7 @@ enum CVSType {
     case .sevenEleven: return UIImage(named: "logo_7eleven")
     case .miniStop: return UIImage(named: "logo_ministop")
     case .eMart: return UIImage(named: "logo_emart24")
+    case .all: return UIImage(named: "logo_all")
     }
   }
 
@@ -49,6 +52,7 @@ enum CVSType {
     case .sevenEleven: return UIColor(hex: "#FF8329")
     case .miniStop: return UIColor(hex: "#003893")
     case .eMart: return UIColor(hex: "#56555B")
+    case .all: return UIColor(hex: "#030026")
     }
   }
 
@@ -59,6 +63,7 @@ enum CVSType {
     case .sevenEleven: return UIColor(hex: "#005B45")
     case .miniStop: return UIColor(hex: "#F0F0F0")
     case .eMart: return UIColor(hex: "#FFB41D")
+    case .all: return UIColor.white
     }
   }
 }
