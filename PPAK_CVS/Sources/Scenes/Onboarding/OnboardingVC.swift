@@ -5,6 +5,7 @@
 //  Created by 김민지 on 2022/09/24.
 //
 
+import AVFoundation
 import UIKit
 
 import Lottie
@@ -160,6 +161,7 @@ final class OnboardingViewController: BaseViewController, Viewable {
         self?.pageControl.currentPage = currentPage
         self?.setCurrentPageUI()
         self?.startLottieAnimation()
+        self?.hapticEffect()
       }
       .disposed(by: disposeBag)
   }
@@ -201,6 +203,10 @@ extension OnboardingViewController {
   private func startLottieAnimation() {
     self.animationView.play()
     self.animationView.loopMode = .loop
+  }
+
+  private func hapticEffect() {
+    AudioServicesPlaySystemSound(1520)
   }
 }
 
