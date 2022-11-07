@@ -44,5 +44,5 @@ extension UIColor {
 // MARK: - OnboardingPage's Color
 extension UIColor {
 
-  static let defaultBackgroundColor = UIColor(hex: "#030026")!
+  static let defaultBackgroundColor = UIColor(hex: "#030026")
 }
