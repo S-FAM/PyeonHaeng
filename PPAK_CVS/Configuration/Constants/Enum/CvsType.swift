@@ -45,21 +45,21 @@ enum CVSType {
 
   var bgColor: UIColor {
     switch self {
-    case .cu: return UIColor(hex: "#751485")!
-    case .gs: return UIColor(hex: "#63514D")!
-    case .sevenEleven: return UIColor(hex: "#FF8329")!
-    case .miniStop: return UIColor(hex: "#003893")!
-    case .eMart: return UIColor(hex: "#56555B")!
+    case .cu: return UIColor(hex: "#751485")
+    case .gs: return UIColor(hex: "#63514D")
+    case .sevenEleven: return UIColor(hex: "#FF8329")
+    case .miniStop: return UIColor(hex: "#003893")
+    case .eMart: return UIColor(hex: "#56555B")
     }
   }
 
   var fontColor: UIColor {
     switch self {
-    case .cu: return UIColor(hex: "#9DC92A")!
-    case .gs: return UIColor(hex: "#00D7F1")!
-    case .sevenEleven: return UIColor(hex: "#005B45")!
-    case .miniStop: return UIColor(hex: "#F0F0F0")!
-    case .eMart: return UIColor(hex: "#FFB41D")!
+    case .cu: return UIColor(hex: "#9DC92A")
+    case .gs: return UIColor(hex: "#00D7F1")
+    case .sevenEleven: return UIColor(hex: "#005B45")
+    case .miniStop: return UIColor(hex: "#F0F0F0")
+    case .eMart: return UIColor(hex: "#FFB41D")
     }
   }
 }
