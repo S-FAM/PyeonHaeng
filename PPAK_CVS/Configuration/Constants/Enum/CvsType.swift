@@ -21,6 +21,7 @@ enum CVSType {
   case sevenEleven // sevenEleven
   case miniStop // miniStop
   case eMart // eMart
+  case all
 
   var title: String {
     switch self {
@@ -29,39 +30,40 @@ enum CVSType {
     case .sevenEleven: return "7-ELEVEn"
     case .miniStop: return "MINISTOP"
     case .eMart: return "emart24"
+    case .all: return "All"
     }
   }
 
-  // TODO: - 나중에 정확한 파일명으로 수정필요
   var image: UIImage? {
     switch self {
-    case .cu: return UIImage(systemName: "CU")
-    case .gs: return UIImage(systemName: "GS25")
-    case .sevenEleven: return UIImage(systemName: "7-ELEVEn")
-    case .miniStop: return UIImage(systemName: "MINISTOP")
-    case .eMart: return UIImage(systemName: "emart24")
+    case .cu: return UIImage(named: "logo_cu")
+    case .gs: return UIImage(named: "logo_gs25")
+    case .sevenEleven: return UIImage(named: "logo_7eleven")
+    case .miniStop: return UIImage(named: "logo_ministop")
+    case .eMart: return UIImage(named: "logo_emart24")
+    case .all: return UIImage(named: "logo_all")
     }
   }
 
-  // TODO: - 머지후 정확한 컬러로 수정필요
   var bgColor: UIColor {
     switch self {
-    case .cu: return UIColor.black
-    case .gs: return UIColor.black
-    case .sevenEleven: return UIColor.black
-    case .miniStop: return UIColor.black
-    case .eMart: return UIColor.black
+    case .cu: return UIColor(hex: "#751485")
+    case .gs: return UIColor(hex: "#63514D")
+    case .sevenEleven: return UIColor(hex: "#FF8329")
+    case .miniStop: return UIColor(hex: "#003893")
+    case .eMart: return UIColor(hex: "#56555B")
+    case .all: return UIColor(hex: "#030026")
     }
   }
 
-  // TODO: - 머지후 정확한 컬러로 수정필요
   var fontColor: UIColor {
     switch self {
-    case .cu: return UIColor.black
-    case .gs: return UIColor.black
-    case .sevenEleven: return UIColor.black
-    case .miniStop: return UIColor.black
-    case .eMart: return UIColor.black
+    case .cu: return UIColor(hex: "#9DC92A")
+    case .gs: return UIColor(hex: "#00D7F1")
+    case .sevenEleven: return UIColor(hex: "#005B45")
+    case .miniStop: return UIColor(hex: "#F0F0F0")
+    case .eMart: return UIColor(hex: "#FFB41D")
+    case .all: return UIColor.white
     }
   }
 }

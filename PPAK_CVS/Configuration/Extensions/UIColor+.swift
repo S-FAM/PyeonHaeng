@@ -26,7 +26,7 @@ extension UIColor {
   /// - Parameters:
   ///   - hex: 16진수 형태의 문자열
   ///   - alpha: 불투명도, 0부터 1 사이의 값
-  convenience init?(hex: String, alpha: CGFloat = 1.0) {
+  convenience init(hex: String, alpha: CGFloat = 1.0) {
     var hexString = hex
     if hexString.hasPrefix("#") {
       hexString.removeFirst()
@@ -35,23 +35,8 @@ extension UIColor {
       hexString.removeFirst(2)
     }
 
-    guard let hexColor = UInt(hexString, radix: 16) else { return nil }
+    let hexColor = UInt(hexString, radix: 16)!
 
     self.init(hex: hexColor, alpha: alpha)
   }
-}
-
-// MARK: - Store's SymbolColor
-extension UIColor {
-
-  static let cuBackGroundColor = UIColor(hex: 0x51485)
-  static let cuFontColor = UIColor(hex: 0x9DC92A)
-  static let gsBackGroundColor = UIColor(hex: 0x63514D)
-  static let gsFontColor = UIColor(hex: 0x00D7F1)
-  static let seBackGroundColor = UIColor(hex: 0xFF8329)
-  static let seFontColor = UIColor(hex: 0x005B45)
-  static let msBackGroundColor = UIColor(hex: 0x003893)
-  static let msFontColor = UIColor(hex: 0xF0F0F0)
-  static let emBackGroundColor = UIColor(hex: 0x56555B)
-  static let emFontColor = UIColor(hex: 0xFFB41D)
 }
