@@ -26,7 +26,7 @@ extension UIColor {
   /// - Parameters:
   ///   - hex: 16진수 형태의 문자열
   ///   - alpha: 불투명도, 0부터 1 사이의 값
-  convenience init?(hex: String, alpha: CGFloat = 1.0) {
+  convenience init(hex: String, alpha: CGFloat = 1.0) {
     var hexString = hex
     if hexString.hasPrefix("#") {
       hexString.removeFirst()
