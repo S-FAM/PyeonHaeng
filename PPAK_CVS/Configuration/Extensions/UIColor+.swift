@@ -40,9 +40,3 @@ extension UIColor {
     self.init(hex: hexColor, alpha: alpha)
   }
 }
-
-// MARK: - OnboardingPage's Color
-extension UIColor {
-
-  static let defaultBackgroundColor = UIColor(hex: "#030026")
-}
