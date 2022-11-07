@@ -43,25 +43,23 @@ enum CVSType {
     }
   }
 
-  // TODO: - 머지후 정확한 컬러로 수정필요
   var bgColor: UIColor {
     switch self {
-    case .cu: return UIColor(hex: 0x751485)
-    case .gs: return UIColor(hex: 0x63514D)
-    case .sevenEleven: return UIColor(hex: 0xFF8329)
-    case .miniStop: return UIColor(hex: 0x003893)
-    case .eMart: return UIColor(hex: 0x56555B)
+    case .cu: return UIColor(hex: "#751485")!
+    case .gs: return UIColor(hex: "#63514D")!
+    case .sevenEleven: return UIColor(hex: "#FF8329")!
+    case .miniStop: return UIColor(hex: "#003893")!
+    case .eMart: return UIColor(hex: "#56555B")!
     }
   }
 
-  // TODO: - 머지후 정확한 컬러로 수정필요
   var fontColor: UIColor {
     switch self {
-    case .cu: return UIColor(hex: 0x9DC92A)
-    case .gs: return UIColor(hex: 0x00D7F1)
-    case .sevenEleven: return UIColor(hex: 0x005B45)
-    case .miniStop: return UIColor(hex: 0xF0F0F0)
-    case .eMart: return UIColor(hex: 0xFFB41D)
+    case .cu: return UIColor(hex: "#9DC92A")!
+    case .gs: return UIColor(hex: "#00D7F1")!
+    case .sevenEleven: return UIColor(hex: "#005B45")!
+    case .miniStop: return UIColor(hex: "#F0F0F0")!
+    case .eMart: return UIColor(hex: "#FFB41D")!
     }
   }
 }
