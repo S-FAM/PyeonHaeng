@@ -46,7 +46,7 @@ enum CVSType {
   // TODO: - 머지후 정확한 컬러로 수정필요
   var bgColor: UIColor {
     switch self {
-    case .cu: return UIColor(hex: 0x51485)
+    case .cu: return UIColor(hex: 0x751485)
     case .gs: return UIColor(hex: 0x63514D)
     case .sevenEleven: return UIColor(hex: 0xFF8329)
     case .miniStop: return UIColor(hex: 0x003893)
