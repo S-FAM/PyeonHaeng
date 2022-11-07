@@ -44,14 +44,5 @@ extension UIColor {
 // MARK: - Store's SymbolColor
 extension UIColor {
 
-  static let cuBackGroundColor = UIColor(hex: 0x51485)
-  static let cuFontColor = UIColor(hex: 0x9DC92A)
-  static let gsBackGroundColor = UIColor(hex: 0x63514D)
-  static let gsFontColor = UIColor(hex: 0x00D7F1)
-  static let seBackGroundColor = UIColor(hex: 0xFF8329)
-  static let seFontColor = UIColor(hex: 0x005B45)
-  static let msBackGroundColor = UIColor(hex: 0x003893)
-  static let msFontColor = UIColor(hex: 0xF0F0F0)
-  static let emBackGroundColor = UIColor(hex: 0x56555B)
-  static let emFontColor = UIColor(hex: 0xFFB41D)
+  static let defaultBackgroundColor = UIColor(hex: 030026)
 }
