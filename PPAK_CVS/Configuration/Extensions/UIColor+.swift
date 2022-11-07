@@ -35,7 +35,7 @@ extension UIColor {
       hexString.removeFirst(2)
     }
 
-    guard let hexColor = UInt(hexString, radix: 16) else { return nil }
+    let hexColor = UInt(hexString, radix: 16)!
 
     self.init(hex: hexColor, alpha: alpha)
   }
