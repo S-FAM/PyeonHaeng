@@ -30,6 +30,13 @@ final class OnboardingViewController: BaseViewController, Viewable {
     $0.backgroundColor = Color.bottomCurveViewBgColor
   }
 
+  private lazy var textContainer = UIStackView().then {
+    $0.axis = .vertical
+    $0.alignment = .center
+    $0.distribution = .fill
+    $0.spacing = 20
+  }
+
   private lazy var titleLabel = UILabel().then {
     $0.onboardingExplainLabel(textColor: Color.titleLabel, font: Font.titleLabel)
   }
@@ -63,13 +70,15 @@ final class OnboardingViewController: BaseViewController, Viewable {
       self.animationView,
       self.pageControl,
       self.bottomCurveView,
-      self.titleLabel,
-      self.descLabel,
+      self.textContainer,
       self.skipButton,
       self.nextButton
     ].forEach {
       view.addSubview($0)
     }
+
+    self.textContainer.addArrangedSubview(self.titleLabel)
+    self.textContainer.addArrangedSubview(self.descLabel)
   }
 
   override func setupConstraints() {
@@ -91,14 +100,9 @@ final class OnboardingViewController: BaseViewController, Viewable {
       make.height.equalTo(view.frame.size.height * Ratio.bottomCurveViewHeight)
     }
 
-    self.titleLabel.snp.makeConstraints { make in
+    self.textContainer.snp.makeConstraints { make in
       make.centerX.equalToSuperview()
       make.top.equalTo(bottomCurveView.snp.top).inset(Inset.top)
-    }
-
-    self.descLabel.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(titleLabel.snp.bottom).offset(Inset.label)
     }
 
     self.skipButton.snp.makeConstraints { make in
@@ -161,7 +165,7 @@ final class OnboardingViewController: BaseViewController, Viewable {
         self?.pageControl.currentPage = currentPage
         self?.setCurrentPageUI()
         self?.startLottieAnimation()
-        self?.hapticEffect()
+        self?.changePageEffect()
       }
       .disposed(by: disposeBag)
   }
@@ -205,8 +209,12 @@ extension OnboardingViewController {
     self.animationView.loopMode = .loop
   }
 
-  private func hapticEffect() {
+  private func changePageEffect() {
     AudioServicesPlaySystemSound(1520)
+    UIView.animate(withDuration: 0.3) { [weak self] in
+      self?.textContainer.alpha = 1
+      self?.textContainer.layoutIfNeeded()
+    }
   }
 }
 
