@@ -37,8 +37,11 @@ final class CVSDatabase {
     }
   }
 
-  func informationTask(type: CVSType, eventType: EventType, offset: Int = 0, limit: Int = 10) -> Observable<[ProductModel]> {
-
+  func informationTask(
+    request: RequestTypeModel,
+    offset: Int = 0,
+    limit: Int = 10
+  ) -> Observable<[ProductModel]> {
     return Single<[ProductModel]>.create { observer in
       let task = Task {
         do {
