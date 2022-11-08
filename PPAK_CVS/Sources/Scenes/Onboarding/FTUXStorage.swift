@@ -12,8 +12,6 @@ final class FTUXStorage {
   private let key = "localStorage_is_already_come"
   private let userDefaults = UserDefaults.standard
 
-  public init() {}
-
   public func isAlreadyCome() -> Bool {
     self.userDefaults.bool(forKey: key)
   }
