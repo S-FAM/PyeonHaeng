@@ -8,12 +8,12 @@
 import Foundation
 
 extension Date {
-  
+
   /// 년도
   var year: Int {
     Calendar.current.component(.year, from: self)
   }
-  
+
   /// 월
   var month: Int {
     Calendar.current.component(.year, from: self)

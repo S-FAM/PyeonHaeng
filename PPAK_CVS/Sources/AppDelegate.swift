@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // Configuration
     FirebaseApp.configure()
-    let db = Firestore.firestore()
 
     return true
   }
