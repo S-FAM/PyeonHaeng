@@ -19,6 +19,23 @@ final class CVSDatabase {
 
   private lazy var database: CollectionReference = Firestore.firestore().collection("sale")
 
+  var syncKey: Observable<String> {
+    return self._syncKey().asObservable()
+  }
+
+  private func _syncKey() -> Single<String> {
+    return Single.create { [weak self] observer in
+      self?.database.document(Name.syncKey).getDocument(as: SyncKeyModel.self) { result in
+        switch result {
+        case let .success(keyModel):
+          observer(.success(keyModel.month))
+        case .failure:
+          observer(.failure(Error.firebase))
+        }
+      }
+      return Disposables.create()
+    }
+  }
 }
 
 // MARK: - Models and Constants
