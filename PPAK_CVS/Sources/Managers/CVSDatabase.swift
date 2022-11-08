@@ -93,6 +93,10 @@ extension CVSDatabase {
 
   private enum Name {
     static let syncKey = "sync_key"
+    static let price = "price"
+    static let cvs = "store"
+    static let item = "items"
+    static let event = "tag"
   }
 
   private struct SyncKeyModel: Codable {
