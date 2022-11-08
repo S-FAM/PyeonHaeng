@@ -217,8 +217,8 @@ extension OnboardingViewController {
   private enum Color {
     static let viewBgColor = UIColor.white
     static let pageIndicator = UIColor.lightGray
-    static let currentPageIndicator = UIColor.colorFromHex(hex: "#030026") // TODO: Color Model 적용
-    static let bottomCurveViewBgColor = UIColor.colorFromHex(hex: "#030026") // TODO: Color Model 적용
+    static let currentPageIndicator = CVSType.all.bgColor
+    static let bottomCurveViewBgColor = CVSType.all.bgColor
     static let titleLabel = UIColor.white
     static let descLabel = UIColor.white.withAlphaComponent(0.5)
   }
