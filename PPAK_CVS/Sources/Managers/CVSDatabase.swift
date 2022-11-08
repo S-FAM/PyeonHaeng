@@ -17,7 +17,7 @@ final class CVSDatabase {
   /// The shared singleton firebase object.
   static let shared: CVSDatabase = CVSDatabase()
 
-  private lazy var db = Firestore.firestore().collection("sale")
+  private lazy var database: CollectionReference = Firestore.firestore().collection("sale")
 
 //  var isSynchronized: Bool {
 //    db.document("sync_key")
