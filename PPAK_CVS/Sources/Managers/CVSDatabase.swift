@@ -37,6 +37,29 @@ final class CVSDatabase {
     }
   }
 
+  private func _query(model: RequestTypeModel, key: String) -> Query {
+
+    var cvsList: [CVSType] = CVSType.allCases.dropLast()
+    var eventList: [EventType] = EventType.allCases.dropLast()
+    if model.cvs != .all {
+      cvsList = [model.cvs]
+    }
+    if model.event != .all {
+      eventList = [model.event]
+    }
+
+    let ref = self.database.document(key).collection(Name.item)
+      .whereField(Name.cvs, in: cvsList)
+      .whereField(Name.event, in: eventList)
+
+    if model.sort == .none {
+      return ref
+    }
+
+    return ref
+      .order(by: Name.price, descending: model.sort == .descending ? true : false)
+  }
+
   func informationTask(
     request: RequestTypeModel,
     offset: Int = 0,
@@ -61,6 +84,7 @@ final class CVSDatabase {
             throw Error.synchronized
           }
 
+          // ok. access to firebase
           observer(.success([]))
         } catch {
           observer(.failure(error))
