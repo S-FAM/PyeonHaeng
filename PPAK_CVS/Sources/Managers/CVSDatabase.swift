@@ -39,13 +39,13 @@ final class CVSDatabase {
 
   private func _query(model: RequestTypeModel, key: String) -> Query {
 
-    var cvsList: [CVSType] = CVSType.allCases.dropLast()
-    var eventList: [EventType] = EventType.allCases.dropLast()
+    var cvsList: [String] = CVSType.allCases.dropLast().map { $0.title }
+    var eventList: [String] = EventType.allCases.dropLast().map { $0.rawValue }
     if model.cvs != .all {
-      cvsList = [model.cvs]
+      cvsList = [model.cvs.title]
     }
     if model.event != .all {
-      eventList = [model.event]
+      eventList = [model.event.rawValue]
     }
 
     let ref = self.database.document(key).collection(Name.item)
