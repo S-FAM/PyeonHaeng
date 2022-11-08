@@ -36,6 +36,39 @@ final class CVSDatabase {
       return Disposables.create()
     }
   }
+
+  func informationTask(type: CVSType, eventType: EventType, offset: Int = 0, limit: Int = 10) -> Observable<[ProductModel]> {
+
+    return Single<[ProductModel]>.create { observer in
+      let task = Task {
+        do {
+          let key = try await self._syncKey().value
+
+          let dateFormatter = DateFormatter().then {
+            $0.dateFormat = "yyyy:MM"
+          }
+
+          // 받아온 값으로 날짜변환이 되지 않는 경우
+          guard let syncDate = dateFormatter.date(from: key) else {
+            throw Error.decoding
+          }
+
+          // db에 저장되어있는 날짜(년/월)가 현재 날짜랑 맞지 않는 경우
+          guard Date.now.year == syncDate.year && Date.now.month == syncDate.month else {
+            throw Error.synchronized
+          }
+
+          observer(.success([]))
+        } catch {
+          observer(.failure(error))
+        }
+      }
+      return Disposables.create {
+        task.cancel()
+      }
+    }
+    .asObservable()
+  }
 }
 
 // MARK: - Models and Constants
