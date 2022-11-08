@@ -7,7 +7,10 @@
 
 import Foundation
 
+import RxSwift
+import RxCocoa
 import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 final class CVSDatabase {
 
