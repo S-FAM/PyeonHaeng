@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum SortType {
+enum SortType: CaseIterable {
   case ascending
   case descending
   case none

@@ -14,7 +14,7 @@ import UIKit
 ///     - bgColor: 태그의 배경색상
 ///     - fontColor: 태그의 폰트색상
 
-enum CVSType {
+enum CVSType: Codable, CaseIterable {
 
   case cu // cu
   case gs // gs25

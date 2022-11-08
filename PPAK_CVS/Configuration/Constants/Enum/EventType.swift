@@ -7,9 +7,8 @@
 
 import UIKit
 
-/// Description
 /// 이벤트의 종류를 가리키는 Enum Type
-enum EventType {
+enum EventType: Codable, CaseIterable {
 
   case onePlusOne
   case twoPlusOne
@@ -25,3 +24,13 @@ enum EventType {
     }
   }
 }
+
+
+
+
+///// 이벤트의 종류를 가리키는 Enum Type
+//enum EventType: String, Codable, CaseIterable {
+//  case onePlusOne = "1+1"
+//  case twoPlusOne = "2+1"
+//  case all = "All"
+//}
