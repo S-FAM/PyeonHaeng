@@ -7,16 +7,36 @@
 
 import UIKit
 
-final class OnboardingCoordinator: Coordinator {
+import RxSwift
 
-  var navigationController: UINavigationController
+final class OnboardingCoordinator: BaseCoordinator {
 
-  init(navigationController: UINavigationController) {
-    self.navigationController = navigationController
+  private let disposeBag = DisposeBag()
+
+  override func start() {
+    let onboardingViewModel = OnboardingViewModel()
+    let onboardingVC = OnboardingViewController()
+    onboardingVC.coordinator = self
+    onboardingVC.viewModel = onboardingViewModel
+    self.navigationController.setViewControllers([onboardingVC], animated: true)
+
+    self.bind(onboardingViewModel)
   }
 
-  func start() {
-    let viewController = OnboardingViewController()
-    self.navigationController.setViewControllers([viewController], animated: false)
+  private func bind(_ viewModel: OnboardingViewModel) {
+
+    // 홈 화면으로 이동하기
+    viewModel.state.map { $0.isPushHomeVC }
+      .distinctUntilChanged()
+      .bind { [weak self] isPush in
+        guard let self = self,
+              let parentCoordinator = self.parentCoordinator as? AppCoordinator else { return }
+
+        if isPush {
+          FTUXStorage().saveFTUXStatus()
+          parentCoordinator.switchToHome(coordinator: self)
+        }
+      }
+      .disposed(by: disposeBag)
   }
 }

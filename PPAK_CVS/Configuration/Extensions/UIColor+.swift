@@ -9,52 +9,34 @@ import UIKit
 
 extension UIColor {
 
-    /// static let exampleColor = RGB(red: 196, green: 22, blue: 28)
-    static func RGB(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
-        return self.RGBA(red: red, green: green, blue: blue, alpha: 1)
+  /// 16진수의 정수형으로 UIColor를 생성합니다.
+  /// - Parameters:
+  ///   - hex: 16진수
+  ///   - alpha: 불투명도, 0부터 1사이의 값
+  convenience init(hex: UInt, alpha: CGFloat = 1.0) {
+    let components = (
+      red: CGFloat((hex >> 16) & 0xff) / 255,
+      green: CGFloat((hex >> 08) & 0xff) / 255,
+      blue: CGFloat((hex >> 00) & 0xff) / 255
+    )
+    self.init(red: components.red, green: components.green, blue: components.blue, alpha: alpha)
+  }
+
+  /// 16진수 형태의 문자열로 UIColor를 생성합니다.
+  /// - Parameters:
+  ///   - hex: 16진수 형태의 문자열
+  ///   - alpha: 불투명도, 0부터 1 사이의 값
+  convenience init(hex: String, alpha: CGFloat = 1.0) {
+    var hexString = hex
+    if hexString.hasPrefix("#") {
+      hexString.removeFirst()
+    }
+    if hexString.hasPrefix("0x") {
+      hexString.removeFirst(2)
     }
 
-    static func RGBA(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> UIColor {
-        return UIColor.init(red: red / 255.0, green: green / 255.0, blue: blue / 255.0, alpha: alpha)
-    }
-}
+    let hexColor = UInt(hexString, radix: 16)!
 
-extension UIColor {
-    static func colorFromHex(hex: String) -> UIColor {
-        var cString: String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-
-        if cString.hasPrefix("#") {
-            cString.remove(at: cString.startIndex)
-        }
-
-        if (cString.count) != 6 {
-            return UIColor.gray
-        }
-
-        var rgbValue: UInt64 = 0
-        Scanner(string: cString).scanHexInt64(&rgbValue)
-
-        return UIColor(
-            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-            alpha: CGFloat(1.0)
-        )
-    }
-}
-
-// MARK: - Store's SymbolColor
-extension UIColor {
-
-    static let cuBackGroundColor = UIColor.colorFromHex(hex: "#751485")
-    static let cuFontColor = UIColor.colorFromHex(hex: "#9DC92A")
-    static let gsBackGroundColor = UIColor.colorFromHex(hex: "#63514D")
-    static let gsFontColor = UIColor.colorFromHex(hex: "#00D7F1")
-    static let seBackGroundColor = UIColor.colorFromHex(hex: "#FF8329")
-    static let seFontColor = UIColor.colorFromHex(hex: "#005B45")
-    static let msBackGroundColor = UIColor.colorFromHex(hex: "#003893")
-    static let msFontColor = UIColor.colorFromHex(hex: "#F0F0F0")
-    static let emBackGroundColor = UIColor.colorFromHex(hex: "#56555B")
-    static let emFontColor = UIColor.colorFromHex(hex: "#FFB41D")
-
+    self.init(hex: hexColor, alpha: alpha)
+  }
 }

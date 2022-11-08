@@ -1,47 +1,51 @@
 import UIKit
 
+import Then
+import SnapKit
 import RxSwift
 import RxCocoa
 import RxGesture
-import SnapKit
-import Then
 
-final class HomeViewController: BaseViewController, Viewable {
+final class BookmarkViewController: BaseViewController, Viewable {
 
   // MARK: - Properties
 
   private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then {
     $0.collectionViewLayout = UICollectionViewFlowLayout().then {
-      $0.headerReferenceSize = CGSize(width: self.view.frame.width, height: 320)
-      $0.itemSize = CGSize(width: self.view.frame.width, height: 125)
+      $0.headerReferenceSize = CGSize(width: view.frame.width, height: 320)
+      $0.itemSize = CGSize(width: view.frame.width, height: 125)
       $0.sectionInset = UIEdgeInsets(top: 24, left: 0, bottom: 16, right: 0)
     }
     $0.contentInsetAdjustmentBehavior = .never
     $0.bounces = false
     $0.dataSource = self
     $0.delegate = self
-    $0.register(HomeCollectionHeaderView.self,
-                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                withReuseIdentifier: HomeCollectionHeaderView.id)
-    $0.register(GoodsCell.self,
-                forCellWithReuseIdentifier: GoodsCell.id)
+    $0.register(
+      BookmarkCollectionHeaderView.self,
+      forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+      withReuseIdentifier: BookmarkCollectionHeaderView.id
+    )
+    $0.register(
+      GoodsCell.self,
+      forCellWithReuseIdentifier: GoodsCell.id
+    )
   }
 
-  private lazy var cvsDropdownView = CVSDropdownView()
   private lazy var filterDropdownView = FilterDropdownView()
-  private var header: HomeCollectionHeaderView!
+  private lazy var cvsDropdownView = CVSDropdownView()
+  private var header: BookmarkCollectionHeaderView!
 
   // MARK: - Setup
+
+  override func setupStyles() {
+    super.setupStyles()
+    navigationController?.isNavigationBarHidden = true
+    view.backgroundColor = .white
+  }
 
   override func setupLayouts() {
     super.setupLayouts()
     view.addSubview(collectionView)
-  }
-
-  override func setupStyles() {
-    navigationController?.isNavigationBarHidden = true
-    navigationController?.interactivePopGestureRecognizer?.delegate = nil
-    view.backgroundColor = .white
   }
 
   override func setupConstraints() {
@@ -51,18 +55,10 @@ final class HomeViewController: BaseViewController, Viewable {
     }
   }
 
-  func setupDropdown() {
-    [cvsDropdownView, filterDropdownView]
-      .forEach {
-        view.addSubview($0)
-        $0.isHidden = true
-      }
-
-    cvsDropdownView.snp.makeConstraints { make in
-      make.top.equalTo(header.cvsButton.snp.bottom).offset(16)
-      make.leading.equalToSuperview().inset(16)
-      make.width.equalTo(64)
-      make.height.equalTo(376)
+  private func setupDropdown() {
+    [filterDropdownView, cvsDropdownView].forEach {
+      view.addSubview($0)
+      $0.isHidden = true
     }
 
     filterDropdownView.snp.makeConstraints { make in
@@ -71,44 +67,51 @@ final class HomeViewController: BaseViewController, Viewable {
       make.width.equalTo(130)
       make.height.equalTo(100)
     }
+
+    cvsDropdownView.snp.makeConstraints { make in
+      make.top.equalTo(header.cvsButton.snp.bottom).offset(16)
+      make.trailing.equalToSuperview().inset(16)
+      make.width.equalTo(64)
+      make.height.equalTo(376)
+    }
   }
 
-  // MARK: - Event
+  // MARK: - Bind
 
-  func bind(viewModel: HomeViewModel) {}
+  func bind(viewModel: BookmarkViewModel) {}
 
   private func bindHeader() {
     guard let viewModel = viewModel else { return }
 
     // MARK: - Action
 
-    // 북마크 버튼 클릭
-    header.bookmarkButton.rx.tap
-      .map { HomeViewModel.Action.bookmarkButtonTapped }
+    // 뒤로 가기 버튼 클릭
+    header.backButton.rx.tap
+      .map { BookmarkViewModel.Action.backButtonTapped }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 현재 편의점 로고 버튼 클릭
     header.cvsButton.rx.tap
-      .map { HomeViewModel.Action.currentCVSButtonTapped }
+      .map { BookmarkViewModel.Action.currentCVSButtonTapped }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 필터 버튼 클릭
     header.filterButton.rx.tap
-      .map { HomeViewModel.Action.filterButtonTapped }
+      .map { BookmarkViewModel.Action.filterButtonTapped }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 편의점 드롭다운 리스트 버튼 클릭
     cvsDropdownView.buttonEventSubject
-      .map { HomeViewModel.Action.cvsButtonTappedInDropdown($0) }
+      .map { BookmarkViewModel.Action.cvsButtonTappedInDropdown($0) }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 필터 드롭다운 리스트 버튼 클릭
     filterDropdownView.buttonEventSubject
-      .map { HomeViewModel.Action.filterButtonTappedInDropdown($0) }
+      .map { BookmarkViewModel.Action.filterButtonTappedInDropdown($0) }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
@@ -116,7 +119,7 @@ final class HomeViewController: BaseViewController, Viewable {
     header.pageControl.pageIndexSubject
       .skip(1)
       .distinctUntilChanged()
-      .map { HomeViewModel.Action.pageControlIndexEvent($0) }
+      .map { BookmarkViewModel.Action.pageControlIndexEvent($0) }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
@@ -124,7 +127,7 @@ final class HomeViewController: BaseViewController, Viewable {
     view.rx.tapGesture(configuration: { _, delegate in
       delegate.simultaneousRecognitionPolicy = .never
     })
-    .map { _ in HomeViewModel.Action.backgroundTapped }
+    .map { _ in BookmarkViewModel.Action.backgroundTapped }
     .bind(to: viewModel.action)
     .disposed(by: disposeBag)
 
@@ -166,8 +169,11 @@ final class HomeViewController: BaseViewController, Viewable {
 
 // MARK: - CollectionView Setup
 
-extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    cellForItemAt indexPath: IndexPath
+  ) -> UICollectionViewCell {
     guard let cell = collectionView.dequeueReusableCell(
       withReuseIdentifier: GoodsCell.id,
       for: indexPath
@@ -191,9 +197,11 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
   ) -> UICollectionReusableView {
     guard let header = collectionView.dequeueReusableSupplementaryView(
       ofKind: UICollectionView.elementKindSectionHeader,
-      withReuseIdentifier: HomeCollectionHeaderView.id,
+      withReuseIdentifier: BookmarkCollectionHeaderView.id,
       for: indexPath
-    ) as? HomeCollectionHeaderView else { return UICollectionReusableView() }
+    ) as? BookmarkCollectionHeaderView else {
+      return UICollectionReusableView()
+    }
 
     if self.header == nil {
       self.header = header

@@ -8,28 +8,28 @@
 import UIKit
 
 import SnapKit
-
-protocol PageControlDelegate: AnyObject {
-  func didChangedSelectedIndex(index: Int)
-}
+import RxSwift
+import RxCocoa
+import RxGesture
 
 final class PageControl: UIControl {
 
   // MARK: - Properties
 
-  let items: [String] = ["All", "1+1", "2+1"]
+  private let items: [String] = ["All", "1+1", "2+1"]
 
-  var labels: [UILabel] = []
-  var focusedView: UIView!
+  private var labels: [UILabel] = []
+  private var focusedView: UIView!
 
-  weak var delegate: PageControlDelegate?
-
-  var selectedIndex: Int = 0 {
+  private var selectedIndex: Int = 0 {
     didSet {
       updateFocusView()
-      delegate?.didChangedSelectedIndex(index: selectedIndex)
+      pageIndexSubject.accept(selectedIndex)
     }
   }
+
+  let pageIndexSubject = BehaviorRelay<Int>(value: 0)
+  let disposeBag = DisposeBag()
 
   // MARK: - Init
 
@@ -38,6 +38,7 @@ final class PageControl: UIControl {
     setupStyles()
     setupLabels()
     setupFocusView()
+    bind()
   }
 
   required init?(coder: NSCoder) {
@@ -97,20 +98,40 @@ final class PageControl: UIControl {
     focusedView.layer.cornerRadius = 20.0
   }
 
+  // MARK: - Bind
+
+  private func bind() {
+    let allLabel = labels[0]
+    let onePlusLabel = labels[1]
+    let twoPlusLabel = labels[2]
+
+    onePlusLabel.rx.tapGesture()
+      .map { _ in 1 }
+      .bind(to: pageIndexSubject)
+      .disposed(by: disposeBag)
+
+    twoPlusLabel.rx.tapGesture()
+      .map { _ in 2 }
+      .bind(to: pageIndexSubject)
+      .disposed(by: disposeBag)
+
+    allLabel.rx.tapGesture()
+      .map { _ in 0 }
+      .bind(to: pageIndexSubject)
+      .disposed(by: disposeBag)
+
+    pageIndexSubject
+      .bind(onNext: { [unowned self] index in
+        let label = labels[index]
+        self.focusedView.center = label.center
+      })
+      .disposed(by: disposeBag)
+  }
+
   // MARK: - Helpers
 
   private func updateFocusView() {
     let label = labels[selectedIndex]
     self.focusedView.center = label.center
-  }
-
-  override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-    let location = touch.location(in: self)
-
-    for (index, item) in labels.enumerated() where item.frame.contains(location) {
-      self.selectedIndex = index
-    }
-
-    return false
   }
 }
