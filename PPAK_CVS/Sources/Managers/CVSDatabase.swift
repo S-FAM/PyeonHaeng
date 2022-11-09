@@ -23,7 +23,7 @@ final class CVSDatabase {
     return self._syncKey().asObservable()
   }
 
-  func informationTask(
+  func product(
     request: RequestTypeModel,
     offset: Int = 0,
     limit: Int = 10
