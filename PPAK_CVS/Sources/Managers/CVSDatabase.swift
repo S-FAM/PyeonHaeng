@@ -62,6 +62,28 @@ final class CVSDatabase {
       .order(by: Name.price, descending: model.sort == .descending ? true : false)
   }
 
+  private func snapshot(query: Query, offset: Int) -> Single<QueryDocumentSnapshot> {
+    return Single.create { observer in
+
+      query.addSnapshotListener { snapshot, _ in
+        guard let snapshot = snapshot else {
+          observer(.failure(Error.retrieving))
+          return
+        }
+
+        guard let lastSnapshot = snapshot.documents.last else {
+          observer(.failure(Error.retrieving)) // collection is empty if first access
+          return
+        }
+
+        observer(.success(lastSnapshot))
+      }
+        .remove()
+
+      return Disposables.create()
+    }
+  }
+
   func informationTask(
     request: RequestTypeModel,
     offset: Int = 0,
