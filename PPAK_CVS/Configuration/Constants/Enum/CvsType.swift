@@ -13,7 +13,7 @@ import UIKit
 ///     - image: 로고이미지 이름
 ///     - bgColor: 태그의 배경색상
 ///     - fontColor: 태그의 폰트색상
-enum CVSType: String, Codable, CaseIterable {
+enum CVSType: String, Codable {
 
   case cu = "CU"
   case gs = "GS25"
