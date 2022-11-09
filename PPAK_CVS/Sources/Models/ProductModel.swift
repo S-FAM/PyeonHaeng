@@ -9,13 +9,13 @@ import Foundation
 
 struct ProductModel: Codable {
   /// 이미지 주소
-  let imageLink: String
+  let imageLink: String?
   /// 물품명
   let name: String
   /// 가격
   let price: Int
   /// 편의점 가게
-  let store: String
+  let store: CVSType
   /// 할인종류
   let saleType: EventType
 
