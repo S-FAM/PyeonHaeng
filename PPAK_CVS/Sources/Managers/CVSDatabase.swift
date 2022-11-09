@@ -23,68 +23,6 @@ final class CVSDatabase {
     return self._syncKey().asObservable()
   }
 
-  private func _syncKey() -> Single<String> {
-    return Single.create { [weak self] observer in
-      self?.database.document(Name.syncKey).getDocument(as: SyncKeyModel.self) { result in
-        switch result {
-        case let .success(keyModel):
-          observer(.success(keyModel.month))
-        case .failure:
-          observer(.failure(Error.firebase))
-        }
-      }
-      return Disposables.create()
-    }
-  }
-
-  private func _query(model: RequestTypeModel, key: String) -> Query {
-
-    let ref = self.database.document(key).collection(Name.item)
-    var query: Query
-
-    if model.cvs != .all && model.event != .all {
-      query = ref
-        .whereField(Name.cvs, isEqualTo: model.cvs.title)
-        .whereField(Name.event, isEqualTo: model.event.rawValue)
-    } else if model.cvs != .all {
-      query = ref
-        .whereField(Name.cvs, isEqualTo: model.cvs.title)
-    } else {
-      query = ref
-        .whereField(Name.event, isEqualTo: model.event.rawValue)
-    }
-
-    if model.sort == .none {
-      return query
-    }
-
-    return query
-      .order(by: Name.price, descending: model.sort == .descending ? true : false)
-  }
-
-  private func snapshot(query: Query, offset: Int) -> Single<QueryDocumentSnapshot> {
-    return Single.create { observer in
-
-      let listener = query.addSnapshotListener { snapshot, _ in
-        guard let snapshot = snapshot else {
-          observer(.failure(Error.retrieving))
-          return
-        }
-
-        guard let lastSnapshot = snapshot.documents.last else {
-          observer(.failure(Error.retrieving)) // collection is empty if first access
-          return
-        }
-
-        observer(.success(lastSnapshot))
-      }
-
-      return Disposables.create {
-        listener.remove()
-      }
-    }
-  }
-
   func informationTask(
     request: RequestTypeModel,
     offset: Int = 0,
@@ -121,7 +59,7 @@ final class CVSDatabase {
           } else {
 
             // offset부터 시작하는 문서를 가져오기 위함
-            let offsetDocument = try await self.snapshot(query: query.limit(to: offset), offset: offset).value
+            let offsetDocument = try await self._snapshot(query: query.limit(to: offset), offset: offset).value
 
             snapshot = try await query
               .limit(to: limit)
@@ -176,5 +114,72 @@ extension CVSDatabase {
 
   private struct SyncKeyModel: Codable {
     let month: String
+  }
+}
+
+// MARK: - Private Methods
+
+extension CVSDatabase {
+  
+  private func _syncKey() -> Single<String> {
+    return Single.create { [weak self] observer in
+      self?.database.document(Name.syncKey).getDocument(as: SyncKeyModel.self) { result in
+        switch result {
+        case let .success(keyModel):
+          observer(.success(keyModel.month))
+        case .failure:
+          observer(.failure(Error.firebase))
+        }
+      }
+      return Disposables.create()
+    }
+  }
+
+  private func _query(model: RequestTypeModel, key: String) -> Query {
+
+    let ref = self.database.document(key).collection(Name.item)
+    var query: Query
+
+    if model.cvs != .all && model.event != .all {
+      query = ref
+        .whereField(Name.cvs, isEqualTo: model.cvs.title)
+        .whereField(Name.event, isEqualTo: model.event.rawValue)
+    } else if model.cvs != .all {
+      query = ref
+        .whereField(Name.cvs, isEqualTo: model.cvs.title)
+    } else {
+      query = ref
+        .whereField(Name.event, isEqualTo: model.event.rawValue)
+    }
+
+    if model.sort == .none {
+      return query
+    }
+
+    return query
+      .order(by: Name.price, descending: model.sort == .descending ? true : false)
+  }
+
+  private func _snapshot(query: Query, offset: Int) -> Single<QueryDocumentSnapshot> {
+    return Single.create { observer in
+
+      let listener = query.addSnapshotListener { snapshot, _ in
+        guard let snapshot = snapshot else {
+          observer(.failure(Error.retrieving))
+          return
+        }
+
+        guard let lastSnapshot = snapshot.documents.last else {
+          observer(.failure(Error.retrieving)) // collection is empty if first access
+          return
+        }
+
+        observer(.success(lastSnapshot))
+      }
+
+      return Disposables.create {
+        listener.remove()
+      }
+    }
   }
 }
