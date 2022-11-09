@@ -108,8 +108,31 @@ final class CVSDatabase {
             throw Error.synchronized
           }
 
-          // ok. access to firebase
-          observer(.success([]))
+          // == ok. access to firebase ==
+          let query = self._query(model: request, key: key)
+
+          var snapshot: QuerySnapshot
+
+          if offset == 0 {
+            snapshot = try await query
+              .limit(to: limit)
+              .getDocuments()
+          } else {
+
+            // offset부터 시작하는 문서를 가져오기 위함
+            let offsetDocument = try await self.snapshot(query: query.limit(to: offset), offset: offset).value
+
+            snapshot = try await query
+              .limit(to: limit)
+              .start(afterDocument: offsetDocument)
+              .getDocuments()
+          }
+
+          let result = snapshot.documents.compactMap { document in
+            return try? document.data(as: ProductModel.self)
+          }
+
+          observer(.success(result))
         } catch {
           observer(.failure(error))
         }
