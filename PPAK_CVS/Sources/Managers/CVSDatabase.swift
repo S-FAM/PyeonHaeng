@@ -65,7 +65,7 @@ final class CVSDatabase {
   private func snapshot(query: Query, offset: Int) -> Single<QueryDocumentSnapshot> {
     return Single.create { observer in
 
-      query.addSnapshotListener { snapshot, _ in
+      let listener = query.addSnapshotListener { snapshot, _ in
         guard let snapshot = snapshot else {
           observer(.failure(Error.retrieving))
           return
@@ -78,9 +78,10 @@ final class CVSDatabase {
 
         observer(.success(lastSnapshot))
       }
-        .remove()
 
-      return Disposables.create()
+      return Disposables.create {
+        listener.remove()
+      }
     }
   }
 
