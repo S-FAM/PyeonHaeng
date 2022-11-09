@@ -39,24 +39,26 @@ final class CVSDatabase {
 
   private func _query(model: RequestTypeModel, key: String) -> Query {
 
-    var cvsList: [String] = CVSType.allCases.dropLast().map { $0.title }
-    var eventList: [String] = EventType.allCases.dropLast().map { $0.rawValue }
-    if model.cvs != .all {
-      cvsList = [model.cvs.title]
-    }
-    if model.event != .all {
-      eventList = [model.event.rawValue]
-    }
-
     let ref = self.database.document(key).collection(Name.item)
-      .whereField(Name.cvs, in: cvsList)
-      .whereField(Name.event, in: eventList)
+    var query: Query
+
+    if model.cvs != .all && model.event != .all {
+      query = ref
+        .whereField(Name.cvs, isEqualTo: model.cvs.title)
+        .whereField(Name.event, isEqualTo: model.event.rawValue)
+    } else if model.cvs != .all {
+      query = ref
+        .whereField(Name.cvs, isEqualTo: model.cvs.title)
+    } else {
+      query = ref
+        .whereField(Name.event, isEqualTo: model.event.rawValue)
+    }
 
     if model.sort == .none {
-      return ref
+      return query
     }
 
-    return ref
+    return query
       .order(by: Name.price, descending: model.sort == .descending ? true : false)
   }
 
