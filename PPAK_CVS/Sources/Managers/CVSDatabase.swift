@@ -115,6 +115,9 @@ extension CVSDatabase {
 
     /// 서버에 저장되어있는 데이터가 현재 날짜랑 맞지 않는 경우
     case synchronized
+
+    /// 문서를 찾지 못한 경우
+    case retrieving
   }
 
   private enum Name {
