@@ -29,7 +29,7 @@ final class TitleLogoView: UIView {
       $0.centerX.centerY.equalToSuperview()
     }
 
-    titleLabel.text = cvsType.title
+    titleLabel.text = cvsType.rawValue
     titleLabel.textColor = cvsType.fontColor
     titleLabel.backgroundColor = cvsType.bgColor
   }

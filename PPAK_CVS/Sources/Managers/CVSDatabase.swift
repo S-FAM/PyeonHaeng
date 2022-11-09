@@ -18,12 +18,12 @@ final class CVSDatabase {
   static let shared: CVSDatabase = CVSDatabase()
 
   private lazy var database: CollectionReference = Firestore.firestore().collection("sale")
-  
+
   /// 데이터베이스에 저장되어있는 편의점 할인날짜
   var syncKey: Observable<String> {
     return self._syncKey().asObservable()
   }
-  
+
   /// 특정 조건에 맞는 제품을 가져옵니다.
   /// - Parameters:
   ///   - request: 요청할 제품의 조건식을 갖는 모델
@@ -158,7 +158,7 @@ extension CVSDatabase {
 // MARK: - Private Methods
 
 extension CVSDatabase {
-  
+
   private func _syncKey() -> Single<String> {
     return Single.create { [weak self] observer in
       self?.database.document(Name.syncKey).getDocument(as: SyncKeyModel.self) { result in
@@ -180,11 +180,11 @@ extension CVSDatabase {
 
     if model.cvs != .all && model.event != .all {
       query = ref
-        .whereField(Name.cvs, isEqualTo: model.cvs.title)
+        .whereField(Name.cvs, isEqualTo: model.cvs.rawValue)
         .whereField(Name.event, isEqualTo: model.event.rawValue)
     } else if model.cvs != .all {
       query = ref
-        .whereField(Name.cvs, isEqualTo: model.cvs.title)
+        .whereField(Name.cvs, isEqualTo: model.cvs.rawValue)
     } else {
       query = ref
         .whereField(Name.event, isEqualTo: model.event.rawValue)

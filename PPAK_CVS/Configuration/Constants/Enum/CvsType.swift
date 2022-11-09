@@ -13,26 +13,14 @@ import UIKit
 ///     - image: 로고이미지 이름
 ///     - bgColor: 태그의 배경색상
 ///     - fontColor: 태그의 폰트색상
+enum CVSType: String, Codable, CaseIterable {
 
-enum CVSType: Codable, CaseIterable {
-
-  case cu // cu
-  case gs // gs25
-  case sevenEleven // sevenEleven
-  case miniStop // miniStop
-  case eMart // eMart
+  case cu = "CU"
+  case gs = "GS25"
+  case sevenEleven = "7-ELEVEn"
+  case miniStop = "MINISTOP"
+  case eMart = "emart24"
   case all
-
-  var title: String {
-    switch self {
-    case .cu: return "CU"
-    case .gs: return "GS25"
-    case .sevenEleven: return "7-ELEVEn"
-    case .miniStop: return "MINISTOP"
-    case .eMart: return "emart24"
-    case .all: return "All"
-    }
-  }
 
   var image: UIImage? {
     switch self {
