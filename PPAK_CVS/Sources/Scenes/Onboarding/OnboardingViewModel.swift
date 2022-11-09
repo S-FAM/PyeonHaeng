@@ -55,7 +55,9 @@ final class OnboardingViewModel: ViewModel {
         nextState.isPushHomeVC = true
       }
     case .goToPreviousPage:
-      nextState.currentPage -= 1
+      if nextState.currentPage > 0 {
+        nextState.currentPage -= 1
+      }
     }
     return nextState
   }
