@@ -18,11 +18,49 @@ final class CVSDatabase {
   static let shared: CVSDatabase = CVSDatabase()
 
   private lazy var database: CollectionReference = Firestore.firestore().collection("sale")
-
+  
+  /// 데이터베이스에 저장되어있는 편의점 할인날짜
   var syncKey: Observable<String> {
     return self._syncKey().asObservable()
   }
-
+  
+  /// 특정 조건에 맞는 제품을 가져옵니다.
+  /// - Parameters:
+  ///   - request: 요청할 제품의 조건식을 갖는 모델
+  ///   - offset: 보여줄 인덱스, 또는 위치
+  ///   - limit: 보여줄 제품의 수
+  /// - Returns: [ProductModel] 타입의 Observable을 리턴합니다.
+  ///
+  /// request model을 가지고 제품을 요청하되, Pagination을 위해서 offset과 limit 파라미터 값을 적절히 수정할 필요가 있습니다.
+  /// 다음은 cu 편의점에 대해 2+1인 제품을 정렬하지 않고 가져오며, 해당 조건에 대해 10번째 제품부터 20개까지 요청하는 코드입니다.
+  /// ```
+  /// let model: RequestTypeModel = RequestTypeModel(
+  ///   cvs: .cu,               // cu 편의점인데
+  ///   event: .twoPlusOne,     // 2+1인 제품
+  ///   sort: .none             // 정렬 상관없이
+  /// )
+  /// product(request: model, offset: 10, limit: 20)
+  ///   .asDriver(onErrorJustReturn: [])
+  ///   .drive { product in
+  ///     // UI Codes...
+  ///   }
+  ///   .disposed(by: disposeBag)
+  /// ```
+  /// 만약 모든 편의점에 대해 모든 할인행사를 갖고오고 싶고, 가격 오름차순 정렬을 통해 처음부터 100개의 제품을 가져와 보여주고 싶다면 다음과 같은 코드를 작성하면 됩니다.
+  /// 참고로 처음부터 가지고오는 경우 offset의 기본값은 0이므로 생략가능합니다.
+  /// ```
+  /// let model: RequestTypeModel = RequestTypeModel(
+  ///   cvs: .all,          // 모든 편의점에 대해
+  ///   event: .all,        // 모든 할인행사를 가지고
+  ///   sort: .ascending    // 오름차순으로
+  /// )
+  /// product(request: model, limit: 100)
+  ///   .asDriver(onErrorJustReturn: [])
+  ///   .drive { product in
+  ///     // UI Codes...
+  ///   }
+  ///   .disposed(by: disposeBag)
+  /// ```
   func product(
     request: RequestTypeModel,
     offset: Int = 0,
