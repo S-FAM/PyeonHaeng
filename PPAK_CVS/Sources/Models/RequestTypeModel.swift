@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct RequestTypeModel {
   let cvs: CVSType
   let event: EventType
