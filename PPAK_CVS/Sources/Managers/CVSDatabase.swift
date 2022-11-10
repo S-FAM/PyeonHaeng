@@ -61,32 +61,54 @@ final class CVSDatabase {
   ///   }
   ///   .disposed(by: disposeBag)
   /// ```
+  ///
+  /// 만약 syncKey값으로 firebase에 접근하여 가져오고 싶다면 syncKey 프로퍼티를 이용하여 가져올 수 있습니다.
+  /// ```
+  /// CVSDatabase.shared.syncKey
+  ///   .flatMap { key in
+  ///     CVSDatabase.shared.product(
+  ///       request: RequestTypeModel(cvs: .eMart, event: .twoPlusOne, sort: .ascending),
+  ///       key: key
+  ///     )
+  ///   }
+  ///   .subscribe { products in
+  ///     // codes...
+  ///   }
+  ///   .disposed(by: disposeBag)
+  /// ```
   func product(
     request: RequestTypeModel,
+    key: String? = nil,
     offset: Int = 0,
     limit: Int = 10
   ) -> Observable<[ProductModel]> {
     return Single<[ProductModel]>.create { observer in
       let task = Task {
         do {
-          let key = try await self._syncKey().value
 
-          let dateFormatter = DateFormatter().then {
-            $0.dateFormat = "yyyy:MM"
+          let unwrappedKey: String
+
+          if let key = key {
+            unwrappedKey = key
+          } else {
+            unwrappedKey = try await self._syncKey().value
+
+            let dateFormatter = DateFormatter().then {
+              $0.dateFormat = "yyyy:MM"
+            }
+
+            // 받아온 값으로 날짜변환이 되지 않는 경우
+            guard let syncDate = dateFormatter.date(from: unwrappedKey) else {
+              throw Error.decoding
+            }
+
+            // db에 저장되어있는 날짜(년/월)가 현재 날짜랑 맞지 않는 경우
+            guard Date.now.year == syncDate.year && Date.now.month == syncDate.month else {
+              throw Error.synchronized
+            }
           }
-
-          // 받아온 값으로 날짜변환이 되지 않는 경우
-          guard let syncDate = dateFormatter.date(from: key) else {
-            throw Error.decoding
-          }
-
-          // db에 저장되어있는 날짜(년/월)가 현재 날짜랑 맞지 않는 경우
-          guard Date.now.year == syncDate.year && Date.now.month == syncDate.month else {
-            throw Error.synchronized
-          }
-
           // == ok. access to firebase ==
-          let query = self._query(model: request, key: key)
+          let query = self._query(model: request, key: unwrappedKey)
 
           var snapshot: QuerySnapshot
 
