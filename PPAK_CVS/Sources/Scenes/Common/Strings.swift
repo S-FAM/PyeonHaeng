@@ -24,4 +24,10 @@ enum Strings {
     static let desc3 = "찜한 제품이 행사하는 경우 \n매달 초에 알림을 받을 수 있습니다."
   }
 
+  enum Network {
+    static let alertTitle = "네트워크에 접속할 수 없습니다."
+    static let alertMessage = "네트워크 연결 상태를 확인해주세요."
+    static let alertEndAction = "종료"
+    static let alertConfirmAction = "확인"
+  }
 }
