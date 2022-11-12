@@ -161,6 +161,15 @@ final class HomeViewController: BaseViewController, Viewable {
         self.header.cvsButton.setImage(UIImage(named: imageName), for: .normal)
       })
       .disposed(by: disposeBag)
+
+    // 현재 편의점 타입 변경
+    viewModel.state
+      .compactMap { $0.currentCVSType }
+      .bind(onNext: { [weak self] in
+        self?.header.topCurveView.backgroundColor = $0.bgColor
+        self?.header.pageControl.focusedView.backgroundColor = $0.bgColor
+      })
+      .disposed(by: disposeBag)
   }
 }
 
