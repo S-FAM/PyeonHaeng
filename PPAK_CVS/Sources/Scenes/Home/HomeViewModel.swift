@@ -86,7 +86,6 @@ final class HomeViewModel: ViewModel {
         Observable.just(.onChangedFilter(filterDropdownCase)),
         Observable.just(.hideDropdown)
       ])
-
     }
   }
 
