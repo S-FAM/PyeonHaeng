@@ -46,9 +46,15 @@ final class BookmarkViewModel: ViewModel {
     case .pageControlIndexEvent(let index):
       return Observable.just(.onChnagedPageIndex(index))
     case .cvsButtonTappedInDropdown(let cvsDropdownCase):
-      return Observable.just(.onChangedCVSImage(cvsDropdownCase))
+      return Observable.concat([
+        Observable.just(.onChangedCVSImage(cvsDropdownCase)),
+        Observable.just(.hideDropdown)
+      ])
     case .filterButtonTappedInDropdown(let filterDropdownCase):
-      return Observable.just(.onChangedFilter(filterDropdownCase))
+      return Observable.concat([
+        Observable.just(.onChangedFilter(filterDropdownCase)),
+        Observable.just(.hideDropdown)
+      ])
     }
   }
 

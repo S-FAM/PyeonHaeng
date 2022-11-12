@@ -52,7 +52,8 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
   // MARK: - Setup
 
   private func setupStyles() {
-    topCurveView.backgroundColor = .blue
+    topCurveView.backgroundColor = CVSType.all.bgColor
+    pageControl.focusedView.backgroundColor = CVSType.all.bgColor
   }
 
   private func setupLayout() {
