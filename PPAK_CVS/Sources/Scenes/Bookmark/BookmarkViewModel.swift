@@ -17,7 +17,6 @@ final class BookmarkViewModel: ViewModel {
     case toggleFilterDropdown
     case toggleShowHomeVC
     case hideDropdown
-    case onChangedCVSImage(CVSDropdownCase)
     case onChangedCVSType(CVSType?)
     case onChangedFilter(FilterDropdownCase)
     case onChnagedPageIndex(Int)
@@ -27,7 +26,6 @@ final class BookmarkViewModel: ViewModel {
     var isVisibleCVSDropdown: Bool = false
     var isVisibleFilterDropdown: Bool = false
     var showHomeVC: Bool = false
-    var currentCVSImage: CVSDropdownCase = .all
     var currentFilter: FilterDropdownCase = .ascending
     var currentCVSType: CVSType? = .all
     var pageIndex: Int = 0
@@ -53,27 +51,16 @@ final class BookmarkViewModel: ViewModel {
       return Observable.just(.onChnagedPageIndex(index))
 
     case .cvsButtonTappedInDropdown(let cvsDropdownCase):
-      var cvsType: CVSType?
+      var newCvsType: CVSType?
       switch cvsDropdownCase {
-      case .all:
-        cvsType = .all
-      case .cu:
-        cvsType = .cu
-      case .emart:
-        cvsType = .eMart
-      case .gs:
-        cvsType = .gs
-      case .ministop:
-        cvsType = .miniStop
-      case .sevenEleven:
-        cvsType = .sevenEleven
+      case .cvs(let cvsType):
+        newCvsType = cvsType
       case .setting:
         break // 셋팅 페이지로 가야할 곳
       }
       return Observable.concat([
-        Observable.just(.onChangedCVSImage(cvsDropdownCase)),
         Observable.just(.hideDropdown),
-        Observable.just(.onChangedCVSType(cvsType))
+        Observable.just(.onChangedCVSType(newCvsType))
       ])
 
     case .filterButtonTappedInDropdown(let filterDropdownCase):
@@ -103,9 +90,6 @@ final class BookmarkViewModel: ViewModel {
 
     case .onChangedCVSType(let cvsType):
       nextState.currentCVSType = cvsType
-
-    case .onChangedCVSImage(let cvsDropdownCase):
-      nextState.currentCVSImage = cvsDropdownCase
 
     case .onChangedFilter(let filterDropdownCase):
       nextState.currentFilter = filterDropdownCase
