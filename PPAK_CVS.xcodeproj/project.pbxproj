@@ -19,7 +19,6 @@
 		A5932EAA28E047E000457AD3 /* OnboardingDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5932EA928E047E000457AD3 /* OnboardingDataModel.swift */; };
 		A5E8DD07291FA217006AF2CE /* NetworkCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E8DD06291FA217006AF2CE /* NetworkCheck.swift */; };
 		A5E8DD0A291FA75A006AF2CE /* NetworkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E8DD09291FA75A006AF2CE /* NetworkVC.swift */; };
-		A5E8DD0E291FAB27006AF2CE /* NetworkCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E8DD0D291FAB27006AF2CE /* NetworkCoordinator.swift */; };
 		A5F8288228DEAE3C00C5D6A2 /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288128DEAE3C00C5D6A2 /* OnboardingVC.swift */; };
 		A5F8288528DEB03A00C5D6A2 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288428DEB03A00C5D6A2 /* OnboardingCoordinator.swift */; };
 		A5F8288728DEB63D00C5D6A2 /* FTUXStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288628DEB63D00C5D6A2 /* FTUXStorage.swift */; };
@@ -88,7 +87,6 @@
 		A5932EA928E047E000457AD3 /* OnboardingDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDataModel.swift; sourceTree = "<group>"; };
 		A5E8DD06291FA217006AF2CE /* NetworkCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCheck.swift; sourceTree = "<group>"; };
 		A5E8DD09291FA75A006AF2CE /* NetworkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkVC.swift; sourceTree = "<group>"; };
-		A5E8DD0D291FAB27006AF2CE /* NetworkCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCoordinator.swift; sourceTree = "<group>"; };
 		A5F8288128DEAE3C00C5D6A2 /* OnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
 		A5F8288428DEB03A00C5D6A2 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
 		A5F8288628DEB63D00C5D6A2 /* FTUXStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUXStorage.swift; sourceTree = "<group>"; };
@@ -202,7 +200,6 @@
 			isa = PBXGroup;
 			children = (
 				A5E8DD09291FA75A006AF2CE /* NetworkVC.swift */,
-				A5E8DD0D291FAB27006AF2CE /* NetworkCoordinator.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -505,7 +502,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5932EAA28E047E000457AD3 /* OnboardingDataModel.swift in Sources */,
-				A5E8DD0E291FAB27006AF2CE /* NetworkCoordinator.swift in Sources */,
 				E5C9025228E2DB480086BDE9 /* HomeViewModel.swift in Sources */,
 				BAA0F53528FD353500B632AC /* AppCoordinator.swift in Sources */,
 				BA1CCACD28FB9A450002FD8C /* Viewable.swift in Sources */,

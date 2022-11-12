@@ -38,7 +38,7 @@ class NetworkViewController: BaseViewController {
       UIApplication.shared.open(url)
     }
   }
-  
+
   // MARK: - Life Cycle
 
   override func viewDidLoad() {

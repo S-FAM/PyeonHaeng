@@ -5,8 +5,8 @@
 //  Created by 김민지 on 2022/11/12.
 //
 
-import Foundation
 import Network
+import UIKit
 
 final class NetworkCheck {
   static let shared = NetworkCheck()
@@ -37,10 +37,14 @@ final class NetworkCheck {
       self?.getConnectionType(path)
 
       if self?.isConnected == true {
-        print("연결됨!")
+        print(#function, "연결됨!")
       } else {
-        print("연결안됨!")
-        // TODO: NetworkVC를 Root로 보여주기
+        print(#function, "연결안됨!")
+        DispatchQueue.main.async {
+          let networkViewController = NetworkViewController()
+          networkViewController.modalPresentationStyle = .fullScreen
+          UIApplication.shared.windows.first?.rootViewController?.show(networkViewController, sender: nil)
+        }
       }
     }
   }
