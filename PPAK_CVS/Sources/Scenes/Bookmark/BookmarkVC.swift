@@ -157,18 +157,11 @@ final class BookmarkViewController: BaseViewController, Viewable {
       })
       .disposed(by: disposeBag)
 
-    // 현재 선택된 편의점 로고 이미지 변경
-    viewModel.state
-      .map { $0.currentCVSImage.imageName }
-      .bind(onNext: { [unowned self] imageName in
-        self.header.cvsButton.setImage(UIImage(named: imageName), for: .normal)
-      })
-      .disposed(by: disposeBag)
-    
     // 현재 편의점 타입 변경 반응
     viewModel.state
       .compactMap { $0.currentCVSType }
       .bind(onNext: { [weak self] in
+        self?.header.cvsButton.setImage($0.image, for: .normal)
         self?.header.topCurveView.backgroundColor = $0.bgColor
         self?.header.pageControl.focusedView.backgroundColor = $0.bgColor
       })

@@ -20,7 +20,7 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
   lazy var searchBar = SearchBar()
 
   lazy var cvsButton = UIButton().then {
-    $0.setImage(UIImage(named: CVSDropdownCase.all.imageName), for: .normal)
+    $0.setImage(CVSType.all.image, for: .normal)
   }
 
   lazy var filterButton = UIButton().then {
