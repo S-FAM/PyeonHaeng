@@ -15,19 +15,28 @@ import RxCocoa
 enum CVSDropdownCase {
   case cvs(CVSType)
   case setting
+  
+  var image: UIImage? {
+    switch self {
+    case .cvs(let type):
+      return type.image
+    case .setting:
+      return UIImage(named: "setting")
+    }
+  }
 }
 
 final class CVSDropdownView: UIView {
 
   // MARK: - Properties
 
-  private lazy var allButton = createLogoButton(CVSType.all.image)
-  private lazy var elevenButton = createLogoButton(CVSType.sevenEleven.image)
-  private lazy var cuButton = createLogoButton(CVSType.cu.image)
-  private lazy var emartButton = createLogoButton(CVSType.eMart.image)
-  private lazy var gsButton = createLogoButton(CVSType.gs.image)
-  private lazy var ministopButton = createLogoButton(CVSType.miniStop.image)
-  private lazy var settingButton = createLogoButton(UIImage())
+  private lazy var allButton = createLogoButton(CVSDropdownCase.cvs(.all).image)
+  private lazy var elevenButton = createLogoButton(CVSDropdownCase.cvs(.all).image)
+  private lazy var cuButton = createLogoButton(CVSDropdownCase.cvs(.all).image)
+  private lazy var emartButton = createLogoButton(CVSDropdownCase.cvs(.all).image)
+  private lazy var gsButton = createLogoButton(CVSDropdownCase.cvs(.all).image)
+  private lazy var ministopButton = createLogoButton(CVSDropdownCase.cvs(.all).image)
+  private lazy var settingButton = createLogoButton(CVSDropdownCase.setting.image)
 
   private lazy var stackView = UIStackView(
     arrangedSubviews: [allButton, cuButton, gsButton, elevenButton, ministopButton, emartButton, settingButton]
