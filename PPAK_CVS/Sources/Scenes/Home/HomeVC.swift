@@ -153,7 +153,7 @@ final class HomeViewController: BaseViewController, Viewable {
         }
       })
       .disposed(by: disposeBag)
-    
+
     // 현재 편의점 타입 반응
     viewModel.state
       .compactMap { $0.currentCVSType }
@@ -178,7 +178,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     return cell
   }
-  
+
   func collectionView(
     _ collectionView: UICollectionView,
     numberOfItemsInSection section: Int

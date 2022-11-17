@@ -56,16 +56,16 @@ final class HomeViewModel: ViewModel {
       return Observable.just(.onChangedPageIndex(index))
 
     case .cvsButtonTappedInDropdown(let cvsDropdownCase):
-      var newCvsType: CVSType?
+      var newCVSType: CVSType?
       switch cvsDropdownCase {
       case .cvs(let cvsType):
-        newCvsType = cvsType
+        newCVSType = cvsType
       case .setting:
         break // 셋팅 페이지로 가야할 곳
       }
       return Observable.concat([
         Observable.just(.hideDropdown),
-        Observable.just(.onChangedCVSType(newCvsType))
+        Observable.just(.onChangedCVSType(newCVSType))
       ])
 
     case .filterButtonTappedInDropdown(let filterDropdownCase):
