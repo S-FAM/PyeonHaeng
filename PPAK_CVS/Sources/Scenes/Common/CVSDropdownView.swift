@@ -1,10 +1,3 @@
-//
-//  CVSDropdownView.swift
-//  PPAK_CVS
-//
-//  Created by 김응철 on 2022/09/27.
-//
-
 import UIKit
 
 import SnapKit
@@ -13,38 +6,21 @@ import RxSwift
 import RxCocoa
 
 enum CVSDropdownCase {
-  case all
-  case sevenEleven
-  case gs
-  case cu
-  case emart
-  case ministop
+  case cvs(CVSType)
   case setting
-
-  var imageName: String {
-    switch self {
-    case .all: return "logo_all"
-    case .sevenEleven: return "logo_7eleven"
-    case .gs: return "logo_gs25"
-    case .cu: return "logo_cu"
-    case .emart: return "logo_emart24"
-    case .ministop: return "logo_ministop"
-    case .setting: return "setting"
-    }
-  }
 }
 
 final class CVSDropdownView: UIView {
 
   // MARK: - Properties
 
-  private lazy var allButton = createLogoButton(CVSDropdownCase.all.imageName)
-  private lazy var elevenButton = createLogoButton(CVSDropdownCase.sevenEleven.imageName)
-  private lazy var cuButton = createLogoButton(CVSDropdownCase.cu.imageName)
-  private lazy var emartButton = createLogoButton(CVSDropdownCase.emart.imageName)
-  private lazy var gsButton = createLogoButton(CVSDropdownCase.gs.imageName)
-  private lazy var ministopButton = createLogoButton(CVSDropdownCase.ministop.imageName)
-  private lazy var settingButton = createLogoButton(CVSDropdownCase.setting.imageName)
+  private lazy var allButton = createLogoButton(CVSType.all.image)
+  private lazy var elevenButton = createLogoButton(CVSType.sevenEleven.image)
+  private lazy var cuButton = createLogoButton(CVSType.cu.image)
+  private lazy var emartButton = createLogoButton(CVSType.eMart.image)
+  private lazy var gsButton = createLogoButton(CVSType.gs.image)
+  private lazy var ministopButton = createLogoButton(CVSType.miniStop.image)
+  private lazy var settingButton = createLogoButton(#imageLiteral(resourceName: "setting"))
 
   private lazy var stackView = UIStackView(
     arrangedSubviews: [allButton, cuButton, gsButton, elevenButton, ministopButton, emartButton, settingButton]
@@ -96,37 +72,37 @@ final class CVSDropdownView: UIView {
 
     // All 버튼 이벤트
     allButton.rx.tap
-      .map { CVSDropdownCase.all }
+      .map { CVSDropdownCase.cvs(.all) }
       .bind(to: buttonEventSubject)
       .disposed(by: disposeBag)
 
     // CU 버튼 이벤트
     cuButton.rx.tap
-      .map { CVSDropdownCase.cu }
+      .map { CVSDropdownCase.cvs(.cu) }
       .bind(to: buttonEventSubject)
       .disposed(by: disposeBag)
 
     // GS 버튼 이벤트
     gsButton.rx.tap
-      .map { CVSDropdownCase.gs }
+      .map { CVSDropdownCase.cvs(.gs) }
       .bind(to: buttonEventSubject)
       .disposed(by: disposeBag)
 
     // Emart 버튼 이벤트
     emartButton.rx.tap
-      .map { CVSDropdownCase.emart }
+      .map { CVSDropdownCase.cvs(.eMart) }
       .bind(to: buttonEventSubject)
       .disposed(by: disposeBag)
 
     // Ministop 버튼 이벤트
     ministopButton.rx.tap
-      .map { CVSDropdownCase.ministop }
+      .map { CVSDropdownCase.cvs(.miniStop) }
       .bind(to: buttonEventSubject)
       .disposed(by: disposeBag)
 
     // 7Eleven 버튼 이벤트
     elevenButton.rx.tap
-      .map { CVSDropdownCase.sevenEleven }
+      .map { CVSDropdownCase.cvs(.miniStop) }
       .bind(to: buttonEventSubject)
       .disposed(by: disposeBag)
 
@@ -139,9 +115,9 @@ final class CVSDropdownView: UIView {
 
   // MARK: - Helpers
 
-  private func createLogoButton(_ name: String) -> UIButton {
+  private func createLogoButton(_ image: UIImage?) -> UIButton {
     let button = UIButton()
-    button.setImage(UIImage(named: name), for: .normal)
+    button.setImage(image, for: .normal)
     button.snp.makeConstraints { make in
       make.width.height.equalTo(40)
     }
