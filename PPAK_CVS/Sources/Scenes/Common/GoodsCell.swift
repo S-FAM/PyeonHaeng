@@ -23,18 +23,15 @@ final class GoodsCell: UICollectionViewCell {
   }
 
   private let goodsLabel = UILabel().then {
-    $0.text = "코카)씨그랩피치탄산수350ML"
     $0.font = .systemFont(ofSize: 16.0, weight: .bold)
   }
 
   private let priceLabel = UILabel().then {
-    $0.text = "1,500원"
-    $0.font = .systemFont(ofSize: 16.0, weight: .light)
+    $0.font = .systemFont(ofSize: 14.0, weight: .light)
   }
 
   private let descriptionLabel = UILabel().then {
-    $0.text = "(개당 750원)"
-    $0.font = .systemFont(ofSize: 14.0, weight: .light)
+    $0.font = .systemFont(ofSize: 12.0, weight: .light)
   }
 
   private let goodsImage = UIImageView().then {
@@ -65,8 +62,10 @@ final class GoodsCell: UICollectionViewCell {
   // MARK: - Setup
 
   /// 명시적으로 호출되어야 합니다.
-  func setupCVS(cvs: CVSType, event: EventType) {
-    setupButtons(cvs: cvs, event: event)
+  func setupCVS(_ product: ProductModel) {
+    goodsLabel.text = product.name
+    priceLabel.text = String(product.price)
+    setupButtons(cvs: product.store, event: product.saleType)
     setupLayouts()
     setupConstraints()
   }
@@ -105,6 +104,7 @@ final class GoodsCell: UICollectionViewCell {
 
     titleLogoView.snp.makeConstraints { make in
       make.trailing.equalTo(containerView.snp.trailing).offset(-12)
+      make.centerY.equalTo(containerView.snp.top)
       make.height.equalTo(30)
     }
 
