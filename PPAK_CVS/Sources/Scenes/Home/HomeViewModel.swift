@@ -2,16 +2,16 @@ import RxSwift
 import RxCocoa
 
 final class HomeViewModel: ViewModel {
-  
+
   enum Action {
-    case requestProducts
+    case viewDidLoad
     case currentCVSButtonDidTap
     case filterButtonDidTap
     case backgroundDidTap
     case bookmarkButtonDidTap
-    case pageControlIndexDidChange(Int)
+    case pageControlIndexDidChange(EventType)
     case dropdownCVSButtonDidTap(CVSDropdownCase)
-    case dropdownFilterButtonDidTap(FilterDropdownCase)
+    case dropdownFilterButtonDidTap(SortType)
   }
 
   enum Mutation {
@@ -19,9 +19,9 @@ final class HomeViewModel: ViewModel {
     case toggleFilterDropdown
     case toggleShowBookmarkVC(Bool)
     case hideDropdown
-    case updateCVSType(CVSType?)
-    case updateFilter(FilterDropdownCase)
-    case updatePageIndex(Int)
+    case updateCVSType(CVSType)
+    case updateSortType(SortType)
+    case updateEventType(EventType)
     case updateIndicatorState(Bool)
     case updateProducts([ProductModel])
   }
@@ -30,9 +30,9 @@ final class HomeViewModel: ViewModel {
     var isVisibleCVSDropdown: Bool = false
     var isVisibleFilterDropdown: Bool = false
     var showBookmarkVC: Bool = false
-    var currentFilter: FilterDropdownCase = .ascending
-    var currentCVSType: CVSType? = .all
-    var pageIndex: Int = 0
+    var currentSortType: SortType = .none
+    var currentEventType: EventType = .all
+    var currentCVSType: CVSType = .all
     var indicatorState: Bool = false
     var products: [ProductModel] = []
   }
@@ -41,16 +41,8 @@ final class HomeViewModel: ViewModel {
 
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
-    case .requestProducts:
-      return Observable.concat([
-        Observable.just(.updateIndicatorState(true)),
-        CVSDatabase.shared.product(request: RequestTypeModel(
-          cvs: .all,
-          event: .all,
-          sort: .none)
-        )
-        .flatMap { Observable.just(.updateProducts($0)) }
-      ])
+    case .viewDidLoad:
+      return requestProducts()
 
     case .currentCVSButtonDidTap:
       return Observable.just(.toggleCVSDropdown)
@@ -68,26 +60,29 @@ final class HomeViewModel: ViewModel {
         Observable.just(.toggleShowBookmarkVC(false))
       ])
 
-    case .pageControlIndexDidChange(let index):
-      return Observable.just(.updatePageIndex(index))
+    case .pageControlIndexDidChange(let event):
+      return Observable.concat([
+        Observable.just(.updateIndicatorState(true)),
+        Observable.just(.updateEventType(event)),
+        requestProducts(cvs: currentState.currentCVSType, event: event, sort: currentState.currentSortType)
+      ])
 
     case .dropdownCVSButtonDidTap(let cvsDropdownCase):
-      var newCVSType: CVSType?
       switch cvsDropdownCase {
       case .cvs(let cvsType):
-        newCVSType = cvsType
+        return Observable.concat([
+          Observable.just(.hideDropdown),
+          Observable.just(.updateCVSType(cvsType)),
+          requestProducts(cvs: cvsType, event: currentState.currentEventType, sort: currentState.currentSortType)
+        ])
       case .setting:
         // TODO: Setting Page로 이동해야 합니다.
-        break
+        return Observable.just(.hideDropdown)
       }
-      return Observable.concat([
-        Observable.just(.hideDropdown),
-        Observable.just(.updateCVSType(newCVSType))
-      ])
 
     case .dropdownFilterButtonDidTap(let filterDropdownCase):
       return Observable.concat([
-        Observable.just(.updateFilter(filterDropdownCase)),
+        Observable.just(.updateSortType(filterDropdownCase)),
         Observable.just(.hideDropdown)
       ])
     }
@@ -117,16 +112,30 @@ final class HomeViewModel: ViewModel {
     case let .toggleShowBookmarkVC(isShowBookmarkVC):
       nextState.showBookmarkVC = isShowBookmarkVC
 
+    case .updateEventType(let eventType):
+      nextState.currentEventType = eventType
+
     case .updateCVSType(let cvsType):
       nextState.currentCVSType = cvsType
 
-    case .updateFilter(let filterDropdownCase):
-      nextState.currentFilter = filterDropdownCase
-
-    case .updatePageIndex(let index):
-      nextState.pageIndex = index
+    case .updateSortType(let sortType):
+      nextState.currentSortType = sortType
 
     }
     return nextState
+  }
+}
+
+extension HomeViewModel {
+  func requestProducts(cvs: CVSType = .all, event: EventType = .all, sort: SortType = .none) -> Observable<Mutation> {
+    return Observable.concat([
+      Observable.just(.updateIndicatorState(true)),
+      CVSDatabase.shared.product(request: RequestTypeModel(
+        cvs: cvs,
+        event: event,
+        sort: sort)
+      )
+      .flatMap { Observable.just(.updateProducts($0)) }
+    ])
   }
 }
