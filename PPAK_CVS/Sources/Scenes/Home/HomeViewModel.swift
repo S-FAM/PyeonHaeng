@@ -83,7 +83,8 @@ final class HomeViewModel: ViewModel {
     case .dropdownFilterButtonDidTap(let sortType):
       return Observable.concat([
         Observable.just(.updateSortType(sortType)),
-        Observable.just(.hideDropdown)
+        Observable.just(.hideDropdown),
+        requestProducts(cvs: currentState.currentCVSType, event: currentState.currentEventType, sort: sortType)
       ])
     }
   }

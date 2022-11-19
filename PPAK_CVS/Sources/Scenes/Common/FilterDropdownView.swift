@@ -88,8 +88,8 @@ extension FilterDropdownView {
     var config = UIButton.Configuration.plain()
     var container = AttributeContainer()
     container.font = .systemFont(ofSize: 16.0, weight: .bold)
-    container.foregroundColor = .black
     config.attributedTitle = AttributedString(title, attributes: container)
+    config.baseForegroundColor = .black
     let button = UIButton(configuration: config)
 
     return button
