@@ -12,11 +12,6 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-enum FilterDropdownCase {
-  case ascending
-  case descending
-}
-
 final class FilterDropdownView: UIView {
 
   // MARK: - Properties
@@ -32,7 +27,7 @@ final class FilterDropdownView: UIView {
   }
 
   let disposeBag = DisposeBag()
-  let buttonEventSubject = PublishSubject<FilterDropdownCase>()
+  let buttonEventSubject = PublishSubject<SortType>()
 
   // MARK: - Init
 
@@ -74,13 +69,13 @@ final class FilterDropdownView: UIView {
 
     // 낮은가격순 터치
     ascendingButton.rx.tap
-      .map { FilterDropdownCase.ascending }
+      .map { SortType.ascending }
       .bind(to: buttonEventSubject)
       .disposed(by: disposeBag)
 
     // 높은가격순 터치
     descendingButton.rx.tap
-      .map { FilterDropdownCase.descending }
+      .map { SortType.descending }
       .bind(to: buttonEventSubject)
       .disposed(by: disposeBag)
   }

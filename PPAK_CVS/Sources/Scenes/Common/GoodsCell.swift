@@ -8,6 +8,7 @@ import UIKit
 
 import Then
 import SnapKit
+import Kingfisher
 
 final class GoodsCell: UICollectionViewCell {
 
@@ -65,6 +66,12 @@ final class GoodsCell: UICollectionViewCell {
   func setupCVS(_ product: ProductModel) {
     goodsLabel.text = product.name
     priceLabel.text = String(product.price)
+    goodsImage.kf.setImage(
+      with: URL(string: product.imageLink ?? ""),
+      options: [
+        .transition(.fade(0.5))
+      ]
+    )
     setupButtons(cvs: product.store, event: product.saleType)
     setupLayouts()
     setupConstraints()
