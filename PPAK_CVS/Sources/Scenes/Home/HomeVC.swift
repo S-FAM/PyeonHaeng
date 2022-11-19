@@ -27,15 +27,19 @@ final class HomeViewController: BaseViewController, Viewable {
                 forCellWithReuseIdentifier: GoodsCell.id)
   }
 
-  private lazy var cvsDropdownView = CVSDropdownView()
-  private lazy var filterDropdownView = FilterDropdownView()
+  private let indicator = UIActivityIndicatorView()
+  private let cvsDropdownView = CVSDropdownView()
+  private let filterDropdownView = FilterDropdownView()
   private var header: HomeCollectionHeaderView!
 
+  private var products: [ProductModel] = []
+ 
   // MARK: - Setup
 
   override func setupLayouts() {
     super.setupLayouts()
     view.addSubview(collectionView)
+    view.addSubview(indicator)
   }
 
   override func setupStyles() {
@@ -49,9 +53,13 @@ final class HomeViewController: BaseViewController, Viewable {
       make.top.leading.trailing.equalToSuperview()
       make.bottom.equalTo(view.safeAreaLayoutGuide)
     }
+
+    indicator.snp.makeConstraints { make in
+      make.center.equalToSuperview()
+    }
   }
 
-  func setupDropdown() {
+  private func setupDropdown() {
     [cvsDropdownView, filterDropdownView]
       .forEach {
         view.addSubview($0)
@@ -74,41 +82,48 @@ final class HomeViewController: BaseViewController, Viewable {
   }
 
   // MARK: - Event
-
+  
   func bind(viewModel: HomeViewModel) {}
 
   private func bindHeader() {
     guard let viewModel = viewModel else { return }
 
     // MARK: - Action
+    
+    // 최초 실행 시 데이터 불러오기
+    Observable.empty()
+      .take(1)
+      .map { HomeViewModel.Action.requestProducts }
+      .bind(to: viewModel.action)
+      .disposed(by: disposeBag)
 
     // 북마크 버튼 클릭
     header.bookmarkButton.rx.tap
-      .map { HomeViewModel.Action.bookmarkButtonTapped }
+      .map { HomeViewModel.Action.bookmarkButtonDidTap }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 현재 편의점 로고 버튼 클릭
     header.cvsButton.rx.tap
-      .map { HomeViewModel.Action.currentCVSButtonTapped }
+      .map { HomeViewModel.Action.currentCVSButtonDidTap }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 필터 버튼 클릭
     header.filterButton.rx.tap
-      .map { HomeViewModel.Action.filterButtonTapped }
+      .map { HomeViewModel.Action.filterButtonDidTap }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 편의점 드롭다운 리스트 버튼 클릭
     cvsDropdownView.buttonEventSubject
-      .map { HomeViewModel.Action.cvsButtonTappedInDropdown($0) }
+      .map { HomeViewModel.Action.dropdownCVSButtonDidTap($0) }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 필터 드롭다운 리스트 버튼 클릭
     filterDropdownView.buttonEventSubject
-      .map { HomeViewModel.Action.filterButtonTappedInDropdown($0) }
+      .map { HomeViewModel.Action.dropdownFilterButtonDidTap($0) }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
@@ -116,7 +131,7 @@ final class HomeViewController: BaseViewController, Viewable {
     header.pageControl.pageIndexSubject
       .skip(1)
       .distinctUntilChanged()
-      .map { HomeViewModel.Action.pageControlIndexEvent($0) }
+      .map { HomeViewModel.Action.pageControlIndexDidChange($0) }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
@@ -124,7 +139,7 @@ final class HomeViewController: BaseViewController, Viewable {
     view.rx.tapGesture(configuration: { _, delegate in
       delegate.simultaneousRecognitionPolicy = .never
     })
-    .map { _ in HomeViewModel.Action.backgroundTapped }
+    .map { _ in HomeViewModel.Action.backgroundDidTap }
     .bind(to: viewModel.action)
     .disposed(by: disposeBag)
 
@@ -163,6 +178,22 @@ final class HomeViewController: BaseViewController, Viewable {
         self?.header.pageControl.focusedView.backgroundColor = $0.bgColor
       })
       .disposed(by: disposeBag)
+
+    // 인디케이터 애니메이션 제어
+    viewModel.state
+      .map { $0.indicatorState }
+      .bind(to: indicator.rx.isAnimating)
+      .disposed(by: disposeBag)
+
+    // 새로운 상품 목록들로 업데이트
+    viewModel.state
+      .map { $0.products }
+      .bind(onNext: { [weak self] in
+        guard let self = self else { return }
+        self.products = $0
+        self.collectionView.reloadData()
+      })
+      .disposed(by: disposeBag)
   }
 }
 
@@ -176,6 +207,8 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     ) as? GoodsCell else {
       return UICollectionViewCell()
     }
+    let product = products[indexPath.row]
+    cell.setupCVS(product)
     return cell
   }
 
@@ -183,7 +216,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     _ collectionView: UICollectionView,
     numberOfItemsInSection section: Int
   ) -> Int {
-    return 10
+    return products.count
   }
 
   func collectionView(

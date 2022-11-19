@@ -22,7 +22,7 @@ final class TitleLogoView: UIView {
       attributes: container
     )
     config.cornerStyle = .capsule
-    config.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 4, bottom: 8, trailing: 4)
+    config.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
     config.baseBackgroundColor = cvsType.bgColor
 
     $0.configuration = config
