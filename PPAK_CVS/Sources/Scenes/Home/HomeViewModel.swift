@@ -2,15 +2,16 @@ import RxSwift
 import RxCocoa
 
 final class HomeViewModel: ViewModel {
-
+  
   enum Action {
-    case currentCVSButtonTapped
-    case filterButtonTapped
-    case backgroundTapped
-    case bookmarkButtonTapped
-    case pageControlIndexEvent(Int)
-    case cvsButtonTappedInDropdown(CVSDropdownCase)
-    case filterButtonTappedInDropdown(FilterDropdownCase)
+    case requestProducts
+    case currentCVSButtonDidTap
+    case filterButtonDidTap
+    case backgroundDidTap
+    case bookmarkButtonDidTap
+    case pageControlIndexDidChange(Int)
+    case dropdownCVSButtonDidTap(CVSDropdownCase)
+    case dropdownFilterButtonDidTap(FilterDropdownCase)
   }
 
   enum Mutation {
@@ -18,9 +19,11 @@ final class HomeViewModel: ViewModel {
     case toggleFilterDropdown
     case toggleShowBookmarkVC(Bool)
     case hideDropdown
-    case onChangedCVSType(CVSType?)
-    case onChangedFilter(FilterDropdownCase)
-    case onChangedPageIndex(Int)
+    case updateCVSType(CVSType?)
+    case updateFilter(FilterDropdownCase)
+    case updatePageIndex(Int)
+    case updateIndicatorState(Bool)
+    case updateProducts([ProductModel])
   }
 
   struct State {
@@ -30,47 +33,61 @@ final class HomeViewModel: ViewModel {
     var currentFilter: FilterDropdownCase = .ascending
     var currentCVSType: CVSType? = .all
     var pageIndex: Int = 0
+    var indicatorState: Bool = false
+    var products: [ProductModel] = []
   }
 
   var initialState = State()
 
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
-    case .currentCVSButtonTapped:
+    case .requestProducts:
+      return Observable.concat([
+        Observable.just(.updateIndicatorState(true)),
+        CVSDatabase.shared.product(request: RequestTypeModel(
+          cvs: .all,
+          event: .all,
+          sort: .none)
+        )
+        .flatMap { Observable.just(.updateProducts($0)) }
+      ])
+
+    case .currentCVSButtonDidTap:
       return Observable.just(.toggleCVSDropdown)
 
-    case .filterButtonTapped:
+    case .filterButtonDidTap:
       return Observable.just(.toggleFilterDropdown)
 
-    case .backgroundTapped:
+    case .backgroundDidTap:
       return Observable.just(.hideDropdown)
 
-    case .bookmarkButtonTapped:
+    case .bookmarkButtonDidTap:
       guard currentState.showBookmarkVC == false else { return .empty() }
       return Observable.concat([
         Observable.just(.toggleShowBookmarkVC(true)),
         Observable.just(.toggleShowBookmarkVC(false))
       ])
 
-    case .pageControlIndexEvent(let index):
-      return Observable.just(.onChangedPageIndex(index))
+    case .pageControlIndexDidChange(let index):
+      return Observable.just(.updatePageIndex(index))
 
-    case .cvsButtonTappedInDropdown(let cvsDropdownCase):
+    case .dropdownCVSButtonDidTap(let cvsDropdownCase):
       var newCVSType: CVSType?
       switch cvsDropdownCase {
       case .cvs(let cvsType):
         newCVSType = cvsType
       case .setting:
-        break // 셋팅 페이지로 가야할 곳
+        // TODO: Setting Page로 이동해야 합니다.
+        break
       }
       return Observable.concat([
         Observable.just(.hideDropdown),
-        Observable.just(.onChangedCVSType(newCVSType))
+        Observable.just(.updateCVSType(newCVSType))
       ])
 
-    case .filterButtonTappedInDropdown(let filterDropdownCase):
+    case .dropdownFilterButtonDidTap(let filterDropdownCase):
       return Observable.concat([
-        Observable.just(.onChangedFilter(filterDropdownCase)),
+        Observable.just(.updateFilter(filterDropdownCase)),
         Observable.just(.hideDropdown)
       ])
     }
@@ -80,6 +97,13 @@ final class HomeViewModel: ViewModel {
     var nextState = state
 
     switch mutation {
+    case .updateProducts(let products):
+      nextState.products = products
+      nextState.indicatorState = false
+
+    case .updateIndicatorState(let isAnimated):
+      nextState.indicatorState = isAnimated
+
     case .toggleCVSDropdown:
       nextState.isVisibleCVSDropdown.toggle()
 
@@ -93,13 +117,13 @@ final class HomeViewModel: ViewModel {
     case let .toggleShowBookmarkVC(isShowBookmarkVC):
       nextState.showBookmarkVC = isShowBookmarkVC
 
-    case .onChangedCVSType(let cvsType):
+    case .updateCVSType(let cvsType):
       nextState.currentCVSType = cvsType
 
-    case .onChangedFilter(let filterDropdownCase):
+    case .updateFilter(let filterDropdownCase):
       nextState.currentFilter = filterDropdownCase
 
-    case .onChangedPageIndex(let index):
+    case .updatePageIndex(let index):
       nextState.pageIndex = index
 
     }
