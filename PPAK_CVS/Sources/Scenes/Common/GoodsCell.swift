@@ -22,11 +22,6 @@ final class GoodsCell: UICollectionViewCell {
     $0.backgroundColor = .white
   }
 
-  private let logoView = UIView().then {
-    $0.layer.cornerRadius = 15.0
-    $0.backgroundColor = .blue
-  }
-
   private let goodsLabel = UILabel().then {
     $0.text = "코카)씨그랩피치탄산수350ML"
     $0.font = .systemFont(ofSize: 16.0, weight: .bold)
@@ -56,7 +51,7 @@ final class GoodsCell: UICollectionViewCell {
     let horiStack = UIStackView(arrangedSubviews: [priceLabel, descriptionLabel])
     horiStack.axis = .horizontal
     horiStack.spacing = 2.0
-    [goodsLabel, horiStack].forEach {
+    [goodsLabel, horiStack, descriptionButton].forEach {
       stackView.addArrangedSubview($0)
     }
       stackView.axis = .vertical
@@ -64,21 +59,37 @@ final class GoodsCell: UICollectionViewCell {
       stackView.alignment = .leading
   }
 
-  // MARK: - Init
-  override init(frame: CGRect) {
-    super.init(frame: frame)
+  private var titleLogoView: TitleLogoView!
+  private var descriptionButton: UIButton!
+
+  // MARK: - Setup
+
+  /// 명시적으로 호출되어야 합니다.
+  func setupCVS(cvs: CVSType, event: EventType) {
+    setupButtons(cvs: cvs, event: event)
     setupLayouts()
     setupConstraints()
   }
 
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+  private func setupButtons(cvs: CVSType, event: EventType) {
+    self.titleLogoView = TitleLogoView(cvsType: cvs)
+
+    var config = UIButton.Configuration.filled()
+    var container = AttributeContainer()
+    container.foregroundColor = cvs.fontColor
+    container.font = .systemFont(ofSize: 12)
+    config.baseBackgroundColor = cvs.bgColor
+    config.background.cornerRadius = 12
+    config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 10, bottom: 4, trailing: 10)
+    config.attributedTitle = AttributedString(
+      event.rawValue,
+      attributes: container
+    )
+    self.descriptionButton = UIButton(configuration: config)
   }
 
-  // MARK: - Setup
-
   private func setupLayouts() {
-    [containerView, logoView]
+    [containerView, titleLogoView]
       .forEach { contentView.addSubview($0) }
 
     [stackView, goodsImage, eventView]
@@ -92,11 +103,9 @@ final class GoodsCell: UICollectionViewCell {
       make.height.equalTo(100)
     }
 
-    logoView.snp.makeConstraints { make in
-      make.bottom.equalTo(containerView.snp.top).offset(8)
-      make.trailing.equalTo(containerView.snp.trailing).offset(-24.0)
-      make.height.equalTo(30.0)
-      make.width.equalTo(100.0)
+    titleLogoView.snp.makeConstraints { make in
+      make.trailing.equalTo(containerView.snp.trailing).offset(-12)
+      make.height.equalTo(30)
     }
 
     goodsImage.snp.makeConstraints { make in
