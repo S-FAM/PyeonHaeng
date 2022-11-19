@@ -80,9 +80,9 @@ final class HomeViewModel: ViewModel {
         return Observable.just(.hideDropdown)
       }
 
-    case .dropdownFilterButtonDidTap(let filterDropdownCase):
+    case .dropdownFilterButtonDidTap(let sortType):
       return Observable.concat([
-        Observable.just(.updateSortType(filterDropdownCase)),
+        Observable.just(.updateSortType(sortType)),
         Observable.just(.hideDropdown)
       ])
     }
@@ -93,6 +93,7 @@ final class HomeViewModel: ViewModel {
 
     switch mutation {
     case .updateProducts(let products):
+      print(products)
       nextState.products = products
       nextState.indicatorState = false
 

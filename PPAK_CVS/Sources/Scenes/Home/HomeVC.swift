@@ -33,7 +33,7 @@ final class HomeViewController: BaseViewController, Viewable {
   private var header: HomeCollectionHeaderView!
 
   private var products: [ProductModel] = []
- 
+
   // MARK: - Setup
 
   override func setupLayouts() {
@@ -82,20 +82,16 @@ final class HomeViewController: BaseViewController, Viewable {
   }
 
   // MARK: - Event
-  
+
   func bind(viewModel: HomeViewModel) {}
 
   private func bindHeader() {
     guard let viewModel = viewModel else { return }
 
     // MARK: - Action
-    
-    // 최초 실행 시 데이터 불러오기
-    Observable.empty()
-      .take(1)
-      .map { HomeViewModel.Action.requestProducts }
-      .bind(to: viewModel.action)
-      .disposed(by: disposeBag)
+
+    // 화면 최초 실행
+    viewModel.action.onNext(.viewDidLoad)
 
     // 북마크 버튼 클릭
     header.bookmarkButton.rx.tap
@@ -208,7 +204,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       return UICollectionViewCell()
     }
     let product = products[indexPath.row]
-    cell.setupCVS(product)
+    cell.updateCell(product)
     return cell
   }
 
