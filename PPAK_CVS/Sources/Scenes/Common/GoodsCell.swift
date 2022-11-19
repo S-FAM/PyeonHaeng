@@ -37,19 +37,13 @@ final class GoodsCell: UICollectionViewCell {
 
   private let goodsImage = UIImageView().then {
     $0.contentMode = .scaleAspectFit
-    $0.backgroundColor = .blue
-  }
-
-  private let eventView = UIView().then {
-    $0.layer.cornerRadius = 4.0
-    $0.backgroundColor = .blue
   }
 
   private lazy var stackView = UIStackView().then { stackView in
     let horiStack = UIStackView(arrangedSubviews: [priceLabel, descriptionLabel])
     horiStack.axis = .horizontal
     horiStack.spacing = 2.0
-    [goodsLabel, horiStack, descriptionButton].forEach {
+    [goodsLabel, horiStack, saleTypeView].forEach {
       stackView.addArrangedSubview($0)
     }
       stackView.axis = .vertical
@@ -57,48 +51,30 @@ final class GoodsCell: UICollectionViewCell {
       stackView.alignment = .leading
   }
 
-  private var titleLogoView: TitleLogoView!
-  private var descriptionButton: UIButton!
+  private let titleLogoView = TitleLogoView(cvsType: .all)
+  private let saleTypeView = SaleTypeView(cvsType: .all)
 
-  // MARK: - Setup
+  var initDone: Bool = false
 
-  /// 명시적으로 호출되어야 합니다.
-  func setupCVS(_ product: ProductModel) {
-    goodsLabel.text = product.name
-    priceLabel.text = String(product.price)
-    goodsImage.kf.setImage(
-      with: URL(string: product.imageLink ?? ""),
-      options: [
-        .transition(.fade(0.5))
-      ]
-    )
-    setupButtons(cvs: product.store, event: product.saleType)
+  // MARK: - LifeCycle
+
+  override init(frame: CGRect) {
+    super.init(frame: .zero)
     setupLayouts()
     setupConstraints()
   }
 
-  private func setupButtons(cvs: CVSType, event: EventType) {
-    self.titleLogoView = TitleLogoView(cvsType: cvs)
-
-    var config = UIButton.Configuration.filled()
-    var container = AttributeContainer()
-    container.foregroundColor = cvs.fontColor
-    container.font = .systemFont(ofSize: 12)
-    config.baseBackgroundColor = cvs.bgColor
-    config.background.cornerRadius = 12
-    config.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 10, bottom: 4, trailing: 10)
-    config.attributedTitle = AttributedString(
-      event.rawValue,
-      attributes: container
-    )
-    self.descriptionButton = UIButton(configuration: config)
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
+
+  // MARK: - Setup
 
   private func setupLayouts() {
     [containerView, titleLogoView]
       .forEach { contentView.addSubview($0) }
 
-    [stackView, goodsImage, eventView]
+    [stackView, goodsImage]
       .forEach { containerView.addSubview($0) }
   }
 
@@ -125,5 +101,22 @@ final class GoodsCell: UICollectionViewCell {
       make.centerY.equalToSuperview()
       make.leading.equalTo(goodsImage.snp.trailing).offset(8.0)
     }
+  }
+}
+
+extension GoodsCell {
+  /// 명시적으로 호출해야 합니다.
+  func updateCell(_ product: ProductModel) {
+    goodsLabel.text = product.name
+    priceLabel.text = "\(product.price)원"
+    saleTypeView.updateStyles(product)
+    titleLogoView.updateStyles(product)
+
+    goodsImage.kf.setImage(
+      with: URL(string: product.imageLink ?? ""),
+      options: [
+        .transition(.fade(0.5))
+      ]
+    )
   }
 }
