@@ -7,10 +7,29 @@
 
 import UIKit
 
+import Then
+import SnapKit
+
 final class TitleLogoView: UIView {
 
-  private var titleLabel =  UILabel()
-  private var cvsType: CVSType
+  private lazy var titleButton = UIButton().then {
+    var config = UIButton.Configuration.filled()
+    var container = AttributeContainer()
+    container.foregroundColor = cvsType.fontColor
+    // TODO: 폰트 추가하기
+    config.attributedTitle = AttributedString(
+      cvsType.rawValue,
+      attributes: container
+    )
+    config.cornerStyle = .capsule
+    config.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 4, bottom: 8, trailing: 4)
+    config.baseBackgroundColor = cvsType.bgColor
+
+    $0.configuration = config
+    $0.isUserInteractionEnabled = false
+  }
+
+  private let cvsType: CVSType
 
   init(cvsType: CVSType) {
     self.cvsType = cvsType
@@ -22,15 +41,11 @@ final class TitleLogoView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func setTitle() {
-    addSubview(titleLabel)
+  private func setTitle() {
+    addSubview(titleButton)
 
-    titleLabel.snp.makeConstraints {
-      $0.centerX.centerY.equalToSuperview()
+    titleButton.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
     }
-
-    titleLabel.text = cvsType.rawValue
-    titleLabel.textColor = cvsType.fontColor
-    titleLabel.backgroundColor = cvsType.bgColor
   }
 }
