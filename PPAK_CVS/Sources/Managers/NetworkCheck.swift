@@ -13,15 +13,6 @@ final class NetworkCheck {
   private let queue = DispatchQueue.global()
   private let monitor: NWPathMonitor
   public private(set) var isConnected: Bool = false
-  public private(set) var connectionType: ConnectionType = .unknown
-
-  // 연결타입
-  enum ConnectionType {
-    case wifi
-    case cellular
-    case ethernet
-    case unknown
-  }
 
   // monotior 초기화
   private init() {
@@ -34,7 +25,6 @@ final class NetworkCheck {
     self.monitor.pathUpdateHandler = { [weak self] path in
 
       self?.isConnected = path.status == .satisfied
-      self?.getConnectionType(path)
 
       if self?.isConnected == true {
         print(#function, "연결됨!")
@@ -42,28 +32,11 @@ final class NetworkCheck {
         print(#function, "연결안됨!")
         DispatchQueue.main.async {
           let networkViewController = NetworkViewController()
-          networkViewController.modalPresentationStyle = .fullScreen
-          UIApplication.shared.windows.first?.rootViewController?.show(networkViewController, sender: nil)
+          networkViewController.modalPresentationStyle = .overFullScreen
+          guard let topVC = UIApplication.topViewController() else { return }
+          topVC.present(networkViewController, animated: true)
         }
       }
-    }
-  }
-
-  // Network Monitoring 종료
-  public func stopMonitoring() {
-    self.monitor.cancel()
-  }
-
-  // Network 연결 타입
-  private func getConnectionType(_ path: NWPath) {
-    if path.usesInterfaceType(.wifi) {
-      self.connectionType = .wifi
-    } else if path.usesInterfaceType(.cellular) {
-      self.connectionType = .cellular
-    } else if path.usesInterfaceType(.wiredEthernet) {
-      self.connectionType = .ethernet
-    } else {
-      self.connectionType = .unknown
     }
   }
 }

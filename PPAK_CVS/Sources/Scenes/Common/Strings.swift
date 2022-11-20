@@ -25,9 +25,7 @@ enum Strings {
   }
 
   enum Network {
-    static let alertTitle = "네트워크에 접속할 수 없습니다."
-    static let alertMessage = "네트워크 연결 상태를 확인해주세요."
-    static let alertEndAction = "종료"
-    static let alertConfirmAction = "확인"
+    static let pleseCheckNetwork = "네트워크 연결 상태를 확인해주세요."
+    static let goToSettings = "설정으로"
   }
 }
