@@ -198,17 +198,22 @@ extension CVSDatabase {
   private func _query(model: RequestTypeModel, key: String) -> Query {
 
     let ref = self.database.document(key).collection(Name.item)
-    var query: Query
+    var query: Query = ref
 
+    // 전부를 가져오는 것이 아닌 경우
     if model.cvs != .all && model.event != .all {
-      query = ref
+      query = query
         .whereField(Name.cvs, isEqualTo: model.cvs.rawValue)
         .whereField(Name.event, isEqualTo: model.event.rawValue)
-    } else if model.cvs != .all {
-      query = ref
+    }
+    // 이벤트 유형 전부를 가져오는 경우
+    else if model.cvs != .all {
+      query = query
         .whereField(Name.cvs, isEqualTo: model.cvs.rawValue)
-    } else {
-      query = ref
+    }
+    // 편의점 유형 전부를 가져오는 경우
+    else if model.event != .all {
+      query = query
         .whereField(Name.event, isEqualTo: model.event.rawValue)
     }
 
