@@ -31,7 +31,7 @@ final class HomeViewController: BaseViewController, Viewable {
   private let cvsDropdownView = CVSDropdownView()
   private let filterDropdownView = FilterDropdownView()
   private var header: HomeCollectionHeaderView!
-  
+
   private var products: [ProductModel] = []
 
   // MARK: - Setup
@@ -200,18 +200,19 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     guard let cell = collectionView.dequeueReusableCell(
       withReuseIdentifier: GoodsCell.id,
       for: indexPath
-    ) as? GoodsCell else {
+    ) as? GoodsCell,
+          let product = viewModel?.currentState.products[indexPath.row] else {
       return UICollectionViewCell()
     }
-    let product = products[indexPath.row]
     cell.updateCell(product)
     return cell
   }
-
+  
   func collectionView(
     _ collectionView: UICollectionView,
     numberOfItemsInSection section: Int
   ) -> Int {
+    guard let products = viewModel?.currentState.products else { return 0 }
     return products.count
   }
 
