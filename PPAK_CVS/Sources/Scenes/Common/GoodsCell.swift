@@ -6,9 +6,9 @@
 //
 import UIKit
 
-import Then
-import SnapKit
 import Kingfisher
+import SnapKit
+import Then
 
 final class GoodsCell: UICollectionViewCell {
 
