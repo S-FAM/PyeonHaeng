@@ -18,7 +18,7 @@ final class HomeViewModel: ViewModel {
     case toggleFilterDropdown
     case toggleShowBookmarkVC(Bool)
     case hideDropdown
-    case onChangedCVSImage(CVSDropdownCase)
+    case onChangedCVSType(CVSType?)
     case onChangedFilter(FilterDropdownCase)
     case onChangedPageIndex(Int)
   }
@@ -27,8 +27,8 @@ final class HomeViewModel: ViewModel {
     var isVisibleCVSDropdown: Bool = false
     var isVisibleFilterDropdown: Bool = false
     var showBookmarkVC: Bool = false
-    var currentCVSImage: CVSDropdownCase = .all
     var currentFilter: FilterDropdownCase = .ascending
+    var currentCVSType: CVSType? = .all
     var pageIndex: Int = 0
   }
 
@@ -38,22 +38,41 @@ final class HomeViewModel: ViewModel {
     switch action {
     case .currentCVSButtonTapped:
       return Observable.just(.toggleCVSDropdown)
+
     case .filterButtonTapped:
       return Observable.just(.toggleFilterDropdown)
+
     case .backgroundTapped:
       return Observable.just(.hideDropdown)
+
     case .bookmarkButtonTapped:
       guard currentState.showBookmarkVC == false else { return .empty() }
       return Observable.concat([
         Observable.just(.toggleShowBookmarkVC(true)),
         Observable.just(.toggleShowBookmarkVC(false))
       ])
+
     case .pageControlIndexEvent(let index):
       return Observable.just(.onChangedPageIndex(index))
+
     case .cvsButtonTappedInDropdown(let cvsDropdownCase):
-      return Observable.just(.onChangedCVSImage(cvsDropdownCase))
+      var newCVSType: CVSType?
+      switch cvsDropdownCase {
+      case .cvs(let cvsType):
+        newCVSType = cvsType
+      case .setting:
+        break // 셋팅 페이지로 가야할 곳
+      }
+      return Observable.concat([
+        Observable.just(.hideDropdown),
+        Observable.just(.onChangedCVSType(newCVSType))
+      ])
+
     case .filterButtonTappedInDropdown(let filterDropdownCase):
-      return Observable.just(.onChangedFilter(filterDropdownCase))
+      return Observable.concat([
+        Observable.just(.onChangedFilter(filterDropdownCase)),
+        Observable.just(.hideDropdown)
+      ])
     }
   }
 
@@ -63,19 +82,26 @@ final class HomeViewModel: ViewModel {
     switch mutation {
     case .toggleCVSDropdown:
       nextState.isVisibleCVSDropdown.toggle()
+
     case .toggleFilterDropdown:
       nextState.isVisibleFilterDropdown.toggle()
+
     case .hideDropdown:
       nextState.isVisibleFilterDropdown = false
       nextState.isVisibleCVSDropdown = false
+
     case let .toggleShowBookmarkVC(isShowBookmarkVC):
       nextState.showBookmarkVC = isShowBookmarkVC
-    case .onChangedCVSImage(let cvsDropdownCase):
-      nextState.currentCVSImage = cvsDropdownCase
+
+    case .onChangedCVSType(let cvsType):
+      nextState.currentCVSType = cvsType
+
     case .onChangedFilter(let filterDropdownCase):
       nextState.currentFilter = filterDropdownCase
+
     case .onChangedPageIndex(let index):
       nextState.pageIndex = index
+
     }
     return nextState
   }

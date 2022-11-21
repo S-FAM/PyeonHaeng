@@ -29,7 +29,7 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
   }
 
   lazy var cvsButton = UIButton().then {
-    $0.setImage(UIImage(named: CVSDropdownCase.all.imageName), for: .normal)
+    $0.setImage(CVSType.all.image, for: .normal)
   }
 
   lazy var topCurveView = TopCurveView()
@@ -52,7 +52,8 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
   // MARK: - Setup
 
   private func setupStyles() {
-    topCurveView.backgroundColor = .blue
+    topCurveView.backgroundColor = CVSType.all.bgColor
+    pageControl.focusedView.backgroundColor = CVSType.all.bgColor
   }
 
   private func setupLayout() {

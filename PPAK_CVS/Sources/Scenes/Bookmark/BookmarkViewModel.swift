@@ -17,7 +17,7 @@ final class BookmarkViewModel: ViewModel {
     case toggleFilterDropdown
     case toggleShowHomeVC
     case hideDropdown
-    case onChangedCVSImage(CVSDropdownCase)
+    case onChangedCVSType(CVSType?)
     case onChangedFilter(FilterDropdownCase)
     case onChnagedPageIndex(Int)
   }
@@ -26,8 +26,8 @@ final class BookmarkViewModel: ViewModel {
     var isVisibleCVSDropdown: Bool = false
     var isVisibleFilterDropdown: Bool = false
     var showHomeVC: Bool = false
-    var currentCVSImage: CVSDropdownCase = .all
     var currentFilter: FilterDropdownCase = .ascending
+    var currentCVSType: CVSType? = .all
     var pageIndex: Int = 0
   }
 
@@ -37,18 +37,37 @@ final class BookmarkViewModel: ViewModel {
     switch action {
     case .currentCVSButtonTapped:
       return Observable.just(.toggleCVSDropdown)
+
     case .filterButtonTapped:
       return Observable.just(.toggleFilterDropdown)
+
     case .backgroundTapped:
       return Observable.just(.hideDropdown)
+
     case .backButtonTapped:
       return Observable.just(.toggleShowHomeVC)
+
     case .pageControlIndexEvent(let index):
       return Observable.just(.onChnagedPageIndex(index))
+
     case .cvsButtonTappedInDropdown(let cvsDropdownCase):
-      return Observable.just(.onChangedCVSImage(cvsDropdownCase))
+      var newCvsType: CVSType?
+      switch cvsDropdownCase {
+      case .cvs(let cvsType):
+        newCvsType = cvsType
+      case .setting:
+        break // 셋팅 페이지로 가야할 곳
+      }
+      return Observable.concat([
+        Observable.just(.hideDropdown),
+        Observable.just(.onChangedCVSType(newCvsType))
+      ])
+
     case .filterButtonTappedInDropdown(let filterDropdownCase):
-      return Observable.just(.onChangedFilter(filterDropdownCase))
+      return Observable.concat([
+        Observable.just(.onChangedFilter(filterDropdownCase)),
+        Observable.just(.hideDropdown)
+      ])
     }
   }
 
@@ -58,17 +77,23 @@ final class BookmarkViewModel: ViewModel {
     switch mutation {
     case .toggleCVSDropdown:
       nextState.isVisibleCVSDropdown.toggle()
+
     case .toggleFilterDropdown:
       nextState.isVisibleFilterDropdown.toggle()
+
     case .toggleShowHomeVC:
       nextState.showHomeVC = true
+
     case .hideDropdown:
       nextState.isVisibleFilterDropdown = false
       nextState.isVisibleCVSDropdown = false
-    case .onChangedCVSImage(let cvsDropdownCase):
-      nextState.currentCVSImage = cvsDropdownCase
+
+    case .onChangedCVSType(let cvsType):
+      nextState.currentCVSType = cvsType
+
     case .onChangedFilter(let filterDropdownCase):
       nextState.currentFilter = filterDropdownCase
+
     case .onChnagedPageIndex(let index):
       nextState.pageIndex = index
     }

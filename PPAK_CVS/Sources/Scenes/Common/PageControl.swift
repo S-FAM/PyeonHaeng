@@ -19,7 +19,7 @@ final class PageControl: UIControl {
   private let items: [String] = ["All", "1+1", "2+1"]
 
   private var labels: [UILabel] = []
-  private var focusedView: UIView!
+  var focusedView: UIView!
 
   private var selectedIndex: Int = 0 {
     didSet {
