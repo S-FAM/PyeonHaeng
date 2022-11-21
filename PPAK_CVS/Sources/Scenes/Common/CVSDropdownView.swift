@@ -102,7 +102,7 @@ final class CVSDropdownView: UIView {
 
     // 7Eleven 버튼 이벤트
     elevenButton.rx.tap
-      .map { CVSDropdownCase.cvs(.miniStop) }
+      .map { CVSDropdownCase.cvs(.sevenEleven) }
       .bind(to: buttonEventSubject)
       .disposed(by: disposeBag)
 

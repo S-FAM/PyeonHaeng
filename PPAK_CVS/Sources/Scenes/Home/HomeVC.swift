@@ -207,7 +207,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     cell.updateCell(product)
     return cell
   }
-  
+
   func collectionView(
     _ collectionView: UICollectionView,
     numberOfItemsInSection section: Int
