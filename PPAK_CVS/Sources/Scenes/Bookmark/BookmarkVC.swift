@@ -107,7 +107,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
       .map { BookmarkViewModel.Action.filterButtonTapped }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
-
+    
     // 편의점 드롭다운 리스트 버튼 클릭
     cvsDropdownView.buttonEventSubject
       .map { BookmarkViewModel.Action.cvsButtonTappedInDropdown($0) }

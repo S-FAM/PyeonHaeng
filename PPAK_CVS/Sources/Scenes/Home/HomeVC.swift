@@ -31,7 +31,7 @@ final class HomeViewController: BaseViewController, Viewable {
   private let cvsDropdownView = CVSDropdownView()
   private let filterDropdownView = FilterDropdownView()
   private var header: HomeCollectionHeaderView!
-
+  
   private var products: [ProductModel] = []
 
   // MARK: - Setup

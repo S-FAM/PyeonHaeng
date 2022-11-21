@@ -54,12 +54,10 @@ final class GoodsCell: UICollectionViewCell {
   private let titleLogoView = TitleLogoView(cvsType: .all)
   private let saleTypeView = SaleTypeView(cvsType: .all)
 
-  var initDone: Bool = false
-
   // MARK: - LifeCycle
 
   override init(frame: CGRect) {
-    super.init(frame: .zero)
+    super.init(frame: frame)
     setupLayouts()
     setupConstraints()
   }

@@ -94,7 +94,6 @@ final class HomeViewModel: ViewModel {
 
     switch mutation {
     case .updateProducts(let products):
-      print(products)
       nextState.products = products
       nextState.indicatorState = false
 
