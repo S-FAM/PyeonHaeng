@@ -24,11 +24,10 @@ final class PageControl: UIControl {
   private var selectedIndex: Int = 0 {
     didSet {
       updateFocusView()
-      pageIndexSubject.accept(selectedIndex)
     }
   }
 
-  let pageIndexSubject = BehaviorRelay<Int>(value: 0)
+  let pageIndexSubject = BehaviorRelay<EventType>(value: .all)
   let disposeBag = DisposeBag()
 
   // MARK: - Init
@@ -106,22 +105,28 @@ final class PageControl: UIControl {
     let twoPlusLabel = labels[2]
 
     onePlusLabel.rx.tapGesture()
-      .map { _ in 1 }
+      .map { _ in .onePlusOne }
       .bind(to: pageIndexSubject)
       .disposed(by: disposeBag)
 
     twoPlusLabel.rx.tapGesture()
-      .map { _ in 2 }
+      .map { _ in .twoPlusOne }
       .bind(to: pageIndexSubject)
       .disposed(by: disposeBag)
 
     allLabel.rx.tapGesture()
-      .map { _ in 0 }
+      .map { _ in .all }
       .bind(to: pageIndexSubject)
       .disposed(by: disposeBag)
 
     pageIndexSubject
-      .bind(onNext: { [unowned self] index in
+      .bind(onNext: { [unowned self] event in
+        let index: Int
+        switch event {
+        case .all: index = 0
+        case .onePlusOne: index = 1
+        case .twoPlusOne: index = 2
+        }
         let label = labels[index]
         self.focusedView.center = label.center
       })
