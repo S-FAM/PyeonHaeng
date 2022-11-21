@@ -173,6 +173,7 @@
 				9C798F8B28EAEC5D00FE250C /* CvsType.swift */,
 				9CCFA4FD28F4585E00963A95 /* EventType.swift */,
 				BAD70BD7291A58CB00C39863 /* SortType.swift */,
+				A5F8288B28DECEE700C5D6A2 /* Strings.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -295,7 +296,6 @@
 				E5467E4B28D45DFE0031B785 /* BottomCurveView.swift */,
 				E5A877BF28D4A34D002A2402 /* PageControl.swift */,
 				E55BEBE028D6A82400804FCB /* SearchBar.swift */,
-				A5F8288B28DECEE700C5D6A2 /* Strings.swift */,
 				E580BF2228E0646200BE7ADC /* GoodsCell.swift */,
 				9C798F8928EAE9DA00FE250C /* TitleLogoView.swift */,
 				E5B9965628E2872A00E39566 /* CVSDropdownView.swift */,
@@ -692,7 +692,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2ZQR76M3UH;
+				DEVELOPMENT_TEAM = MZ4WUT4W35;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PPAK_CVS/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -719,7 +719,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2ZQR76M3UH;
+				DEVELOPMENT_TEAM = MZ4WUT4W35;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PPAK_CVS/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
