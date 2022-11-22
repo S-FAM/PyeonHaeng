@@ -71,6 +71,7 @@ final class HomeViewModel: ViewModel {
       switch cvsDropdownCase {
       case .cvs(let cvsType):
         return Observable.concat([
+          Observable.just(.updateProducts([])),
           Observable.just(.hideDropdown),
           Observable.just(.updateCVSType(cvsType)),
           requestProducts(cvs: cvsType, event: currentState.currentEventType, sort: currentState.currentSortType)
@@ -95,7 +96,6 @@ final class HomeViewModel: ViewModel {
     switch mutation {
     case .updateProducts(let products):
       nextState.products = products
-      nextState.indicatorState = false
 
     case .updateIndicatorState(let isAnimated):
       nextState.indicatorState = isAnimated
@@ -136,7 +136,8 @@ extension HomeViewModel {
         event: event,
         sort: sort)
       )
-      .flatMap { Observable.just(.updateProducts($0)) }
+      .flatMap { Observable.just(.updateProducts($0)) },
+      Observable.just(.updateIndicatorState(false))
     ])
   }
 }
