@@ -80,7 +80,7 @@ final class HomeViewController: BaseViewController, Viewable {
       make.height.equalTo(100)
     }
   }
-
+  
   // MARK: - Event
 
   func bind(viewModel: HomeViewModel) {}
@@ -138,6 +138,19 @@ final class HomeViewController: BaseViewController, Viewable {
     .map { _ in HomeViewModel.Action.backgroundDidTap }
     .bind(to: viewModel.action)
     .disposed(by: disposeBag)
+    
+    // 스크롤 감지
+    collectionView.rx.didScroll
+      .withUnretained(self)
+      .map {
+        ($0.0.collectionView.contentOffset.y,
+         $0.0.collectionView.contentSize.height,
+         $0.0.collectionView.frame.size.height + 100)
+      }
+      .filter { $0.0 > $0.1 - $0.2 }
+      .map { HomeViewModel.Action.didScroll }
+      .bind(to: viewModel.action)
+      .disposed(by: disposeBag)
 
     // MARK: - State
 
