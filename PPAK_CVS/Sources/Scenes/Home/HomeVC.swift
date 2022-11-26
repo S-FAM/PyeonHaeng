@@ -26,7 +26,7 @@ final class HomeViewController: BaseViewController, Viewable {
     $0.register(GoodsCell.self,
                 forCellWithReuseIdentifier: GoodsCell.id)
   }
-
+  
   private let indicator = UIActivityIndicatorView()
   private let cvsDropdownView = CVSDropdownView()
   private let filterDropdownView = FilterDropdownView()
@@ -144,34 +144,29 @@ final class HomeViewController: BaseViewController, Viewable {
     // 편의점 로고 드롭다운 애니메이션 동작
     viewModel.state
       .map { $0.isVisibleCVSDropdown }
-      .bind(onNext: { [unowned self] isVisible in
-        if isVisible {
-          cvsDropdownView.willAppearDropdown()
-        } else {
-          cvsDropdownView.willDisappearDropdown()
-        }
+      .withUnretained(self)
+      .bind(onNext: { owner, isVisible in
+        isVisible ? owner.cvsDropdownView.willAppearDropdown() : owner.cvsDropdownView.willDisappearDropdown()
       })
       .disposed(by: disposeBag)
 
     // 필터 드롭다운 애니메이션 동작
     viewModel.state
       .map { $0.isVisibleFilterDropdown }
-      .bind(onNext: { [unowned self] isVisible in
-        if isVisible {
-          filterDropdownView.willAppearDropdown()
-        } else {
-          filterDropdownView.willDisappearDropdown()
-        }
+      .withUnretained(self)
+      .bind(onNext: { owner, isVisible in
+        isVisible ? owner.filterDropdownView.willAppearDropdown() : owner.filterDropdownView.willDisappearDropdown()
       })
       .disposed(by: disposeBag)
 
     // 현재 편의점 타입 반응
     viewModel.state
       .compactMap { $0.currentCVSType }
-      .bind(onNext: { [weak self] in
-        self?.header.cvsButton.setImage($0.image, for: .normal)
-        self?.header.topCurveView.backgroundColor = $0.bgColor
-        self?.header.pageControl.focusedView.backgroundColor = $0.bgColor
+      .withUnretained(self)
+      .bind(onNext: { owner, cvsType in
+        owner.header.cvsButton.setImage(cvsType.image, for: .normal)
+        owner.header.topCurveView.backgroundColor = cvsType.bgColor
+        owner.header.pageControl.focusedView.backgroundColor = cvsType.bgColor
       })
       .disposed(by: disposeBag)
 
@@ -184,11 +179,10 @@ final class HomeViewController: BaseViewController, Viewable {
     // 새로운 상품 목록들로 업데이트
     viewModel.state
       .map { $0.products }
-      .bind(onNext: { [weak self] in
-        guard let self = self else { return }
-        self.products = $0
-        self.collectionView.reloadData()
-      })
+      .map { _ in Void() }
+      .withUnretained(self)
+      .map { $0.0 }
+      .bind(onNext: { $0.collectionView.reloadData() })
       .disposed(by: disposeBag)
   }
 }
