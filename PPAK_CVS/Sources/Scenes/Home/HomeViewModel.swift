@@ -93,6 +93,7 @@ final class HomeViewModel: ViewModel {
       switch cvsDropdownCase {
       case .cvs(let cvsType):
         return Observable.concat([
+          Observable.just(.updateIsLoading(true)),
           Observable.just(.hideDropdown),
           Observable.just(.updateCVSType(cvsType)),
           Observable.just(.updateProducts([])),
@@ -110,6 +111,7 @@ final class HomeViewModel: ViewModel {
 
     case .dropdownFilterButtonDidTap(let sortType):
       return Observable.concat([
+        Observable.just(.updateIsLoading(true)),
         Observable.just(.updateSortType(sortType)),
         Observable.just(.hideDropdown),
         Observable.just(.updateProducts([])),
@@ -177,7 +179,6 @@ extension HomeViewModel {
   ) -> Observable<Mutation> {
     print(offset)
     return Observable.concat([
-      Observable.just(.updateIsLoading(true)),
       CVSDatabase.shared.product(
         request: RequestTypeModel(
         cvs: cvs,
