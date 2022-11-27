@@ -177,7 +177,6 @@ extension HomeViewModel {
     sort: SortType,
     offset: Int = 0
   ) -> Observable<Mutation> {
-    print(offset)
     return Observable.concat([
       CVSDatabase.shared.product(
         request: RequestTypeModel(

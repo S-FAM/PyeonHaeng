@@ -279,4 +279,3 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     return header
   }
 }
-
