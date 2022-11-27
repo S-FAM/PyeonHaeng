@@ -12,6 +12,7 @@ final class HomeViewModel: ViewModel {
     case pageControlIndexDidChange(EventType)
     case dropdownCVSButtonDidTap(CVSDropdownCase)
     case dropdownFilterButtonDidTap(SortType)
+    case loadingCellWillDisplay
   }
 
   enum Mutation {
@@ -22,7 +23,9 @@ final class HomeViewModel: ViewModel {
     case updateCVSType(CVSType)
     case updateSortType(SortType)
     case updateEventType(EventType)
-    case updateIndicatorState(Bool)
+    case updateIsLoading(Bool)
+    case updateIsLoadingFromCell(Bool)
+    case updateOffset
     case updateProducts([ProductModel])
   }
 
@@ -33,8 +36,10 @@ final class HomeViewModel: ViewModel {
     var currentSortType: SortType = .none
     var currentEventType: EventType = .all
     var currentCVSType: CVSType = .all
-    var indicatorState: Bool = false
+    var isLoading: Bool = false
+    var isLoadingFromCell: Bool = false
     var products: [ProductModel] = []
+    var currentOffset: Int = 0
   }
 
   var initialState = State()
@@ -42,7 +47,19 @@ final class HomeViewModel: ViewModel {
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
     case .viewDidLoad:
-      return requestProducts()
+      return requestProducts(cvs: .all, event: .all, sort: .none)
+
+    case .loadingCellWillDisplay:
+      let nextOffset = currentState.currentOffset + 10
+      return Observable.concat([
+        Observable.just(.updateIsLoadingFromCell(true)),
+        Observable.just(.updateOffset),
+        requestProducts(
+          cvs: currentState.currentCVSType,
+          event: currentState.currentEventType,
+          sort: currentState.currentSortType,
+          offset: nextOffset)
+      ])
 
     case .currentCVSButtonDidTap:
       return Observable.just(.toggleCVSDropdown)
@@ -62,20 +79,30 @@ final class HomeViewModel: ViewModel {
 
     case .pageControlIndexDidChange(let event):
       return Observable.concat([
-        Observable.just(.updateIndicatorState(true)),
+        Observable.just(.updateIsLoading(true)),
         Observable.just(.updateEventType(event)),
-        requestProducts(cvs: currentState.currentCVSType, event: event, sort: currentState.currentSortType)
+        Observable.just(.updateProducts([])),
+        requestProducts(
+          cvs: currentState.currentCVSType,
+          event: event,
+          sort: currentState.currentSortType
+        )
       ])
 
     case .dropdownCVSButtonDidTap(let cvsDropdownCase):
       switch cvsDropdownCase {
       case .cvs(let cvsType):
         return Observable.concat([
-          Observable.just(.updateProducts([])),
           Observable.just(.hideDropdown),
           Observable.just(.updateCVSType(cvsType)),
-          requestProducts(cvs: cvsType, event: currentState.currentEventType, sort: currentState.currentSortType)
+          Observable.just(.updateProducts([])),
+          requestProducts(
+            cvs: cvsType,
+            event: currentState.currentEventType,
+            sort: currentState.currentSortType
+          )
         ])
+
       case .setting:
         // TODO: Setting Page로 이동해야 합니다.
         return Observable.just(.hideDropdown)
@@ -85,6 +112,7 @@ final class HomeViewModel: ViewModel {
       return Observable.concat([
         Observable.just(.updateSortType(sortType)),
         Observable.just(.hideDropdown),
+        Observable.just(.updateProducts([])),
         requestProducts(cvs: currentState.currentCVSType, event: currentState.currentEventType, sort: sortType)
       ])
     }
@@ -95,10 +123,14 @@ final class HomeViewModel: ViewModel {
 
     switch mutation {
     case .updateProducts(let products):
-      nextState.products = products
+      if products.isEmpty {
+        nextState.products = []
+      } else {
+        nextState.products += products
+      }
 
-    case .updateIndicatorState(let isAnimated):
-      nextState.indicatorState = isAnimated
+    case .updateIsLoading(let isLoading):
+      nextState.isLoading = isLoading
 
     case .toggleCVSDropdown:
       nextState.isVisibleCVSDropdown.toggle()
@@ -113,14 +145,23 @@ final class HomeViewModel: ViewModel {
     case let .toggleShowBookmarkVC(isShowBookmarkVC):
       nextState.showBookmarkVC = isShowBookmarkVC
 
+    case .updateIsLoadingFromCell(let isLoading):
+      nextState.isLoadingFromCell = isLoading
+
+    case .updateOffset:
+      nextState.currentOffset += 10
+
     case .updateEventType(let eventType):
       nextState.currentEventType = eventType
+      nextState.currentOffset = 0
 
     case .updateCVSType(let cvsType):
       nextState.currentCVSType = cvsType
+      nextState.currentOffset = 0
 
     case .updateSortType(let sortType):
       nextState.currentSortType = sortType
+      nextState.currentOffset = 0
 
     }
     return nextState
@@ -128,16 +169,25 @@ final class HomeViewModel: ViewModel {
 }
 
 extension HomeViewModel {
-  func requestProducts(cvs: CVSType = .all, event: EventType = .all, sort: SortType = .none) -> Observable<Mutation> {
+  func requestProducts(
+    cvs: CVSType,
+    event: EventType,
+    sort: SortType,
+    offset: Int = 0
+  ) -> Observable<Mutation> {
+    print(offset)
     return Observable.concat([
-      Observable.just(.updateIndicatorState(true)),
-      CVSDatabase.shared.product(request: RequestTypeModel(
+      Observable.just(.updateIsLoading(true)),
+      CVSDatabase.shared.product(
+        request: RequestTypeModel(
         cvs: cvs,
         event: event,
-        sort: sort)
+        sort: sort),
+        offset: offset
       )
       .flatMap { Observable.just(.updateProducts($0)) },
-      Observable.just(.updateIndicatorState(false))
+      Observable.just(.updateIsLoading(false)),
+      Observable.just(.updateIsLoadingFromCell(false))
     ])
   }
 }
