@@ -11,11 +11,7 @@ final class HomeViewController: BaseViewController, Viewable {
   // MARK: - Properties
 
   private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then {
-    $0.collectionViewLayout = UICollectionViewFlowLayout().then {
-      $0.headerReferenceSize = CGSize(width: self.view.frame.width, height: 320)
-      $0.itemSize = CGSize(width: self.view.frame.width, height: 125)
-      $0.sectionInset = UIEdgeInsets(top: 24, left: 0, bottom: 16, right: 0)
-    }
+    $0.collectionViewLayout = UICollectionViewFlowLayout()
     $0.contentInsetAdjustmentBehavior = .never
     $0.bounces = false
     $0.dataSource = self
@@ -25,14 +21,14 @@ final class HomeViewController: BaseViewController, Viewable {
                 withReuseIdentifier: HomeCollectionHeaderView.id)
     $0.register(GoodsCell.self,
                 forCellWithReuseIdentifier: GoodsCell.id)
+    $0.register(LoadingCell.self,
+                forCellWithReuseIdentifier: LoadingCell.id)
   }
 
   private let indicator = UIActivityIndicatorView()
   private let cvsDropdownView = CVSDropdownView()
   private let filterDropdownView = FilterDropdownView()
   private var header: HomeCollectionHeaderView!
-
-  private var products: [ProductModel] = []
 
   // MARK: - Setup
 
@@ -139,20 +135,6 @@ final class HomeViewController: BaseViewController, Viewable {
     .bind(to: viewModel.action)
     .disposed(by: disposeBag)
 
-    // 스크롤 감지
-    collectionView.rx.didScroll
-      .withUnretained(self)
-      .map { $0.0 }
-      .bind(onNext: {
-        let offSetY = $0.collectionView.contentOffset.y
-        let contentHeight = $0.collectionView.contentSize.height
-        
-        if offSetY > (contentHeight - $0.collectionView.frame.size.height - 100) {
-          viewModel.action.onNext(.didScroll)
-        }
-      })
-      .disposed(by: disposeBag)
-
     // MARK: - State
 
     // 편의점 로고 드롭다운 애니메이션 동작
@@ -186,7 +168,7 @@ final class HomeViewController: BaseViewController, Viewable {
 
     // 인디케이터 애니메이션 제어
     viewModel.state
-      .map { $0.indicatorState }
+      .map { $0.isLoading }
       .bind(to: indicator.rx.isAnimating)
       .disposed(by: disposeBag)
 
@@ -203,17 +185,32 @@ final class HomeViewController: BaseViewController, Viewable {
 
 // MARK: - CollectionView Setup
 
-extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    guard let cell = collectionView.dequeueReusableCell(
-      withReuseIdentifier: GoodsCell.id,
-      for: indexPath
-    ) as? GoodsCell,
-          let product = viewModel?.currentState.products[indexPath.row] else {
+
+    guard let products = viewModel?.currentState.products else {
       return UICollectionViewCell()
     }
-    cell.updateCell(product)
-    return cell
+
+    if indexPath.row != products.count {
+      guard let cell = collectionView.dequeueReusableCell(
+        withReuseIdentifier: GoodsCell.id,
+        for: indexPath
+      ) as? GoodsCell else {
+        return UICollectionViewCell()
+      }
+      cell.updateCell(products[indexPath.row])
+      return cell
+    } else {
+      guard let cell = collectionView.dequeueReusableCell(
+        withReuseIdentifier: LoadingCell.id,
+        for: indexPath
+      ) as? LoadingCell else {
+        return UICollectionViewCell()
+      }
+      cell.indicator.startAnimating()
+      return cell
+    }
   }
 
   func collectionView(
@@ -221,7 +218,45 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     numberOfItemsInSection section: Int
   ) -> Int {
     guard let products = viewModel?.currentState.products else { return 0 }
-    return products.count
+    return products.count > 0 ? products.count + 1 : 0
+  }
+
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    insetForSectionAt section: Int
+  ) -> UIEdgeInsets {
+    return UIEdgeInsets(top: 24, left: 0, bottom: 16, right: 0)
+  }
+
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    referenceSizeForHeaderInSection section: Int
+  ) -> CGSize {
+    return CGSize(width: view.frame.width, height: 320)
+  }
+
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    sizeForItemAt indexPath: IndexPath
+  ) -> CGSize {
+    guard let currentState = viewModel?.currentState else { return CGSize() }
+    let width = Int(view.frame.width)
+    let height = (indexPath.row == currentState.products.count) && currentState.isLoadingFromCell ? 40 : 125
+    return CGSize(width: width, height: height)
+  }
+
+  func collectionView(
+    _ collectionView: UICollectionView,
+    willDisplay cell: UICollectionViewCell,
+    forItemAt indexPath: IndexPath
+  ) {
+    guard let viewModel = viewModel else { return }
+    if (indexPath.row == viewModel.currentState.products.count) && !viewModel.currentState.isLoadingFromCell {
+      viewModel.action.onNext(.loadingCellWillDisplay)
+    }
   }
 
   func collectionView(
