@@ -16,6 +16,8 @@
 		A5932EA528E045EF00457AD3 /* onboarding3.json in Resources */ = {isa = PBXBuildFile; fileRef = A5932EA428E045EF00457AD3 /* onboarding3.json */; };
 		A5932EA728E0472B00457AD3 /* onboarding2.json in Resources */ = {isa = PBXBuildFile; fileRef = A5932EA628E0472B00457AD3 /* onboarding2.json */; };
 		A5932EAA28E047E000457AD3 /* OnboardingDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5932EA928E047E000457AD3 /* OnboardingDataModel.swift */; };
+		A5E8DD07291FA217006AF2CE /* NetworkCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E8DD06291FA217006AF2CE /* NetworkCheck.swift */; };
+		A5E8DD0A291FA75A006AF2CE /* NetworkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E8DD09291FA75A006AF2CE /* NetworkVC.swift */; };
 		A5F8288228DEAE3C00C5D6A2 /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288128DEAE3C00C5D6A2 /* OnboardingVC.swift */; };
 		A5F8288528DEB03A00C5D6A2 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288428DEB03A00C5D6A2 /* OnboardingCoordinator.swift */; };
 		A5F8288728DEB63D00C5D6A2 /* FTUXStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288628DEB63D00C5D6A2 /* FTUXStorage.swift */; };
@@ -82,6 +84,8 @@
 		A5932EA428E045EF00457AD3 /* onboarding3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding3.json; sourceTree = "<group>"; };
 		A5932EA628E0472B00457AD3 /* onboarding2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding2.json; sourceTree = "<group>"; };
 		A5932EA928E047E000457AD3 /* OnboardingDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDataModel.swift; sourceTree = "<group>"; };
+		A5E8DD06291FA217006AF2CE /* NetworkCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCheck.swift; sourceTree = "<group>"; };
+		A5E8DD09291FA75A006AF2CE /* NetworkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkVC.swift; sourceTree = "<group>"; };
 		A5F8288128DEAE3C00C5D6A2 /* OnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
 		A5F8288428DEB03A00C5D6A2 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
 		A5F8288628DEB63D00C5D6A2 /* FTUXStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUXStorage.swift; sourceTree = "<group>"; };
@@ -167,6 +171,7 @@
 				9C798F8B28EAEC5D00FE250C /* CvsType.swift */,
 				9CCFA4FD28F4585E00963A95 /* EventType.swift */,
 				BAD70BD7291A58CB00C39863 /* SortType.swift */,
+				A5F8288B28DECEE700C5D6A2 /* Strings.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -189,6 +194,14 @@
 				BAD70BD9291A594F00C39863 /* RequestTypeModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		A5E8DD08291FA722006AF2CE /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				A5E8DD09291FA75A006AF2CE /* NetworkVC.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		A5F8288328DEAE4300C5D6A2 /* Onboarding */ = {
@@ -279,7 +292,6 @@
 				E5467E4B28D45DFE0031B785 /* BottomCurveView.swift */,
 				E5A877BF28D4A34D002A2402 /* PageControl.swift */,
 				E55BEBE028D6A82400804FCB /* SearchBar.swift */,
-				A5F8288B28DECEE700C5D6A2 /* Strings.swift */,
 				E580BF2228E0646200BE7ADC /* GoodsCell.swift */,
 				9C798F8928EAE9DA00FE250C /* TitleLogoView.swift */,
 				E59041DD2928FB8100135ECA /* SaleTypeView.swift */,
@@ -311,6 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				BAA21ACD29155E4A00056DB6 /* CVSDatabase.swift */,
+				A5E8DD06291FA217006AF2CE /* NetworkCheck.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -360,6 +373,7 @@
 				BA3B763C28D89E6F00CC32BE /* Common */,
 				BA27023628CF5F580039D9EA /* Home */,
 				E54D9C4028F1A16700D028B2 /* Bookmark */,
+				A5E8DD08291FA722006AF2CE /* Network */,
 				A5F8288328DEAE4300C5D6A2 /* Onboarding */,
 				BA5A433A28F2BC4C008DCDCC /* Product */,
 			);
@@ -492,6 +506,9 @@
 				BAA0F53528FD353500B632AC /* AppCoordinator.swift in Sources */,
 				BA1CCACD28FB9A450002FD8C /* Viewable.swift in Sources */,
 				A5F8288728DEB63D00C5D6A2 /* FTUXStorage.swift in Sources */,
+				A5E8DD07291FA217006AF2CE /* NetworkCheck.swift in Sources */,
+				A5E8DD0A291FA75A006AF2CE /* NetworkVC.swift in Sources */,
+				9CCFA5002901841400963A95 /* EventInfoResponseModel.swift in Sources */,
 				A5F8288A28DEC0CF00C5D6A2 /* UIButton+.swift in Sources */,
 				BA9EDA9B2918BF2B00B97C23 /* ProductModel.swift in Sources */,
 				A5F8288E28DED76700C5D6A2 /* UILabel+.swift in Sources */,
@@ -702,7 +719,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2ZQR76M3UH;
+				DEVELOPMENT_TEAM = MZ4WUT4W35;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PPAK_CVS/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

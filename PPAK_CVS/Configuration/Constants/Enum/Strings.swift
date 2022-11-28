@@ -24,4 +24,8 @@ enum Strings {
     static let desc3 = "찜한 제품이 행사하는 경우 \n매달 초에 알림을 받을 수 있습니다."
   }
 
+  enum Network {
+    static let pleseCheckNetwork = "네트워크 연결 상태를 확인해주세요."
+    static let goToSettings = "설정으로"
+  }
 }
