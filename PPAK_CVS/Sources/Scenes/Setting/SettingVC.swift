@@ -6,11 +6,10 @@ import RxSwift
 import RxCocoa
 import RxGesture
 
-
-class SettingViewController: BaseViewController, Viewable {
+class SettingViewController: BaseViewController {
 
   // MARK: - Properties
-
+  var 
   // MARK: - Setup
   override func setupStyles() {
     super.setupStyles()

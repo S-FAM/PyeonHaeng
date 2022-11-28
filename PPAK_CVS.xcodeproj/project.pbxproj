@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C07AE832934D763002CFE3F /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C07AE822934D763002CFE3F /* SettingTableViewCell.swift */; };
 		9C5C03A5292B9F770000989F /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5C03A4292B9F770000989F /* SettingVC.swift */; };
 		9C798F8A28EAE9DA00FE250C /* TitleLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C798F8928EAE9DA00FE250C /* TitleLogoView.swift */; };
 		9C798F8C28EAEC5D00FE250C /* CvsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C798F8B28EAEC5D00FE250C /* CvsType.swift */; };
@@ -75,6 +76,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9C07AE822934D763002CFE3F /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingTableViewCell.swift; path = PPAK_CVS/SettingTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		9C5C03A4292B9F770000989F /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		9C798F8928EAE9DA00FE250C /* TitleLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleLogoView.swift; sourceTree = "<group>"; };
 		9C798F8B28EAEC5D00FE250C /* CvsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvsType.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				9C5C03A4292B9F770000989F /* SettingVC.swift */,
+				9C07AE822934D763002CFE3F /* SettingTableViewCell.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -514,6 +517,7 @@
 				A5F8288528DEB03A00C5D6A2 /* OnboardingCoordinator.swift in Sources */,
 				E54D9C4228F1A18100D028B2 /* BookmarkCollectionHeaderView.swift in Sources */,
 				E505D9EF28CF5B4A00EEFC65 /* HomeVC.swift in Sources */,
+				9C07AE832934D763002CFE3F /* SettingTableViewCell.swift in Sources */,
 				E5A877C028D4A34D002A2402 /* PageControl.swift in Sources */,
 				E5B9965728E2872A00E39566 /* CVSDropdownView.swift in Sources */,
 				BAD70BDA291A594F00C39863 /* RequestTypeModel.swift in Sources */,
