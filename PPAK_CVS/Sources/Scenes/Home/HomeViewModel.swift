@@ -85,7 +85,7 @@ final class HomeViewModel: ViewModel {
         requestProducts(
           cvs: currentState.currentCVSType,
           event: event,
-          sort: currentState.currentSortType
+          sort: .none
         )
       ])
 
@@ -100,7 +100,7 @@ final class HomeViewModel: ViewModel {
           requestProducts(
             cvs: cvsType,
             event: currentState.currentEventType,
-            sort: currentState.currentSortType
+            sort: .none
           )
         ])
 
