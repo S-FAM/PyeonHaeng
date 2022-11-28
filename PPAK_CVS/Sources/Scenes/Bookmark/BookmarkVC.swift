@@ -109,19 +109,19 @@ final class BookmarkViewController: BaseViewController, Viewable {
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
-    // 필터 드롭다운 리스트 버튼 클릭
-    filterDropdownView.buttonEventSubject
-      .map { BookmarkViewModel.Action.filterButtonTappedInDropdown($0) }
-      .bind(to: viewModel.action)
-      .disposed(by: disposeBag)
-
-    // 페이지 컨트롤 인덱스 감지
-    header.pageControl.pageIndexSubject
-      .skip(1)
-      .distinctUntilChanged()
-      .map { BookmarkViewModel.Action.pageControlIndexEvent($0) }
-      .bind(to: viewModel.action)
-      .disposed(by: disposeBag)
+//    // 필터 드롭다운 리스트 버튼 클릭
+//    filterDropdownView.buttonEventSubject
+//      .map { BookmarkViewModel.Action.filterButtonTappedInDropdown($0) }
+//      .bind(to: viewModel.action)
+//      .disposed(by: disposeBag)
+//
+//    // 페이지 컨트롤 인덱스 감지
+//    header.pageControl.pageIndexSubject
+//      .skip(1)
+//      .distinctUntilChanged()
+//      .map { BookmarkViewModel.Action.pageControlIndexEvent($0) }
+//      .bind(to: viewModel.action)
+//      .disposed(by: disposeBag)
 
     // 빈공간 터치 감지
     view.rx.tapGesture(configuration: { _, delegate in

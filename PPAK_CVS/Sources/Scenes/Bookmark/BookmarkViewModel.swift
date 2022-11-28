@@ -2,6 +2,11 @@ import RxSwift
 
 final class BookmarkViewModel: ViewModel {
 
+  enum FilterDropdownCase {
+    case ascending
+    case descending
+  }
+
   enum Action {
     case currentCVSButtonTapped
     case filterButtonTapped
