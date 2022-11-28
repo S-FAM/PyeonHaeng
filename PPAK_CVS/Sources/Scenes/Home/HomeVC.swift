@@ -141,29 +141,29 @@ final class HomeViewController: BaseViewController, Viewable {
     viewModel.state
       .map { $0.isVisibleCVSDropdown }
       .withUnretained(self)
-      .bind(onNext: { owner, isVisible in
+      .bind { owner, isVisible in
         isVisible ? owner.cvsDropdownView.willAppearDropdown() : owner.cvsDropdownView.willDisappearDropdown()
-      })
+      }
       .disposed(by: disposeBag)
 
     // 필터 드롭다운 애니메이션 동작
     viewModel.state
       .map { $0.isVisibleFilterDropdown }
       .withUnretained(self)
-      .bind(onNext: { owner, isVisible in
+      .bind { owner, isVisible in
         isVisible ? owner.filterDropdownView.willAppearDropdown() : owner.filterDropdownView.willDisappearDropdown()
-      })
+      }
       .disposed(by: disposeBag)
 
     // 현재 편의점 타입 반응
     viewModel.state
       .compactMap { $0.currentCVSType }
       .withUnretained(self)
-      .bind(onNext: { owner, cvsType in
+      .bind { owner, cvsType in
         owner.header.cvsButton.setImage(cvsType.image, for: .normal)
         owner.header.topCurveView.backgroundColor = cvsType.bgColor
         owner.header.pageControl.focusedView.backgroundColor = cvsType.bgColor
-      })
+      }
       .disposed(by: disposeBag)
 
     // 인디케이터 애니메이션 제어
@@ -178,7 +178,7 @@ final class HomeViewController: BaseViewController, Viewable {
       .map { _ in Void() }
       .withUnretained(self)
       .map { $0.0 }
-      .bind(onNext: { $0.collectionView.reloadData() })
+      .bind { $0.collectionView.reloadData() }
       .disposed(by: disposeBag)
   }
 }
