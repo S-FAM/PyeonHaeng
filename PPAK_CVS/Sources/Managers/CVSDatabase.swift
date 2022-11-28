@@ -85,7 +85,6 @@ final class CVSDatabase {
     return Single<[ProductModel]>.create { observer in
       let task = Task {
         do {
-
           let unwrappedKey: String
 
           if let key = key {
