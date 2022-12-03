@@ -57,6 +57,11 @@ class SettingTableViewCell: UITableViewCell {
       $0.text = isVersionCell ? "v1.0" : ""
       $0.isHidden = isVersionCell ? false : true
     }
+
+    // disClosureIndicator가 필요한경우
+    let isNotIndicatorCell = row == 4 || row == 5
+    self.accessoryType =  isNotIndicatorCell ? .none : .disclosureIndicator
+
   }
 
   private func setLayouts() {
