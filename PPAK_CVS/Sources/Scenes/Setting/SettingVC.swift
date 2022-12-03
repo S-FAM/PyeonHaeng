@@ -71,8 +71,8 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     guard let cell = tableView.dequeueReusableCell(
       withIdentifier: SettingTableViewCell.identifier
     ) as? SettingTableViewCell else { return UITableViewCell() }
-    cell.setUI()
 
+    cell.setUI(indexPath.row)
     return cell
   }
 
