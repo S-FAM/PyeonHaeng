@@ -45,11 +45,11 @@ class SettingViewController: BaseViewController {
     headerBar.snp.makeConstraints {
       $0.top.equalTo(view.safeAreaLayoutGuide)
       $0.leading.trailing.equalToSuperview()
-      $0.height.equalTo(50)
+      $0.height.equalTo(60)
     }
 
     tableView.snp.makeConstraints {
-      $0.top.equalTo(headerBar.snp.bottom)
+      $0.top.equalTo(headerBar.snp.bottom).offset(10)
       $0.leading.trailing.bottom.equalToSuperview()
     }
   }
@@ -77,7 +77,7 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 100
+    return 60
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { }
