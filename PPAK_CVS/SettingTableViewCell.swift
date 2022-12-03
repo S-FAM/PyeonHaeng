@@ -45,6 +45,7 @@ class SettingTableViewCell: UITableViewCell {
     setLayouts()
     setupConstraints()
     setDetail(row)
+
   }
 
   private func setDetail(_ row: Int) {
@@ -52,9 +53,10 @@ class SettingTableViewCell: UITableViewCell {
     iconImage.image = UIImage(named: iconList[row])
     titleLabel.text = titleList[row]
 
+    // 버전정보 셀
     let isVersionCell = row == 5
     [descriptionLabel].forEach {
-      $0.text = isVersionCell ? "v1.0" : ""
+      $0.text = isVersionCell ? "v \(versionInfo())" : ""
       $0.isHidden = isVersionCell ? false : true
     }
 
@@ -96,5 +98,13 @@ class SettingTableViewCell: UITableViewCell {
       make.width.equalTo(40)
       make.height.equalTo(20)
     }
+  }
+
+  /// 현재 앱의 버전정보를 알려주는 함수
+  /// - Returns: VersionInfo String
+  func versionInfo() -> String {
+
+    guard let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return ""}
+    return appVersion
   }
 }
