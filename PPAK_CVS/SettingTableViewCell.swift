@@ -62,10 +62,9 @@ class SettingTableViewCell: UITableViewCell {
       $0.textAlignment = .right
     }
 
-    // disClosureIndicator가 필요한경우
+    // Accessory가 필요하지 않은 경우
     let isNotIndicatorCell = row == 4 || row == 5
     self.accessoryType =  isNotIndicatorCell ? .none : .disclosureIndicator
-
   }
 
   private func setLayouts() {
