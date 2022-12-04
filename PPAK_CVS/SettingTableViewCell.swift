@@ -108,4 +108,10 @@ class SettingTableViewCell: UITableViewCell {
     guard let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return ""}
     return appVersion
   }
+
+  /// 텍스트의 자간을 세팅하는 함수
+  private func setTextSpacing(text: String) -> NSAttributedString {
+    let introduction = NSAttributedString(string: text).withLineSpacing(100)
+    return introduction
+  }
 }
