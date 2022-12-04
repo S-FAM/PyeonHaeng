@@ -25,7 +25,7 @@ class SettingTableViewCell: UITableViewCell {
     $0.font = .systemFont(ofSize: 14, weight: .regular)
   }
 
-  private let descriptionLabel = UILabel().then {
+  private let versionInfoLabel = UILabel().then {
     $0.font = .systemFont(ofSize: 12, weight: .regular)
     $0.textColor = .gray
   }
@@ -45,7 +45,6 @@ class SettingTableViewCell: UITableViewCell {
     setLayouts()
     setupConstraints()
     setDetail(row)
-
   }
 
   private func setDetail(_ row: Int) {
@@ -55,9 +54,11 @@ class SettingTableViewCell: UITableViewCell {
 
     // 버전정보 셀
     let isVersionCell = row == 5
-    [descriptionLabel].forEach {
-      $0.text = isVersionCell ? "v \(versionInfo())" : ""
+    [versionInfoLabel].forEach {
+
+      let versionString = isVersionCell ? "v \(versionInfo())" : ""
       $0.isHidden = isVersionCell ? false : true
+      $0.textAlignment = .right
     }
 
     // disClosureIndicator가 필요한경우
@@ -69,7 +70,7 @@ class SettingTableViewCell: UITableViewCell {
   private func setLayouts() {
 
     addSubview(containerView)
-    [iconImage, titleLabel, descriptionLabel].forEach {
+    [iconImage, titleLabel, versionInfoLabel].forEach {
       containerView.addSubview($0)
     }
   }
@@ -93,7 +94,7 @@ class SettingTableViewCell: UITableViewCell {
       make.centerY.equalToSuperview()
     }
 
-    descriptionLabel.snp.makeConstraints { make in
+    versionInfoLabel.snp.makeConstraints { make in
       make.trailing.equalTo(containerView.snp.trailing)
       make.centerY.equalToSuperview()
       make.width.equalTo(40)
@@ -102,8 +103,7 @@ class SettingTableViewCell: UITableViewCell {
   }
 
   /// 현재 앱의 버전정보를 알려주는 함수
-  /// - Returns: VersionInfo String
-  func versionInfo() -> String {
+  private func versionInfo() -> String {
 
     guard let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return ""}
     return appVersion
