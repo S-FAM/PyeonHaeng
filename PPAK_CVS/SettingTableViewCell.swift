@@ -57,6 +57,7 @@ class SettingTableViewCell: UITableViewCell {
     [versionInfoLabel].forEach {
 
       let versionString = isVersionCell ? "v \(versionInfo())" : ""
+      $0.attributedText = setTextSpacing(text: versionString)
       $0.isHidden = isVersionCell ? false : true
       $0.textAlignment = .right
     }
