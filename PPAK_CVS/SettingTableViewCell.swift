@@ -77,7 +77,8 @@ class SettingTableViewCell: UITableViewCell {
   private func setupConstraints() {
 
     containerView.snp.makeConstraints {
-      $0.horizontalEdges.equalToSuperview().inset(30)
+      $0.leading.equalToSuperview().inset(30)
+      $0.trailing.equalToSuperview().inset(20)
       $0.verticalEdges.equalToSuperview().inset(10)
       $0.centerX.centerY.equalToSuperview()
     }
