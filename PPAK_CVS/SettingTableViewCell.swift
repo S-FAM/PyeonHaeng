@@ -81,7 +81,7 @@ class SettingTableViewCell: UITableViewCell {
       $0.leading.equalToSuperview().inset(30)
       $0.trailing.equalToSuperview().inset(20)
       $0.verticalEdges.equalToSuperview().inset(10)
-      $0.centerX.centerY.equalToSuperview()
+      $0.centerY.equalToSuperview()
     }
 
     iconImage.snp.makeConstraints { make in
