@@ -6,7 +6,7 @@ import RxSwift
 import RxCocoa
 import RxGesture
 
-class SettingViewController: BaseViewController {
+final class SettingViewController: BaseViewController {
 
   // MARK: - Properties
   private lazy var headerBar: UIView = {

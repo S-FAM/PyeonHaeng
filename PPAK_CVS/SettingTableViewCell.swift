@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class SettingTableViewCell: UITableViewCell {
+final class SettingTableViewCell: UITableViewCell {
 
   // MARK: - Properties
   static let identifier = "SettingTableViewCell"
