@@ -46,13 +46,10 @@ final class SettingTableViewCell: UITableViewCell {
 
     // 버전정보 셀
     let isVersionCell = row == 5
-    [versionInfoLabel].forEach {
-
-      let versionString = isVersionCell ? "v \(versionInfo())" : ""
-      $0.attributedText = setTextSpacing(text: versionString)
-      $0.isHidden = isVersionCell ? false : true
-      $0.textAlignment = .right
-    }
+    let versionString = isVersionCell ? "v \(versionInfo())" : ""
+    versionInfoLabel.attributedText = setTextSpacing(text: versionString)
+    versionInfoLabel.isHidden = isVersionCell ? false : true
+    versionInfoLabel.textAlignment = .right
 
     // Accessory가 필요하지 않은 경우
     let isNotIndicatorCell = row == 4 || row == 5
