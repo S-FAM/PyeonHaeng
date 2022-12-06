@@ -54,9 +54,6 @@ class SettingViewController: BaseViewController {
     }
   }
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
-  }
 }
 
 // MARK: - TableView Delegate
