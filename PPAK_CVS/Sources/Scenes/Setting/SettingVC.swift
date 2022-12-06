@@ -9,26 +9,22 @@ import RxGesture
 final class SettingViewController: BaseViewController {
 
   // MARK: - Properties
-  private lazy var headerBar: UIView = {
-    let view = UIView()
-    return view
-  }()
+  private lazy var headerBar = UIView().then {
+    $0.backgroundColor = .systemRed
+  }
 
-  private lazy var tableView: UITableView = {
-    let tableView = UITableView()
-    tableView.alwaysBounceVertical = false
-    tableView.dataSource = self
-    tableView.delegate = self
-    tableView.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.identifier)
-    tableView.backgroundColor = .systemTeal
-    return tableView
-  }()
+  private lazy var tableView = UITableView().then {
+    $0.alwaysBounceVertical = false
+    $0.dataSource = self
+    $0.delegate = self
+    $0.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.identifier)
+    $0.backgroundColor = .systemTeal
+  }
 
   // MARK: - SetLayout
   override func setupStyles() {
     super.setupStyles()
     view.backgroundColor = .systemYellow
-    headerBar.backgroundColor = .systemRed
   }
 
   override func setupLayouts() {
@@ -52,7 +48,6 @@ final class SettingViewController: BaseViewController {
       make.leading.trailing.bottom.equalToSuperview()
     }
   }
-
 }
 
 // MARK: - TableView Delegate
