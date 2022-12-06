@@ -94,7 +94,7 @@ final class SettingTableViewCell: UITableViewCell {
   /// 현재 앱의 버전정보를 알려주는 함수
   private func versionInfo() -> String {
 
-    guard let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return ""}
+    guard let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return "" }
     return appVersion
   }
 
