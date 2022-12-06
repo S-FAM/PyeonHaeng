@@ -16,7 +16,6 @@ final class SettingTableViewCell: UITableViewCell {
   static let identifier = "SettingTableViewCell"
   private let iconList = ["icon_alert", "icon_noti", "icon_review", "icon_mail", "info_cheer", "icon_version"]
   private let titleList = ["알림", "공지사항", "리뷰 남기기", "문의하기", "개발자 응원하기", "버전정보"]
-
   private let containerView = UIView()
   private let iconImage = UIImageView().then {
     $0.tintColor = .black
@@ -33,14 +32,12 @@ final class SettingTableViewCell: UITableViewCell {
 
   // MARK: setLayout
   func setUI(_ row: Int) {
-
     setLayouts()
     setupConstraints()
     setDetail(row)
   }
 
   private func setDetail(_ row: Int) {
-
     iconImage.image = UIImage(named: iconList[row])
     titleLabel.text = titleList[row]
 
@@ -57,7 +54,6 @@ final class SettingTableViewCell: UITableViewCell {
   }
 
   private func setLayouts() {
-
     addSubview(containerView)
     [iconImage, titleLabel, versionInfoLabel].forEach {
       containerView.addSubview($0)
@@ -65,7 +61,6 @@ final class SettingTableViewCell: UITableViewCell {
   }
 
   private func setupConstraints() {
-
     containerView.snp.makeConstraints { make in
       make.leading.equalToSuperview().inset(30)
       make.trailing.equalToSuperview().inset(20)
@@ -93,7 +88,6 @@ final class SettingTableViewCell: UITableViewCell {
 
   /// 현재 앱의 버전정보를 알려주는 함수
   private func versionInfo() -> String {
-
     guard let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return "" }
     return appVersion
   }

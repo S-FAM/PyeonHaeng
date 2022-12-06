@@ -33,7 +33,6 @@ final class SettingViewController: BaseViewController {
 
   override func setupLayouts() {
     super.setupLayouts()
-
     [headerBar, tableView].forEach {
       view.addSubview($0)
     }
@@ -59,12 +58,10 @@ final class SettingViewController: BaseViewController {
 // MARK: - TableView Delegate
 extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
     return 6
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
     guard let cell = tableView.dequeueReusableCell(
       withIdentifier: SettingTableViewCell.identifier
     ) as? SettingTableViewCell else { return UITableViewCell() }
