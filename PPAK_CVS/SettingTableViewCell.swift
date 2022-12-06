@@ -30,15 +30,6 @@ class SettingTableViewCell: UITableViewCell {
     $0.textColor = .gray
   }
 
-  // MARK: Life Cycle
-  override func awakeFromNib() {
-    super.awakeFromNib()
-  }
-  // MARK: SetSelected
-  override func setSelected(_ selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
-  }
-
   // MARK: setLayout
   func setUI(_ row: Int) {
 
