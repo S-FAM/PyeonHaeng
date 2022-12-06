@@ -42,15 +42,15 @@ final class SettingViewController: BaseViewController {
   override func setupConstraints() {
     super.setupConstraints()
 
-    headerBar.snp.makeConstraints {
-      $0.top.equalTo(view.safeAreaLayoutGuide)
-      $0.leading.trailing.equalToSuperview()
-      $0.height.equalTo(60)
+    headerBar.snp.makeConstraints { make in
+      make.top.equalTo(view.safeAreaLayoutGuide)
+      make.leading.trailing.equalToSuperview()
+      make.height.equalTo(60)
     }
 
-    tableView.snp.makeConstraints {
-      $0.top.equalTo(headerBar.snp.bottom).offset(10)
-      $0.leading.trailing.bottom.equalToSuperview()
+    tableView.snp.makeConstraints { make in
+      make.top.equalTo(headerBar.snp.bottom).offset(10)
+      make.leading.trailing.bottom.equalToSuperview()
     }
   }
 

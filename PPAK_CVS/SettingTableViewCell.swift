@@ -66,11 +66,11 @@ final class SettingTableViewCell: UITableViewCell {
 
   private func setupConstraints() {
 
-    containerView.snp.makeConstraints {
-      $0.leading.equalToSuperview().inset(30)
-      $0.trailing.equalToSuperview().inset(20)
-      $0.verticalEdges.equalToSuperview().inset(10)
-      $0.centerY.equalToSuperview()
+    containerView.snp.makeConstraints { make in
+      make.leading.equalToSuperview().inset(30)
+      make.trailing.equalToSuperview().inset(20)
+      make.verticalEdges.equalToSuperview().inset(10)
+      make.centerY.equalToSuperview()
     }
 
     iconImage.snp.makeConstraints { make in
