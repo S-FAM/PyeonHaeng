@@ -17,7 +17,7 @@ final class CVSDatabase {
 
   /// The shared singleton firebase object.
   static let shared: CVSDatabase = CVSDatabase()
-  
+
   @available(*, deprecated)
   init() { }
 
