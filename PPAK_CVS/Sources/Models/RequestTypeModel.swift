@@ -7,8 +7,14 @@
 
 import Foundation
 
-struct RequestTypeModel {
+struct RequestTypeModel: Codable {
   let cvs: CVSType
   let event: EventType
   let sort: SortType
+
+  enum CodingKeys: String, CodingKey {
+    case cvs
+    case event
+    case sort = "order-by"
+  }
 }
