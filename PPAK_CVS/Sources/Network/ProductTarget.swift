@@ -13,3 +13,30 @@ enum ProductTarget {
   case search(String)
   case filter(RequestTypeModel)
 }
+
+extension ProductTarget: TargetType {
+
+  var method: HTTPMethod {
+    return .get
+  }
+
+  var path: String {
+    let uri = "products"
+    switch self {
+    case .search:
+      return "\(uri)/search"
+    case .filter:
+      return "\(uri)/filter"
+
+    }
+  }
+
+  var parameters: Parameters {
+    switch self {
+    case .search(let name):
+      return ["name": name]
+    case .filter(let model):
+      return model.parameters
+    }
+  }
+}
