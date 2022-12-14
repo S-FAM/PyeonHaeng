@@ -40,6 +40,7 @@
 		BA8CF87C290D10CB009770C0 /* ProductHeaderViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8CF87B290D10CB009770C0 /* ProductHeaderViewViewModel.swift */; };
 		BA8CFD7D28E1E4AB00ADC4A8 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8CFD7C28E1E4AB00ADC4A8 /* UIColor+.swift */; };
 		BA9EBC102949BBC600167970 /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EBC0F2949BBC600167970 /* TargetType.swift */; };
+		BA9EBC122949F49D00167970 /* PrivateKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EBC112949F49D00167970 /* PrivateKeys.swift */; };
 		BA9EDA912917F98B00B97C23 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BA9EDA902917F98B00B97C23 /* FirebaseFirestoreSwift */; };
 		BA9EDA9B2918BF2B00B97C23 /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EDA9A2918BF2B00B97C23 /* ProductModel.swift */; };
 		BA9EDA9D2918BF9000B97C23 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EDA9C2918BF8F00B97C23 /* Date+.swift */; };
@@ -103,6 +104,7 @@
 		BA8CF87B290D10CB009770C0 /* ProductHeaderViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductHeaderViewViewModel.swift; sourceTree = "<group>"; };
 		BA8CFD7C28E1E4AB00ADC4A8 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		BA9EBC0F2949BBC600167970 /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
+		BA9EBC112949F49D00167970 /* PrivateKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKeys.swift; sourceTree = "<group>"; };
 		BA9EDA9A2918BF2B00B97C23 /* ProductModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
 		BA9EDA9C2918BF8F00B97C23 /* Date+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		BAA0580F28D36F75000CDD11 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				9CCFA4FC28F4584400963A95 /* Enum */,
+				BA9EBC112949F49D00167970 /* PrivateKeys.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -546,6 +549,7 @@
 				A5F8288228DEAE3C00C5D6A2 /* OnboardingVC.swift in Sources */,
 				E54D9C4428F1A19000D028B2 /* BookmarkCoordinator.swift in Sources */,
 				BA1CCACB28FB01DE0002FD8C /* ViewModel.swift in Sources */,
+				BA9EBC122949F49D00167970 /* PrivateKeys.swift in Sources */,
 				E5467E4C28D45DFE0031B785 /* BottomCurveView.swift in Sources */,
 				BAD70BD8291A58CB00C39863 /* SortType.swift in Sources */,
 				E54D9C4628F1A19B00D028B2 /* BookmarkViewModel.swift in Sources */,
