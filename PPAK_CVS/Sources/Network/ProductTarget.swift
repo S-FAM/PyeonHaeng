@@ -10,6 +10,6 @@ import Foundation
 import Alamofire
 
 enum ProductTarget {
-  case name(String)
+  case search(String)
   case filter(RequestTypeModel)
 }
