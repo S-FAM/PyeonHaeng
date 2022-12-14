@@ -12,10 +12,14 @@ import RxCocoa
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
+@available(*, deprecated)
 final class CVSDatabase {
 
   /// The shared singleton firebase object.
   static let shared: CVSDatabase = CVSDatabase()
+  
+  @available(*, deprecated)
+  init() { }
 
   private lazy var database: CollectionReference = Firestore.firestore().collection("sale")
 
