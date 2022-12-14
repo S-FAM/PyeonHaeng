@@ -275,9 +275,9 @@
 				BAA0580F28D36F75000CDD11 /* BaseViewController.swift */,
 				BA27023028CF5DCD0039D9EA /* Coordinator.swift */,
 				E505D9F528CF5B4B00EEFC65 /* LaunchScreen.storyboard */,
+				BA9EBC0F2949BBC600167970 /* TargetType.swift */,
 				BA1CCACA28FB01DE0002FD8C /* ViewModel.swift */,
 				BA1CCACC28FB9A450002FD8C /* Viewable.swift */,
-				BA9EBC0F2949BBC600167970 /* TargetType.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
