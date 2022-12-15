@@ -31,9 +31,9 @@ final class PyeonHaengAPI {
     .asObservable()
   }
 
-  func product(named name: String) -> Observable<ResponseModel> {
+  func product(nameModel: RequestProductNameModel) -> Observable<ResponseModel> {
     return Single.create { observer in
-      AF.request(ProductTarget.search(name))
+      AF.request(ProductTarget.search(nameModel))
         .responseDecodable(of: ResponseModel.self) { response in
           switch response.result {
           case .success(let model):
