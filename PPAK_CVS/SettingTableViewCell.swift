@@ -46,7 +46,8 @@ final class SettingTableViewCell: UITableViewCell {
     // 버전정보 셀
     let isVersionCell = row == 5
     let versionString = isVersionCell ? "v \(versionInfo())" : ""
-    versionInfoLabel.attributedText = setTextSpacing(text: versionString)
+    let attributeString = NSAttributedString(string: versionString).withLineSpacing(100)
+    versionInfoLabel.attributedText = attributeString
     versionInfoLabel.isHidden = isVersionCell ? false : true
     versionInfoLabel.textAlignment = .right
 
@@ -92,11 +93,5 @@ final class SettingTableViewCell: UITableViewCell {
   private func versionInfo() -> String {
     guard let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return "" }
     return appVersion
-  }
-
-  /// 텍스트의 자간을 세팅하는 함수
-  private func setTextSpacing(text: String) -> NSAttributedString {
-    let introduction = NSAttributedString(string: text).withLineSpacing(100)
-    return introduction
   }
 }
