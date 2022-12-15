@@ -13,6 +13,7 @@ import Then
 final class SettingTableViewCell: UITableViewCell {
 
   // MARK: - Properties
+
   static let identifier = "SettingTableViewCell"
   private let iconList = ["icon_alert", "icon_noti", "icon_review", "icon_mail", "info_cheer", "icon_version"]
   private let titleList = ["알림", "공지사항", "리뷰 남기기", "문의하기", "개발자 응원하기", "버전정보"]
@@ -31,6 +32,7 @@ final class SettingTableViewCell: UITableViewCell {
   }
 
   // MARK: setLayout
+
   func setUI(_ row: Int) {
     setLayouts()
     setupConstraints()

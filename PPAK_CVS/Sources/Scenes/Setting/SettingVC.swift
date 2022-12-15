@@ -9,6 +9,7 @@ import RxGesture
 final class SettingViewController: BaseViewController {
 
   // MARK: - Properties
+
   private lazy var headerBar = UIView().then {
     $0.backgroundColor = .systemRed
   }
@@ -22,6 +23,7 @@ final class SettingViewController: BaseViewController {
   }
 
   // MARK: - SetLayout
+
   override func setupStyles() {
     super.setupStyles()
     view.backgroundColor = .systemYellow
@@ -51,6 +53,7 @@ final class SettingViewController: BaseViewController {
 }
 
 // MARK: - TableView Delegate
+
 extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return 6
