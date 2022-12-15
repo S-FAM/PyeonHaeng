@@ -57,7 +57,7 @@ final class SettingTableViewCell: UITableViewCell {
   }
 
   private func setLayouts() {
-    addSubview(containerView)
+    contentView.addSubview(containerView)
     [iconImage, titleLabel, versionInfoLabel].forEach {
       containerView.addSubview($0)
     }
