@@ -1,22 +1,20 @@
 //
-//  RequestTypeModel.swift
+//  RequestProductNameModel.swift
 //  PPAK_CVS
 //
-//  Created by 홍승현 on 2022/11/08.
+//  Created by 홍승현 on 2022/12/15.
 //
 
 import Foundation
 
-struct RequestTypeModel: Codable {
-  var cvs: CVSType
-  var event: EventType
+struct RequestProductNameModel: Codable {
+  var name: String
   var sort: SortType
   var offset: Int = 0
   var limit: Int = 10
 
   enum CodingKeys: String, CodingKey {
-    case cvs
-    case event
+    case name
     case sort = "order-by"
     case offset
     case limit

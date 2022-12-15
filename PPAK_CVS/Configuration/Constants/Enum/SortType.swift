@@ -7,8 +7,8 @@
 
 import Foundation
 
-enum SortType {
-  case ascending
-  case descending
+enum SortType: String, Codable {
+  case ascending = "asc"
+  case descending = "desc"
   case none
 }
