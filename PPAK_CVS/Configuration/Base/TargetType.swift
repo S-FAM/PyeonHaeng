@@ -31,8 +31,8 @@ extension TargetType {
     // setting uri
     var components = URLComponents(string: url.appendingPathComponent(path).absoluteString)
     components?.queryItems = parameters.map { URLQueryItem(name: $0, value: "\($1)") }
-    request.url = components?.url
-
+    // encoding "+" symbols if exists.
+    request.url = try components?.url?.absoluteString.replacingOccurrences(of: "+", with: "%2B").asURL()
     return request
   }
 }
