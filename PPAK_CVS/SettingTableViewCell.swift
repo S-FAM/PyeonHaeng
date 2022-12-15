@@ -31,11 +31,21 @@ final class SettingTableViewCell: UITableViewCell {
     $0.textColor = .gray
   }
 
+  // MARK: - Init
+
+  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+      super.init(style: style, reuseIdentifier: reuseIdentifier)
+      setLayouts()
+      setupConstraints()
+  }
+
+  required init?(coder: NSCoder) {
+      fatalError("init(coder:) has not been impl")
+  }
+
   // MARK: setLayout
 
   func setUI(_ row: Int) {
-    setLayouts()
-    setupConstraints()
     setDetail(row)
   }
 
