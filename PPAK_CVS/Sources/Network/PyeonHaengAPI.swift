@@ -14,9 +14,9 @@ final class PyeonHaengAPI {
 
   static let shared = PyeonHaengAPI()
 
-  func product(request: RequestTypeModel) -> Observable<ResponseModel> {
+  func product(typeModel: RequestTypeModel) -> Observable<ResponseModel> {
     return Single.create { observer in
-      AF.request(ProductTarget.filter(request))
+      AF.request(ProductTarget.filter(typeModel))
         .responseDecodable(of: ResponseModel.self) { response in
           switch response.result {
           case .success(let model):
