@@ -43,6 +43,8 @@
 		BA9EBC122949F49D00167970 /* PrivateKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EBC112949F49D00167970 /* PrivateKeys.swift */; };
 		BA9EBC14294A032800167970 /* ProductTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EBC13294A032800167970 /* ProductTarget.swift */; };
 		BA9EBC16294A04E500167970 /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EBC15294A04E500167970 /* Encodable+.swift */; };
+		BA9EBC18294A08C600167970 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EBC17294A08C600167970 /* TestViewController.swift */; };
+		BA9EBC1B294A115300167970 /* PyeonHaengAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EBC1A294A115300167970 /* PyeonHaengAPI.swift */; };
 		BA9EDA912917F98B00B97C23 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BA9EDA902917F98B00B97C23 /* FirebaseFirestoreSwift */; };
 		BA9EDA9B2918BF2B00B97C23 /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EDA9A2918BF2B00B97C23 /* ProductModel.swift */; };
 		BA9EDA9D2918BF9000B97C23 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EDA9C2918BF8F00B97C23 /* Date+.swift */; };
@@ -109,6 +111,8 @@
 		BA9EBC112949F49D00167970 /* PrivateKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKeys.swift; sourceTree = "<group>"; };
 		BA9EBC13294A032800167970 /* ProductTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTarget.swift; sourceTree = "<group>"; };
 		BA9EBC15294A04E500167970 /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
+		BA9EBC17294A08C600167970 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		BA9EBC1A294A115300167970 /* PyeonHaengAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyeonHaengAPI.swift; sourceTree = "<group>"; };
 		BA9EDA9A2918BF2B00B97C23 /* ProductModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
 		BA9EDA9C2918BF8F00B97C23 /* Date+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		BAA0580F28D36F75000CDD11 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -338,7 +342,9 @@
 			children = (
 				BAA21ACD29155E4A00056DB6 /* CVSDatabase.swift */,
 				A5E8DD06291FA217006AF2CE /* NetworkCheck.swift */,
+				BA9EBC1A294A115300167970 /* PyeonHaengAPI.swift */,
 				BA9EBC13294A032800167970 /* ProductTarget.swift */,
+				BA9EBC17294A08C600167970 /* TestViewController.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -551,8 +557,10 @@
 				E580BF2328E0646200BE7ADC /* GoodsCell.swift in Sources */,
 				BA9EBC102949BBC600167970 /* TargetType.swift in Sources */,
 				E5B9965B28E2A16D00E39566 /* FilterDropdownView.swift in Sources */,
+				BA9EBC18294A08C600167970 /* TestViewController.swift in Sources */,
 				BA8CF87C290D10CB009770C0 /* ProductHeaderViewViewModel.swift in Sources */,
 				A5F8288228DEAE3C00C5D6A2 /* OnboardingVC.swift in Sources */,
+				BA9EBC1B294A115300167970 /* PyeonHaengAPI.swift in Sources */,
 				BA9EBC14294A032800167970 /* ProductTarget.swift in Sources */,
 				E54D9C4428F1A19000D028B2 /* BookmarkCoordinator.swift in Sources */,
 				BA1CCACB28FB01DE0002FD8C /* ViewModel.swift in Sources */,
