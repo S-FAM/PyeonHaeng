@@ -6,8 +6,9 @@
 //
 import UIKit
 
-import Then
+import Kingfisher
 import SnapKit
+import Then
 
 final class GoodsCell: UICollectionViewCell {
 
@@ -22,41 +23,27 @@ final class GoodsCell: UICollectionViewCell {
     $0.backgroundColor = .white
   }
 
-  private let logoView = UIView().then {
-    $0.layer.cornerRadius = 15.0
-    $0.backgroundColor = .blue
-  }
-
   private let goodsLabel = UILabel().then {
-    $0.text = "코카)씨그랩피치탄산수350ML"
     $0.font = .systemFont(ofSize: 16.0, weight: .bold)
   }
 
   private let priceLabel = UILabel().then {
-    $0.text = "1,500원"
-    $0.font = .systemFont(ofSize: 16.0, weight: .light)
+    $0.font = .systemFont(ofSize: 14.0, weight: .light)
   }
 
   private let descriptionLabel = UILabel().then {
-    $0.text = "(개당 750원)"
-    $0.font = .systemFont(ofSize: 14.0, weight: .light)
+    $0.font = .systemFont(ofSize: 12.0, weight: .light)
   }
 
   private let goodsImage = UIImageView().then {
     $0.contentMode = .scaleAspectFit
-    $0.backgroundColor = .blue
-  }
-
-  private let eventView = UIView().then {
-    $0.layer.cornerRadius = 4.0
-    $0.backgroundColor = .blue
   }
 
   private lazy var stackView = UIStackView().then { stackView in
     let horiStack = UIStackView(arrangedSubviews: [priceLabel, descriptionLabel])
     horiStack.axis = .horizontal
     horiStack.spacing = 2.0
-    [goodsLabel, horiStack].forEach {
+    [goodsLabel, horiStack, saleTypeView].forEach {
       stackView.addArrangedSubview($0)
     }
       stackView.axis = .vertical
@@ -64,7 +51,11 @@ final class GoodsCell: UICollectionViewCell {
       stackView.alignment = .leading
   }
 
-  // MARK: - Init
+  private let titleLogoView = TitleLogoView(cvsType: .all)
+  private let saleTypeView = SaleTypeView(cvsType: .all)
+
+  // MARK: - LifeCycle
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupLayouts()
@@ -78,10 +69,10 @@ final class GoodsCell: UICollectionViewCell {
   // MARK: - Setup
 
   private func setupLayouts() {
-    [containerView, logoView]
+    [containerView, titleLogoView]
       .forEach { contentView.addSubview($0) }
 
-    [stackView, goodsImage, eventView]
+    [stackView, goodsImage]
       .forEach { containerView.addSubview($0) }
   }
 
@@ -92,11 +83,10 @@ final class GoodsCell: UICollectionViewCell {
       make.height.equalTo(100)
     }
 
-    logoView.snp.makeConstraints { make in
-      make.bottom.equalTo(containerView.snp.top).offset(8)
-      make.trailing.equalTo(containerView.snp.trailing).offset(-24.0)
-      make.height.equalTo(30.0)
-      make.width.equalTo(100.0)
+    titleLogoView.snp.makeConstraints { make in
+      make.trailing.equalTo(containerView.snp.trailing).offset(-12)
+      make.centerY.equalTo(containerView.snp.top)
+      make.height.equalTo(30)
     }
 
     goodsImage.snp.makeConstraints { make in
@@ -109,5 +99,22 @@ final class GoodsCell: UICollectionViewCell {
       make.centerY.equalToSuperview()
       make.leading.equalTo(goodsImage.snp.trailing).offset(8.0)
     }
+  }
+}
+
+extension GoodsCell {
+  /// 명시적으로 호출해야 합니다.
+  func updateCell(_ product: ProductModel) {
+    goodsLabel.text = product.name
+    priceLabel.text = "\(product.price)원"
+    saleTypeView.updateStyles(product)
+    titleLogoView.updateStyles(product)
+
+    goodsImage.kf.setImage(
+      with: URL(string: product.imageLink ?? ""),
+      options: [
+        .transition(.fade(0.5))
+      ]
+    )
   }
 }

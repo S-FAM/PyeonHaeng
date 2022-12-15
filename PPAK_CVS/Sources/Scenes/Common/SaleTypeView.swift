@@ -1,8 +1,8 @@
 //
-//  TitleLogoView.swift
+//  SaleTypeView.swift
 //  PPAK_CVS
 //
-//  Created by hyeonseok on 2022/10/03.
+//  Created by 김응철 on 2022/11/19.
 //
 
 import UIKit
@@ -10,12 +10,12 @@ import UIKit
 import SnapKit
 import Then
 
-final class TitleLogoView: UIView {
+final class SaleTypeView: UIView {
 
   lazy var titleLabel = UILabel().then {
     $0.text = cvsType.rawValue
     $0.textColor = cvsType.fontColor
-    $0.font = .systemFont(ofSize: 16, weight: .bold)
+    $0.font = .systemFont(ofSize: 12, weight: .bold)
   }
 
   private let cvsType: CVSType
@@ -35,22 +35,22 @@ final class TitleLogoView: UIView {
 
   private func setupStyles() {
     backgroundColor = cvsType.bgColor
-    layer.cornerRadius = 16
+    layer.cornerRadius = 8
   }
 
   private func setTitle() {
     addSubview(titleLabel)
 
     titleLabel.snp.makeConstraints { make in
-      make.leading.trailing.equalToSuperview().inset(16)
-      make.top.bottom.equalToSuperview().inset(8)
+      make.leading.trailing.equalToSuperview().inset(12)
+      make.top.bottom.equalToSuperview().inset(4)
     }
   }
 }
 
-extension TitleLogoView {
+extension SaleTypeView {
   func updateStyles(_ product: ProductModel) {
-    titleLabel.text = product.store.rawValue
+    titleLabel.text = product.saleType.rawValue
     titleLabel.textColor = product.store.fontColor
     backgroundColor = product.store.bgColor
   }
