@@ -48,7 +48,6 @@
 		BA9EBC16294A04E500167970 /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EBC15294A04E500167970 /* Encodable+.swift */; };
 		BA9EBC1B294A115300167970 /* PyeonHaengAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EBC1A294A115300167970 /* PyeonHaengAPI.swift */; };
 		BA9EBC1D294AED8E00167970 /* ReponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EBC1C294AED8E00167970 /* ReponseModel.swift */; };
-		BA9EBC21294B08A900167970 /* RequestProductNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EBC20294B08A900167970 /* RequestProductNameModel.swift */; };
 		BA9EDA912917F98B00B97C23 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BA9EDA902917F98B00B97C23 /* FirebaseFirestoreSwift */; };
 		BA9EDA9B2918BF2B00B97C23 /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EDA9A2918BF2B00B97C23 /* ProductModel.swift */; };
 		BA9EDA9D2918BF9000B97C23 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EDA9C2918BF8F00B97C23 /* Date+.swift */; };
@@ -120,7 +119,6 @@
 		BA9EBC15294A04E500167970 /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
 		BA9EBC1A294A115300167970 /* PyeonHaengAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyeonHaengAPI.swift; sourceTree = "<group>"; };
 		BA9EBC1C294AED8E00167970 /* ReponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReponseModel.swift; sourceTree = "<group>"; };
-		BA9EBC20294B08A900167970 /* RequestProductNameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestProductNameModel.swift; sourceTree = "<group>"; };
 		BA9EDA9A2918BF2B00B97C23 /* ProductModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
 		BA9EDA9C2918BF8F00B97C23 /* Date+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		BAA0580F28D36F75000CDD11 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -224,7 +222,6 @@
 				A5932EA928E047E000457AD3 /* OnboardingDataModel.swift */,
 				BA9EDA9A2918BF2B00B97C23 /* ProductModel.swift */,
 				BA9EBC1C294AED8E00167970 /* ReponseModel.swift */,
-				BA9EBC20294B08A900167970 /* RequestProductNameModel.swift */,
 				BAD70BD9291A594F00C39863 /* RequestTypeModel.swift */,
 			);
 			path = Models;
@@ -583,10 +580,8 @@
 				BA8CF87C290D10CB009770C0 /* ProductHeaderViewViewModel.swift in Sources */,
 				A5F8288228DEAE3C00C5D6A2 /* OnboardingVC.swift in Sources */,
 				9C5C03A5292B9F770000989F /* SettingVC.swift in Sources */,
-
 				BA9EBC1B294A115300167970 /* PyeonHaengAPI.swift in Sources */,
 				BA9EBC14294A032800167970 /* ProductTarget.swift in Sources */,
-
 				E54D9C4428F1A19000D028B2 /* BookmarkCoordinator.swift in Sources */,
 				BA1CCACB28FB01DE0002FD8C /* ViewModel.swift in Sources */,
 				BA9EBC122949F49D00167970 /* PrivateKeys.swift in Sources */,
@@ -603,7 +598,6 @@
 				BA9EBC16294A04E500167970 /* Encodable+.swift in Sources */,
 				9CCFA4FE28F4585E00963A95 /* EventType.swift in Sources */,
 				E59041DE2928FB8100135ECA /* SaleTypeView.swift in Sources */,
-				BA9EBC21294B08A900167970 /* RequestProductNameModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -743,10 +737,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-
-				DEVELOPMENT_TEAM = 69J4V4ULVW;
 				DEVELOPMENT_TEAM = 2ZQR76M3UH;
-
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PPAK_CVS/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
