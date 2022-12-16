@@ -63,10 +63,10 @@ final class HomeViewController: BaseViewController, Viewable {
       }
 
     cvsDropdownView.snp.makeConstraints { make in
-      make.top.equalTo(header.cvsButton.snp.bottom).offset(16)
-      make.leading.equalToSuperview().inset(16)
-      make.width.equalTo(64)
-      make.height.equalTo(376)
+      make.top.equalTo(header.cvsButton.snp.bottom).offset(10)
+      make.centerX.equalTo(header.cvsButton)
+      make.width.equalTo(73)
+      make.height.equalTo(450)
     }
 
     filterDropdownView.snp.makeConstraints { make in

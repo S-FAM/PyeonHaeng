@@ -32,9 +32,7 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
   }
 
   lazy var bookmarkButton = UIButton().then {
-    let image = UIImage(systemName: "heart.circle.fill")?.applyingSymbolConfiguration(.init(pointSize: 44))
-    $0.setImage(image, for: .normal)
-    $0.tintColor = .white
+    $0.setImage(UIImage(named: "ic_heart_white"), for: .normal)
   }
 
   // MARK: - Init
@@ -85,7 +83,7 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
 
     filterButton.snp.makeConstraints { make in
       make.centerY.equalTo(searchBar)
-      make.trailing.equalToSuperview().inset(16)
+      make.trailing.equalToSuperview().inset(20)
       make.width.height.equalTo(30)
     }
 
@@ -103,6 +101,7 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
     bookmarkButton.snp.makeConstraints { make in
       make.centerY.equalToSuperview()
       make.trailing.equalTo(cvsButton.snp.leading).offset(-20)
+      make.width.height.equalTo(50)
     }
   }
 }
