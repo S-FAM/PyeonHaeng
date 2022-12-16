@@ -24,17 +24,11 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
   }
 
   lazy var filterButton = UIButton().then {
-    $0.setImage(UIImage(named: "filter"), for: .normal)
-  }
-
-  lazy var logoLabel = UILabel().then {
-    $0.text = "logo"
-    $0.textColor = .white
-    $0.font = .systemFont(ofSize: 32.0, weight: .heavy)
+    $0.setImage(UIImage(named: "ic_sort"), for: .normal)
   }
 
   lazy var bookmarkButton = UIButton().then {
-    let image = UIImage(systemName: "heart.circle.fill")?.applyingSymbolConfiguration(.init(pointSize: 40))
+    let image = UIImage(systemName: "heart.circle.fill")?.applyingSymbolConfiguration(.init(pointSize: 44))
     $0.setImage(image, for: .normal)
     $0.tintColor = .white
   }
@@ -60,7 +54,7 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
   }
 
   private func setupLayouts() {
-    [topCurveView, pageControl, searchBar, filterButton, logoLabel, cvsButton, bookmarkButton]
+    [topCurveView, pageControl, searchBar, filterButton, cvsButton, bookmarkButton]
       .forEach { self.addSubview($0) }
   }
 
@@ -70,8 +64,8 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
     }
 
     pageControl.snp.makeConstraints { make in
-      make.centerY.equalToSuperview().offset(16)
       make.leading.trailing.equalToSuperview().inset(40)
+      make.bottom.equalToSuperview().inset(110)
       make.height.equalTo(65)
     }
 
@@ -88,20 +82,15 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
       make.width.height.equalTo(30)
     }
 
-    logoLabel.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(self.safeAreaLayoutGuide).inset(8)
-    }
-
     cvsButton.snp.makeConstraints { make in
-      make.top.equalTo(safeAreaLayoutGuide).inset(8)
-      make.leading.equalToSuperview().inset(16)
-      make.width.height.equalTo(40)
+      make.top.equalTo(safeAreaLayoutGuide).inset(23)
+      make.trailing.equalToSuperview().inset(40)
+      make.width.height.equalTo(44)
     }
 
     bookmarkButton.snp.makeConstraints { make in
       make.centerY.equalTo(cvsButton)
-      make.trailing.equalToSuperview().inset(16)
+      make.trailing.equalTo(cvsButton.snp.leading).offset(-20)
     }
   }
 }

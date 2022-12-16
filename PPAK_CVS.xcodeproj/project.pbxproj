@@ -583,10 +583,8 @@
 				BA8CF87C290D10CB009770C0 /* ProductHeaderViewViewModel.swift in Sources */,
 				A5F8288228DEAE3C00C5D6A2 /* OnboardingVC.swift in Sources */,
 				9C5C03A5292B9F770000989F /* SettingVC.swift in Sources */,
-
 				BA9EBC1B294A115300167970 /* PyeonHaengAPI.swift in Sources */,
 				BA9EBC14294A032800167970 /* ProductTarget.swift in Sources */,
-
 				E54D9C4428F1A19000D028B2 /* BookmarkCoordinator.swift in Sources */,
 				BA1CCACB28FB01DE0002FD8C /* ViewModel.swift in Sources */,
 				BA9EBC122949F49D00167970 /* PrivateKeys.swift in Sources */,
@@ -743,16 +741,16 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-
-				DEVELOPMENT_TEAM = 69J4V4ULVW;
 				DEVELOPMENT_TEAM = 2ZQR76M3UH;
-
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PPAK_CVS/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "사진첩에 이미지를 저장할 수 있습니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -781,10 +779,13 @@
 				DEVELOPMENT_TEAM = 69J4V4ULVW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PPAK_CVS/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "사진첩에 이미지를 저장할 수 있습니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

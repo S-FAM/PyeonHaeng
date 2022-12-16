@@ -20,7 +20,7 @@ final class CVSDropdownView: UIView {
   private lazy var emartButton = createLogoButton(CVSType.eMart.image)
   private lazy var gsButton = createLogoButton(CVSType.gs.image)
   private lazy var ministopButton = createLogoButton(CVSType.miniStop.image)
-  private lazy var settingButton = createLogoButton(#imageLiteral(resourceName: "setting"))
+  private lazy var settingButton = createLogoButton(#imageLiteral(resourceName: "ic_gear"))
 
   private lazy var stackView = UIStackView(
     arrangedSubviews: [allButton, cuButton, gsButton, elevenButton, ministopButton, emartButton, settingButton]

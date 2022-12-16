@@ -29,7 +29,7 @@ enum CVSType: String, Codable {
     case .sevenEleven: return UIImage(named: "logo_7eleven")
     case .miniStop: return UIImage(named: "logo_ministop")
     case .eMart: return UIImage(named: "logo_emart24")
-    case .all: return UIImage(named: "logo_all")
+    case .all: return UIImage(named: "ic_convenienceStore")
     }
   }
 
