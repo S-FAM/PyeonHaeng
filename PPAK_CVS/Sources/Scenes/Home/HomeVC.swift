@@ -27,7 +27,7 @@ final class HomeViewController: BaseViewController, Viewable {
 
   private let indicator = UIActivityIndicatorView()
   private let cvsDropdownView = CVSDropdownView()
-  private let filterDropdownView = FilterDropdownView()
+  private let sortDropdownView = SortDropdownView()
   private var header: HomeCollectionHeaderView!
 
   // MARK: - Setup
@@ -56,7 +56,7 @@ final class HomeViewController: BaseViewController, Viewable {
   }
 
   private func setupDropdown() {
-    [cvsDropdownView, filterDropdownView]
+    [cvsDropdownView, sortDropdownView]
       .forEach {
         view.addSubview($0)
         $0.isHidden = true
@@ -69,11 +69,11 @@ final class HomeViewController: BaseViewController, Viewable {
       make.height.equalTo(450)
     }
 
-    filterDropdownView.snp.makeConstraints { make in
+    sortDropdownView.snp.makeConstraints { make in
       make.top.equalTo(header.filterButton.snp.bottom).offset(12)
       make.trailing.equalToSuperview().inset(16)
-      make.width.equalTo(130)
-      make.height.equalTo(100)
+      make.width.equalTo(100)
+      make.height.equalTo(80)
     }
   }
 
@@ -114,7 +114,7 @@ final class HomeViewController: BaseViewController, Viewable {
       .disposed(by: disposeBag)
 
     // 필터 드롭다운 리스트 버튼 클릭
-    filterDropdownView.buttonEventSubject
+    sortDropdownView.buttonEventSubject
       .map { HomeViewModel.Action.dropdownFilterButtonDidTap($0) }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
@@ -151,7 +151,7 @@ final class HomeViewController: BaseViewController, Viewable {
       .map { $0.isVisibleFilterDropdown }
       .withUnretained(self)
       .bind { owner, isVisible in
-        isVisible ? owner.filterDropdownView.willAppearDropdown() : owner.filterDropdownView.willDisappearDropdown()
+        isVisible ? owner.sortDropdownView.willAppearDropdown() : owner.sortDropdownView.willDisappearDropdown()
       }
       .disposed(by: disposeBag)
 
