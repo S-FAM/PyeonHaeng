@@ -43,14 +43,14 @@ final class SearchBar: UIView {
 
   private func setupStyles() {
     self.backgroundColor = .white
-    self.layer.cornerRadius = 18.0
+    self.layer.cornerRadius = 24
     self.layer.shadowOffset = CGSize(width: 0, height: 0)
-    self.layer.shadowOpacity = 0.2
+    self.layer.shadowOpacity = 0.15
     self.layer.shadowColor = UIColor.black.cgColor
   }
 
   private func setupImageView() {
-    let imageView = UIImageView(image: UIImage(named: "Magnifying_Glass"))
+    let imageView = UIImageView(image: UIImage(named: "ic_magnifyingGlass"))
     self.imageView = imageView
     self.addSubview(imageView)
   }
