@@ -1,7 +1,7 @@
 import UIKit
 
 class BaseCoordinator: NSObject, Coordinator {
-  var childCoordinators: [Coordinator] = []
+  var childCoordinators: [any Coordinator] = []
   var navigationController: UINavigationController
   var parentCoordinator: Coordinator?
 
