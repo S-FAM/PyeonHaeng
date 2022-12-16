@@ -41,13 +41,13 @@ final class HomeViewController: BaseViewController, Viewable {
   override func setupStyles() {
     navigationController?.isNavigationBarHidden = true
     navigationController?.interactivePopGestureRecognizer?.delegate = nil
-    view.backgroundColor = .white
+    view.backgroundColor = CVSType.all.bgColor
   }
 
   override func setupConstraints() {
     collectionView.snp.makeConstraints { make in
-      make.top.leading.trailing.equalToSuperview()
-      make.bottom.equalTo(view.safeAreaLayoutGuide)
+      make.leading.trailing.bottom.equalToSuperview()
+      make.top.equalTo(view.safeAreaLayoutGuide)
     }
 
     indicator.snp.makeConstraints { make in
@@ -163,6 +163,7 @@ final class HomeViewController: BaseViewController, Viewable {
         owner.header.cvsButton.setImage(cvsType.image, for: .normal)
         owner.header.topCurveView.backgroundColor = cvsType.bgColor
         owner.header.pageControl.focusedView.backgroundColor = cvsType.bgColor
+        owner.view.backgroundColor = cvsType.bgColor
       }
       .disposed(by: disposeBag)
 
@@ -234,7 +235,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     layout collectionViewLayout: UICollectionViewLayout,
     referenceSizeForHeaderInSection section: Int
   ) -> CGSize {
-    return CGSize(width: view.frame.width, height: 320)
+    return CGSize(width: view.frame.width, height: 280)
   }
 
   func collectionView(
