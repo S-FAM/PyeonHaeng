@@ -101,7 +101,7 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
     bookmarkButton.snp.makeConstraints { make in
       make.centerY.equalToSuperview()
       make.trailing.equalTo(cvsButton.snp.leading).offset(-20)
-      make.width.height.equalTo(50)
+      make.width.height.equalTo(44)
     }
   }
 }
