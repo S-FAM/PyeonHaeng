@@ -77,14 +77,14 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
     searchBar.snp.makeConstraints { make in
       make.bottom.equalToSuperview()
       make.leading.equalToSuperview().inset(40)
-      make.trailing.equalTo(filterButton.snp.leading).offset(-16)
+      make.trailing.equalTo(filterButton.snp.leading).offset(-13)
       make.height.equalTo(50)
     }
 
     filterButton.snp.makeConstraints { make in
       make.centerY.equalTo(searchBar)
-      make.trailing.equalToSuperview().inset(20)
-      make.width.height.equalTo(30)
+      make.trailing.equalToSuperview().inset(16)
+      make.width.height.equalTo(44)
     }
 
     iconContainerView.snp.makeConstraints { make in
