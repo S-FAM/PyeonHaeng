@@ -20,12 +20,12 @@ final class CVSDropdownView: UIView {
   private lazy var emartButton = createLogoButton(CVSType.eMart.image)
   private lazy var gsButton = createLogoButton(CVSType.gs.image)
   private lazy var ministopButton = createLogoButton(CVSType.miniStop.image)
-  private lazy var settingButton = createLogoButton(#imageLiteral(resourceName: "setting"))
+  private lazy var settingButton = createLogoButton(#imageLiteral(resourceName: "ic_gear"))
 
   private lazy var stackView = UIStackView(
     arrangedSubviews: [allButton, cuButton, gsButton, elevenButton, ministopButton, emartButton, settingButton]
   ).then {
-    $0.spacing = 12
+    $0.spacing = 16
     $0.axis = .vertical
   }
 
@@ -62,7 +62,7 @@ final class CVSDropdownView: UIView {
   private func setupConstraints() {
     stackView.snp.makeConstraints { make in
       make.centerX.equalToSuperview()
-      make.top.equalToSuperview().inset(12)
+      make.top.equalToSuperview().inset(23)
     }
   }
 
@@ -119,7 +119,7 @@ final class CVSDropdownView: UIView {
     let button = UIButton()
     button.setImage(image, for: .normal)
     button.snp.makeConstraints { make in
-      make.width.height.equalTo(40)
+      make.width.height.equalTo(44)
     }
 
     return button

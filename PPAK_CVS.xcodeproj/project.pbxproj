@@ -48,7 +48,6 @@
 		BA9EBC16294A04E500167970 /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EBC15294A04E500167970 /* Encodable+.swift */; };
 		BA9EBC1B294A115300167970 /* PyeonHaengAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EBC1A294A115300167970 /* PyeonHaengAPI.swift */; };
 		BA9EBC1D294AED8E00167970 /* ReponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EBC1C294AED8E00167970 /* ReponseModel.swift */; };
-		BA9EBC21294B08A900167970 /* RequestProductNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EBC20294B08A900167970 /* RequestProductNameModel.swift */; };
 		BA9EDA912917F98B00B97C23 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BA9EDA902917F98B00B97C23 /* FirebaseFirestoreSwift */; };
 		BA9EDA9B2918BF2B00B97C23 /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EDA9A2918BF2B00B97C23 /* ProductModel.swift */; };
 		BA9EDA9D2918BF9000B97C23 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EDA9C2918BF8F00B97C23 /* Date+.swift */; };
@@ -81,7 +80,7 @@
 		E59041DE2928FB8100135ECA /* SaleTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59041DD2928FB8100135ECA /* SaleTypeView.swift */; };
 		E5A877C028D4A34D002A2402 /* PageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A877BF28D4A34D002A2402 /* PageControl.swift */; };
 		E5B9965728E2872A00E39566 /* CVSDropdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B9965628E2872A00E39566 /* CVSDropdownView.swift */; };
-		E5B9965B28E2A16D00E39566 /* FilterDropdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B9965A28E2A16D00E39566 /* FilterDropdownView.swift */; };
+		E5B9965B28E2A16D00E39566 /* SortDropdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B9965A28E2A16D00E39566 /* SortDropdownView.swift */; };
 		E5C9025228E2DB480086BDE9 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C9025128E2DB480086BDE9 /* HomeViewModel.swift */; };
 		E5F9CCA228EF10EA0084CD63 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = E5F9CCA128EF10EA0084CD63 /* RxGesture */; };
 /* End PBXBuildFile section */
@@ -120,7 +119,6 @@
 		BA9EBC15294A04E500167970 /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
 		BA9EBC1A294A115300167970 /* PyeonHaengAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyeonHaengAPI.swift; sourceTree = "<group>"; };
 		BA9EBC1C294AED8E00167970 /* ReponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReponseModel.swift; sourceTree = "<group>"; };
-		BA9EBC20294B08A900167970 /* RequestProductNameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestProductNameModel.swift; sourceTree = "<group>"; };
 		BA9EDA9A2918BF2B00B97C23 /* ProductModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
 		BA9EDA9C2918BF8F00B97C23 /* Date+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		BAA0580F28D36F75000CDD11 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -153,7 +151,7 @@
 		E59041DD2928FB8100135ECA /* SaleTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaleTypeView.swift; sourceTree = "<group>"; };
 		E5A877BF28D4A34D002A2402 /* PageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControl.swift; sourceTree = "<group>"; };
 		E5B9965628E2872A00E39566 /* CVSDropdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVSDropdownView.swift; sourceTree = "<group>"; };
-		E5B9965A28E2A16D00E39566 /* FilterDropdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDropdownView.swift; sourceTree = "<group>"; };
+		E5B9965A28E2A16D00E39566 /* SortDropdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortDropdownView.swift; sourceTree = "<group>"; };
 		E5C9025128E2DB480086BDE9 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -224,7 +222,6 @@
 				A5932EA928E047E000457AD3 /* OnboardingDataModel.swift */,
 				BA9EDA9A2918BF2B00B97C23 /* ProductModel.swift */,
 				BA9EBC1C294AED8E00167970 /* ReponseModel.swift */,
-				BA9EBC20294B08A900167970 /* RequestProductNameModel.swift */,
 				BAD70BD9291A594F00C39863 /* RequestTypeModel.swift */,
 			);
 			path = Models;
@@ -333,7 +330,7 @@
 				9C798F8928EAE9DA00FE250C /* TitleLogoView.swift */,
 				E59041DD2928FB8100135ECA /* SaleTypeView.swift */,
 				E5B9965628E2872A00E39566 /* CVSDropdownView.swift */,
-				E5B9965A28E2A16D00E39566 /* FilterDropdownView.swift */,
+				E5B9965A28E2A16D00E39566 /* SortDropdownView.swift */,
 				E51669EF29338593006C9635 /* LoadingCell.swift */,
 			);
 			path = Common;
@@ -579,7 +576,7 @@
 				E580BF2528E0649E00BE7ADC /* HomeCollectionHeaderView.swift in Sources */,
 				E580BF2328E0646200BE7ADC /* GoodsCell.swift in Sources */,
 				BA9EBC102949BBC600167970 /* TargetType.swift in Sources */,
-				E5B9965B28E2A16D00E39566 /* FilterDropdownView.swift in Sources */,
+				E5B9965B28E2A16D00E39566 /* SortDropdownView.swift in Sources */,
 				BA8CF87C290D10CB009770C0 /* ProductHeaderViewViewModel.swift in Sources */,
 				A5F8288228DEAE3C00C5D6A2 /* OnboardingVC.swift in Sources */,
 				9C5C03A5292B9F770000989F /* SettingVC.swift in Sources */,
@@ -601,7 +598,6 @@
 				BA9EBC16294A04E500167970 /* Encodable+.swift in Sources */,
 				9CCFA4FE28F4585E00963A95 /* EventType.swift in Sources */,
 				E59041DE2928FB8100135ECA /* SaleTypeView.swift in Sources */,
-				BA9EBC21294B08A900167970 /* RequestProductNameModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -744,10 +740,13 @@
 				DEVELOPMENT_TEAM = 2ZQR76M3UH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PPAK_CVS/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "사진첩에 이미지를 저장할 수 있습니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -773,13 +772,16 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2ZQR76M3UH;
+				DEVELOPMENT_TEAM = 95JTZ6AP78;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PPAK_CVS/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "사진첩에 이미지를 저장할 수 있습니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

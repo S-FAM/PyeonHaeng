@@ -31,7 +31,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
     )
   }
 
-  private lazy var filterDropdownView = FilterDropdownView()
+  private lazy var filterDropdownView = SortDropdownView()
   private lazy var cvsDropdownView = CVSDropdownView()
   private var header: BookmarkCollectionHeaderView!
 

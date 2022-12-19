@@ -27,7 +27,7 @@ final class HomeViewController: BaseViewController, Viewable {
 
   private let indicator = UIActivityIndicatorView()
   private let cvsDropdownView = CVSDropdownView()
-  private let filterDropdownView = FilterDropdownView()
+  private let sortDropdownView = SortDropdownView()
   private var header: HomeCollectionHeaderView!
 
   // MARK: - Setup
@@ -41,13 +41,13 @@ final class HomeViewController: BaseViewController, Viewable {
   override func setupStyles() {
     navigationController?.isNavigationBarHidden = true
     navigationController?.interactivePopGestureRecognizer?.delegate = nil
-    view.backgroundColor = .white
+    view.backgroundColor = CVSType.all.bgColor
   }
 
   override func setupConstraints() {
     collectionView.snp.makeConstraints { make in
-      make.top.leading.trailing.equalToSuperview()
-      make.bottom.equalTo(view.safeAreaLayoutGuide)
+      make.leading.trailing.bottom.equalToSuperview()
+      make.top.equalTo(view.safeAreaLayoutGuide)
     }
 
     indicator.snp.makeConstraints { make in
@@ -56,24 +56,24 @@ final class HomeViewController: BaseViewController, Viewable {
   }
 
   private func setupDropdown() {
-    [cvsDropdownView, filterDropdownView]
+    [cvsDropdownView, sortDropdownView]
       .forEach {
         view.addSubview($0)
         $0.isHidden = true
       }
 
     cvsDropdownView.snp.makeConstraints { make in
-      make.top.equalTo(header.cvsButton.snp.bottom).offset(16)
-      make.leading.equalToSuperview().inset(16)
-      make.width.equalTo(64)
-      make.height.equalTo(376)
+      make.top.equalTo(header.cvsButton.snp.bottom).offset(10)
+      make.centerX.equalTo(header.cvsButton)
+      make.width.equalTo(73)
+      make.height.equalTo(450)
     }
 
-    filterDropdownView.snp.makeConstraints { make in
+    sortDropdownView.snp.makeConstraints { make in
       make.top.equalTo(header.filterButton.snp.bottom).offset(12)
       make.trailing.equalToSuperview().inset(16)
-      make.width.equalTo(130)
-      make.height.equalTo(100)
+      make.width.equalTo(100)
+      make.height.equalTo(80)
     }
   }
 
@@ -114,7 +114,7 @@ final class HomeViewController: BaseViewController, Viewable {
       .disposed(by: disposeBag)
 
     // 필터 드롭다운 리스트 버튼 클릭
-    filterDropdownView.buttonEventSubject
+    sortDropdownView.buttonEventSubject
       .map { HomeViewModel.Action.dropdownFilterButtonDidTap($0) }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
@@ -151,7 +151,7 @@ final class HomeViewController: BaseViewController, Viewable {
       .map { $0.isVisibleFilterDropdown }
       .withUnretained(self)
       .bind { owner, isVisible in
-        isVisible ? owner.filterDropdownView.willAppearDropdown() : owner.filterDropdownView.willDisappearDropdown()
+        isVisible ? owner.sortDropdownView.willAppearDropdown() : owner.sortDropdownView.willDisappearDropdown()
       }
       .disposed(by: disposeBag)
 
@@ -163,6 +163,7 @@ final class HomeViewController: BaseViewController, Viewable {
         owner.header.cvsButton.setImage(cvsType.image, for: .normal)
         owner.header.topCurveView.backgroundColor = cvsType.bgColor
         owner.header.pageControl.focusedView.backgroundColor = cvsType.bgColor
+        owner.view.backgroundColor = cvsType.bgColor
       }
       .disposed(by: disposeBag)
 
@@ -234,7 +235,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     layout collectionViewLayout: UICollectionViewLayout,
     referenceSizeForHeaderInSection section: Int
   ) -> CGSize {
-    return CGSize(width: view.frame.width, height: 320)
+    return CGSize(width: view.frame.width, height: 280)
   }
 
   func collectionView(
