@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9C07AE832934D763002CFE3F /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C07AE822934D763002CFE3F /* SettingTableViewCell.swift */; };
+		9C40083329508D5900C7E2DE /* SettingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C40083229508D5900C7E2DE /* SettingCoordinator.swift */; };
+		9C40083529508DA400C7E2DE /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C40083429508DA400C7E2DE /* SettingViewModel.swift */; };
 		9C5C03A5292B9F770000989F /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5C03A4292B9F770000989F /* SettingVC.swift */; };
 		9C798F8A28EAE9DA00FE250C /* TitleLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C798F8928EAE9DA00FE250C /* TitleLogoView.swift */; };
 		9C798F8C28EAEC5D00FE250C /* CvsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C798F8B28EAEC5D00FE250C /* CvsType.swift */; };
@@ -87,6 +89,8 @@
 
 /* Begin PBXFileReference section */
 		9C07AE822934D763002CFE3F /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingTableViewCell.swift; path = PPAK_CVS/SettingTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		9C40083229508D5900C7E2DE /* SettingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCoordinator.swift; sourceTree = "<group>"; };
+		9C40083429508DA400C7E2DE /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		9C5C03A4292B9F770000989F /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		9C798F8928EAE9DA00FE250C /* TitleLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleLogoView.swift; sourceTree = "<group>"; };
 		9C798F8B28EAEC5D00FE250C /* CvsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvsType.swift; sourceTree = "<group>"; };
@@ -181,7 +185,9 @@
 			isa = PBXGroup;
 			children = (
 				9C5C03A4292B9F770000989F /* SettingVC.swift */,
+				9C40083229508D5900C7E2DE /* SettingCoordinator.swift */,
 				9C07AE822934D763002CFE3F /* SettingTableViewCell.swift */,
+				9C40083429508DA400C7E2DE /* SettingViewModel.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -552,6 +558,7 @@
 				A5F8288E28DED76700C5D6A2 /* UILabel+.swift in Sources */,
 				9C798F8C28EAEC5D00FE250C /* CvsType.swift in Sources */,
 				BA5A433E28F2FF47008DCDCC /* ProductCoordinator.swift in Sources */,
+				9C40083529508DA400C7E2DE /* SettingViewModel.swift in Sources */,
 				BA27023128CF5DCD0039D9EA /* Coordinator.swift in Sources */,
 				BA5A433C28F2FF15008DCDCC /* ProductVC.swift in Sources */,
 				A5F8288528DEB03A00C5D6A2 /* OnboardingCoordinator.swift in Sources */,
@@ -576,6 +583,7 @@
 				E580BF2528E0649E00BE7ADC /* HomeCollectionHeaderView.swift in Sources */,
 				E580BF2328E0646200BE7ADC /* GoodsCell.swift in Sources */,
 				BA9EBC102949BBC600167970 /* TargetType.swift in Sources */,
+				9C40083329508D5900C7E2DE /* SettingCoordinator.swift in Sources */,
 				E5B9965B28E2A16D00E39566 /* FilterDropdownView.swift in Sources */,
 				BA8CF87C290D10CB009770C0 /* ProductHeaderViewViewModel.swift in Sources */,
 				A5F8288228DEAE3C00C5D6A2 /* OnboardingVC.swift in Sources */,

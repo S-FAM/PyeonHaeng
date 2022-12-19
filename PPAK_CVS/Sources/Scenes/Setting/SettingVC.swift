@@ -50,6 +50,9 @@ final class SettingViewController: BaseViewController {
       make.leading.trailing.bottom.equalToSuperview()
     }
   }
+  
+  func bind(viewModel: SettingViewModel) { }
+
 }
 
 // MARK: - TableView Delegate
