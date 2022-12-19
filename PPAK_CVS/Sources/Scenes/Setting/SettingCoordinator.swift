@@ -20,7 +20,7 @@ final class SettingCoordinator: BaseCoordinator {
     viewController.coordinator = self
     viewController.viewModel = viewModel
     bind(viewModel)
-    self.navigationController.setViewControllers([viewController], animated: true)
+    self.navigationController.pushViewControllers([viewController], animated: true)
   }
 
   func bind(_ viewModel: SettingViewModel) {}
