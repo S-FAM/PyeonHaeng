@@ -24,19 +24,15 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
   }
 
   lazy var filterButton = UIButton().then {
-    $0.setImage(UIImage(named: "filter"), for: .normal)
+    $0.setImage(UIImage(named: "ic_sort"), for: .normal)
   }
 
-  lazy var logoLabel = UILabel().then {
-    $0.text = "logo"
-    $0.textColor = .white
-    $0.font = .systemFont(ofSize: 32.0, weight: .heavy)
+  lazy var iconContainerView = UIView().then {
+    $0.backgroundColor = .clear
   }
 
   lazy var bookmarkButton = UIButton().then {
-    let image = UIImage(systemName: "heart.circle.fill")?.applyingSymbolConfiguration(.init(pointSize: 40))
-    $0.setImage(image, for: .normal)
-    $0.tintColor = .white
+    $0.setImage(UIImage(named: "ic_heart_white"), for: .normal)
   }
 
   // MARK: - Init
@@ -60,8 +56,11 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
   }
 
   private func setupLayouts() {
-    [topCurveView, pageControl, searchBar, filterButton, logoLabel, cvsButton, bookmarkButton]
+    [topCurveView, pageControl, searchBar, filterButton, iconContainerView]
       .forEach { self.addSubview($0) }
+
+    [bookmarkButton, cvsButton]
+      .forEach { iconContainerView.addSubview($0) }
   }
 
   private func setupConstraints() {
@@ -70,38 +69,39 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
     }
 
     pageControl.snp.makeConstraints { make in
-      make.centerY.equalToSuperview().offset(16)
       make.leading.trailing.equalToSuperview().inset(40)
+      make.bottom.equalToSuperview().inset(110)
       make.height.equalTo(65)
     }
 
     searchBar.snp.makeConstraints { make in
       make.bottom.equalToSuperview()
-      make.leading.equalToSuperview().inset(32)
-      make.trailing.equalTo(filterButton.snp.leading).offset(-16)
+      make.leading.equalToSuperview().inset(40)
+      make.trailing.equalTo(filterButton.snp.leading).offset(-13)
       make.height.equalTo(50)
     }
 
     filterButton.snp.makeConstraints { make in
       make.centerY.equalTo(searchBar)
-      make.trailing.equalToSuperview().inset(32)
-      make.width.height.equalTo(30)
+      make.trailing.equalToSuperview().inset(16)
+      make.width.height.equalTo(44)
     }
 
-    logoLabel.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(self.safeAreaLayoutGuide).inset(8)
+    iconContainerView.snp.makeConstraints { make in
+      make.top.leading.trailing.equalTo(safeAreaLayoutGuide)
+      make.bottom.equalTo(pageControl.snp.top)
     }
 
     cvsButton.snp.makeConstraints { make in
-      make.top.equalTo(safeAreaLayoutGuide).inset(8)
-      make.leading.equalToSuperview().inset(16)
-      make.width.height.equalTo(40)
+      make.trailing.equalToSuperview().inset(40)
+      make.centerY.equalToSuperview()
+      make.width.height.equalTo(44)
     }
 
     bookmarkButton.snp.makeConstraints { make in
-      make.centerY.equalTo(cvsButton)
-      make.trailing.equalToSuperview().inset(16)
+      make.centerY.equalToSuperview()
+      make.trailing.equalTo(cvsButton.snp.leading).offset(-20)
+      make.width.height.equalTo(44)
     }
   }
 }

@@ -12,7 +12,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-final class FilterDropdownView: UIView {
+final class SortDropdownView: UIView {
 
   // MARK: - Properties
 
@@ -23,7 +23,7 @@ final class FilterDropdownView: UIView {
     $0.addArrangedSubview(ascendingButton)
     $0.addArrangedSubview(descendingButton)
     $0.axis = .vertical
-    $0.spacing = 4.0
+    $0.spacing = 12
   }
 
   let disposeBag = DisposeBag()
@@ -83,13 +83,14 @@ final class FilterDropdownView: UIView {
 
 // MARK: - Helpers
 
-extension FilterDropdownView {
+extension SortDropdownView {
   private func createButton(_ title: String) -> UIButton {
     var config = UIButton.Configuration.plain()
     var container = AttributeContainer()
-    container.font = .systemFont(ofSize: 16.0, weight: .bold)
+    container.font = .systemFont(ofSize: 14.0, weight: .bold)
     config.attributedTitle = AttributedString(title, attributes: container)
     config.baseForegroundColor = .black
+    config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
     let button = UIButton(configuration: config)
 
     return button
