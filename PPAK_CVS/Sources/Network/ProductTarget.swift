@@ -10,8 +10,7 @@ import Foundation
 import Alamofire
 
 enum ProductTarget {
-  case search(RequestProductNameModel)
-  case filter(RequestTypeModel)
+  case search(RequestTypeModel)
 }
 
 extension ProductTarget: TargetType {
@@ -25,17 +24,12 @@ extension ProductTarget: TargetType {
     switch self {
     case .search:
       return "\(uri)/search"
-    case .filter:
-      return "\(uri)/filter"
-
     }
   }
 
   var parameters: Parameters {
     switch self {
     case .search(let model):
-      return model.parameters
-    case .filter(let model):
       return model.parameters
     }
   }
