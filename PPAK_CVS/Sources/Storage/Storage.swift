@@ -45,31 +45,32 @@ final class Storage {
   func retrieve(
     cvs: CVSType = .all,
     event: EventType = .all,
+    sort: SortType = .none,
     target: String?
   ) -> [ProductModel] {
     var newProducts: [ProductModel] = []
     
-    if let target = target {
-      
-      for item in products {
-        if item.store == cvs,
-           item.saleType == event,
-           item.name.contains(target) {
-          newProducts.append(item)
+    newProducts = products
+      .filter {
+        if let target = target {
+          return $0.name.contains(target)
+        } else {
+          return true
         }
       }
-
-    } else {
-      
-      for item in products {
-        if item.store == cvs,
-           item.saleType == event {
-          newProducts.append(item)
+      .filter { $0.store == cvs }
+      .filter { $0.saleType == event }
+      .sorted {
+        switch sort {
+        case .ascending:
+          return $0.price < $1.price
+        case .descending:
+          return $0.price > $1.price
+        case .none:
+          return false
         }
       }
-    }
     
     return newProducts
   }
-  
 }
