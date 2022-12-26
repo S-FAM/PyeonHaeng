@@ -15,19 +15,17 @@ final class Storage {
   private let userDefaults = UserDefaults.standard
   private init() {}
   
-  private(set) var products: [ProductModel] = shared.load() {
+  private(set) lazy var products: [ProductModel] = load() {
     didSet {
-      let encoder = JSONEncoder()
-      if let encoded = try? encoder.encode(oldValue) {
+      if let encoded = try? JSONEncoder().encode(oldValue) {
         userDefaults.set(encoded, forKey: key)
       }
     }
   }
   
-  func load() -> [ProductModel] {
+  private func load() -> [ProductModel] {
     guard let data = userDefaults.object(forKey: key) as? Data else { return [] }
-    let decoder = JSONDecoder()
-    if let products = try? decoder.decode([ProductModel].self, from: data) {
+    if let products = try? JSONDecoder().decode([ProductModel].self, from: data) {
       return products
     } else {
       return []
@@ -51,7 +49,7 @@ final class Storage {
     var newProducts: [ProductModel] = []
     
     newProducts = products
-      .filter { target != nil ? $0.name.contains(target!) : true }
+      .filter { target == nil ? true : $0.name.contains(target!) }
       .filter { cvs == .all ? true : $0.store == cvs }
       .filter { event == .all ? true : $0.saleType == event }
       .sorted {
