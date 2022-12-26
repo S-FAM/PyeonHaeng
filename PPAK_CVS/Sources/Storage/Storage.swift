@@ -17,7 +17,7 @@ final class Storage {
   
   private(set) lazy var products: [ProductModel] = load() {
     didSet {
-      if let encoded = try? JSONEncoder().encode(oldValue) {
+      if let encoded = try? JSONEncoder().encode(products) {
         userDefaults.set(encoded, forKey: key)
       }
     }
@@ -43,12 +43,12 @@ final class Storage {
   func contains(_ from: ProductModel) -> Bool {
     return products.contains(from)
   }
-
+  
   func retrieve(
     cvs: CVSType = .all,
     event: EventType = .all,
     sort: SortType = .none,
-    target: String?
+    target: String? = nil
   ) -> [ProductModel] {
     var newProducts: [ProductModel] = []
     
