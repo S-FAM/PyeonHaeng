@@ -41,16 +41,35 @@ final class Storage {
   func remove(_ target: ProductModel) {
     // TODO: 특정 아이템을 어떻게 삭제할까?
   }
-  
-  func search(_ target: String) -> [ProductModel] {
+
+  func retrieve(
+    cvs: CVSType = .all,
+    event: EventType = .all,
+    target: String?
+  ) -> [ProductModel] {
     var newProducts: [ProductModel] = []
     
-    for item in products {
-      if item.name.contains(target) {
-        newProducts.append(item)
+    if let target = target {
+      
+      for item in products {
+        if item.store == cvs,
+           item.saleType == event,
+           item.name.contains(target) {
+          newProducts.append(item)
+        }
+      }
+
+    } else {
+      
+      for item in products {
+        if item.store == cvs,
+           item.saleType == event {
+          newProducts.append(item)
+        }
       }
     }
     
     return newProducts
   }
+  
 }
