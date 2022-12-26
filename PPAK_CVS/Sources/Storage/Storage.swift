@@ -37,7 +37,11 @@ final class Storage {
   }
   
   func remove(_ target: ProductModel) {
-    // TODO: 특정 아이템을 어떻게 삭제할까?
+    products = products.filter { $0 != target }
+  }
+  
+  func contains(_ from: ProductModel) -> Bool {
+    return products.contains(from)
   }
 
   func retrieve(
