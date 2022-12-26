@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProductModel: Codable {
+struct ProductModel: Codable, Equatable {
   /// 이미지 주소
   let imageLink: String?
   /// 물품명
