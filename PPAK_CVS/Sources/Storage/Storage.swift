@@ -34,7 +34,7 @@ final class Storage {
     }
   }
   
-  func append(_ from: ProductModel) {
+  func add(_ from: ProductModel) {
     products.insert(from, at: 0)
   }
   
