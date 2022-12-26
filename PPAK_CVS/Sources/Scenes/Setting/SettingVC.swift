@@ -6,7 +6,7 @@ import RxSwift
 import RxCocoa
 import RxGesture
 
-final class SettingViewController: BaseViewController {
+final class SettingViewController: BaseViewController, Viewable {
 
   // MARK: - Properties
 
@@ -50,9 +50,13 @@ final class SettingViewController: BaseViewController {
       make.leading.trailing.bottom.equalToSuperview()
     }
   }
-  
+
   func bind(viewModel: SettingViewModel) { }
 
+  private func bindHeader() {
+    guard let viewModel = viewModel else { return }
+
+  }
 }
 
 // MARK: - TableView Delegate
