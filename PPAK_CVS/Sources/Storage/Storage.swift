@@ -51,15 +51,9 @@ final class Storage {
     var newProducts: [ProductModel] = []
     
     newProducts = products
-      .filter {
-        if let target = target {
-          return $0.name.contains(target)
-        } else {
-          return true
-        }
-      }
-      .filter { $0.store == cvs }
-      .filter { $0.saleType == event }
+      .filter { target != nil ? $0.name.contains(target!) : true }
+      .filter { cvs == .all ? true : $0.store == cvs }
+      .filter { event == .all ? true : $0.saleType == event }
       .sorted {
         switch sort {
         case .ascending:
