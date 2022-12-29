@@ -48,14 +48,11 @@
 		BA9EBC16294A04E500167970 /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EBC15294A04E500167970 /* Encodable+.swift */; };
 		BA9EBC1B294A115300167970 /* PyeonHaengAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EBC1A294A115300167970 /* PyeonHaengAPI.swift */; };
 		BA9EBC1D294AED8E00167970 /* ReponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EBC1C294AED8E00167970 /* ReponseModel.swift */; };
-		BA9EDA912917F98B00B97C23 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BA9EDA902917F98B00B97C23 /* FirebaseFirestoreSwift */; };
 		BA9EDA9B2918BF2B00B97C23 /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EDA9A2918BF2B00B97C23 /* ProductModel.swift */; };
 		BA9EDA9D2918BF9000B97C23 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EDA9C2918BF8F00B97C23 /* Date+.swift */; };
 		BAA0581028D36F75000CDD11 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA0580F28D36F75000CDD11 /* BaseViewController.swift */; };
 		BAA0F53128FCF88300B632AC /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA0F53028FCF88300B632AC /* BaseCoordinator.swift */; };
 		BAA0F53528FD353500B632AC /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA0F53428FD353500B632AC /* AppCoordinator.swift */; };
-		BAA21ACB29154DE000056DB6 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = BAA21ACA29154DE000056DB6 /* FirebaseFirestore */; };
-		BAA21ACE29155E4A00056DB6 /* CVSDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA21ACD29155E4A00056DB6 /* CVSDatabase.swift */; };
 		BABC84B228F58F5A00D6DF45 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABC84B128F58F5A00D6DF45 /* Preview.swift */; };
 		BAD70BD8291A58CB00C39863 /* SortType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD70BD7291A58CB00C39863 /* SortType.swift */; };
 		BAD70BDA291A594F00C39863 /* RequestTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD70BD9291A594F00C39863 /* RequestTypeModel.swift */; };
@@ -126,7 +123,6 @@
 		BAA0580F28D36F75000CDD11 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		BAA0F53028FCF88300B632AC /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		BAA0F53428FD353500B632AC /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
-		BAA21ACD29155E4A00056DB6 /* CVSDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVSDatabase.swift; sourceTree = "<group>"; };
 		BABC84B128F58F5A00D6DF45 /* Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
 		BAD70BD7291A58CB00C39863 /* SortType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortType.swift; sourceTree = "<group>"; };
 		BAD70BD9291A594F00C39863 /* RequestTypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTypeModel.swift; sourceTree = "<group>"; };
@@ -167,9 +163,7 @@
 				BA1CCAC228FAFE500002FD8C /* WeakMapTable in Frameworks */,
 				E5564B84295D401C00BDB7EE /* RxOptional in Frameworks */,
 				A5932EA028E0435200457AD3 /* Lottie in Frameworks */,
-				BAA21ACB29154DE000056DB6 /* FirebaseFirestore in Frameworks */,
 				E5F9CCA228EF10EA0084CD63 /* RxGesture in Frameworks */,
-				BA9EDA912917F98B00B97C23 /* FirebaseFirestoreSwift in Frameworks */,
 				BA27023F28CF60830039D9EA /* Alamofire in Frameworks */,
 				BA27023928CF60570039D9EA /* SnapKit in Frameworks */,
 				BA27024428CF60A30039D9EA /* RxSwift in Frameworks */,
@@ -362,7 +356,6 @@
 		BAA21ACC29155A0F00056DB6 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				BAA21ACD29155E4A00056DB6 /* CVSDatabase.swift */,
 				A5E8DD06291FA217006AF2CE /* NetworkCheck.swift */,
 				BA9EBC1A294A115300167970 /* PyeonHaengAPI.swift */,
 				BA9EBC13294A032800167970 /* ProductTarget.swift */,
@@ -458,8 +451,6 @@
 				A5932E9F28E0435200457AD3 /* Lottie */,
 				E5F9CCA128EF10EA0084CD63 /* RxGesture */,
 				BA1CCAC128FAFE500002FD8C /* WeakMapTable */,
-				BAA21ACA29154DE000056DB6 /* FirebaseFirestore */,
-				BA9EDA902917F98B00B97C23 /* FirebaseFirestoreSwift */,
 				E5564B83295D401C00BDB7EE /* RxOptional */,
 			);
 			productName = PPAK_CVS;
@@ -499,7 +490,6 @@
 				A5932E9E28E0435200457AD3 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				E5F9CCA028EF10EA0084CD63 /* XCRemoteSwiftPackageReference "RxGesture" */,
 				BA1CCAC028FAFE500002FD8C /* XCRemoteSwiftPackageReference "WeakMapTable" */,
-				BAA21AC929154DE000056DB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				E5564B82295D401B00BDB7EE /* XCRemoteSwiftPackageReference "RxOptional" */,
 			);
 			productRefGroup = E505D9E828CF5B4A00EEFC65 /* Products */;
@@ -585,7 +575,6 @@
 				BAEF774928F412FA006B0274 /* ProductCollectionHeaderView.swift in Sources */,
 				E50F851229589AFB008B7052 /* Storage.swift in Sources */,
 				BABC84B228F58F5A00D6DF45 /* Preview.swift in Sources */,
-				BAA21ACE29155E4A00056DB6 /* CVSDatabase.swift in Sources */,
 				E505D9EB28CF5B4A00EEFC65 /* AppDelegate.swift in Sources */,
 				BA9EDA9D2918BF9000B97C23 /* Date+.swift in Sources */,
 				E505D9ED28CF5B4A00EEFC65 /* SceneDelegate.swift in Sources */,
@@ -768,8 +757,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sfam.cvs;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sfam.pyeonhaeng;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -789,7 +778,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 95JTZ6AP78;
+				DEVELOPMENT_TEAM = 2ZQR76M3UH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PPAK_CVS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "편행";
@@ -804,8 +793,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sfam.cvs;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sfam.pyeonhaeng;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -897,14 +886,6 @@
 				kind = branch;
 			};
 		};
-		BAA21AC929154DE000056DB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 9.0.0;
-			};
-		};
 		E5564B82295D401B00BDB7EE /* XCRemoteSwiftPackageReference "RxOptional" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RxSwiftCommunity/RxOptional.git";
@@ -963,16 +944,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BA27024528CF61020039D9EA /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
-		};
-		BA9EDA902917F98B00B97C23 /* FirebaseFirestoreSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BAA21AC929154DE000056DB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestoreSwift;
-		};
-		BAA21ACA29154DE000056DB6 /* FirebaseFirestore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BAA21AC929154DE000056DB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestore;
 		};
 		E5564B83295D401C00BDB7EE /* RxOptional */ = {
 			isa = XCSwiftPackageProductDependency;
