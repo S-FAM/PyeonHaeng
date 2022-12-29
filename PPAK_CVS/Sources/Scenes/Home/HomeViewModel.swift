@@ -12,6 +12,7 @@ final class HomeViewModel: ViewModel {
     case pageControlIndexDidChange(EventType)
     case dropdownCVSButtonDidTap(CVSDropdownCase)
     case dropdownFilterButtonDidTap(SortType)
+    case didChangeSearchBar(String)
     case loadingCellWillDisplay
   }
 
@@ -25,8 +26,12 @@ final class HomeViewModel: ViewModel {
     case setEvent(EventType)
     case setLoading(Bool)
     case setLoadingFromCell(Bool)
+    case setTarget(String)
     case setOffset
-    case setProducts([ProductModel])
+    case setBlockRequest(Bool)
+    case resetOffset
+    case resetProducts
+    case appendProductes([ProductModel])
   }
 
   struct State {
@@ -36,10 +41,13 @@ final class HomeViewModel: ViewModel {
     var currentSortType: SortType = .none
     var currentEventType: EventType = .all
     var currentCVSType: CVSType = .all
+    var currentTarget: String = ""
     var isLoading: Bool = false
     var isLoadingFromCell: Bool = false
+    var isBlockedRequest: Bool = false
     var products: [ProductModel] = []
     var currentOffset: Int = 0
+
   }
 
   var initialState = State()
@@ -58,7 +66,10 @@ final class HomeViewModel: ViewModel {
           cvs: currentState.currentCVSType,
           event: currentState.currentEventType,
           sort: currentState.currentSortType,
-          offset: nextOffset)
+          offset: nextOffset,
+          name: currentState.currentTarget
+        )
+        .delay(.seconds(1), scheduler: MainScheduler.instance)
       ])
 
     case .currentCVSButtonDidTap:
@@ -81,14 +92,17 @@ final class HomeViewModel: ViewModel {
       return .concat([
         .just(.setLoading(true)),
         .just(.setEvent(event)),
-        .just(.setProducts([])),
+        .just(.resetProducts),
+        .just(.setBlockRequest(false)),
+        .just(.resetOffset),
         requestProducts(
           cvs: currentState.currentCVSType,
           event: event,
-          sort: .none
+          sort: .none,
+          name: currentState.currentTarget
         )
       ])
-
+      
     case .dropdownCVSButtonDidTap(let cvsDropdownCase):
       switch cvsDropdownCase {
       case .cvs(let cvsType):
@@ -96,7 +110,9 @@ final class HomeViewModel: ViewModel {
           .just(.setLoading(true)),
           .just(.hideDropdown),
           .just(.setCVS(cvsType)),
-          .just(.setProducts([])),
+          .just(.setTarget("")),
+          .just(.resetProducts),
+          .just(.setBlockRequest(false)),
           requestProducts(
             cvs: cvsType,
             event: currentState.currentEventType,
@@ -112,24 +128,45 @@ final class HomeViewModel: ViewModel {
     case .dropdownFilterButtonDidTap(let sortType):
       return .concat([
         .just(.setLoading(true)),
-        .just(.setSort(sortType)),
         .just(.hideDropdown),
-        .just(.setProducts([])),
-        requestProducts(cvs: currentState.currentCVSType, event: currentState.currentEventType, sort: sortType)
+        .just(.setSort(sortType)),
+        .just(.resetProducts),
+        .just(.resetOffset),
+        .just(.setBlockRequest(false)),
+        requestProducts(
+          cvs: currentState.currentCVSType,
+          event: currentState.currentEventType,
+          sort: sortType,
+          name: currentState.currentTarget
+        )
+      ])
+
+    case .didChangeSearchBar(let target):
+      return .concat([
+        .just(.setLoading(true)),
+        .just(.resetProducts),
+        .just(.resetOffset),
+        .just(.setBlockRequest(false)),
+        .just(.setTarget(target)),
+        requestProducts(
+          cvs: currentState.currentCVSType,
+          event: currentState.currentEventType,
+          sort: currentState.currentSortType,
+          name: target
+        )
       ])
     }
   }
-
+  
   func reduce(state: State, mutation: Mutation) -> State {
     var nextState = state
 
     switch mutation {
-    case .setProducts(let products):
-      if products.isEmpty {
-        nextState.products = []
-      } else {
-        nextState.products += products
-      }
+    case .resetProducts:
+      nextState.products = []
+
+    case .appendProductes(let products):
+      nextState.products += products
 
     case .setLoading(let isLoading):
       nextState.isLoading = isLoading
@@ -155,16 +192,21 @@ final class HomeViewModel: ViewModel {
 
     case .setEvent(let eventType):
       nextState.currentEventType = eventType
-      nextState.currentOffset = 0
 
     case .setCVS(let cvsType):
       nextState.currentCVSType = cvsType
-      nextState.currentOffset = 0
 
     case .setSort(let sortType):
       nextState.currentSortType = sortType
+
+    case .resetOffset:
       nextState.currentOffset = 0
 
+    case .setTarget(let target):
+      nextState.currentTarget = target
+
+    case .setBlockRequest(let isBlocked):
+      nextState.isBlockedRequest = isBlocked
     }
     return nextState
   }
@@ -178,7 +220,8 @@ extension HomeViewModel {
     offset: Int = 0,
     name: String = ""
   ) -> Observable<Mutation> {
-    return Observable.concat([
+    return .concat([
+      .just(.setBlockRequest(true)),
       PyeonHaengAPI.shared.product(request: RequestTypeModel(
         cvs: cvs,
         event: event,
@@ -186,7 +229,13 @@ extension HomeViewModel {
         name: name,
         offset: offset
       ))
-      .flatMap { Observable.just(.setProducts($0.products)) },
+      .catch { _ in .empty() }
+      .flatMap { response -> Observable<Mutation> in
+        return .concat([
+          .just(.appendProductes(response.products)),
+          .just(.setBlockRequest(false))
+        ])
+      },
       .just(.setLoading(false)),
       .just(.setLoadingFromCell(false))
     ])

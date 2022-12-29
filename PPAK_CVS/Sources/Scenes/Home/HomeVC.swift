@@ -3,6 +3,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxGesture
+import RxOptional
 import SnapKit
 import Then
 
@@ -127,6 +128,15 @@ final class HomeViewController: BaseViewController, Viewable {
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
+    // 서치바 텍스트 반응
+    header.searchBar.textField.rx.controlEvent(.editingDidEndOnExit)
+      .withUnretained(self)
+      .map { $0.0.header.searchBar.textField.text }
+      .filterNil()
+      .map { HomeViewModel.Action.didChangeSearchBar($0) }
+      .bind(to: viewModel.action)
+      .disposed(by: disposeBag)
+
     // 빈공간 터치 감지
     view.rx.tapGesture(configuration: { _, delegate in
       delegate.simultaneousRecognitionPolicy = .never
@@ -180,6 +190,13 @@ final class HomeViewController: BaseViewController, Viewable {
       .withUnretained(self)
       .map { $0.0 }
       .bind { $0.collectionView.reloadData() }
+      .disposed(by: disposeBag)
+
+    // 현재 SearchBar text
+    viewModel.state
+      .map { $0.currentTarget }
+      .distinctUntilChanged()
+      .bind(to: header.searchBar.textField.rx.text)
       .disposed(by: disposeBag)
   }
 }
@@ -255,8 +272,12 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     forItemAt indexPath: IndexPath
   ) {
     guard let viewModel = viewModel else { return }
-    if (indexPath.row == viewModel.currentState.products.count) && !viewModel.currentState.isLoadingFromCell {
-      viewModel.action.onNext(.loadingCellWillDisplay)
+
+    if viewModel.currentState.isBlockedRequest == false {
+      if indexPath.row == viewModel.currentState.products.count,
+         !viewModel.currentState.isLoadingFromCell {
+        viewModel.action.onNext(.loadingCellWillDisplay)
+      }
     }
   }
 

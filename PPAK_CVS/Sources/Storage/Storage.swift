@@ -8,13 +8,13 @@
 import Foundation
 
 final class Storage {
-  
+
   static let shared = Storage()
-  
+
   private let key = "Storage"
   private let userDefaults = UserDefaults.standard
   private init() {}
-  
+
   private(set) lazy var products: [ProductModel] = load() {
     didSet {
       if let encoded = try? JSONEncoder().encode(products) {
@@ -22,7 +22,7 @@ final class Storage {
       }
     }
   }
-  
+
   private func load() -> [ProductModel] {
     guard let data = userDefaults.object(forKey: key) as? Data else { return [] }
     if let products = try? JSONDecoder().decode([ProductModel].self, from: data) {
@@ -31,19 +31,19 @@ final class Storage {
       return []
     }
   }
-  
+
   func add(_ from: ProductModel) {
     products.insert(from, at: 0)
   }
-  
+
   func remove(_ target: ProductModel) {
     products = products.filter { $0 != target }
   }
-  
+
   func contains(_ from: ProductModel) -> Bool {
     return products.contains(from)
   }
-  
+
   func retrieve(
     cvs: CVSType = .all,
     event: EventType = .all,
@@ -51,7 +51,7 @@ final class Storage {
     target: String? = nil
   ) -> [ProductModel] {
     var newProducts: [ProductModel] = []
-    
+
     newProducts = products
       .filter { target == nil ? true : $0.name.contains(target!) }
       .filter { cvs == .all ? true : $0.store == cvs }
@@ -66,7 +66,7 @@ final class Storage {
           return false
         }
       }
-    
+
     return newProducts
   }
 }
