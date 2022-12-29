@@ -21,7 +21,7 @@ final class SettingViewController: BaseViewController, Viewable {
 
   override func setupStyles() {
     super.setupStyles()
-    view.backgroundColor = .systemYellow
+    view.backgroundColor = .white
   }
 
   override func setupLayouts() {
