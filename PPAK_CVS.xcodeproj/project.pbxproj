@@ -75,6 +75,7 @@
 		E54D9C4428F1A19000D028B2 /* BookmarkCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54D9C4328F1A19000D028B2 /* BookmarkCoordinator.swift */; };
 		E54D9C4628F1A19B00D028B2 /* BookmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54D9C4528F1A19B00D028B2 /* BookmarkViewModel.swift */; };
 		E54D9C4828F1A1A300D028B2 /* BookmarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54D9C4728F1A1A300D028B2 /* BookmarkVC.swift */; };
+		E5564B84295D401C00BDB7EE /* RxOptional in Frameworks */ = {isa = PBXBuildFile; productRef = E5564B83295D401C00BDB7EE /* RxOptional */; };
 		E55BEBE128D6A82400804FCB /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55BEBE028D6A82400804FCB /* SearchBar.swift */; };
 		E580BF2328E0646200BE7ADC /* GoodsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E580BF2228E0646200BE7ADC /* GoodsCell.swift */; };
 		E580BF2528E0649E00BE7ADC /* HomeCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E580BF2428E0649E00BE7ADC /* HomeCollectionHeaderView.swift */; };
@@ -164,6 +165,7 @@
 			files = (
 				BA27024728CF61020039D9EA /* Kingfisher in Frameworks */,
 				BA1CCAC228FAFE500002FD8C /* WeakMapTable in Frameworks */,
+				E5564B84295D401C00BDB7EE /* RxOptional in Frameworks */,
 				A5932EA028E0435200457AD3 /* Lottie in Frameworks */,
 				BAA21ACB29154DE000056DB6 /* FirebaseFirestore in Frameworks */,
 				E5F9CCA228EF10EA0084CD63 /* RxGesture in Frameworks */,
@@ -458,6 +460,7 @@
 				BA1CCAC128FAFE500002FD8C /* WeakMapTable */,
 				BAA21ACA29154DE000056DB6 /* FirebaseFirestore */,
 				BA9EDA902917F98B00B97C23 /* FirebaseFirestoreSwift */,
+				E5564B83295D401C00BDB7EE /* RxOptional */,
 			);
 			productName = PPAK_CVS;
 			productReference = E505D9E728CF5B4A00EEFC65 /* PPAK_CVS.app */;
@@ -497,6 +500,7 @@
 				E5F9CCA028EF10EA0084CD63 /* XCRemoteSwiftPackageReference "RxGesture" */,
 				BA1CCAC028FAFE500002FD8C /* XCRemoteSwiftPackageReference "WeakMapTable" */,
 				BAA21AC929154DE000056DB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				E5564B82295D401B00BDB7EE /* XCRemoteSwiftPackageReference "RxOptional" */,
 			);
 			productRefGroup = E505D9E828CF5B4A00EEFC65 /* Products */;
 			projectDirPath = "";
@@ -901,6 +905,14 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		E5564B82295D401B00BDB7EE /* XCRemoteSwiftPackageReference "RxOptional" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxOptional.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 4.1.0;
+			};
+		};
 		E5F9CCA028EF10EA0084CD63 /* XCRemoteSwiftPackageReference "RxGesture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture.git";
@@ -961,6 +973,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BAA21AC929154DE000056DB6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		E5564B83295D401C00BDB7EE /* RxOptional */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E5564B82295D401B00BDB7EE /* XCRemoteSwiftPackageReference "RxOptional" */;
+			productName = RxOptional;
 		};
 		E5F9CCA128EF10EA0084CD63 /* RxGesture */ = {
 			isa = XCSwiftPackageProductDependency;

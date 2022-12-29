@@ -37,6 +37,7 @@ final class SearchBar: UIView {
 
     textField.frame = CGRect(x: 65, y: 0, width: self.bounds.width - 80, height: self.bounds.height - 20)
     textField.center.y = self.bounds.midY
+    textField.returnKeyType = .search
   }
 
   // MARK: - Setup
