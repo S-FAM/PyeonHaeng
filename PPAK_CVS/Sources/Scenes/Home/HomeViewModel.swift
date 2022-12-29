@@ -102,7 +102,7 @@ final class HomeViewModel: ViewModel {
           name: currentState.currentTarget
         )
       ])
-      
+
     case .dropdownCVSButtonDidTap(let cvsDropdownCase):
       switch cvsDropdownCase {
       case .cvs(let cvsType):
@@ -157,7 +157,7 @@ final class HomeViewModel: ViewModel {
       ])
     }
   }
-  
+
   func reduce(state: State, mutation: Mutation) -> State {
     var nextState = state
 
