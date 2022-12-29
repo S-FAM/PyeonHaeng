@@ -6,7 +6,7 @@ import RxSwift
 import RxCocoa
 import RxGesture
 
-final class SettingViewController: BaseViewController {
+final class SettingViewController: BaseViewController, Viewable {
 
   // MARK: - Properties
 
@@ -19,7 +19,7 @@ final class SettingViewController: BaseViewController {
     $0.dataSource = self
     $0.delegate = self
     $0.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.identifier)
-    $0.backgroundColor = .systemTeal
+    $0.backgroundColor = .white
   }
 
   // MARK: - SetLayout
@@ -50,6 +50,11 @@ final class SettingViewController: BaseViewController {
       make.leading.trailing.bottom.equalToSuperview()
     }
   }
+
+  func bind(viewModel: SettingViewModel) {
+
+  }
+
 }
 
 // MARK: - TableView Delegate
