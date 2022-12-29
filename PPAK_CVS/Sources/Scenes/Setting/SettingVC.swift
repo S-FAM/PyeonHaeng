@@ -9,11 +9,6 @@ import RxGesture
 final class SettingViewController: BaseViewController, Viewable {
 
   // MARK: - Properties
-
-  private lazy var headerBar = UIView().then {
-    $0.backgroundColor = .systemRed
-  }
-
   private lazy var tableView = UITableView().then {
     $0.alwaysBounceVertical = false
     $0.dataSource = self
@@ -31,23 +26,14 @@ final class SettingViewController: BaseViewController, Viewable {
 
   override func setupLayouts() {
     super.setupLayouts()
-    [headerBar, tableView].forEach {
-      view.addSubview($0)
-    }
+    view.addSubview(tableView)
   }
 
   override func setupConstraints() {
     super.setupConstraints()
 
-    headerBar.snp.makeConstraints { make in
-      make.top.equalTo(view.safeAreaLayoutGuide)
-      make.leading.trailing.equalToSuperview()
-      make.height.equalTo(60)
-    }
-
     tableView.snp.makeConstraints { make in
-      make.top.equalTo(headerBar.snp.bottom).offset(10)
-      make.leading.trailing.bottom.equalToSuperview()
+      make.edges.equalTo(view.safeAreaLayoutGuide)
     }
   }
 
