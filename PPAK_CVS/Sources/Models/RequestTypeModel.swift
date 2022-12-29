@@ -13,7 +13,7 @@ struct RequestTypeModel: Codable {
   var sort: SortType
   var name: String?
   var offset: Int = 0
-  var limit: Int = 10
+  var limit: Int = 20
 
   enum CodingKeys: String, CodingKey {
     case cvs
