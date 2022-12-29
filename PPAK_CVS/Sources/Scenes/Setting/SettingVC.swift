@@ -22,6 +22,7 @@ final class SettingViewController: BaseViewController, Viewable {
   override func setupStyles() {
     super.setupStyles()
     view.backgroundColor = .white
+    setNavigationStyle()
   }
 
   override func setupLayouts() {
@@ -37,10 +38,14 @@ final class SettingViewController: BaseViewController, Viewable {
     }
   }
 
-  func bind(viewModel: SettingViewModel) {
+  func bind(viewModel: SettingViewModel) { }
 
+  func setNavigationStyle() {
+
+    navigationItem.title = "설정"
+    navigationController?.navigationBar.tintColor = .black
+    navigationController?.isNavigationBarHidden = false
   }
-
 }
 
 // MARK: - TableView Delegate
