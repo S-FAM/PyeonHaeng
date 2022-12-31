@@ -223,9 +223,9 @@ extension OnboardingViewController {
 extension OnboardingViewController {
 
   private enum Font {
-    static let titleLabel = UIFont.systemFont(ofSize: 22.0, weight: .heavy)
-    static let descLabel = UIFont.systemFont(ofSize: 15.0, weight: .regular)
-    static let button = UIFont.systemFont(ofSize: 15.0, weight: .semibold)
+    static let titleLabel = UIFont.appFont(family: .extraBold, size: 22.0)
+    static let descLabel = UIFont.appFont(family: .regular, size: 15.0)
+    static let button = UIFont.appFont(family: .semiBold, size: 15.0)
   }
 
   private enum Color {
