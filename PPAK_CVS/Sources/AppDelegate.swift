@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // Start network monitoring
     NetworkCheck.shared.startMonitoring()
-
+    Thread.sleep(forTimeInterval: 1.0)
     return true
   }
 
