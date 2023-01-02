@@ -7,6 +7,9 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class ProductCoordinator: BaseCoordinator {
 
   // MARK: - Properties
@@ -34,5 +37,12 @@ final class ProductCoordinator: BaseCoordinator {
     viewController.coordinator = self
     viewController.viewModel = viewModel
     self.navigationController.pushViewController(viewController, animated: true)
+    bind(viewModel)
+  }
+
+  private func bind(_ viewModel: ProductViewModel) {
+    Observable<ProductViewModel.Action>.just(.updateProduct(self.model))
+      .bind(to: viewModel.action)
+      .disposed(by: disposeBag)
   }
 }
