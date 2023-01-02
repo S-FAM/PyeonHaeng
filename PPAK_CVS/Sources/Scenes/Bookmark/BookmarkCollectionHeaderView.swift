@@ -15,7 +15,7 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
   }
 
   lazy var infoButton = UIButton().then {
-    $0.setImage(UIImage(named: "bookmark_info"), for: .normal)
+    $0.setImage(UIImage(named: "ic_info"), for: .normal)
   }
 
   lazy var backButton = UIButton().then {
@@ -25,11 +25,24 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
   }
 
   lazy var filterButton = UIButton().then {
-    $0.setImage(UIImage(named: "filter"), for: .normal)
+    $0.setImage(UIImage(named: "ic_sort"), for: .normal)
   }
 
   lazy var cvsButton = UIButton().then {
     $0.setImage(CVSType.all.image, for: .normal)
+  }
+  
+  private lazy var iconContainerView = UIView().then {
+    $0.backgroundColor = .clear
+  }
+
+  private lazy var infoStack = UIStackView().then { stack in
+    [
+      mainLabel,
+      infoButton
+    ]
+      .forEach { stack.addArrangedSubview($0) }
+    stack.axis  = .horizontal
   }
 
   lazy var topCurveView = TopCurveView()
@@ -57,8 +70,21 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
   }
 
   private func setupLayout() {
-    [topCurveView, pageControl, searchBar, filterButton, mainLabel, infoButton, cvsButton, backButton]
+    [
+      topCurveView,
+      pageControl,
+      searchBar,
+      filterButton,
+      iconContainerView
+    ]
       .forEach { addSubview($0) }
+
+    [
+      backButton,
+      cvsButton,
+      infoStack
+    ]
+      .forEach { iconContainerView.addSubview($0) }
   }
 
   private func setupConstraints() {
@@ -67,44 +93,42 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
     }
 
     pageControl.snp.makeConstraints { make in
-      make.centerY.equalToSuperview().offset(16)
       make.leading.trailing.equalToSuperview().inset(40)
+      make.bottom.equalToSuperview().inset(110)
       make.height.equalTo(65)
     }
 
     searchBar.snp.makeConstraints { make in
       make.bottom.equalToSuperview()
-      make.leading.equalToSuperview().inset(32)
-      make.trailing.equalTo(filterButton.snp.leading).offset(-16)
+      make.leading.equalToSuperview().inset(40)
+      make.trailing.equalTo(filterButton.snp.leading).offset(-13)
       make.height.equalTo(50)
     }
 
     filterButton.snp.makeConstraints { make in
       make.centerY.equalTo(searchBar)
-      make.trailing.equalToSuperview().inset(32)
-      make.width.height.equalTo(30)
+      make.trailing.equalToSuperview().inset(16)
+      make.width.height.equalTo(44)
     }
 
-    mainLabel.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(safeAreaLayoutGuide).inset(8)
-    }
-
-    infoButton.snp.makeConstraints { make in
-      make.centerY.equalTo(mainLabel)
-      make.leading.equalTo(mainLabel.snp.trailing).offset(4)
-      make.width.height.equalTo(20)
-    }
-
-    backButton.snp.makeConstraints { make in
-      make.centerY.equalTo(mainLabel)
-      make.leading.equalToSuperview().inset(16)
+    iconContainerView.snp.makeConstraints { make in
+      make.top.leading.trailing.equalTo(safeAreaLayoutGuide)
+      make.bottom.equalTo(pageControl.snp.top)
     }
 
     cvsButton.snp.makeConstraints { make in
-      make.centerY.equalTo(backButton)
-      make.trailing.equalToSuperview().inset(16)
-      make.width.height.equalTo(40)
+      make.trailing.equalToSuperview().inset(40)
+      make.centerY.equalToSuperview()
+      make.width.height.equalTo(44)
+    }
+
+    infoStack.snp.makeConstraints { make in
+      make.center.equalToSuperview()
+    }
+
+    backButton.snp.makeConstraints { make in
+      make.leading.equalToSuperview().inset(40)
+      make.centerY.equalToSuperview()
     }
   }
 }

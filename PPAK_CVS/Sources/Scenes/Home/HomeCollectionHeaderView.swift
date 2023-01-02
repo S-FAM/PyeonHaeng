@@ -15,10 +15,6 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
   // MAKR: - Properties
   static let id = "HomeCollectionViewHeader"
 
-  lazy var pageControl = PageControl()
-  lazy var topCurveView = TopCurveView()
-  lazy var searchBar = SearchBar()
-
   lazy var cvsButton = UIButton().then {
     $0.setImage(CVSType.all.image, for: .normal)
   }
@@ -34,6 +30,10 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
   lazy var bookmarkButton = UIButton().then {
     $0.setImage(UIImage(named: "ic_heart_white"), for: .normal)
   }
+
+  lazy var pageControl = PageControl()
+  lazy var topCurveView = TopCurveView()
+  lazy var searchBar = SearchBar()
 
   // MARK: - Init
 
@@ -56,10 +56,19 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
   }
 
   private func setupLayouts() {
-    [topCurveView, pageControl, searchBar, filterButton, iconContainerView]
+    [
+      topCurveView,
+      pageControl,
+      searchBar,
+      filterButton,
+      iconContainerView
+    ]
       .forEach { self.addSubview($0) }
 
-    [bookmarkButton, cvsButton]
+    [
+      bookmarkButton,
+      cvsButton
+    ]
       .forEach { iconContainerView.addSubview($0) }
   }
 
