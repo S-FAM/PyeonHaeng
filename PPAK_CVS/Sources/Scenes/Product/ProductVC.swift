@@ -39,8 +39,11 @@ final class ProductViewController: BaseViewController, Viewable {
       guard let newValue = newValue else { return }
       newValue.viewModel = ProductHeaderViewViewModel()
       bind(newValue)
+      self.headerViewInitializeRelay.accept(newValue)
     }
   }
+
+  private let headerViewInitializeRelay = PublishRelay<ProductCollectionHeaderView>()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -75,6 +78,15 @@ final class ProductViewController: BaseViewController, Viewable {
 
   func bind(viewModel: ProductViewModel) {
 
+    let modelObservable = viewModel.state.map { $0.model }
+    let headerViewObservable = headerViewInitializeRelay.asObservable()
+
+    Observable.combineLatest(modelObservable, headerViewObservable)
+      .subscribe(onNext: { [weak self] model, headerView in
+        headerView.configureUI(with: model)
+        self?.collectionView.backgroundColor = model.store.bgColor
+      })
+      .disposed(by: disposeBag)
   }
 
   func bind(_ headerView: ProductCollectionHeaderView) {
