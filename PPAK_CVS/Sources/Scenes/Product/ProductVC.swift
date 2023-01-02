@@ -23,7 +23,7 @@ final class ProductViewController: BaseViewController {
       layout.itemSize = CGSize(width: self.view.bounds.width, height: 125)
       layout.sectionInset = UIEdgeInsets(top: 24, left: 0, bottom: 16, right: 0)
     }
-    $0.contentInsetAdjustmentBehavior = .never
+    $0.bounces = false
     $0.register(GoodsCell.self, forCellWithReuseIdentifier: GoodsCell.id)
     $0.register(
       ProductCollectionHeaderView.self,
@@ -131,3 +131,12 @@ extension ProductViewController: UICollectionViewDataSource {
     return headerView
   }
 }
+
+#if canImport(SwiftUI) && DEBUG
+import SwiftUI
+struct ProductViewControllerPreview: PreviewProvider {
+  static var previews: some View {
+    ProductViewController().toPreview()
+  }
+}
+#endif
