@@ -145,10 +145,11 @@ extension ProductCollectionHeaderView {
 
   func configureUI(with model: ProductModel) {
     let discount = model.saleType == .onePlusOne ? 2 : 3
+    let multiply = model.saleType == .onePlusOne ? 1 : 2
 
     nameLabel.text = model.name
     priceLabel.text = "\(model.price.commaRepresentation)원"
-    priceDiscriptionLabel.text = "(개당 \(Int(model.price / discount).commaRepresentation)원)"
+    priceDiscriptionLabel.text = "(개당 \(Int(model.price / discount * multiply).commaRepresentation)원)"
 
     productImageView.kf.setImage(with: URL(string: model.imageLink ?? ""))
 
