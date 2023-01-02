@@ -11,7 +11,7 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
   private lazy var mainLabel = UILabel().then {
     $0.text = "찜"
     $0.textColor = .white
-    $0.font = .systemFont(ofSize: 32.0, weight: .heavy)
+    $0.font = .systemFont(ofSize: 22.0, weight: .heavy)
   }
 
   lazy var infoButton = UIButton().then {
@@ -31,7 +31,7 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
   lazy var cvsButton = UIButton().then {
     $0.setImage(CVSType.all.image, for: .normal)
   }
-  
+
   private lazy var iconContainerView = UIView().then {
     $0.backgroundColor = .clear
   }

@@ -11,11 +11,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
   // MARK: - Properties
 
   private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then {
-    $0.collectionViewLayout = UICollectionViewFlowLayout().then {
-      $0.headerReferenceSize = CGSize(width: view.frame.width, height: 320)
-      $0.itemSize = CGSize(width: view.frame.width, height: 125)
-      $0.sectionInset = UIEdgeInsets(top: 24, left: 0, bottom: 16, right: 0)
-    }
+    $0.collectionViewLayout = UICollectionViewFlowLayout()
     $0.contentInsetAdjustmentBehavior = .never
     $0.bounces = false
     $0.dataSource = self
@@ -40,7 +36,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
   override func setupStyles() {
     super.setupStyles()
     navigationController?.isNavigationBarHidden = true
-    view.backgroundColor = .white
+    view.backgroundColor = CVSType.all.bgColor
   }
 
   override func setupLayouts() {
@@ -50,13 +46,17 @@ final class BookmarkViewController: BaseViewController, Viewable {
 
   override func setupConstraints() {
     collectionView.snp.makeConstraints { make in
-      make.top.leading.trailing.equalToSuperview()
-      make.bottom.equalTo(view.safeAreaLayoutGuide)
+      make.leading.trailing.bottom.equalToSuperview()
+      make.top.equalTo(view.safeAreaLayoutGuide)
     }
   }
 
   private func setupDropdown() {
-    [filterDropdownView, cvsDropdownView].forEach {
+    [
+      filterDropdownView,
+      cvsDropdownView
+    ]
+      .forEach {
       view.addSubview($0)
       $0.isHidden = true
     }
@@ -171,7 +171,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
 
 // MARK: - CollectionView Setup
 
-extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   func collectionView(
     _ collectionView: UICollectionView,
     cellForItemAt indexPath: IndexPath
@@ -213,4 +213,37 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
 
     return header
   }
+
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    insetForSectionAt section: Int
+  ) -> UIEdgeInsets {
+    return .init(top: 24, left: 0, bottom: 16, right: 0)
+  }
+
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    referenceSizeForHeaderInSection section: Int
+  ) -> CGSize {
+    return .init(width: view.frame.width, height: 280)
+  }
+
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    sizeForItemAt indexPath: IndexPath
+  ) -> CGSize {
+    return .init(width: view.frame.width, height: 125)
+  }
 }
+
+#if canImport(SwiftUI) && DEBUG
+import SwiftUI
+struct BookmarkVCPreView: PreviewProvider {
+  static var previews: some View {
+    BookmarkViewController().toPreview()
+  }
+}
+#endif
