@@ -14,6 +14,7 @@ final class HomeViewController: BaseViewController, Viewable {
   private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then {
     $0.collectionViewLayout = UICollectionViewFlowLayout()
     $0.contentInsetAdjustmentBehavior = .never
+    $0.keyboardDismissMode = .onDrag
     $0.bounces = false
     $0.dataSource = self
     $0.delegate = self
@@ -137,20 +138,12 @@ final class HomeViewController: BaseViewController, Viewable {
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
-    // 빈공간 터치 감지
-    // FIXME: 방식 바꿔야함
-    view.rx.tapGesture(configuration: { _, delegate in
-      delegate.simultaneousRecognitionPolicy = .never
-    })
-    .map { _ in HomeViewModel.Action.backgroundDidTap }
-    .bind(to: viewModel.action)
-    .disposed(by: disposeBag)
-
     // MARK: - State
-
+    
     // 편의점 로고 드롭다운 애니메이션 동작
     viewModel.state
       .map { $0.isVisibleCVSDropdown }
+      .distinctUntilChanged()
       .withUnretained(self)
       .bind { owner, isVisible in
         isVisible ? owner.cvsDropdownView.willAppearDropdown() : owner.cvsDropdownView.willDisappearDropdown()
@@ -160,6 +153,7 @@ final class HomeViewController: BaseViewController, Viewable {
     // 필터 드롭다운 애니메이션 동작
     viewModel.state
       .map { $0.isVisibleFilterDropdown }
+      .distinctUntilChanged()
       .withUnretained(self)
       .bind { owner, isVisible in
         isVisible ? owner.sortDropdownView.willAppearDropdown() : owner.sortDropdownView.willDisappearDropdown()
@@ -228,7 +222,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       ) as? LoadingCell else {
         return UICollectionViewCell()
       }
-      
+
       if currentState.isBlockedRequest {
         cell.indicator.stopAnimating()
       } else {
@@ -246,7 +240,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     guard let products = viewModel?.currentState.products else { return 0 }
     return products.count > 0 ? products.count + 1 : 0
   }
-
+  
   func collectionView(
     _ collectionView: UICollectionView,
     layout collectionViewLayout: UICollectionViewLayout,
@@ -314,5 +308,16 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
 
     return header
+  }
+
+  func collectionView(
+    _ collectionView: UICollectionView,
+    didSelectItemAt indexPath: IndexPath
+  ) {
+  }
+  
+  func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    cvsDropdownView.willDisappearDropdown()
+    sortDropdownView.willDisappearDropdown()
   }
 }

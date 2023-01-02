@@ -7,7 +7,6 @@ final class HomeViewModel: ViewModel {
     case viewDidLoad
     case currentCVSButtonDidTap
     case filterButtonDidTap
-    case backgroundDidTap
     case bookmarkButtonDidTap
     case pageControlIndexDidChange(EventType)
     case dropdownCVSButtonDidTap(CVSDropdownCase)
@@ -17,8 +16,8 @@ final class HomeViewModel: ViewModel {
   }
 
   enum Mutation {
-    case toggleCVSDropdown
-    case toggleFilterDropdown
+    case setCVSDropdown(Bool)
+    case setFilterDropdown(Bool)
     case toggleShowBookmarkVC(Bool)
     case hideDropdown
     case setCVS(CVSType)
@@ -55,7 +54,7 @@ final class HomeViewModel: ViewModel {
     switch action {
     case .viewDidLoad:
       return requestProducts(cvs: .all, event: .all, sort: .none)
-
+      
     case .fetchMoreData:
       let nextOffset = currentState.currentOffset + 20
       return .concat([
@@ -72,13 +71,18 @@ final class HomeViewModel: ViewModel {
       ])
 
     case .currentCVSButtonDidTap:
-      return .just(.toggleCVSDropdown)
+      let isVisible = currentState.isVisibleCVSDropdown
+      return .concat([
+        .just(.setCVSDropdown(!isVisible)),
+        .just(.setFilterDropdown(false))
+      ])
 
     case .filterButtonDidTap:
-      return .just(.toggleFilterDropdown)
-
-    case .backgroundDidTap:
-      return .just(.hideDropdown)
+      let isVisible = currentState.isVisibleFilterDropdown
+      return .concat([
+        .just(.setFilterDropdown(!isVisible)),
+        .just(.setCVSDropdown(false))
+      ])
 
     case .bookmarkButtonDidTap:
       guard currentState.showBookmarkVC == false else { return .empty() }
@@ -93,6 +97,7 @@ final class HomeViewModel: ViewModel {
         .just(.setEvent(event)),
         .just(.resetProducts),
         .just(.resetOffset),
+        .just(.hideDropdown),
         requestProducts(
           cvs: currentState.currentCVSType,
           event: event,
@@ -143,6 +148,7 @@ final class HomeViewModel: ViewModel {
         .just(.resetProducts),
         .just(.resetOffset),
         .just(.setTarget(target)),
+        .just(.hideDropdown),
         requestProducts(
           cvs: currentState.currentCVSType,
           event: currentState.currentEventType,
@@ -166,11 +172,11 @@ final class HomeViewModel: ViewModel {
     case .setLoading(let isLoading):
       nextState.isLoading = isLoading
 
-    case .toggleCVSDropdown:
-      nextState.isVisibleCVSDropdown.toggle()
+    case .setCVSDropdown(let isVisible):
+      nextState.isVisibleCVSDropdown = isVisible
 
-    case .toggleFilterDropdown:
-      nextState.isVisibleFilterDropdown.toggle()
+    case .setFilterDropdown(let isVisible):
+      nextState.isVisibleFilterDropdown = isVisible
 
     case .hideDropdown:
       nextState.isVisibleFilterDropdown = false
