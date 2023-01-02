@@ -27,7 +27,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
     )
   }
 
-  private lazy var filterDropdownView = SortDropdownView()
+  private lazy var sortDropdownView = SortDropdownView()
   private lazy var cvsDropdownView = CVSDropdownView()
   private var header: BookmarkCollectionHeaderView!
 
@@ -53,7 +53,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
 
   private func setupDropdown() {
     [
-      filterDropdownView,
+      sortDropdownView,
       cvsDropdownView
     ]
       .forEach {
@@ -61,18 +61,18 @@ final class BookmarkViewController: BaseViewController, Viewable {
       $0.isHidden = true
     }
 
-    filterDropdownView.snp.makeConstraints { make in
-      make.top.equalTo(header.filterButton.snp.bottom).offset(12)
-      make.trailing.equalToSuperview().inset(16)
-      make.width.equalTo(130)
-      make.height.equalTo(100)
+    cvsDropdownView.snp.makeConstraints { make in
+      make.top.equalTo(header.cvsButton.snp.bottom).offset(10)
+      make.centerX.equalTo(header.cvsButton)
+      make.width.equalTo(73)
+      make.height.equalTo(450)
     }
 
-    cvsDropdownView.snp.makeConstraints { make in
-      make.top.equalTo(header.cvsButton.snp.bottom).offset(16)
+    sortDropdownView.snp.makeConstraints { make in
+      make.top.equalTo(header.filterButton.snp.bottom).offset(12)
       make.trailing.equalToSuperview().inset(16)
-      make.width.equalTo(64)
-      make.height.equalTo(376)
+      make.width.equalTo(100)
+      make.height.equalTo(80)
     }
   }
 
@@ -150,9 +150,9 @@ final class BookmarkViewController: BaseViewController, Viewable {
       .map { $0.isVisibleFilterDropdown }
       .bind(onNext: { [unowned self] isVisible in
         if isVisible {
-          filterDropdownView.willAppearDropdown()
+          sortDropdownView.willAppearDropdown()
         } else {
-          filterDropdownView.willDisappearDropdown()
+          sortDropdownView.willDisappearDropdown()
         }
       })
       .disposed(by: disposeBag)
