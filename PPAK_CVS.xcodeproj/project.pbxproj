@@ -19,6 +19,16 @@
 		A5932EA528E045EF00457AD3 /* onboarding3.json in Resources */ = {isa = PBXBuildFile; fileRef = A5932EA428E045EF00457AD3 /* onboarding3.json */; };
 		A5932EA728E0472B00457AD3 /* onboarding2.json in Resources */ = {isa = PBXBuildFile; fileRef = A5932EA628E0472B00457AD3 /* onboarding2.json */; };
 		A5932EAA28E047E000457AD3 /* OnboardingDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5932EA928E047E000457AD3 /* OnboardingDataModel.swift */; };
+		A5B69C322960095100052D2B /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = A5B69C292960095000052D2B /* Pretendard-Light.otf */; };
+		A5B69C332960095100052D2B /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A5B69C2A2960095100052D2B /* Pretendard-Bold.otf */; };
+		A5B69C342960095100052D2B /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = A5B69C2B2960095100052D2B /* Pretendard-Black.otf */; };
+		A5B69C352960095100052D2B /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = A5B69C2C2960095100052D2B /* Pretendard-Thin.otf */; };
+		A5B69C362960095100052D2B /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = A5B69C2D2960095100052D2B /* Pretendard-ExtraLight.otf */; };
+		A5B69C372960095100052D2B /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A5B69C2E2960095100052D2B /* Pretendard-Regular.otf */; };
+		A5B69C382960095100052D2B /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A5B69C2F2960095100052D2B /* Pretendard-SemiBold.otf */; };
+		A5B69C392960095100052D2B /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A5B69C302960095100052D2B /* Pretendard-ExtraBold.otf */; };
+		A5B69C3A2960095100052D2B /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = A5B69C312960095100052D2B /* Pretendard-Medium.otf */; };
+		A5B69C3C29600A1000052D2B /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B69C3B29600A1000052D2B /* UIFont+.swift */; };
 		A5E8DD07291FA217006AF2CE /* NetworkCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E8DD06291FA217006AF2CE /* NetworkCheck.swift */; };
 		A5E8DD0A291FA75A006AF2CE /* NetworkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E8DD09291FA75A006AF2CE /* NetworkVC.swift */; };
 		A5F8288228DEAE3C00C5D6A2 /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288128DEAE3C00C5D6A2 /* OnboardingVC.swift */; };
@@ -95,6 +105,16 @@
 		A5932EA428E045EF00457AD3 /* onboarding3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding3.json; sourceTree = "<group>"; };
 		A5932EA628E0472B00457AD3 /* onboarding2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding2.json; sourceTree = "<group>"; };
 		A5932EA928E047E000457AD3 /* OnboardingDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDataModel.swift; sourceTree = "<group>"; };
+		A5B69C292960095000052D2B /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
+		A5B69C2A2960095100052D2B /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		A5B69C2B2960095100052D2B /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
+		A5B69C2C2960095100052D2B /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		A5B69C2D2960095100052D2B /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		A5B69C2E2960095100052D2B /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		A5B69C2F2960095100052D2B /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		A5B69C302960095100052D2B /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		A5B69C312960095100052D2B /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		A5B69C3B29600A1000052D2B /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		A5E8DD06291FA217006AF2CE /* NetworkCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCheck.swift; sourceTree = "<group>"; };
 		A5E8DD09291FA75A006AF2CE /* NetworkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkVC.swift; sourceTree = "<group>"; };
 		A5F8288128DEAE3C00C5D6A2 /* OnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
@@ -223,6 +243,22 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		A5B69C282960093500052D2B /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A5B69C2B2960095100052D2B /* Pretendard-Black.otf */,
+				A5B69C2A2960095100052D2B /* Pretendard-Bold.otf */,
+				A5B69C302960095100052D2B /* Pretendard-ExtraBold.otf */,
+				A5B69C2D2960095100052D2B /* Pretendard-ExtraLight.otf */,
+				A5B69C292960095000052D2B /* Pretendard-Light.otf */,
+				A5B69C312960095100052D2B /* Pretendard-Medium.otf */,
+				A5B69C2E2960095100052D2B /* Pretendard-Regular.otf */,
+				A5B69C2F2960095100052D2B /* Pretendard-SemiBold.otf */,
+				A5B69C2C2960095100052D2B /* Pretendard-Thin.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		A5E8DD08291FA722006AF2CE /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -250,6 +286,7 @@
 				A5F8288928DEC0CF00C5D6A2 /* UIButton+.swift */,
 				A5F8288D28DED76700C5D6A2 /* UILabel+.swift */,
 				BA8CFD7C28E1E4AB00ADC4A8 /* UIColor+.swift */,
+				A5B69C3B29600A1000052D2B /* UIFont+.swift */,
 				E5103250290B4A0300D2F007 /* UIView+.swift */,
 				BABC84B128F58F5A00D6DF45 /* Preview.swift */,
 				9CA7150D293CE26300AEE436 /* NSAttributedString+.swift */,
@@ -287,6 +324,7 @@
 			isa = PBXGroup;
 			children = (
 				E505D9F328CF5B4B00EEFC65 /* Assets.xcassets */,
+				A5B69C282960093500052D2B /* Fonts */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -505,9 +543,18 @@
 			files = (
 				E505D9F728CF5B4B00EEFC65 /* LaunchScreen.storyboard in Resources */,
 				E505D9F428CF5B4B00EEFC65 /* Assets.xcassets in Resources */,
+				A5B69C362960095100052D2B /* Pretendard-ExtraLight.otf in Resources */,
+				A5B69C382960095100052D2B /* Pretendard-SemiBold.otf in Resources */,
+				A5B69C332960095100052D2B /* Pretendard-Bold.otf in Resources */,
+				A5B69C352960095100052D2B /* Pretendard-Thin.otf in Resources */,
 				A5932EA328E044CB00457AD3 /* onboarding1.json in Resources */,
+				A5B69C3A2960095100052D2B /* Pretendard-Medium.otf in Resources */,
 				A5932EA528E045EF00457AD3 /* onboarding3.json in Resources */,
 				A5932EA728E0472B00457AD3 /* onboarding2.json in Resources */,
+				A5B69C392960095100052D2B /* Pretendard-ExtraBold.otf in Resources */,
+				A5B69C372960095100052D2B /* Pretendard-Regular.otf in Resources */,
+				A5B69C342960095100052D2B /* Pretendard-Black.otf in Resources */,
+				A5B69C322960095100052D2B /* Pretendard-Light.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,6 +639,7 @@
 				E54D9C4828F1A1A300D028B2 /* BookmarkVC.swift in Sources */,
 				E55BEBE128D6A82400804FCB /* SearchBar.swift in Sources */,
 				E5467E4A28D45DF40031B785 /* TopCurveView.swift in Sources */,
+				A5B69C3C29600A1000052D2B /* UIFont+.swift in Sources */,
 				E51669F029338593006C9635 /* LoadingCell.swift in Sources */,
 				A57D32E428EDBA0200944C7E /* OnboardingViewModel.swift in Sources */,
 				BAA0F53128FCF88300B632AC /* BaseCoordinator.swift in Sources */,
