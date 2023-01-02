@@ -15,11 +15,11 @@ final class SettingViewController: BaseViewController, Viewable {
 
   private lazy var titleLabel = UILabel().then {
     $0.text = "설정"
-    $0.font = .systemFont(ofSize: 17, weight: .regular)
+    $0.font = .systemFont(ofSize: 18, weight: .bold)
   }
 
   private lazy var backButton = UIButton().then {
-    $0.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+    $0.setImage(UIImage(named: "icon_left"), for: .normal)
     $0.tintColor = .black
     $0.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
   }
