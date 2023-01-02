@@ -13,7 +13,7 @@ final class HomeViewModel: ViewModel {
     case dropdownCVSButtonDidTap(CVSDropdownCase)
     case dropdownFilterButtonDidTap(SortType)
     case didChangeSearchBar(String)
-    case loadingCellWillDisplay
+    case fetchMoreData
   }
 
   enum Mutation {
@@ -25,13 +25,13 @@ final class HomeViewModel: ViewModel {
     case setSort(SortType)
     case setEvent(EventType)
     case setLoading(Bool)
-    case setLoadingFromCell(Bool)
     case setTarget(String)
     case setOffset
     case setBlockRequest(Bool)
     case resetOffset
     case resetProducts
     case appendProductes([ProductModel])
+    case setPagination(Bool)
   }
 
   struct State {
@@ -43,11 +43,10 @@ final class HomeViewModel: ViewModel {
     var currentCVSType: CVSType = .all
     var currentTarget: String = ""
     var isLoading: Bool = false
-    var isLoadingFromCell: Bool = false
     var isBlockedRequest: Bool = false
+    var isPagination: Bool = false
     var products: [ProductModel] = []
     var currentOffset: Int = 0
-
   }
 
   var initialState = State()
@@ -57,10 +56,10 @@ final class HomeViewModel: ViewModel {
     case .viewDidLoad:
       return requestProducts(cvs: .all, event: .all, sort: .none)
 
-    case .loadingCellWillDisplay:
+    case .fetchMoreData:
       let nextOffset = currentState.currentOffset + 20
       return .concat([
-        .just(.setLoadingFromCell(true)),
+        .just(.setPagination(true)),
         .just(.setOffset),
         requestProducts(
           cvs: currentState.currentCVSType,
@@ -93,7 +92,6 @@ final class HomeViewModel: ViewModel {
         .just(.setLoading(true)),
         .just(.setEvent(event)),
         .just(.resetProducts),
-        .just(.setBlockRequest(false)),
         .just(.resetOffset),
         requestProducts(
           cvs: currentState.currentCVSType,
@@ -112,7 +110,6 @@ final class HomeViewModel: ViewModel {
           .just(.setCVS(cvsType)),
           .just(.setTarget("")),
           .just(.resetProducts),
-          .just(.setBlockRequest(false)),
           requestProducts(
             cvs: cvsType,
             event: currentState.currentEventType,
@@ -132,7 +129,6 @@ final class HomeViewModel: ViewModel {
         .just(.setSort(sortType)),
         .just(.resetProducts),
         .just(.resetOffset),
-        .just(.setBlockRequest(false)),
         requestProducts(
           cvs: currentState.currentCVSType,
           event: currentState.currentEventType,
@@ -146,7 +142,6 @@ final class HomeViewModel: ViewModel {
         .just(.setLoading(true)),
         .just(.resetProducts),
         .just(.resetOffset),
-        .just(.setBlockRequest(false)),
         .just(.setTarget(target)),
         requestProducts(
           cvs: currentState.currentCVSType,
@@ -184,9 +179,6 @@ final class HomeViewModel: ViewModel {
     case let .toggleShowBookmarkVC(isShowBookmarkVC):
       nextState.showBookmarkVC = isShowBookmarkVC
 
-    case .setLoadingFromCell(let isLoading):
-      nextState.isLoadingFromCell = isLoading
-
     case .setOffset:
       nextState.currentOffset += 20
 
@@ -207,6 +199,9 @@ final class HomeViewModel: ViewModel {
 
     case .setBlockRequest(let isBlocked):
       nextState.isBlockedRequest = isBlocked
+
+    case .setPagination(let isPagination):
+      nextState.isPagination = isPagination
     }
     return nextState
   }
@@ -221,7 +216,6 @@ extension HomeViewModel {
     name: String = ""
   ) -> Observable<Mutation> {
     return .concat([
-      .just(.setBlockRequest(true)),
       PyeonHaengAPI.shared.product(request: RequestTypeModel(
         cvs: cvs,
         event: event,
@@ -231,13 +225,20 @@ extension HomeViewModel {
       ))
       .catch { _ in .empty() }
       .flatMap { response -> Observable<Mutation> in
-        return .concat([
-          .just(.appendProductes(response.products)),
-          .just(.setBlockRequest(false))
-        ])
+        if response.count < 20 {
+          return .concat([
+            .just(.setBlockRequest(true)),
+            .just(.appendProductes(response.products))
+          ])
+        } else {
+          return .concat([
+            .just(.setBlockRequest(false)),
+            .just(.appendProductes(response.products))
+          ])
+        }
       },
       .just(.setLoading(false)),
-      .just(.setLoadingFromCell(false))
+      .just(.setPagination(false))
     ])
   }
 }

@@ -136,8 +136,9 @@ final class HomeViewController: BaseViewController, Viewable {
       .map { HomeViewModel.Action.didChangeSearchBar($0) }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
-
+    
     // 빈공간 터치 감지
+    // FIXME: 방식 바꿔야함
     view.rx.tapGesture(configuration: { _, delegate in
       delegate.simultaneousRecognitionPolicy = .never
     })
@@ -218,6 +219,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         return UICollectionViewCell()
       }
       cell.updateCell(products[indexPath.row])
+
       return cell
     } else {
       guard let cell = collectionView.dequeueReusableCell(
@@ -227,6 +229,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         return UICollectionViewCell()
       }
       cell.indicator.startAnimating()
+
       return cell
     }
   }
@@ -261,8 +264,16 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     sizeForItemAt indexPath: IndexPath
   ) -> CGSize {
     guard let currentState = viewModel?.currentState else { return CGSize() }
+
     let width = Int(view.frame.width)
-    let height = (indexPath.row == currentState.products.count) && currentState.isLoadingFromCell ? 40 : 125
+    let height: Int
+
+    if currentState.isBlockedRequest {
+      height = indexPath.row == currentState.products.count ? 0 : 125
+    } else {
+      height = indexPath.row == currentState.products.count ? 40 : 125
+    }
+    
     return CGSize(width: width, height: height)
   }
 
@@ -273,11 +284,10 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
   ) {
     guard let viewModel = viewModel else { return }
 
-    if viewModel.currentState.isBlockedRequest == false {
-      if indexPath.row == viewModel.currentState.products.count,
-         !viewModel.currentState.isLoadingFromCell {
-        viewModel.action.onNext(.loadingCellWillDisplay)
-      }
+    if indexPath.row == viewModel.currentState.products.count,
+       !viewModel.currentState.isBlockedRequest,
+       !viewModel.currentState.isPagination {
+      viewModel.action.onNext(.fetchMoreData)
     }
   }
 

@@ -58,6 +58,7 @@ final class GoodsCell: UICollectionViewCell {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
+    setupStyles()
     setupLayouts()
     setupConstraints()
   }
@@ -67,6 +68,10 @@ final class GoodsCell: UICollectionViewCell {
   }
 
   // MARK: - Setup
+
+  private func setupStyles() {
+    contentView.isUserInteractionEnabled = true
+  }
 
   private func setupLayouts() {
     [containerView, titleLogoView]
