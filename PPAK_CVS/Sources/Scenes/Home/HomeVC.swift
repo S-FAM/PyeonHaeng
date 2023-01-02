@@ -136,7 +136,7 @@ final class HomeViewController: BaseViewController, Viewable {
       .map { HomeViewModel.Action.didChangeSearchBar($0) }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
-    
+
     // 빈공간 터치 감지
     // FIXME: 방식 바꿔야함
     view.rx.tapGesture(configuration: { _, delegate in
@@ -207,18 +207,18 @@ final class HomeViewController: BaseViewController, Viewable {
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-    guard let products = viewModel?.currentState.products else {
+    guard let currentState = viewModel?.currentState else {
       return UICollectionViewCell()
     }
 
-    if indexPath.row != products.count {
+    if indexPath.row != currentState.products.count {
       guard let cell = collectionView.dequeueReusableCell(
         withReuseIdentifier: GoodsCell.id,
         for: indexPath
       ) as? GoodsCell else {
         return UICollectionViewCell()
       }
-      cell.updateCell(products[indexPath.row])
+      cell.updateCell(currentState.products[indexPath.row])
 
       return cell
     } else {
@@ -228,7 +228,12 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       ) as? LoadingCell else {
         return UICollectionViewCell()
       }
-      cell.indicator.startAnimating()
+      
+      if currentState.isBlockedRequest {
+        cell.indicator.stopAnimating()
+      } else {
+        cell.indicator.startAnimating()
+      }
 
       return cell
     }
@@ -273,7 +278,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     } else {
       height = indexPath.row == currentState.products.count ? 40 : 125
     }
-    
+
     return CGSize(width: width, height: height)
   }
 
