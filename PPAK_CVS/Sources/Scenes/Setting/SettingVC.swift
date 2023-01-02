@@ -9,6 +9,21 @@ import RxGesture
 final class SettingViewController: BaseViewController, Viewable {
 
   // MARK: - Properties
+  private lazy var headerBar = UIView().then {
+    $0.backgroundColor = .white
+  }
+
+  private lazy var titleLabel = UILabel().then {
+    $0.text = "설정"
+    $0.font = .systemFont(ofSize: 17, weight: .regular)
+  }
+
+  private lazy var backButton = UIButton().then {
+    $0.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+    $0.tintColor = .black
+    $0.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
+  }
+
   private lazy var tableView = UITableView().then {
     $0.alwaysBounceVertical = false
     $0.dataSource = self
@@ -22,30 +37,55 @@ final class SettingViewController: BaseViewController, Viewable {
   override func setupStyles() {
     super.setupStyles()
     view.backgroundColor = .white
-    setNavigationStyle()
+    setGesture()
   }
 
   override func setupLayouts() {
     super.setupLayouts()
-    view.addSubview(tableView)
+    [headerBar, tableView].forEach {
+      view.addSubview($0)
+    }
+
+    [backButton, titleLabel].forEach {
+      headerBar.addSubview($0)
+    }
   }
 
   override func setupConstraints() {
     super.setupConstraints()
 
+    headerBar.snp.makeConstraints { make in
+      make.top.equalTo(view.safeAreaLayoutGuide)
+      make.leading.trailing.equalToSuperview()
+      make.height.equalTo(60)
+    }
+
+    backButton.snp.makeConstraints { make in
+      make.width.height.equalTo(44)
+      make.centerY.equalToSuperview()
+      make.leading.equalToSuperview().inset(16)
+    }
+
+    titleLabel.snp.makeConstraints { make in
+      make.center.equalToSuperview()
+    }
+
     tableView.snp.makeConstraints { make in
-      make.edges.equalTo(view.safeAreaLayoutGuide)
+      make.top.equalTo(headerBar.snp.bottom).offset(10)
+      make.leading.trailing.bottom.equalToSuperview()
     }
   }
 
-  func bind(viewModel: SettingViewModel) { }
-
-  func setNavigationStyle() {
-
-    navigationItem.title = "설정"
-    navigationController?.navigationBar.tintColor = .black
-    navigationController?.isNavigationBarHidden = false
+  private func setGesture() {
+    let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(backButtonAction))
+    view.addGestureRecognizer(swipeGesture)
   }
+
+  @objc func backButtonAction() {
+    navigationController?.popViewController(animated: true)
+  }
+
+  func bind(viewModel: SettingViewModel) { }
 }
 
 // MARK: - TableView Delegate
