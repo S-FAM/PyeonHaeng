@@ -7,6 +7,7 @@
 
 import UIKit
 
+import Kingfisher
 import RxSwift
 import RxCocoa
 import SnapKit
@@ -25,7 +26,6 @@ final class ProductCollectionHeaderView: UICollectionReusableView, Viewable {
 
   private let productImageView = UIImageView().then {
     $0.contentMode = .scaleAspectFit
-    $0.backgroundColor = .systemBlue // temporary color
   }
 
   private let nameLabel = UILabel().then {
@@ -57,7 +57,7 @@ final class ProductCollectionHeaderView: UICollectionReusableView, Viewable {
 
   private let wholeStackView = UIStackView().then {
     $0.alignment = .center
-    $0.distribution = .fillProportionally
+    $0.distribution = .fill
     $0.axis = .vertical
     $0.spacing = 10
   }
@@ -141,6 +141,18 @@ extension ProductCollectionHeaderView {
       .map { ViewModel.Action.share($0) }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
+  }
+
+  func configureUI(with model: ProductModel) {
+    let discount = model.saleType == .onePlusOne ? 2 : 3
+
+    nameLabel.text = model.name
+    priceLabel.text = "\(model.price.commaRepresentation)원"
+    priceDiscriptionLabel.text = "(개당 \(Int(model.price / discount).commaRepresentation)원)"
+
+    productImageView.kf.setImage(with: URL(string: model.imageLink ?? ""))
+
+    curveView.backgroundColor = model.store.bgColor
   }
 }
 
