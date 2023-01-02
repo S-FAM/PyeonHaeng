@@ -31,12 +31,6 @@ final class HomeViewController: BaseViewController, Viewable {
   private let sortDropdownView = SortDropdownView()
   private var header: HomeCollectionHeaderView!
 
-  // MARK: - ViewWillAppear
-  override func viewWillAppear(_ animated: Bool) {
-      super.viewWillAppear(animated)
-      navigationItem.backButtonTitle = ""
-      navigationController?.isNavigationBarHidden = true
-    }
   // MARK: - Setup
 
   override func setupLayouts() {
