@@ -12,7 +12,7 @@ import RxCocoa
 import SnapKit
 import Then
 
-final class ProductViewController: BaseViewController {
+final class ProductViewController: BaseViewController, Viewable {
 
   private lazy var collectionView = UICollectionView(
     frame: .zero,
@@ -71,6 +71,10 @@ final class ProductViewController: BaseViewController {
     collectionView.snp.makeConstraints { make in
       make.edges.equalTo(view.safeAreaLayoutGuide)
     }
+  }
+
+  func bind(viewModel: ProductViewModel) {
+
   }
 
   func bind(_ headerView: ProductCollectionHeaderView) {
