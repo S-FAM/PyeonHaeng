@@ -109,6 +109,15 @@ final class BookmarkViewController: BaseViewController, Viewable {
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
+    // 테스트 로직
+    header.infoButton.rx.tap
+      .bind {
+        let popup = BookmarkPopup()
+        popup.modalPresentationStyle = .overFullScreen
+        self.present(popup, animated: false)
+      }
+      .disposed(by: disposeBag)
+
 //    // 필터 드롭다운 리스트 버튼 클릭
 //    filterDropdownView.buttonEventSubject
 //      .map { BookmarkViewModel.Action.filterButtonTappedInDropdown($0) }
