@@ -6,12 +6,22 @@ import RxSwift
 import RxCocoa
 import RxGesture
 
-final class SettingViewController: BaseViewController {
+final class SettingViewController: BaseViewController, Viewable {
 
   // MARK: - Properties
-
   private lazy var headerBar = UIView().then {
-    $0.backgroundColor = .systemRed
+    $0.backgroundColor = .white
+  }
+
+  private lazy var titleLabel = UILabel().then {
+    $0.text = "설정"
+    $0.font = .systemFont(ofSize: 18, weight: .bold)
+  }
+
+  private lazy var backButton = UIButton().then {
+    $0.setImage(UIImage(named: "icon_left"), for: .normal)
+    $0.tintColor = .black
+    $0.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
   }
 
   private lazy var tableView = UITableView().then {
@@ -19,20 +29,25 @@ final class SettingViewController: BaseViewController {
     $0.dataSource = self
     $0.delegate = self
     $0.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.identifier)
-    $0.backgroundColor = .systemTeal
+    $0.backgroundColor = .white
   }
 
   // MARK: - SetLayout
 
   override func setupStyles() {
     super.setupStyles()
-    view.backgroundColor = .systemYellow
+    view.backgroundColor = .white
+    setGesture()
   }
 
   override func setupLayouts() {
     super.setupLayouts()
     [headerBar, tableView].forEach {
       view.addSubview($0)
+    }
+
+    [backButton, titleLabel].forEach {
+      headerBar.addSubview($0)
     }
   }
 
@@ -45,11 +60,32 @@ final class SettingViewController: BaseViewController {
       make.height.equalTo(60)
     }
 
+    backButton.snp.makeConstraints { make in
+      make.width.height.equalTo(44)
+      make.centerY.equalToSuperview()
+      make.leading.equalToSuperview().inset(16)
+    }
+
+    titleLabel.snp.makeConstraints { make in
+      make.center.equalToSuperview()
+    }
+
     tableView.snp.makeConstraints { make in
       make.top.equalTo(headerBar.snp.bottom).offset(10)
       make.leading.trailing.bottom.equalToSuperview()
     }
   }
+
+  private func setGesture() {
+    let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(backButtonAction))
+    view.addGestureRecognizer(swipeGesture)
+  }
+
+  @objc func backButtonAction() {
+    navigationController?.popViewController(animated: true)
+  }
+
+  func bind(viewModel: SettingViewModel) { }
 }
 
 // MARK: - TableView Delegate

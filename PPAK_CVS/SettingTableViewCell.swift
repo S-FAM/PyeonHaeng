@@ -23,11 +23,11 @@ final class SettingTableViewCell: UITableViewCell {
   }
 
   private let titleLabel = UILabel().then {
-    $0.font = .systemFont(ofSize: 14, weight: .regular)
+    $0.font = .systemFont(ofSize: 15, weight: .regular)
   }
 
   private let versionInfoLabel = UILabel().then {
-    $0.font = .systemFont(ofSize: 12, weight: .regular)
+    $0.font = .systemFont(ofSize: 14, weight: .regular)
     $0.textColor = .gray
   }
 
@@ -94,7 +94,7 @@ final class SettingTableViewCell: UITableViewCell {
     versionInfoLabel.snp.makeConstraints { make in
       make.trailing.equalTo(containerView.snp.trailing)
       make.centerY.equalToSuperview()
-      make.width.equalTo(40)
+      make.width.equalTo(50)
       make.height.equalTo(20)
     }
   }
