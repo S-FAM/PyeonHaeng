@@ -111,7 +111,7 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
       make.top.leading.trailing.equalTo(safeAreaLayoutGuide)
       make.bottom.equalTo(pageControl.snp.top)
     }
-    
+
     cvsButton.snp.makeConstraints { make in
       make.trailing.equalToSuperview().inset(40)
       make.centerY.equalToSuperview()

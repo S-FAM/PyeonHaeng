@@ -25,16 +25,6 @@ final class BookmarkPopup: BaseViewController {
     $0.numberOfLines = 2
   }
 
-  // MARK: - LifeCycle
-
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-
-    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-      self.dismiss(animated: false)
-    }
-  }
-
   // MARK: - Setup
 
   override func setupStyles() {
@@ -58,5 +48,11 @@ final class BookmarkPopup: BaseViewController {
       make.leading.trailing.equalToSuperview().inset(17)
       make.centerY.equalToSuperview()
     }
+  }
+
+  // MARK: - Helpers
+  
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    self.dismiss(animated: false)
   }
 }
