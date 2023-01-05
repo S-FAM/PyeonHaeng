@@ -34,14 +34,7 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
     $0.backgroundColor = .clear
   }
 
-  private lazy var infoStack = UIStackView().then { stack in
-    [
-      mainLabel,
-      infoButton
-    ].forEach { stack.addArrangedSubview($0) }
-    stack.axis  = .horizontal
-  }
-
+  let infoStack = UIStackView()
   let infoTouchView = UIView()
   let topCurveView = TopCurveView()
   let searchBar = SearchBar()
@@ -76,15 +69,18 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
       filterButton,
       iconContainerView,
       infoTouchView
-    ]
-      .forEach { addSubview($0) }
+    ].forEach { addSubview($0) }
 
     [
       backButton,
       cvsButton,
       infoStack
-    ]
-      .forEach { iconContainerView.addSubview($0) }
+    ].forEach { iconContainerView.addSubview($0) }
+
+    [
+      mainLabel,
+      infoButton
+    ].forEach { infoStack.addArrangedSubview($0) }
   }
 
   private func setupConstraints() {
