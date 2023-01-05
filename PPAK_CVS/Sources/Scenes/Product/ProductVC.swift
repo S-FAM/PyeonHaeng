@@ -12,7 +12,7 @@ import RxCocoa
 import SnapKit
 import Then
 
-final class ProductViewController: BaseViewController {
+final class ProductViewController: BaseViewController, Viewable {
 
   private lazy var collectionView = UICollectionView(
     frame: .zero,
@@ -23,7 +23,7 @@ final class ProductViewController: BaseViewController {
       layout.itemSize = CGSize(width: self.view.bounds.width, height: 125)
       layout.sectionInset = UIEdgeInsets(top: 24, left: 0, bottom: 16, right: 0)
     }
-    $0.contentInsetAdjustmentBehavior = .never
+    $0.bounces = false
     $0.register(GoodsCell.self, forCellWithReuseIdentifier: GoodsCell.id)
     $0.register(
       ProductCollectionHeaderView.self,
@@ -39,8 +39,11 @@ final class ProductViewController: BaseViewController {
       guard let newValue = newValue else { return }
       newValue.viewModel = ProductHeaderViewViewModel()
       bind(newValue)
+      self.headerViewInitializeRelay.accept(newValue)
     }
   }
+
+  private let headerViewInitializeRelay = PublishRelay<ProductCollectionHeaderView>()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -71,6 +74,19 @@ final class ProductViewController: BaseViewController {
     collectionView.snp.makeConstraints { make in
       make.edges.equalTo(view.safeAreaLayoutGuide)
     }
+  }
+
+  func bind(viewModel: ProductViewModel) {
+
+    let modelObservable = viewModel.state.map { $0.model }
+    let headerViewObservable = headerViewInitializeRelay.asObservable()
+
+    Observable.combineLatest(modelObservable, headerViewObservable)
+      .subscribe(onNext: { [weak self] model, headerView in
+        headerView.configureUI(with: model)
+        self?.collectionView.backgroundColor = model.store.bgColor
+      })
+      .disposed(by: disposeBag)
   }
 
   func bind(_ headerView: ProductCollectionHeaderView) {
@@ -131,3 +147,12 @@ extension ProductViewController: UICollectionViewDataSource {
     return headerView
   }
 }
+
+#if canImport(SwiftUI) && DEBUG
+import SwiftUI
+struct ProductViewControllerPreview: PreviewProvider {
+  static var previews: some View {
+    ProductViewController().toPreview()
+  }
+}
+#endif
