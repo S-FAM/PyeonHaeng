@@ -54,7 +54,7 @@ final class HomeViewModel: ViewModel {
     switch action {
     case .viewDidLoad:
       return requestProducts(cvs: .all, event: .all, sort: .none)
-      
+
     case .fetchMoreData:
       let nextOffset = currentState.currentOffset + 20
       return .concat([

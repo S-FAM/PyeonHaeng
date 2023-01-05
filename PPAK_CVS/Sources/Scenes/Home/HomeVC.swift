@@ -139,7 +139,7 @@ final class HomeViewController: BaseViewController, Viewable {
       .disposed(by: disposeBag)
 
     // MARK: - State
-    
+
     // 편의점 로고 드롭다운 애니메이션 동작
     viewModel.state
       .map { $0.isVisibleCVSDropdown }
@@ -240,7 +240,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     guard let products = viewModel?.currentState.products else { return 0 }
     return products.count > 0 ? products.count + 1 : 0
   }
-  
+
   func collectionView(
     _ collectionView: UICollectionView,
     layout collectionViewLayout: UICollectionViewLayout,
@@ -315,7 +315,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     didSelectItemAt indexPath: IndexPath
   ) {
   }
-  
+
   func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
     cvsDropdownView.willDisappearDropdown()
     sortDropdownView.willDisappearDropdown()

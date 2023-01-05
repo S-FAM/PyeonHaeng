@@ -69,9 +69,7 @@ final class GoodsCell: UICollectionViewCell {
 
   // MARK: - Setup
 
-  private func setupStyles() {
-    contentView.isUserInteractionEnabled = true
-  }
+  private func setupStyles() {}
 
   private func setupLayouts() {
     [containerView, titleLogoView]
