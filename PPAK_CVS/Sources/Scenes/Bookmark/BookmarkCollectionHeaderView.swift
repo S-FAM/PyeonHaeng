@@ -8,29 +8,29 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
   // MARK: - Properties
   static let id = "BookmarkCollectionHeaderView"
 
-  private lazy var mainLabel = UILabel().then {
+  private let mainLabel = UILabel().then {
     $0.text = "찜"
     $0.textColor = .white
     $0.font = .systemFont(ofSize: 22.0, weight: .heavy)
   }
 
-  lazy var infoButton = UIButton().then {
+  private let infoButton = UIButton().then {
     $0.setImage(UIImage(named: "ic_info"), for: .normal)
   }
 
-  lazy var backButton = UIButton().then {
+  let backButton = UIButton().then {
     $0.setImage(UIImage(named: "ic_back_white"), for: .normal)
   }
 
-  lazy var filterButton = UIButton().then {
+  let filterButton = UIButton().then {
     $0.setImage(UIImage(named: "ic_sort"), for: .normal)
   }
 
-  lazy var cvsButton = UIButton().then {
+  let cvsButton = UIButton().then {
     $0.setImage(CVSType.all.image, for: .normal)
   }
 
-  private lazy var iconContainerView = UIView().then {
+  private let iconContainerView = UIView().then {
     $0.backgroundColor = .clear
   }
 
@@ -38,14 +38,14 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
     [
       mainLabel,
       infoButton
-    ]
-      .forEach { stack.addArrangedSubview($0) }
+    ].forEach { stack.addArrangedSubview($0) }
     stack.axis  = .horizontal
   }
 
-  lazy var topCurveView = TopCurveView()
-  lazy var searchBar = SearchBar()
-  lazy var pageControl = PageControl()
+  let infoTouchView = UIView()
+  let topCurveView = TopCurveView()
+  let searchBar = SearchBar()
+  let pageControl = PageControl()
 
   // MARK: - Init
 
@@ -54,6 +54,7 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
     setupStyles()
     setupLayout()
     setupConstraints()
+
   }
 
   required init?(coder: NSCoder) {
@@ -73,7 +74,8 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
       pageControl,
       searchBar,
       filterButton,
-      iconContainerView
+      iconContainerView,
+      infoTouchView
     ]
       .forEach { addSubview($0) }
 
@@ -128,6 +130,11 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
       make.leading.equalToSuperview().inset(40)
       make.width.height.equalTo(44)
       make.centerY.equalToSuperview()
+    }
+
+    infoTouchView.snp.makeConstraints { make in
+      make.center.equalTo(infoStack)
+      make.width.height.equalTo(44)
     }
   }
 }

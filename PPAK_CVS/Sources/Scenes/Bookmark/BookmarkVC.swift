@@ -110,8 +110,9 @@ final class BookmarkViewController: BaseViewController, Viewable {
       .disposed(by: disposeBag)
 
     // 테스트 로직
-    header.infoButton.rx.tap
-      .bind {
+    header.infoTouchView.rx.tapGesture()
+      .skip(1)
+      .bind { _ in
         let popup = BookmarkPopup()
         popup.modalPresentationStyle = .overFullScreen
         self.present(popup, animated: false)
