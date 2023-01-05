@@ -19,9 +19,7 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
   }
 
   lazy var backButton = UIButton().then {
-    let image = UIImage(systemName: "chevron.backward")?.applyingSymbolConfiguration(.init(pointSize: 25))
-    $0.setImage(image, for: .normal)
-    $0.tintColor = .white
+    $0.setImage(UIImage(named: "ic_back_white"), for: .normal)
   }
 
   lazy var filterButton = UIButton().then {
@@ -128,6 +126,7 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
 
     backButton.snp.makeConstraints { make in
       make.leading.equalToSuperview().inset(40)
+      make.width.height.equalTo(44)
       make.centerY.equalToSuperview()
     }
   }
