@@ -5,8 +5,6 @@ import RxCocoa
 
 final class BookmarkCoordinator: BaseCoordinator {
 
-  private let disposeBag = DisposeBag()
-
   override func start() {
     let viewController = BookmarkViewController()
     let viewModel = BookmarkViewModel()

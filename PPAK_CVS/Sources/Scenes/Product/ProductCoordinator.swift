@@ -15,7 +15,6 @@ final class ProductCoordinator: BaseCoordinator {
   // MARK: - Properties
 
   private let model: ProductModel
-  private let disposeBag = DisposeBag()
 
   // MARK: - Initializations
 
