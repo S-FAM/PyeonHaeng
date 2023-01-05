@@ -199,7 +199,10 @@ final class HomeViewController: BaseViewController, Viewable {
 // MARK: - CollectionView Setup
 
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    cellForItemAt indexPath: IndexPath
+  ) -> UICollectionViewCell {
 
     guard let currentState = viewModel?.currentState else {
       return UICollectionViewCell()
@@ -283,8 +286,8 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
   ) {
     guard let viewModel = viewModel else { return }
 
-    if indexPath.row == viewModel.currentState.products.count,
-       !viewModel.currentState.isBlockedRequest,
+    if indexPath.row == viewModel.currentState.products.count &&
+       !viewModel.currentState.isBlockedRequest &&
        !viewModel.currentState.isPagination {
       viewModel.action.onNext(.fetchMoreData)
     }
