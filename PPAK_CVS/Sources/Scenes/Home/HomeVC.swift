@@ -14,6 +14,7 @@ final class HomeViewController: BaseViewController, Viewable {
   private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then {
     $0.collectionViewLayout = UICollectionViewFlowLayout()
     $0.contentInsetAdjustmentBehavior = .never
+    $0.keyboardDismissMode = .onDrag
     $0.bounces = false
     $0.dataSource = self
     $0.delegate = self
@@ -140,19 +141,12 @@ final class HomeViewController: BaseViewController, Viewable {
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
-    // 빈공간 터치 감지
-    view.rx.tapGesture(configuration: { _, delegate in
-      delegate.simultaneousRecognitionPolicy = .never
-    })
-    .map { _ in HomeViewModel.Action.backgroundDidTap }
-    .bind(to: viewModel.action)
-    .disposed(by: disposeBag)
-
     // MARK: - State
 
     // 편의점 로고 드롭다운 애니메이션 동작
     viewModel.state
       .map { $0.isVisibleCVSDropdown }
+      .distinctUntilChanged()
       .withUnretained(self)
       .bind { owner, isVisible in
         isVisible ? owner.cvsDropdownView.willAppearDropdown() : owner.cvsDropdownView.willDisappearDropdown()
@@ -162,6 +156,7 @@ final class HomeViewController: BaseViewController, Viewable {
     // 필터 드롭다운 애니메이션 동작
     viewModel.state
       .map { $0.isVisibleFilterDropdown }
+      .distinctUntilChanged()
       .withUnretained(self)
       .bind { owner, isVisible in
         isVisible ? owner.sortDropdownView.willAppearDropdown() : owner.sortDropdownView.willDisappearDropdown()
@@ -207,20 +202,24 @@ final class HomeViewController: BaseViewController, Viewable {
 // MARK: - CollectionView Setup
 
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    cellForItemAt indexPath: IndexPath
+  ) -> UICollectionViewCell {
 
-    guard let products = viewModel?.currentState.products else {
+    guard let currentState = viewModel?.currentState else {
       return UICollectionViewCell()
     }
 
-    if indexPath.row != products.count {
+    if indexPath.row != currentState.products.count {
       guard let cell = collectionView.dequeueReusableCell(
         withReuseIdentifier: GoodsCell.id,
         for: indexPath
       ) as? GoodsCell else {
         return UICollectionViewCell()
       }
-      cell.updateCell(products[indexPath.row])
+      cell.updateCell(currentState.products[indexPath.row])
+
       return cell
     } else {
       guard let cell = collectionView.dequeueReusableCell(
@@ -229,7 +228,13 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       ) as? LoadingCell else {
         return UICollectionViewCell()
       }
-      cell.indicator.startAnimating()
+
+      if currentState.isBlockedRequest {
+        cell.indicator.stopAnimating()
+      } else {
+        cell.indicator.startAnimating()
+      }
+
       return cell
     }
   }
@@ -264,8 +269,16 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     sizeForItemAt indexPath: IndexPath
   ) -> CGSize {
     guard let currentState = viewModel?.currentState else { return CGSize() }
+
     let width = Int(view.frame.width)
-    let height = (indexPath.row == currentState.products.count) && currentState.isLoadingFromCell ? 40 : 125
+    let height: Int
+
+    if currentState.isBlockedRequest {
+      height = indexPath.row == currentState.products.count ? 0 : 125
+    } else {
+      height = indexPath.row == currentState.products.count ? 40 : 125
+    }
+
     return CGSize(width: width, height: height)
   }
 
@@ -276,11 +289,10 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
   ) {
     guard let viewModel = viewModel else { return }
 
-    if viewModel.currentState.isBlockedRequest == false {
-      if indexPath.row == viewModel.currentState.products.count,
-         !viewModel.currentState.isLoadingFromCell {
-        viewModel.action.onNext(.loadingCellWillDisplay)
-      }
+    if indexPath.row == viewModel.currentState.products.count &&
+       !viewModel.currentState.isBlockedRequest &&
+       !viewModel.currentState.isPagination {
+      viewModel.action.onNext(.fetchMoreData)
     }
   }
 
@@ -302,5 +314,16 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
 
     return header
+  }
+
+  func collectionView(
+    _ collectionView: UICollectionView,
+    didSelectItemAt indexPath: IndexPath
+  ) {
+  }
+
+  func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    cvsDropdownView.willDisappearDropdown()
+    sortDropdownView.willDisappearDropdown()
   }
 }

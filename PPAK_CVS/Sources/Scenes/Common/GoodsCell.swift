@@ -58,6 +58,7 @@ final class GoodsCell: UICollectionViewCell {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
+    setupStyles()
     setupLayouts()
     setupConstraints()
   }
@@ -67,6 +68,8 @@ final class GoodsCell: UICollectionViewCell {
   }
 
   // MARK: - Setup
+
+  private func setupStyles() {}
 
   private func setupLayouts() {
     [containerView, titleLogoView]
@@ -98,6 +101,7 @@ final class GoodsCell: UICollectionViewCell {
     stackView.snp.makeConstraints { make in
       make.centerY.equalToSuperview()
       make.leading.equalTo(goodsImage.snp.trailing).offset(8.0)
+      make.trailing.equalToSuperview().inset(16)
     }
   }
 }
