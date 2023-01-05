@@ -5,8 +5,6 @@ import RxCocoa
 
 final class HomeCoordinator: BaseCoordinator {
 
-  private let disposeBag = DisposeBag()
-
   override func start() {
     let viewModel = HomeViewModel()
     let viewController = HomeViewController()

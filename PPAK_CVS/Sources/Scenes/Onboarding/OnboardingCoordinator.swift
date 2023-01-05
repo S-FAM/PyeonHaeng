@@ -11,8 +11,6 @@ import RxSwift
 
 final class OnboardingCoordinator: BaseCoordinator {
 
-  private let disposeBag = DisposeBag()
-
   override func start() {
     let onboardingViewModel = OnboardingViewModel()
     let onboardingVC = OnboardingViewController()

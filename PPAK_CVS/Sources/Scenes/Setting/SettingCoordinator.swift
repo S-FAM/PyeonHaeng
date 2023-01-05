@@ -12,8 +12,6 @@ import RxCocoa
 
 final class SettingCoordinator: BaseCoordinator {
 
-  private let disposeBag = DisposeBag()
-
   override func start() {
     let viewModel = SettingViewModel()
     let viewController = SettingViewController()
