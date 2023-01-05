@@ -11,11 +11,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
   // MARK: - Properties
 
   private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then {
-    $0.collectionViewLayout = UICollectionViewFlowLayout().then {
-      $0.headerReferenceSize = CGSize(width: view.frame.width, height: 320)
-      $0.itemSize = CGSize(width: view.frame.width, height: 125)
-      $0.sectionInset = UIEdgeInsets(top: 24, left: 0, bottom: 16, right: 0)
-    }
+    $0.collectionViewLayout = UICollectionViewFlowLayout()
     $0.contentInsetAdjustmentBehavior = .never
     $0.bounces = false
     $0.dataSource = self
@@ -31,7 +27,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
     )
   }
 
-  private lazy var filterDropdownView = SortDropdownView()
+  private lazy var sortDropdownView = SortDropdownView()
   private lazy var cvsDropdownView = CVSDropdownView()
   private var header: BookmarkCollectionHeaderView!
 
@@ -40,7 +36,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
   override func setupStyles() {
     super.setupStyles()
     navigationController?.isNavigationBarHidden = true
-    view.backgroundColor = .white
+    view.backgroundColor = CVSType.all.bgColor
   }
 
   override func setupLayouts() {
@@ -50,29 +46,33 @@ final class BookmarkViewController: BaseViewController, Viewable {
 
   override func setupConstraints() {
     collectionView.snp.makeConstraints { make in
-      make.top.leading.trailing.equalToSuperview()
-      make.bottom.equalTo(view.safeAreaLayoutGuide)
+      make.leading.trailing.bottom.equalToSuperview()
+      make.top.equalTo(view.safeAreaLayoutGuide)
     }
   }
 
   private func setupDropdown() {
-    [filterDropdownView, cvsDropdownView].forEach {
+    [
+      sortDropdownView,
+      cvsDropdownView
+    ]
+      .forEach {
       view.addSubview($0)
       $0.isHidden = true
     }
 
-    filterDropdownView.snp.makeConstraints { make in
-      make.top.equalTo(header.filterButton.snp.bottom).offset(12)
-      make.trailing.equalToSuperview().inset(16)
-      make.width.equalTo(130)
-      make.height.equalTo(100)
+    cvsDropdownView.snp.makeConstraints { make in
+      make.top.equalTo(header.cvsButton.snp.bottom).offset(10)
+      make.centerX.equalTo(header.cvsButton)
+      make.width.equalTo(73)
+      make.height.equalTo(450)
     }
 
-    cvsDropdownView.snp.makeConstraints { make in
-      make.top.equalTo(header.cvsButton.snp.bottom).offset(16)
+    sortDropdownView.snp.makeConstraints { make in
+      make.top.equalTo(header.filterButton.snp.bottom).offset(12)
       make.trailing.equalToSuperview().inset(16)
-      make.width.equalTo(64)
-      make.height.equalTo(376)
+      make.width.equalTo(100)
+      make.height.equalTo(80)
     }
   }
 
@@ -107,6 +107,16 @@ final class BookmarkViewController: BaseViewController, Viewable {
     cvsDropdownView.buttonEventSubject
       .map { BookmarkViewModel.Action.cvsButtonTappedInDropdown($0) }
       .bind(to: viewModel.action)
+      .disposed(by: disposeBag)
+
+    // 테스트 로직
+    header.infoTouchView.rx.tapGesture()
+      .skip(1)
+      .bind { _ in
+        let popup = BookmarkPopup()
+        popup.modalPresentationStyle = .overFullScreen
+        self.present(popup, animated: false)
+      }
       .disposed(by: disposeBag)
 
 //    // 필터 드롭다운 리스트 버튼 클릭
@@ -150,9 +160,9 @@ final class BookmarkViewController: BaseViewController, Viewable {
       .map { $0.isVisibleFilterDropdown }
       .bind(onNext: { [unowned self] isVisible in
         if isVisible {
-          filterDropdownView.willAppearDropdown()
+          sortDropdownView.willAppearDropdown()
         } else {
-          filterDropdownView.willDisappearDropdown()
+          sortDropdownView.willDisappearDropdown()
         }
       })
       .disposed(by: disposeBag)
@@ -171,7 +181,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
 
 // MARK: - CollectionView Setup
 
-extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   func collectionView(
     _ collectionView: UICollectionView,
     cellForItemAt indexPath: IndexPath
@@ -213,4 +223,37 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
 
     return header
   }
+
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    insetForSectionAt section: Int
+  ) -> UIEdgeInsets {
+    return .init(top: 24, left: 0, bottom: 16, right: 0)
+  }
+
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    referenceSizeForHeaderInSection section: Int
+  ) -> CGSize {
+    return .init(width: view.frame.width, height: 280)
+  }
+
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    sizeForItemAt indexPath: IndexPath
+  ) -> CGSize {
+    return .init(width: view.frame.width, height: 125)
+  }
 }
+
+#if canImport(SwiftUI) && DEBUG
+import SwiftUI
+struct BookmarkVCPreView: PreviewProvider {
+  static var previews: some View {
+    BookmarkViewController().toPreview()
+  }
+}
+#endif

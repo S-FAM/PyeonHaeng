@@ -57,7 +57,10 @@ final class HomeViewController: BaseViewController, Viewable {
   }
 
   private func setupDropdown() {
-    [cvsDropdownView, sortDropdownView]
+    [
+      cvsDropdownView,
+      sortDropdownView
+    ]
       .forEach {
         view.addSubview($0)
         $0.isHidden = true

@@ -8,33 +8,37 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
   // MARK: - Properties
   static let id = "BookmarkCollectionHeaderView"
 
-  private lazy var mainLabel = UILabel().then {
+  private let mainLabel = UILabel().then {
     $0.text = "찜"
     $0.textColor = .white
-    $0.font = .systemFont(ofSize: 32.0, weight: .heavy)
+    $0.font = .systemFont(ofSize: 22.0, weight: .heavy)
   }
 
-  lazy var infoButton = UIButton().then {
-    $0.setImage(UIImage(named: "bookmark_info"), for: .normal)
+  private let infoButton = UIButton().then {
+    $0.setImage(UIImage(named: "ic_info"), for: .normal)
   }
 
-  lazy var backButton = UIButton().then {
-    let image = UIImage(systemName: "chevron.backward")?.applyingSymbolConfiguration(.init(pointSize: 25))
-    $0.setImage(image, for: .normal)
-    $0.tintColor = .white
+  let backButton = UIButton().then {
+    $0.setImage(UIImage(named: "ic_back_white"), for: .normal)
   }
 
-  lazy var filterButton = UIButton().then {
-    $0.setImage(UIImage(named: "filter"), for: .normal)
+  let filterButton = UIButton().then {
+    $0.setImage(UIImage(named: "ic_sort"), for: .normal)
   }
 
-  lazy var cvsButton = UIButton().then {
+  let cvsButton = UIButton().then {
     $0.setImage(CVSType.all.image, for: .normal)
   }
 
-  lazy var topCurveView = TopCurveView()
-  lazy var searchBar = SearchBar()
-  lazy var pageControl = PageControl()
+  private let iconContainerView = UIView().then {
+    $0.backgroundColor = .clear
+  }
+
+  let infoStack = UIStackView()
+  let infoTouchView = UIView()
+  let topCurveView = TopCurveView()
+  let searchBar = SearchBar()
+  let pageControl = PageControl()
 
   // MARK: - Init
 
@@ -43,6 +47,7 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
     setupStyles()
     setupLayout()
     setupConstraints()
+
   }
 
   required init?(coder: NSCoder) {
@@ -57,8 +62,25 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
   }
 
   private func setupLayout() {
-    [topCurveView, pageControl, searchBar, filterButton, mainLabel, infoButton, cvsButton, backButton]
-      .forEach { addSubview($0) }
+    [
+      topCurveView,
+      pageControl,
+      searchBar,
+      filterButton,
+      iconContainerView,
+      infoTouchView
+    ].forEach { addSubview($0) }
+
+    [
+      backButton,
+      cvsButton,
+      infoStack
+    ].forEach { iconContainerView.addSubview($0) }
+
+    [
+      mainLabel,
+      infoButton
+    ].forEach { infoStack.addArrangedSubview($0) }
   }
 
   private func setupConstraints() {
@@ -67,44 +89,48 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
     }
 
     pageControl.snp.makeConstraints { make in
-      make.centerY.equalToSuperview().offset(16)
       make.leading.trailing.equalToSuperview().inset(40)
+      make.bottom.equalToSuperview().inset(110)
       make.height.equalTo(65)
     }
 
     searchBar.snp.makeConstraints { make in
       make.bottom.equalToSuperview()
-      make.leading.equalToSuperview().inset(32)
-      make.trailing.equalTo(filterButton.snp.leading).offset(-16)
+      make.leading.equalToSuperview().inset(40)
+      make.trailing.equalTo(filterButton.snp.leading).offset(-13)
       make.height.equalTo(50)
     }
 
     filterButton.snp.makeConstraints { make in
       make.centerY.equalTo(searchBar)
-      make.trailing.equalToSuperview().inset(32)
-      make.width.height.equalTo(30)
+      make.trailing.equalToSuperview().inset(16)
+      make.width.height.equalTo(44)
     }
 
-    mainLabel.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.top.equalTo(safeAreaLayoutGuide).inset(8)
-    }
-
-    infoButton.snp.makeConstraints { make in
-      make.centerY.equalTo(mainLabel)
-      make.leading.equalTo(mainLabel.snp.trailing).offset(4)
-      make.width.height.equalTo(20)
-    }
-
-    backButton.snp.makeConstraints { make in
-      make.centerY.equalTo(mainLabel)
-      make.leading.equalToSuperview().inset(16)
+    iconContainerView.snp.makeConstraints { make in
+      make.top.leading.trailing.equalTo(safeAreaLayoutGuide)
+      make.bottom.equalTo(pageControl.snp.top)
     }
 
     cvsButton.snp.makeConstraints { make in
-      make.centerY.equalTo(backButton)
-      make.trailing.equalToSuperview().inset(16)
-      make.width.height.equalTo(40)
+      make.trailing.equalToSuperview().inset(40)
+      make.centerY.equalToSuperview()
+      make.width.height.equalTo(44)
+    }
+
+    infoStack.snp.makeConstraints { make in
+      make.center.equalToSuperview()
+    }
+
+    backButton.snp.makeConstraints { make in
+      make.leading.equalToSuperview().inset(25)
+      make.width.height.equalTo(44)
+      make.centerY.equalToSuperview()
+    }
+
+    infoTouchView.snp.makeConstraints { make in
+      make.center.equalTo(infoStack)
+      make.width.height.equalTo(44)
     }
   }
 }
