@@ -111,7 +111,7 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
       make.top.leading.trailing.equalTo(safeAreaLayoutGuide)
       make.bottom.equalTo(pageControl.snp.top)
     }
-
+    
     cvsButton.snp.makeConstraints { make in
       make.trailing.equalToSuperview().inset(40)
       make.centerY.equalToSuperview()
@@ -123,7 +123,7 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
     }
 
     backButton.snp.makeConstraints { make in
-      make.leading.equalToSuperview().inset(40)
+      make.leading.equalToSuperview().inset(25)
       make.width.height.equalTo(44)
       make.centerY.equalToSuperview()
     }

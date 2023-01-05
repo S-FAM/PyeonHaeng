@@ -60,12 +60,3 @@ final class BookmarkPopup: BaseViewController {
     }
   }
 }
-
-#if canImport(SwiftUI) && DEBUG
-import SwiftUI
-struct AsdfPreView: PreviewProvider {
-  static var previews: some View {
-    BookmarkPopup().toPreview()
-  }
-}
-#endif
