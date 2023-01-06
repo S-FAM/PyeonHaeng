@@ -79,9 +79,11 @@ final class BookmarkViewModel: ViewModel {
     switch mutation {
     case .setCVSDropdown:
       nextState.isHiddenCVSDropdown.toggle()
+      nextState.isHiddenSortDropdown = true
 
     case .setSortDropdown:
       nextState.isHiddenSortDropdown.toggle()
+      nextState.isHiddenCVSDropdown = true
 
     case .setHomeVC(let state):
       nextState.showsHomeVC = state

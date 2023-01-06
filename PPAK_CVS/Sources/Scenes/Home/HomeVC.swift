@@ -125,7 +125,7 @@ final class HomeViewController: BaseViewController, Viewable {
       .disposed(by: disposeBag)
 
     // 페이지 컨트롤 인덱스 감지
-    header.pageControl.pageIndexSubject
+    header.pageControl.didChangeEvent
       .skip(1)
       .distinctUntilChanged()
       .map { HomeViewModel.Action.pageControlIndexDidChange($0) }

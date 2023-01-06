@@ -31,7 +31,7 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
     $0.setImage(UIImage(named: "ic_heart_white"), for: .normal)
   }
 
-  lazy var pageControl = PageControl()
+  lazy var pageControl = EventControl()
   lazy var topCurveView = TopCurveView()
   lazy var searchBar = SearchBar()
 
