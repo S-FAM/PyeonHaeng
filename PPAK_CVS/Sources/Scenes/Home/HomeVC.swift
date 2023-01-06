@@ -320,6 +320,10 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     _ collectionView: UICollectionView,
     didSelectItemAt indexPath: IndexPath
   ) {
+    guard let product = viewModel?.currentState.products[indexPath.row] else { return }
+
+    // 특정 제품 클릭
+    viewModel?.action.onNext(.didSelectItemAt(product))
   }
 
   func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
