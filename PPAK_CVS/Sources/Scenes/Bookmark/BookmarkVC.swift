@@ -55,7 +55,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
 
   private func setupDropdown() {
     view.addSubview(indicator)
-    
+
     [
       sortDropdownView,
       cvsDropdownView
@@ -63,7 +63,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
       view.addSubview($0)
       $0.isHidden = true
     }
-    
+
     indicator.snp.makeConstraints { make in
       make.center.equalToSuperview()
     }
@@ -198,11 +198,19 @@ final class BookmarkViewController: BaseViewController, Viewable {
       .withUnretained(self)
       .bind { $0.0.collectionView.reloadData() }
       .disposed(by: disposeBag)
-    
+
     // 로딩 중
     viewModel.state
       .map { $0.isLoading }
+      .distinctUntilChanged()
       .bind(to: indicator.rx.isAnimating)
+      .disposed(by: disposeBag)
+
+    // 서치바 텍스트
+    viewModel.state
+      .map { $0.currentTarget }
+      .distinctUntilChanged()
+      .bind(to: header.searchBar.textField.rx.text)
       .disposed(by: disposeBag)
   }
 }
@@ -217,7 +225,7 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
     guard let products = viewModel?.currentState.currentProducts else {
       return UICollectionViewCell()
     }
-    
+
     guard let cell = collectionView.dequeueReusableCell(
       withReuseIdentifier: GoodsCell.id,
       for: indexPath

@@ -22,6 +22,7 @@ final class BookmarkViewModel: ViewModel {
     case setEvent(EventType)
     case setTarget(String)
     case setLoading(Bool)
+    case setProducts([ProductModel])
   }
 
   struct State {
@@ -53,30 +54,80 @@ final class BookmarkViewModel: ViewModel {
       ])
 
     case .didChangeEvent(let event):
+
+      let updatedProducts = Storage.shared.retrieve(
+        cvs: currentState.currentCVS,
+        event: event,
+        sort: .none,
+        target: currentState.currentTarget)
+
       return .concat([
         .just(.setEvent(event)),
-        .just(.hideDropdown)
+        .just(.hideDropdown),
+        .just(.setLoading(true)),
+        .just(.setProducts([])).delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
+        .just(.setProducts(updatedProducts)),
+        .just(.setLoading(false))
       ])
 
     case .didTapDropdownCVS(let cvsDropdownCase):
+
       switch cvsDropdownCase {
       case .cvs(let cvs):
+
+        let updatedProducts = Storage.shared.retrieve(
+          cvs: cvs,
+          event: currentState.currentEvent,
+          sort: .none)
+
         return .concat([
           .just(.setCVS(cvs)),
-          .just(.hideDropdown)
+          .just(.hideDropdown),
+          .just(.setTarget("")),
+          .just(.setLoading(true)),
+          .just(.setProducts([])).delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
+          .just(.setProducts(updatedProducts)),
+          .just(.setLoading(false))
         ])
-        
+
       case .setting:
         return .empty()
       }
 
     case .didChangeSearchBarText(let target):
-      return .just(.setTarget(target))
+
+      let updatedProducts = Storage.shared.retrieve(
+        cvs: currentState.currentCVS,
+        event: currentState.currentEvent,
+        sort: currentState.currentSort,
+        target: target
+      )
+
+      return .concat([
+        .just(.setTarget(target)),
+        .just(.hideDropdown),
+        .just(.setLoading(true)),
+        .just(.setProducts([])).delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
+        .just(.setProducts(updatedProducts)),
+        .just(.setLoading(false))
+      ])
 
     case .didTapDropdownSort(let sort):
+
+      let updatedProducts = Storage.shared.retrieve(
+        cvs: currentState.currentCVS,
+        event: currentState.currentEvent,
+        sort: sort,
+        target: currentState.currentTarget
+      )
+
       return .concat([
         .just(.setSort(sort)),
-        .just(.hideDropdown)
+        .just(.hideDropdown),
+        .just(.setLoading(true)),
+        .just(.setProducts([])).delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
+        .just(.setProducts(updatedProducts)),
+        .just(.setLoading(false))
       ])
     }
   }
@@ -111,9 +162,12 @@ final class BookmarkViewModel: ViewModel {
 
     case .setTarget(let text):
       nextState.currentTarget = text
-      
+
     case .setLoading(let isLoading):
       nextState.isLoading = isLoading
+
+    case .setProducts(let products):
+      nextState.currentProducts = products
     }
     return nextState
   }
