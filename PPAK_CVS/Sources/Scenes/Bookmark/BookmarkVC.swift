@@ -28,10 +28,10 @@ final class BookmarkViewController: BaseViewController, Viewable {
     )
   }
 
-  private lazy var sortDropdownView = SortDropdownView()
-  private lazy var cvsDropdownView = CVSDropdownView()
+  private let indicator = UIActivityIndicatorView()
+  private let sortDropdownView = SortDropdownView()
+  private let cvsDropdownView = CVSDropdownView()
   private var header: BookmarkCollectionHeaderView!
-  private let storage = Storage.shared
 
   // MARK: - Setup
 
@@ -57,8 +57,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
     [
       sortDropdownView,
       cvsDropdownView
-    ]
-      .forEach {
+    ].forEach {
       view.addSubview($0)
       $0.isHidden = true
     }
@@ -203,13 +202,17 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
     _ collectionView: UICollectionView,
     cellForItemAt indexPath: IndexPath
   ) -> UICollectionViewCell {
+    guard let products = viewModel?.currentState.currentProducts else {
+      return UICollectionViewCell()
+    }
+    
     guard let cell = collectionView.dequeueReusableCell(
       withReuseIdentifier: GoodsCell.id,
       for: indexPath
     ) as? GoodsCell else {
       return UICollectionViewCell()
     }
-    cell.updateCell(storage.products[indexPath.row])
+    cell.updateCell(products[indexPath.row])
 
     return cell
   }
@@ -218,7 +221,8 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
     _ collectionView: UICollectionView,
     numberOfItemsInSection section: Int
   ) -> Int {
-    return storage.products.count
+    guard let products = viewModel?.currentState.currentProducts else { return 0 }
+    return products.count
   }
 
   func collectionView(

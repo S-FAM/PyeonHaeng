@@ -63,7 +63,7 @@ final class BookmarkViewModel: ViewModel {
           .just(.setCVS(cvs)),
           .just(.hideDropdown)
         ])
-
+        
       case .setting:
         return .empty()
       }
