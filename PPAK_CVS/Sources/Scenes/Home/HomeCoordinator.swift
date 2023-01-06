@@ -18,11 +18,22 @@ final class HomeCoordinator: BaseCoordinator {
 
     // Bookmark VC
     viewModel.state
-      .map { $0.showBookmarkVC }
+      .map { $0.showsBookmarkVC }
       .filter { $0 }
       .withUnretained(self)
       .bind { owner, _ in
         let coordinator = BookmarkCoordinator(navigationController: owner.navigationController)
+        owner.start(childCoordinator: coordinator)
+      }
+      .disposed(by: disposeBag)
+
+    // ProductVC
+    viewModel.state
+      .map { $0.showsProductVC }
+      .filter { $0.0 }
+      .withUnretained(self)
+      .bind { owner, product in
+        let coordinator = ProductCoordinator(owner.navigationController, model: product.1)
         owner.start(childCoordinator: coordinator)
       }
       .disposed(by: disposeBag)
