@@ -14,6 +14,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
     $0.collectionViewLayout = UICollectionViewFlowLayout()
     $0.contentInsetAdjustmentBehavior = .never
     $0.bounces = false
+    $0.keyboardDismissMode = .onDrag
     $0.dataSource = self
     $0.delegate = self
     $0.register(
@@ -30,6 +31,14 @@ final class BookmarkViewController: BaseViewController, Viewable {
   private lazy var sortDropdownView = SortDropdownView()
   private lazy var cvsDropdownView = CVSDropdownView()
   private var header: BookmarkCollectionHeaderView!
+  private let storage = Storage.shared
+
+  // MARK: - LifeCycle
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    collectionView.reloadData()
+  }
 
   // MARK: - Setup
 
@@ -87,25 +96,25 @@ final class BookmarkViewController: BaseViewController, Viewable {
 
     // 뒤로 가기 버튼 클릭
     header.backButton.rx.tap
-      .map { BookmarkViewModel.Action.backButtonTapped }
+      .map { BookmarkViewModel.Action.didTapBackButton }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 현재 편의점 로고 버튼 클릭
     header.cvsButton.rx.tap
-      .map { BookmarkViewModel.Action.currentCVSButtonTapped }
+      .map { BookmarkViewModel.Action.didTapCVSButton }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 필터 버튼 클릭
     header.filterButton.rx.tap
-      .map { BookmarkViewModel.Action.filterButtonTapped }
+      .map { BookmarkViewModel.Action.didTapSortButton }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 편의점 드롭다운 리스트 버튼 클릭
     cvsDropdownView.buttonEventSubject
-      .map { BookmarkViewModel.Action.cvsButtonTappedInDropdown($0) }
+      .map { BookmarkViewModel.Action.didTapDropdownCVS($0) }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
@@ -133,48 +142,46 @@ final class BookmarkViewController: BaseViewController, Viewable {
 //      .bind(to: viewModel.action)
 //      .disposed(by: disposeBag)
 
-    // 빈공간 터치 감지
-    view.rx.tapGesture(configuration: { _, delegate in
-      delegate.simultaneousRecognitionPolicy = .never
-    })
-    .map { _ in BookmarkViewModel.Action.backgroundTapped }
-    .bind(to: viewModel.action)
-    .disposed(by: disposeBag)
-
     // MARK: - State
 
     // 편의점 로고 드롭다운 애니메이션 동작
     viewModel.state
-      .map { $0.isVisibleCVSDropdown }
-      .bind(onNext: { [unowned self] isVisible in
-        if isVisible {
-          cvsDropdownView.willAppearDropdown()
+      .map { $0.isHiddenCVSDropdown }
+      .distinctUntilChanged()
+      .withUnretained(self)
+      .bind { owner, isHidden in
+        if isHidden {
+          owner.cvsDropdownView.willDisappearDropdown()
         } else {
-          cvsDropdownView.willDisappearDropdown()
+          owner.cvsDropdownView.willAppearDropdown()
         }
-      })
+      }
       .disposed(by: disposeBag)
 
     // 필터 드롭다운 애니메이션 동작
     viewModel.state
-      .map { $0.isVisibleFilterDropdown }
-      .bind(onNext: { [unowned self] isVisible in
-        if isVisible {
-          sortDropdownView.willAppearDropdown()
+      .map { $0.isHiddenSortDropdown }
+      .distinctUntilChanged()
+      .withUnretained(self)
+      .bind { owner, isHidden in
+        if isHidden {
+          owner.sortDropdownView.willDisappearDropdown()
         } else {
-          sortDropdownView.willDisappearDropdown()
+          owner.sortDropdownView.willAppearDropdown()
         }
-      })
+      }
       .disposed(by: disposeBag)
 
     // 현재 편의점 타입 변경 반응
     viewModel.state
-      .compactMap { $0.currentCVSType }
-      .bind(onNext: { [weak self] in
-        self?.header.cvsButton.setImage($0.image, for: .normal)
-        self?.header.topCurveView.backgroundColor = $0.bgColor
-        self?.header.pageControl.focusedView.backgroundColor = $0.bgColor
-      })
+      .map { $0.currentCVS }
+      .withUnretained(self)
+      .bind { owner, cvs in
+        owner.header.cvsButton.setImage(cvs.image, for: .normal)
+        owner.header.topCurveView.backgroundColor = cvs.bgColor
+        owner.header.pageControl.focusedView.backgroundColor = cvs.bgColor
+        owner.view.backgroundColor = cvs.bgColor
+      }
       .disposed(by: disposeBag)
   }
 }
@@ -192,6 +199,8 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
     ) as? GoodsCell else {
       return UICollectionViewCell()
     }
+    cell.updateCell(storage.products[indexPath.row])
+
     return cell
   }
 
@@ -199,7 +208,7 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
     _ collectionView: UICollectionView,
     numberOfItemsInSection section: Int
   ) -> Int {
-    return 10
+    return storage.products.count
   }
 
   func collectionView(
@@ -247,13 +256,9 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
   ) -> CGSize {
     return .init(width: view.frame.width, height: 125)
   }
-}
 
-#if canImport(SwiftUI) && DEBUG
-import SwiftUI
-struct BookmarkVCPreView: PreviewProvider {
-  static var previews: some View {
-    BookmarkViewController().toPreview()
+  func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    sortDropdownView.willDisappearDropdown()
+    cvsDropdownView.willDisappearDropdown()
   }
 }
-#endif

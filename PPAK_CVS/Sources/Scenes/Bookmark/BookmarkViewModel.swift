@@ -10,24 +10,25 @@ final class BookmarkViewModel: ViewModel {
     case didTapDropdownCVS(CVSDropdownCase)
     case didTapDropdownSort(SortType)
   }
-  
+
   enum Mutation {
     case setCVSDropdown
     case setSortDropdown
-    case setHomeVC
+    case setHomeVC(Bool)
     case hideDropdown
     case setCVS(CVSType)
     case setSort(SortType)
     case setEvent(EventType)
   }
-  
+
   struct State {
     var isHiddenCVSDropdown: Bool = true
     var isHiddenSortDropdown: Bool = true
     var showsHomeVC: Bool = false
     var currentSort: SortType = .ascending
-    var currentCVS: CVSType? = .all
-    var currentEvent: Int = 0
+    var currentCVS: CVSType = .all
+    var currentEvent: EventType = .all
+    var currentProducts: [ProductModel] = Storage.shared.products
   }
 
   var initialState = State()
@@ -35,34 +36,39 @@ final class BookmarkViewModel: ViewModel {
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
     case .didTapCVSButton:
-      return Observable.just(.setCVSDropdown)
+      return .just(.setCVSDropdown)
 
     case .didTapSortButton:
-      return Observable.just(.setSortDropdown)
-      
+      return .just(.setSortDropdown)
+
     case .didTapBackButton:
-      return Observable.just(.setHomeVC)
-
-    case .didChangeEvent(let index):
-      return Observable.just(.onChnagedPageIndex(index))
-
-    case .didTapDropdownCVS(let cvsDropdownCase):
-      var newCvsType: CVSType?
-      switch cvsDropdownCase {
-      case .cvs(let cvsType):
-        newCvsType = cvsType
-      case .setting:
-        break // 셋팅 페이지로 가야할 곳
-      }
-      return Observable.concat([
-        Observable.just(.hideDropdown),
-        Observable.just(.setCVS(newCvsType))
+      return .concat([
+        .just(.setHomeVC(true)),
+        .just(.setHomeVC(false))
       ])
 
-    case .didTapDropdownSort(let filterDropdownCase):
-      return Observable.concat([
-        Observable.just(.setSort(filterDropdownCase)),
-        Observable.just(.hideDropdown)
+    case .didChangeEvent(let event):
+      return .concat([
+        .just(.setEvent(event)),
+        .just(.hideDropdown)
+      ])
+
+    case .didTapDropdownCVS(let cvsDropdownCase):
+      switch cvsDropdownCase {
+      case .cvs(let cvs):
+        return .concat([
+          .just(.setCVS(cvs)),
+          .just(.hideDropdown)
+        ])
+
+      case .setting:
+        return .empty()
+      }
+
+    case .didTapDropdownSort(let sort):
+      return .concat([
+        .just(.setSort(sort)),
+        .just(.hideDropdown)
       ])
     }
   }
@@ -77,12 +83,12 @@ final class BookmarkViewModel: ViewModel {
     case .setSortDropdown:
       nextState.isHiddenSortDropdown.toggle()
 
-    case .setHomeVC:
-      nextState.showsHomeVC = true
+    case .setHomeVC(let state):
+      nextState.showsHomeVC = state
 
     case .hideDropdown:
-      nextState.isHiddenSortDropdown = false
-      nextState.isHiddenCVSDropdown = false
+      nextState.isHiddenSortDropdown = true
+      nextState.isHiddenCVSDropdown = true
 
     case .setCVS(let cvsType):
       nextState.currentCVS = cvsType
@@ -90,8 +96,8 @@ final class BookmarkViewModel: ViewModel {
     case .setSort(let filterDropdownCase):
       nextState.currentSort = filterDropdownCase
 
-    case .setEvent(let index):
-      nextState.pageIndex = index
+    case .setEvent(let event):
+      nextState.currentEvent = event
     }
     return nextState
   }
