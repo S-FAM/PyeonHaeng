@@ -54,12 +54,18 @@ final class BookmarkViewController: BaseViewController, Viewable {
   }
 
   private func setupDropdown() {
+    view.addSubview(indicator)
+    
     [
       sortDropdownView,
       cvsDropdownView
     ].forEach {
       view.addSubview($0)
       $0.isHidden = true
+    }
+    
+    indicator.snp.makeConstraints { make in
+      make.center.equalToSuperview()
     }
 
     cvsDropdownView.snp.makeConstraints { make in
@@ -191,6 +197,12 @@ final class BookmarkViewController: BaseViewController, Viewable {
       .distinctUntilChanged()
       .withUnretained(self)
       .bind { $0.0.collectionView.reloadData() }
+      .disposed(by: disposeBag)
+    
+    // 로딩 중
+    viewModel.state
+      .map { $0.isLoading }
+      .bind(to: indicator.rx.isAnimating)
       .disposed(by: disposeBag)
   }
 }

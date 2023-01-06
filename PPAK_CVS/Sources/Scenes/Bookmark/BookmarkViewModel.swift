@@ -21,6 +21,7 @@ final class BookmarkViewModel: ViewModel {
     case setSort(SortType)
     case setEvent(EventType)
     case setTarget(String)
+    case setLoading(Bool)
   }
 
   struct State {
@@ -31,6 +32,7 @@ final class BookmarkViewModel: ViewModel {
     var currentCVS: CVSType = .all
     var currentEvent: EventType = .all
     var currentTarget: String = ""
+    var isLoading: Bool = false
     var currentProducts: [ProductModel] = Storage.shared.products
   }
 
@@ -109,6 +111,9 @@ final class BookmarkViewModel: ViewModel {
 
     case .setTarget(let text):
       nextState.currentTarget = text
+      
+    case .setLoading(let isLoading):
+      nextState.isLoading = isLoading
     }
     return nextState
   }
