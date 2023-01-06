@@ -9,6 +9,7 @@ final class BookmarkViewModel: ViewModel {
     case didChangeEvent(EventType)
     case didTapDropdownCVS(CVSDropdownCase)
     case didTapDropdownSort(SortType)
+    case didChangeSearchBarText(String)
   }
 
   enum Mutation {
@@ -19,6 +20,7 @@ final class BookmarkViewModel: ViewModel {
     case setCVS(CVSType)
     case setSort(SortType)
     case setEvent(EventType)
+    case setTarget(String)
   }
 
   struct State {
@@ -28,6 +30,7 @@ final class BookmarkViewModel: ViewModel {
     var currentSort: SortType = .ascending
     var currentCVS: CVSType = .all
     var currentEvent: EventType = .all
+    var currentTarget: String = ""
     var currentProducts: [ProductModel] = Storage.shared.products
   }
 
@@ -65,6 +68,9 @@ final class BookmarkViewModel: ViewModel {
         return .empty()
       }
 
+    case .didChangeSearchBarText(let target):
+      return .just(.setTarget(target))
+
     case .didTapDropdownSort(let sort):
       return .concat([
         .just(.setSort(sort)),
@@ -100,6 +106,9 @@ final class BookmarkViewModel: ViewModel {
 
     case .setEvent(let event):
       nextState.currentEvent = event
+
+    case .setTarget(let text):
+      nextState.currentTarget = text
     }
     return nextState
   }

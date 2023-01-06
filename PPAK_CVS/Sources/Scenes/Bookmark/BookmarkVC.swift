@@ -111,6 +111,15 @@ final class BookmarkViewController: BaseViewController, Viewable {
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
+    // 서치바 텍스트 반응
+    header.searchBar.textField.rx.controlEvent(.editingDidEndOnExit)
+      .withUnretained(self)
+      .map { $0.0.header.searchBar.textField.text }
+      .filterNil()
+      .map { BookmarkViewModel.Action.didChangeSearchBarText($0) }
+      .bind(to: viewModel.action)
+      .disposed(by: disposeBag)
+
     // 테스트 로직
     header.infoTouchView.rx.tapGesture()
       .skip(1)
@@ -127,7 +136,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
-    // 페이지 컨트롤 인덱스 감지
+    // 이벤트 감지
     header.pageControl.didChangeEvent
       .skip(1)
       .distinctUntilChanged()
@@ -175,6 +184,14 @@ final class BookmarkViewController: BaseViewController, Viewable {
         owner.header.pageControl.focusedView.backgroundColor = cvs.bgColor
         owner.view.backgroundColor = cvs.bgColor
       }
+      .disposed(by: disposeBag)
+
+    // 현재 상품 목록
+    viewModel.state
+      .map { $0.currentProducts }
+      .distinctUntilChanged()
+      .withUnretained(self)
+      .bind { $0.0.collectionView.reloadData() }
       .disposed(by: disposeBag)
   }
 }

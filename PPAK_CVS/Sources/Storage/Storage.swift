@@ -48,12 +48,12 @@ final class Storage {
     cvs: CVSType = .all,
     event: EventType = .all,
     sort: SortType = .none,
-    target: String? = nil
+    target: String = ""
   ) -> [ProductModel] {
     var newProducts: [ProductModel] = []
 
     newProducts = products
-      .filter { target == nil ? true : $0.name.contains(target!) }
+      .filter { target == "" ? true : $0.name.contains(target) }
       .filter { cvs == .all ? true : $0.store == cvs }
       .filter { event == .all ? true : $0.saleType == event }
       .sorted {
