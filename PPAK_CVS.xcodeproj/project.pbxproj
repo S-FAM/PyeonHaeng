@@ -284,7 +284,6 @@
 			children = (
 				A5F8288428DEB03A00C5D6A2 /* OnboardingCoordinator.swift */,
 				A5F8288128DEAE3C00C5D6A2 /* OnboardingVC.swift */,
-				A5F8288628DEB63D00C5D6A2 /* FTUXStorage.swift */,
 				A57D32E328EDBA0200944C7E /* OnboardingViewModel.swift */,
 			);
 			path = Onboarding;
@@ -345,10 +344,10 @@
 		BA27023528CF5F180039D9EA /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				E505D9F528CF5B4B00EEFC65 /* LaunchScreen.storyboard */,
+				BA27023028CF5DCD0039D9EA /* Coordinator.swift */,
 				BAA0F53028FCF88300B632AC /* BaseCoordinator.swift */,
 				BAA0580F28D36F75000CDD11 /* BaseViewController.swift */,
-				BA27023028CF5DCD0039D9EA /* Coordinator.swift */,
-				E505D9F528CF5B4B00EEFC65 /* LaunchScreen.storyboard */,
 				BA9EBC0F2949BBC600167970 /* TargetType.swift */,
 				BA1CCACA28FB01DE0002FD8C /* ViewModel.swift */,
 				BA1CCACC28FB9A450002FD8C /* Viewable.swift */,
@@ -444,6 +443,7 @@
 			isa = PBXGroup;
 			children = (
 				E50F851129589AFB008B7052 /* Storage.swift */,
+				A5F8288628DEB63D00C5D6A2 /* FTUXStorage.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";

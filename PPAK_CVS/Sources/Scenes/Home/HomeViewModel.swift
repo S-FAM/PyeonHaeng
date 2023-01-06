@@ -12,6 +12,7 @@ final class HomeViewModel: ViewModel {
     case dropdownCVSButtonDidTap(CVSDropdownCase)
     case dropdownFilterButtonDidTap(SortType)
     case didChangeSearchBar(String)
+    case didSelectItemAt(ProductModel)
     case fetchMoreData
   }
 
@@ -31,12 +32,14 @@ final class HomeViewModel: ViewModel {
     case resetProducts
     case appendProductes([ProductModel])
     case setPagination(Bool)
+    case setProductVC(Bool, ProductModel)
   }
 
   struct State {
     var isVisibleCVSDropdown: Bool = false
     var isVisibleFilterDropdown: Bool = false
-    var showBookmarkVC: Bool = false
+    var showsBookmarkVC: Bool = false
+    var showsProductVC: (Bool, ProductModel) = (false, .init(imageLink: nil, name: "", price: 0, store: .all, saleType: .all))
     var currentSortType: SortType = .none
     var currentEventType: EventType = .all
     var currentCVSType: CVSType = .all
@@ -85,7 +88,7 @@ final class HomeViewModel: ViewModel {
       ])
 
     case .bookmarkButtonDidTap:
-      guard currentState.showBookmarkVC == false else { return .empty() }
+      guard currentState.showsBookmarkVC == false else { return .empty() }
       return .concat([
         .just(.toggleShowBookmarkVC(true)),
         .just(.toggleShowBookmarkVC(false))
@@ -156,6 +159,12 @@ final class HomeViewModel: ViewModel {
           name: target
         )
       ])
+
+    case .didSelectItemAt(let product):
+      return .concat([
+        .just(.setProductVC(true, product)),
+        .just(.setProductVC(false, .init(imageLink: nil, name: "", price: 0, store: .all, saleType: .all)))
+      ])
     }
   }
 
@@ -183,7 +192,7 @@ final class HomeViewModel: ViewModel {
       nextState.isVisibleCVSDropdown = false
 
     case let .toggleShowBookmarkVC(isShowBookmarkVC):
-      nextState.showBookmarkVC = isShowBookmarkVC
+      nextState.showsBookmarkVC = isShowBookmarkVC
 
     case .setOffset:
       nextState.currentOffset += 20
@@ -208,6 +217,9 @@ final class HomeViewModel: ViewModel {
 
     case .setPagination(let isPagination):
       nextState.isPagination = isPagination
+
+    case let .setProductVC(state, product):
+      nextState.showsProductVC = (state, product)
     }
     return nextState
   }
