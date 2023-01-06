@@ -2,60 +2,51 @@ import RxSwift
 
 final class BookmarkViewModel: ViewModel {
 
-  enum FilterDropdownCase {
-    case ascending
-    case descending
-  }
-
   enum Action {
-    case currentCVSButtonTapped
-    case filterButtonTapped
-    case backButtonTapped
-    case backgroundTapped
-    case pageControlIndexEvent(Int)
-    case cvsButtonTappedInDropdown(CVSDropdownCase)
-    case filterButtonTappedInDropdown(FilterDropdownCase)
+    case didTapCVSButton
+    case didTapSortButton
+    case didTapBackButton
+    case didChangeEvent(EventType)
+    case didTapDropdownCVS(CVSDropdownCase)
+    case didTapDropdownSort(SortType)
   }
-
+  
   enum Mutation {
-    case toggleCVSDropdown
-    case toggleFilterDropdown
-    case toggleShowHomeVC
+    case setCVSDropdown
+    case setSortDropdown
+    case setHomeVC
     case hideDropdown
-    case onChangedCVSType(CVSType?)
-    case onChangedFilter(FilterDropdownCase)
-    case onChnagedPageIndex(Int)
+    case setCVS(CVSType)
+    case setSort(SortType)
+    case setEvent(EventType)
   }
-
+  
   struct State {
-    var isVisibleCVSDropdown: Bool = false
-    var isVisibleFilterDropdown: Bool = false
-    var showHomeVC: Bool = false
-    var currentFilter: FilterDropdownCase = .ascending
-    var currentCVSType: CVSType? = .all
-    var pageIndex: Int = 0
+    var isHiddenCVSDropdown: Bool = true
+    var isHiddenSortDropdown: Bool = true
+    var showsHomeVC: Bool = false
+    var currentSort: SortType = .ascending
+    var currentCVS: CVSType? = .all
+    var currentEvent: Int = 0
   }
 
   var initialState = State()
 
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
-    case .currentCVSButtonTapped:
-      return Observable.just(.toggleCVSDropdown)
+    case .didTapCVSButton:
+      return Observable.just(.setCVSDropdown)
 
-    case .filterButtonTapped:
-      return Observable.just(.toggleFilterDropdown)
+    case .didTapSortButton:
+      return Observable.just(.setSortDropdown)
+      
+    case .didTapBackButton:
+      return Observable.just(.setHomeVC)
 
-    case .backgroundTapped:
-      return Observable.just(.hideDropdown)
-
-    case .backButtonTapped:
-      return Observable.just(.toggleShowHomeVC)
-
-    case .pageControlIndexEvent(let index):
+    case .didChangeEvent(let index):
       return Observable.just(.onChnagedPageIndex(index))
 
-    case .cvsButtonTappedInDropdown(let cvsDropdownCase):
+    case .didTapDropdownCVS(let cvsDropdownCase):
       var newCvsType: CVSType?
       switch cvsDropdownCase {
       case .cvs(let cvsType):
@@ -65,12 +56,12 @@ final class BookmarkViewModel: ViewModel {
       }
       return Observable.concat([
         Observable.just(.hideDropdown),
-        Observable.just(.onChangedCVSType(newCvsType))
+        Observable.just(.setCVS(newCvsType))
       ])
 
-    case .filterButtonTappedInDropdown(let filterDropdownCase):
+    case .didTapDropdownSort(let filterDropdownCase):
       return Observable.concat([
-        Observable.just(.onChangedFilter(filterDropdownCase)),
+        Observable.just(.setSort(filterDropdownCase)),
         Observable.just(.hideDropdown)
       ])
     }
@@ -80,26 +71,26 @@ final class BookmarkViewModel: ViewModel {
     var nextState = state
 
     switch mutation {
-    case .toggleCVSDropdown:
-      nextState.isVisibleCVSDropdown.toggle()
+    case .setCVSDropdown:
+      nextState.isHiddenCVSDropdown.toggle()
 
-    case .toggleFilterDropdown:
-      nextState.isVisibleFilterDropdown.toggle()
+    case .setSortDropdown:
+      nextState.isHiddenSortDropdown.toggle()
 
-    case .toggleShowHomeVC:
-      nextState.showHomeVC = true
+    case .setHomeVC:
+      nextState.showsHomeVC = true
 
     case .hideDropdown:
-      nextState.isVisibleFilterDropdown = false
-      nextState.isVisibleCVSDropdown = false
+      nextState.isHiddenSortDropdown = false
+      nextState.isHiddenCVSDropdown = false
 
-    case .onChangedCVSType(let cvsType):
-      nextState.currentCVSType = cvsType
+    case .setCVS(let cvsType):
+      nextState.currentCVS = cvsType
 
-    case .onChangedFilter(let filterDropdownCase):
-      nextState.currentFilter = filterDropdownCase
+    case .setSort(let filterDropdownCase):
+      nextState.currentSort = filterDropdownCase
 
-    case .onChnagedPageIndex(let index):
+    case .setEvent(let index):
       nextState.pageIndex = index
     }
     return nextState
