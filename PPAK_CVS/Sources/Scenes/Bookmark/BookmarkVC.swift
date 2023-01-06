@@ -33,13 +33,6 @@ final class BookmarkViewController: BaseViewController, Viewable {
   private var header: BookmarkCollectionHeaderView!
   private let storage = Storage.shared
 
-  // MARK: - LifeCycle
-
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    collectionView.reloadData()
-  }
-
   // MARK: - Setup
 
   override func setupStyles() {

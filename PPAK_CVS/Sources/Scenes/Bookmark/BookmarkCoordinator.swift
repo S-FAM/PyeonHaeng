@@ -18,7 +18,7 @@ final class BookmarkCoordinator: BaseCoordinator {
 
     // BookmarkVC -> HomeVC
     viewModel.state
-      .map { $0.showHomeVC }
+      .map { $0.showsHomeVC }
       .filter { $0 }
       .bind(onNext: { [unowned self] _ in
         self.toHomeVC()

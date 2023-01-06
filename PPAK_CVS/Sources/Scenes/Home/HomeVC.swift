@@ -140,7 +140,7 @@ final class HomeViewController: BaseViewController, Viewable {
       .map { HomeViewModel.Action.didChangeSearchBar($0) }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
-
+    
     // MARK: - State
 
     // 편의점 로고 드롭다운 애니메이션 동작
