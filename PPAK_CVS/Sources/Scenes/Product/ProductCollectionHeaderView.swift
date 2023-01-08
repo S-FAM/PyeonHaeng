@@ -38,21 +38,10 @@ final class ProductCollectionHeaderView: UICollectionReusableView, Viewable {
     $0.text = "1,500원"
   }
 
-  private let priceDiscriptionLabel = UILabel().then {
-    $0.font = Font.priceDescriptionLabel
-    $0.text = "(개당 750원)"
-  }
-
   private let previousHistoryLabel = UILabel().then {
     $0.font = Font.previousHistoryLabel
     $0.text = "이전 행사 내역"
     $0.textColor = .white
-  }
-
-  private let priceStackView = UIStackView().then {
-    $0.axis = .horizontal
-    $0.alignment = .center
-    $0.spacing = 3
   }
 
   private let wholeStackView = UIStackView().then {
@@ -89,11 +78,7 @@ extension ProductCollectionHeaderView {
     }
 
     // == stackViews ==
-    [priceLabel, priceDiscriptionLabel].forEach {
-      priceStackView.addArrangedSubview($0)
-    }
-
-    [productImageView, nameLabel, priceStackView].forEach {
+    [productImageView, nameLabel, priceLabel].forEach {
       wholeStackView.addArrangedSubview($0)
     }
 
@@ -148,8 +133,7 @@ extension ProductCollectionHeaderView {
     let multiply = model.saleType == .onePlusOne ? 1 : 2
 
     nameLabel.text = model.name
-    priceLabel.text = "\(model.price.commaRepresentation)원"
-    priceDiscriptionLabel.text = "(개당 \(Int(model.price / discount * multiply).commaRepresentation)원)"
+    priceLabel.text = "\(model.price.commaRepresentation)원(개당 \(Int(model.price / discount * multiply).commaRepresentation)원)"
 
     productImageView.kf.setImage(with: URL(string: model.imageLink ?? ""))
 
@@ -164,8 +148,6 @@ extension ProductCollectionHeaderView {
   private enum Font {
     static let nameLabel = UIFont.appFont(family: .bold, size: 18)
     static let priceLabel = UIFont.appFont(family: .regular, size: 15)
-    static let priceDescriptionLabel = UIFont.systemFont(ofSize: 16, weight: .regular)
-
     static let previousHistoryLabel = UIFont.appFont(family: .bold, size: 14)
   }
 
