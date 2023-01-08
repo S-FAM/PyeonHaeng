@@ -162,11 +162,11 @@ extension ProductCollectionHeaderView {
 extension ProductCollectionHeaderView {
 
   private enum Font {
-    static let nameLabel = UIFont.boldSystemFont(ofSize: 20)
-    static let priceLabel = UIFont.systemFont(ofSize: 20, weight: .medium)
+    static let nameLabel = UIFont.appFont(family: .bold, size: 18)
+    static let priceLabel = UIFont.appFont(family: .regular, size: 15)
     static let priceDescriptionLabel = UIFont.systemFont(ofSize: 16, weight: .regular)
 
-    static let previousHistoryLabel = UIFont.boldSystemFont(ofSize: 16)
+    static let previousHistoryLabel = UIFont.appFont(family: .bold, size: 14)
   }
 
   private enum Inset {
