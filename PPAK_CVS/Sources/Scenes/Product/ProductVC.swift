@@ -110,8 +110,8 @@ final class ProductViewController: BaseViewController, Viewable {
     }
 
     collectionView.snp.makeConstraints { make in
-      make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
       make.top.equalTo(navigationHeaderBarView.snp.bottom)
+      make.horizontalEdges.bottom.equalToSuperview()
     }
   }
 
