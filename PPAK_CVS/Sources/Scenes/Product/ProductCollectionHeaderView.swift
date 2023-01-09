@@ -18,12 +18,6 @@ final class ProductCollectionHeaderView: UICollectionReusableView, Viewable {
 
   var disposeBag = DisposeBag()
 
-  private let shareButton = UIButton().then {
-    var configuration = UIButton.Configuration.plain()
-    configuration.image = UIImage(systemName: "square.and.arrow.up")
-    $0.configuration = configuration
-  }
-
   private let productImageView = UIImageView().then {
     $0.contentMode = .scaleAspectFit
   }
@@ -38,21 +32,10 @@ final class ProductCollectionHeaderView: UICollectionReusableView, Viewable {
     $0.text = "1,500원"
   }
 
-  private let priceDiscriptionLabel = UILabel().then {
-    $0.font = Font.priceDescriptionLabel
-    $0.text = "(개당 750원)"
-  }
-
   private let previousHistoryLabel = UILabel().then {
     $0.font = Font.previousHistoryLabel
     $0.text = "이전 행사 내역"
     $0.textColor = .white
-  }
-
-  private let priceStackView = UIStackView().then {
-    $0.axis = .horizontal
-    $0.alignment = .center
-    $0.spacing = 3
   }
 
   private let wholeStackView = UIStackView().then {
@@ -84,16 +67,12 @@ extension ProductCollectionHeaderView {
   private func setupLayouts() {
 
     // == views ==
-    [shareButton, wholeStackView, curveView].forEach {
+    [wholeStackView, curveView].forEach {
       addSubview($0)
     }
 
     // == stackViews ==
-    [priceLabel, priceDiscriptionLabel].forEach {
-      priceStackView.addArrangedSubview($0)
-    }
-
-    [productImageView, nameLabel, priceStackView].forEach {
+    [productImageView, nameLabel, priceLabel].forEach {
       wholeStackView.addArrangedSubview($0)
     }
 
@@ -102,13 +81,9 @@ extension ProductCollectionHeaderView {
   }
 
   private func setupConstraints() {
-    shareButton.snp.makeConstraints { make in
-      make.trailing.top.equalToSuperview().inset(Inset.shareButton)
-    }
-
     wholeStackView.snp.makeConstraints { make in
       make.centerX.equalToSuperview()
-      make.top.equalToSuperview().inset(Inset.StackView.top)
+      make.top.equalToSuperview().inset(Inset.stackViewTop)
     }
 
     curveView.snp.makeConstraints { make in
@@ -117,12 +92,14 @@ extension ProductCollectionHeaderView {
     }
 
     productImageView.snp.makeConstraints { make in
-      make.width.height.equalTo(240)
+      make.size.equalTo(150)
     }
 
     previousHistoryLabel.snp.makeConstraints { make in
       make.bottom.trailing.equalToSuperview().inset(Inset.previousHistoryLabel)
     }
+
+    wholeStackView.setCustomSpacing(16, after: productImageView)
   }
 
   private func setupStyles() {
@@ -130,26 +107,17 @@ extension ProductCollectionHeaderView {
   }
 
   func bind(viewModel: ProductHeaderViewViewModel) {
-    // == Action ==
-    shareButton.rx.tap
-      .map { [unowned self] in
-        let renderer = UIGraphicsImageRenderer(bounds: self.wholeStackView.bounds)
-        return renderer.image { rendererContext in
-          self.wholeStackView.layer.render(in: rendererContext.cgContext)
-        }
-      }
-      .map { ViewModel.Action.share($0) }
-      .bind(to: viewModel.action)
-      .disposed(by: disposeBag)
+
   }
 
   func configureUI(with model: ProductModel) {
     let discount = model.saleType == .onePlusOne ? 2 : 3
     let multiply = model.saleType == .onePlusOne ? 1 : 2
 
+    let unitPrice = Int(model.price / discount * multiply).commaRepresentation
+
     nameLabel.text = model.name
-    priceLabel.text = "\(model.price.commaRepresentation)원"
-    priceDiscriptionLabel.text = "(개당 \(Int(model.price / discount * multiply).commaRepresentation)원)"
+    priceLabel.text = "\(model.price.commaRepresentation)원(개당 \(unitPrice)원)"
 
     productImageView.kf.setImage(with: URL(string: model.imageLink ?? ""))
 
@@ -162,23 +130,19 @@ extension ProductCollectionHeaderView {
 extension ProductCollectionHeaderView {
 
   private enum Font {
-    static let nameLabel = UIFont.boldSystemFont(ofSize: 20)
-    static let priceLabel = UIFont.systemFont(ofSize: 20, weight: .medium)
-    static let priceDescriptionLabel = UIFont.systemFont(ofSize: 16, weight: .regular)
-
-    static let previousHistoryLabel = UIFont.boldSystemFont(ofSize: 16)
+    static let nameLabel = UIFont.appFont(family: .bold, size: 18)
+    static let priceLabel = UIFont.appFont(family: .regular, size: 15)
+    static let previousHistoryLabel = UIFont.appFont(family: .bold, size: 14)
   }
 
   private enum Inset {
 
     static let shareButton = 5
 
-    static let previousHistoryLabel = 10
+    static let previousHistoryLabel = 20
 
     static let curveView = 10
 
-    enum StackView {
-      static let top = 10
-    }
+    static let stackViewTop = 25
   }
 }
