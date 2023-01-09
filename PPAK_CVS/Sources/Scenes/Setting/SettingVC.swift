@@ -209,4 +209,10 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
       }
       return model
   }
+
+  /// after sending mail
+  func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+    dismiss(animated: true)
+  }
+
 }
