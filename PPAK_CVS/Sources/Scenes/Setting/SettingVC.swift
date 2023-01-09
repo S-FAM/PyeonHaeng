@@ -5,6 +5,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import RxGesture
+import MessageUI
 
 final class SettingViewController: BaseViewController, Viewable {
 
@@ -108,5 +109,30 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     return 60
   }
 
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { }
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+    print("click: \(indexPath.row)")
+
+    if indexPath.row == 3 {
+      sendMail()
+    }
+  }
+}
+
+// MARK: Send Mail
+extension SettingViewController: MFMailComposeViewControllerDelegate {
+
+  /// 메일보내기 기능
+  func sendMail() {
+    if MFMailComposeViewController.canSendMail() {
+      let mailComposeVC = MFMailComposeViewController()
+      mailComposeVC.mailComposeDelegate = self
+      mailComposeVC.setToRecipients(["bang.hyeonseok.dev@gmail.com"])
+      mailComposeVC.setSubject("<편행> 문의하기")
+      mailComposeVC.setMessageBody(bodyString(), isHTML: false)
+      present(mailComposeVC, animated: true)
+    } else {
+      failAlertVC()
+    }
+  }
 }
