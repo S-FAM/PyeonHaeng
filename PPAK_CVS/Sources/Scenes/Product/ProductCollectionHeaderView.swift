@@ -92,7 +92,7 @@ extension ProductCollectionHeaderView {
     }
 
     productImageView.snp.makeConstraints { make in
-      make.width.height.equalTo(240)
+      make.size.equalTo(150)
     }
 
     previousHistoryLabel.snp.makeConstraints { make in
