@@ -30,10 +30,10 @@ final class HomeCoordinator: BaseCoordinator {
     // ProductVC
     viewModel.state
       .map { $0.showsProductVC }
-      .distinctUntilChanged()
+      .filter { $0.0 }
       .withUnretained(self)
       .bind { owner, product in
-        let coordinator = ProductCoordinator(owner.navigationController, model: product)
+        let coordinator = ProductCoordinator(owner.navigationController, model: product.1)
         owner.start(childCoordinator: coordinator)
       }
       .disposed(by: disposeBag)
