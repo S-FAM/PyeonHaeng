@@ -163,4 +163,50 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
       }
     }
   }
+
+  /// mail default contents
+  func bodyString() -> String {
+    return """
+           이곳에 내용을 작성해주세요.
+
+           -------------------
+
+           Device Model : \(getDeviceIdentifier())
+           Device OS    : \(UIDevice.current.systemVersion)
+           App Version  : \(getCurrentVersion())
+
+           -------------------
+           """
+  }
+
+  /// 앱 버전을 가져오는 함수
+  func getCurrentVersion() -> String {
+    guard let dictionary = Bundle.main.infoDictionary,
+          let version = dictionary["CFBundleShortVersionString"] as? String else { return "" }
+
+    return version
+  }
+
+  /// 기종을 가져오는 함수
+  func getDeviceIdentifier() -> String {
+    var systemInfo = utsname()
+    uname(&systemInfo)
+    let machineMirror = Mirror(reflecting: systemInfo.machine)
+    let identifier = machineMirror.children.reduce("") { identifier, element in
+      guard let value = element.value as? Int8, value != 0 else { return identifier }
+      return identifier + String(UnicodeScalar(UInt8(value)))
+    }
+    return identifier
+  }
+
+  func getModel() -> String {
+      var systemInfo = utsname()
+      uname(&systemInfo)
+      let machineMirror = Mirror(reflecting: systemInfo.machine)
+      let model = machineMirror.children.reduce("") { identifier, element in
+          guard let value = element.value as? Int8, value != 0 else { return identifier }
+          return identifier + String(UnicodeScalar(UInt8(value)))
+      }
+      return model
+  }
 }
