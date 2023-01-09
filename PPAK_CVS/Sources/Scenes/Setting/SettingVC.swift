@@ -5,6 +5,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import RxGesture
+import MessageUI
 
 final class SettingViewController: BaseViewController, Viewable {
 
@@ -108,5 +109,110 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     return 60
   }
 
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { }
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+    print("click: \(indexPath.row)")
+
+    if indexPath.row == 3 {
+      sendMail()
+    }
+  }
+}
+
+// MARK: Send Mail
+extension SettingViewController: MFMailComposeViewControllerDelegate {
+
+  /// 메일보내기 기능
+  private func sendMail() {
+    if MFMailComposeViewController.canSendMail() {
+      let mailComposeVC = MFMailComposeViewController()
+      mailComposeVC.mailComposeDelegate = self
+      mailComposeVC.setToRecipients(["bang.hyeonseok.dev@gmail.com"])
+      mailComposeVC.setSubject("<편행> 문의하기")
+      mailComposeVC.setMessageBody(bodyString(), isHTML: false)
+      present(mailComposeVC, animated: true)
+    } else {
+      failAlertVC()
+    }
+  }
+
+  /// 전송실패 메세지 얼럿
+  private func failAlertVC() {
+    let title = Message.sendMailFail
+    let message = Message.retry
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+    let close = UIAlertAction(title: Message.cancel, style: .cancel)
+    let move = UIAlertAction(title: Message.moveAppStore, style: .default) { [weak self] _ in
+      self?.moveToAppStore()
+    }
+
+    [move, close].forEach { alert.addAction($0) }
+    present(alert, animated: true)
+  }
+
+  // TODO: 앱스토어 링크 수정필요
+  /// 앱스토어로 이동시키는 함수
+  private func moveToAppStore() {
+    if let url = URL(string: Configs.appStoreURL),
+        UIApplication.shared.canOpenURL(url) {
+      if #available(iOS 10.0, *) {
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+      } else {
+        UIApplication.shared.openURL(url)
+      }
+    }
+  }
+
+  /// mail default contents
+  private func bodyString() -> String {
+    return """
+           이곳에 내용을 작성해주세요.
+
+           -------------------
+
+           Device Model : \(getDeviceIdentifier())
+           Device OS    : \(UIDevice.current.systemVersion)
+           App Version  : \(getCurrentVersion())
+
+           -------------------
+           """
+  }
+
+  /// 앱 버전을 가져오는 함수
+  private func getCurrentVersion() -> String {
+    guard let dictionary = Bundle.main.infoDictionary,
+          let version = dictionary["CFBundleShortVersionString"] as? String else { return "" }
+
+    return version
+  }
+
+  /// 기종을 가져오는 함수
+  private func getDeviceIdentifier() -> String {
+    var systemInfo = utsname()
+    uname(&systemInfo)
+    let machineMirror = Mirror(reflecting: systemInfo.machine)
+    let identifier = machineMirror.children.reduce("") { identifier, element in
+      guard let value = element.value as? Int8, value != 0 else { return identifier }
+      return identifier + String(UnicodeScalar(UInt8(value)))
+    }
+    return identifier
+  }
+
+  private func getModel() -> String {
+      var systemInfo = utsname()
+      uname(&systemInfo)
+      let machineMirror = Mirror(reflecting: systemInfo.machine)
+      let model = machineMirror.children.reduce("") { identifier, element in
+          guard let value = element.value as? Int8, value != 0 else { return identifier }
+          return identifier + String(UnicodeScalar(UInt8(value)))
+      }
+      return model
+  }
+
+  /// after sending mail
+  func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+    dismiss(animated: true)
+  }
+
 }
