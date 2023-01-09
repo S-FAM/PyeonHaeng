@@ -19,5 +19,5 @@ struct Message {
 
 struct Configs {
 
-  static let appStoreUrl = "https://apps.apple.com/kr/app/mail/id362057947"
+  static let appStoreURL = "https://apps.apple.com/kr/app/mail/id362057947"
 }
