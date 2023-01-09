@@ -5,20 +5,21 @@ final class HomeViewModel: ViewModel {
 
   enum Action {
     case viewDidLoad
-    case currentCVSButtonDidTap
-    case filterButtonDidTap
-    case bookmarkButtonDidTap
-    case pageControlIndexDidChange(EventType)
-    case dropdownCVSButtonDidTap(CVSDropdownCase)
-    case dropdownFilterButtonDidTap(SortType)
-    case didChangeSearchBar(String)
+    case didTapCVSButton
+    case didTapSortButton
+    case didTapBookmarkButton
+    case didChangeEvent(EventType)
+    case didTapDropdownCVS(CVSDropdownCase)
+    case didTapDropdownSort(SortType)
+    case didChangeSearchBarText(String)
+    case didSelectItemAt(ProductModel)
     case fetchMoreData
   }
 
   enum Mutation {
     case setCVSDropdown(Bool)
     case setFilterDropdown(Bool)
-    case toggleShowBookmarkVC(Bool)
+    case setBookmarkVC(Bool)
     case hideDropdown
     case setCVS(CVSType)
     case setSort(SortType)
@@ -31,12 +32,14 @@ final class HomeViewModel: ViewModel {
     case resetProducts
     case appendProductes([ProductModel])
     case setPagination(Bool)
+    case setProductVC(ProductModel)
   }
 
   struct State {
     var isVisibleCVSDropdown: Bool = false
     var isVisibleFilterDropdown: Bool = false
-    var showBookmarkVC: Bool = false
+    var showsBookmarkVC: Bool = false
+    var showsProductVC: ProductModel = .init(imageLink: nil, name: "", price: 0, store: .all, saleType: .all)
     var currentSortType: SortType = .none
     var currentEventType: EventType = .all
     var currentCVSType: CVSType = .all
@@ -70,28 +73,28 @@ final class HomeViewModel: ViewModel {
         .delay(.seconds(1), scheduler: MainScheduler.instance)
       ])
 
-    case .currentCVSButtonDidTap:
+    case .didTapCVSButton:
       let isVisible = currentState.isVisibleCVSDropdown
       return .concat([
         .just(.setCVSDropdown(!isVisible)),
         .just(.setFilterDropdown(false))
       ])
 
-    case .filterButtonDidTap:
+    case .didTapSortButton:
       let isVisible = currentState.isVisibleFilterDropdown
       return .concat([
         .just(.setFilterDropdown(!isVisible)),
         .just(.setCVSDropdown(false))
       ])
 
-    case .bookmarkButtonDidTap:
-      guard currentState.showBookmarkVC == false else { return .empty() }
+    case .didTapBookmarkButton:
+      guard currentState.showsBookmarkVC == false else { return .empty() }
       return .concat([
-        .just(.toggleShowBookmarkVC(true)),
-        .just(.toggleShowBookmarkVC(false))
+        .just(.setBookmarkVC(true)),
+        .just(.setBookmarkVC(false))
       ])
 
-    case .pageControlIndexDidChange(let event):
+    case .didChangeEvent(let event):
       return .concat([
         .just(.setLoading(true)),
         .just(.setEvent(event)),
@@ -106,7 +109,7 @@ final class HomeViewModel: ViewModel {
         )
       ])
 
-    case .dropdownCVSButtonDidTap(let cvsDropdownCase):
+    case .didTapDropdownCVS(let cvsDropdownCase):
       switch cvsDropdownCase {
       case .cvs(let cvsType):
         return .concat([
@@ -127,7 +130,7 @@ final class HomeViewModel: ViewModel {
         return .just(.hideDropdown)
       }
 
-    case .dropdownFilterButtonDidTap(let sortType):
+    case .didTapDropdownSort(let sortType):
       return .concat([
         .just(.setLoading(true)),
         .just(.hideDropdown),
@@ -142,7 +145,7 @@ final class HomeViewModel: ViewModel {
         )
       ])
 
-    case .didChangeSearchBar(let target):
+    case .didChangeSearchBarText(let target):
       return .concat([
         .just(.setLoading(true)),
         .just(.resetProducts),
@@ -156,6 +159,9 @@ final class HomeViewModel: ViewModel {
           name: target
         )
       ])
+
+    case .didSelectItemAt(let product):
+      return .just(.setProductVC(product))
     }
   }
 
@@ -182,8 +188,8 @@ final class HomeViewModel: ViewModel {
       nextState.isVisibleFilterDropdown = false
       nextState.isVisibleCVSDropdown = false
 
-    case let .toggleShowBookmarkVC(isShowBookmarkVC):
-      nextState.showBookmarkVC = isShowBookmarkVC
+    case let .setBookmarkVC(isShowBookmarkVC):
+      nextState.showsBookmarkVC = isShowBookmarkVC
 
     case .setOffset:
       nextState.currentOffset += 20
@@ -208,6 +214,9 @@ final class HomeViewModel: ViewModel {
 
     case .setPagination(let isPagination):
       nextState.isPagination = isPagination
+
+    case .setProductVC(let product):
+      nextState.showsProductVC = product
     }
     return nextState
   }

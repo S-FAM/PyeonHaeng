@@ -90,7 +90,7 @@
 		E580BF2328E0646200BE7ADC /* GoodsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E580BF2228E0646200BE7ADC /* GoodsCell.swift */; };
 		E580BF2528E0649E00BE7ADC /* HomeCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E580BF2428E0649E00BE7ADC /* HomeCollectionHeaderView.swift */; };
 		E59041DE2928FB8100135ECA /* SaleTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59041DD2928FB8100135ECA /* SaleTypeView.swift */; };
-		E5A877C028D4A34D002A2402 /* PageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A877BF28D4A34D002A2402 /* PageControl.swift */; };
+		E5A877C028D4A34D002A2402 /* EventControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A877BF28D4A34D002A2402 /* EventControl.swift */; };
 		E5B249C32962CB6400081609 /* BookmarkPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B249C22962CB6400081609 /* BookmarkPopup.swift */; };
 		E5B9965728E2872A00E39566 /* CVSDropdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B9965628E2872A00E39566 /* CVSDropdownView.swift */; };
 		E5B9965B28E2A16D00E39566 /* SortDropdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B9965A28E2A16D00E39566 /* SortDropdownView.swift */; };
@@ -175,7 +175,7 @@
 		E580BF2228E0646200BE7ADC /* GoodsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodsCell.swift; sourceTree = "<group>"; };
 		E580BF2428E0649E00BE7ADC /* HomeCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionHeaderView.swift; sourceTree = "<group>"; };
 		E59041DD2928FB8100135ECA /* SaleTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaleTypeView.swift; sourceTree = "<group>"; };
-		E5A877BF28D4A34D002A2402 /* PageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControl.swift; sourceTree = "<group>"; };
+		E5A877BF28D4A34D002A2402 /* EventControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventControl.swift; sourceTree = "<group>"; };
 		E5B249C22962CB6400081609 /* BookmarkPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkPopup.swift; sourceTree = "<group>"; };
 		E5B9965628E2872A00E39566 /* CVSDropdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVSDropdownView.swift; sourceTree = "<group>"; };
 		E5B9965A28E2A16D00E39566 /* SortDropdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortDropdownView.swift; sourceTree = "<group>"; };
@@ -284,7 +284,6 @@
 			children = (
 				A5F8288428DEB03A00C5D6A2 /* OnboardingCoordinator.swift */,
 				A5F8288128DEAE3C00C5D6A2 /* OnboardingVC.swift */,
-				A5F8288628DEB63D00C5D6A2 /* FTUXStorage.swift */,
 				A57D32E328EDBA0200944C7E /* OnboardingViewModel.swift */,
 			);
 			path = Onboarding;
@@ -345,10 +344,10 @@
 		BA27023528CF5F180039D9EA /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				E505D9F528CF5B4B00EEFC65 /* LaunchScreen.storyboard */,
+				BA27023028CF5DCD0039D9EA /* Coordinator.swift */,
 				BAA0F53028FCF88300B632AC /* BaseCoordinator.swift */,
 				BAA0580F28D36F75000CDD11 /* BaseViewController.swift */,
-				BA27023028CF5DCD0039D9EA /* Coordinator.swift */,
-				E505D9F528CF5B4B00EEFC65 /* LaunchScreen.storyboard */,
 				BA9EBC0F2949BBC600167970 /* TargetType.swift */,
 				BA1CCACA28FB01DE0002FD8C /* ViewModel.swift */,
 				BA1CCACC28FB9A450002FD8C /* Viewable.swift */,
@@ -372,7 +371,7 @@
 			children = (
 				E5467E4928D45DF40031B785 /* TopCurveView.swift */,
 				E5467E4B28D45DFE0031B785 /* BottomCurveView.swift */,
-				E5A877BF28D4A34D002A2402 /* PageControl.swift */,
+				E5A877BF28D4A34D002A2402 /* EventControl.swift */,
 				E55BEBE028D6A82400804FCB /* SearchBar.swift */,
 				E580BF2228E0646200BE7ADC /* GoodsCell.swift */,
 				9C798F8928EAE9DA00FE250C /* TitleLogoView.swift */,
@@ -444,6 +443,7 @@
 			isa = PBXGroup;
 			children = (
 				E50F851129589AFB008B7052 /* Storage.swift */,
+				A5F8288628DEB63D00C5D6A2 /* FTUXStorage.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -623,7 +623,7 @@
 				E54D9C4228F1A18100D028B2 /* BookmarkCollectionHeaderView.swift in Sources */,
 				E505D9EF28CF5B4A00EEFC65 /* HomeVC.swift in Sources */,
 				9C07AE832934D763002CFE3F /* SettingTableViewCell.swift in Sources */,
-				E5A877C028D4A34D002A2402 /* PageControl.swift in Sources */,
+				E5A877C028D4A34D002A2402 /* EventControl.swift in Sources */,
 				E5B9965728E2872A00E39566 /* CVSDropdownView.swift in Sources */,
 				BA343AB12963139900DE8016 /* Int+.swift in Sources */,
 				BAD70BDA291A594F00C39863 /* RequestTypeModel.swift in Sources */,

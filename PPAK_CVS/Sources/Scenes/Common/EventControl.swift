@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import RxGesture
 
-final class PageControl: UIControl {
+final class EventControl: UIControl {
 
   // MARK: - Properties
 
@@ -27,7 +27,7 @@ final class PageControl: UIControl {
     }
   }
 
-  let pageIndexSubject = BehaviorRelay<EventType>(value: .all)
+  let didChangeEvent = BehaviorRelay<EventType>(value: .all)
   let disposeBag = DisposeBag()
 
   // MARK: - Init
@@ -106,20 +106,20 @@ final class PageControl: UIControl {
 
     onePlusLabel.rx.tapGesture()
       .map { _ in .onePlusOne }
-      .bind(to: pageIndexSubject)
+      .bind(to: didChangeEvent)
       .disposed(by: disposeBag)
 
     twoPlusLabel.rx.tapGesture()
       .map { _ in .twoPlusOne }
-      .bind(to: pageIndexSubject)
+      .bind(to: didChangeEvent)
       .disposed(by: disposeBag)
 
     allLabel.rx.tapGesture()
       .map { _ in .all }
-      .bind(to: pageIndexSubject)
+      .bind(to: didChangeEvent)
       .disposed(by: disposeBag)
 
-    pageIndexSubject
+    didChangeEvent
       .bind(onNext: { [unowned self] event in
         let index: Int
         switch event {
