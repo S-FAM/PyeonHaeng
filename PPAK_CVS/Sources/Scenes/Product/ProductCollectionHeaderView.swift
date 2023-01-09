@@ -139,7 +139,7 @@ extension ProductCollectionHeaderView {
 
     static let shareButton = 5
 
-    static let previousHistoryLabel = 10
+    static let previousHistoryLabel = 20
 
     static let curveView = 10
 
