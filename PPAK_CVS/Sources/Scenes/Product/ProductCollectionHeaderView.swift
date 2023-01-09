@@ -18,12 +18,6 @@ final class ProductCollectionHeaderView: UICollectionReusableView, Viewable {
 
   var disposeBag = DisposeBag()
 
-  private let shareButton = UIButton().then {
-    var configuration = UIButton.Configuration.plain()
-    configuration.image = UIImage(systemName: "square.and.arrow.up")
-    $0.configuration = configuration
-  }
-
   private let productImageView = UIImageView().then {
     $0.contentMode = .scaleAspectFit
   }
@@ -73,7 +67,7 @@ extension ProductCollectionHeaderView {
   private func setupLayouts() {
 
     // == views ==
-    [shareButton, wholeStackView, curveView].forEach {
+    [wholeStackView, curveView].forEach {
       addSubview($0)
     }
 
@@ -87,10 +81,6 @@ extension ProductCollectionHeaderView {
   }
 
   private func setupConstraints() {
-    shareButton.snp.makeConstraints { make in
-      make.trailing.top.equalToSuperview().inset(Inset.shareButton)
-    }
-
     wholeStackView.snp.makeConstraints { make in
       make.centerX.equalToSuperview()
       make.top.equalToSuperview().inset(Inset.StackView.top)
@@ -115,17 +105,7 @@ extension ProductCollectionHeaderView {
   }
 
   func bind(viewModel: ProductHeaderViewViewModel) {
-    // == Action ==
-    shareButton.rx.tap
-      .map { [unowned self] in
-        let renderer = UIGraphicsImageRenderer(bounds: self.wholeStackView.bounds)
-        return renderer.image { rendererContext in
-          self.wholeStackView.layer.render(in: rendererContext.cgContext)
-        }
-      }
-      .map { ViewModel.Action.share($0) }
-      .bind(to: viewModel.action)
-      .disposed(by: disposeBag)
+
   }
 
   func configureUI(with model: ProductModel) {
