@@ -123,7 +123,7 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
 extension SettingViewController: MFMailComposeViewControllerDelegate {
 
   /// 메일보내기 기능
-  func sendMail() {
+  private func sendMail() {
     if MFMailComposeViewController.canSendMail() {
       let mailComposeVC = MFMailComposeViewController()
       mailComposeVC.mailComposeDelegate = self
@@ -137,7 +137,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
   }
 
   /// 전송실패 메세지 얼럿
-  func failAlertVC() {
+  private func failAlertVC() {
     let title = Message.sendMailFail
     let message = Message.retry
     let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -153,8 +153,8 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
 
   // TODO: 앱스토어 링크 수정필요
   /// 앱스토어로 이동시키는 함수
-  func moveToAppStore() {
-    if let url = URL(string: Configs.appStoreUrl),
+  private func moveToAppStore() {
+    if let url = URL(string: Configs.appStoreURL),
         UIApplication.shared.canOpenURL(url) {
       if #available(iOS 10.0, *) {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -165,7 +165,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
   }
 
   /// mail default contents
-  func bodyString() -> String {
+  private func bodyString() -> String {
     return """
            이곳에 내용을 작성해주세요.
 
@@ -180,7 +180,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
   }
 
   /// 앱 버전을 가져오는 함수
-  func getCurrentVersion() -> String {
+  private func getCurrentVersion() -> String {
     guard let dictionary = Bundle.main.infoDictionary,
           let version = dictionary["CFBundleShortVersionString"] as? String else { return "" }
 
@@ -188,7 +188,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
   }
 
   /// 기종을 가져오는 함수
-  func getDeviceIdentifier() -> String {
+  private func getDeviceIdentifier() -> String {
     var systemInfo = utsname()
     uname(&systemInfo)
     let machineMirror = Mirror(reflecting: systemInfo.machine)
@@ -199,7 +199,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
     return identifier
   }
 
-  func getModel() -> String {
+  private func getModel() -> String {
       var systemInfo = utsname()
       uname(&systemInfo)
       let machineMirror = Mirror(reflecting: systemInfo.machine)
