@@ -39,7 +39,7 @@ final class ProductViewController: BaseViewController, Viewable {
     collectionViewLayout: .init()
   ).then {
     $0.collectionViewLayout = UICollectionViewFlowLayout().then { layout in
-      layout.headerReferenceSize = CGSize(width: view.bounds.width, height: 460)
+      layout.headerReferenceSize = CGSize(width: view.bounds.width, height: 404)
       layout.itemSize = CGSize(width: self.view.bounds.width, height: 125)
       layout.sectionInset = UIEdgeInsets(top: 24, left: 0, bottom: 16, right: 0)
     }
