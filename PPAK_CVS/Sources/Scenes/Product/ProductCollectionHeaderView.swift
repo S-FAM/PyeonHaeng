@@ -83,7 +83,7 @@ extension ProductCollectionHeaderView {
   private func setupConstraints() {
     wholeStackView.snp.makeConstraints { make in
       make.centerX.equalToSuperview()
-      make.top.equalToSuperview().inset(Inset.StackView.top)
+      make.top.equalToSuperview().inset(Inset.stackViewTop)
     }
 
     curveView.snp.makeConstraints { make in
@@ -141,8 +141,6 @@ extension ProductCollectionHeaderView {
 
     static let curveView = 10
 
-    enum StackView {
-      static let top = 10
-    }
+    static let stackViewTop = 25
   }
 }
