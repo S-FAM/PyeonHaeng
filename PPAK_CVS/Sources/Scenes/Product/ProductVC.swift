@@ -69,16 +69,47 @@ final class ProductViewController: BaseViewController, Viewable {
 
   override func setupLayouts() {
     super.setupLayouts()
+    [navigationHeaderBarView, collectionView].forEach {
+      view.addSubview($0)
+    }
 
-    // add views
-    view.addSubview(collectionView)
+    [backButton, featureStackView].forEach {
+      navigationHeaderBarView.addSubview($0)
+    }
+
+    [bookmarkButton, shareButton].forEach {
+      featureStackView.addArrangedSubview($0)
+    }
   }
 
   override func setupConstraints() {
     super.setupConstraints()
 
+    navigationHeaderBarView.snp.makeConstraints { make in
+      make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+      make.height.equalTo(60)
+    }
+
+    backButton.snp.makeConstraints { make in
+      make.centerY.equalToSuperview()
+      make.leading.equalToSuperview().inset(16)
+      make.size.equalTo(44)
+    }
+
+    featureStackView.snp.makeConstraints { make in
+      make.centerY.equalToSuperview()
+      make.trailing.equalToSuperview().inset(16)
+    }
+
+    [bookmarkButton, shareButton].forEach {
+      $0.snp.makeConstraints { make in
+        make.size.equalTo(44)
+      }
+    }
+
     collectionView.snp.makeConstraints { make in
-      make.edges.equalTo(view.safeAreaLayoutGuide)
+      make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
+      make.top.equalTo(navigationHeaderBarView.snp.bottom)
     }
   }
 
