@@ -14,6 +14,24 @@ import Then
 
 final class ProductViewController: BaseViewController, Viewable {
 
+  private let navigationHeaderBarView = UIView()
+
+  private let featureStackView = UIStackView().then {
+    $0.spacing = 20
+  }
+
+  private let backButton = UIButton().then {
+    $0.setImage(UIImage(named: "ic_back"), for: .normal)
+  }
+
+  private let bookmarkButton = UIButton().then {
+    $0.setImage(UIImage(named: "ic_heart_gray"), for: .normal)
+  }
+
+  private let shareButton = UIButton().then {
+    $0.setImage(UIImage(named: "ic_share"), for: .normal)
+  }
+
   private lazy var collectionView = UICollectionView(
     frame: .zero,
     collectionViewLayout: .init()
