@@ -14,7 +14,9 @@ import Then
 
 final class ProductViewController: BaseViewController, Viewable {
 
-  private let navigationHeaderBarView = UIView()
+  private let navigationHeaderBarView = UIView().then {
+    $0.backgroundColor = .white
+  }
 
   private let featureStackView = UIStackView().then {
     $0.spacing = 20
