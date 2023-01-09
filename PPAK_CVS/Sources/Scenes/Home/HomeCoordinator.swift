@@ -16,19 +16,26 @@ final class HomeCoordinator: BaseCoordinator {
 
   func bind(_ viewModel: HomeViewModel) {
 
-    // Home VC -> Bookmark VC
+    // Bookmark VC
     viewModel.state
-      .map { $0.showBookmarkVC }
-      .distinctUntilChanged()
+      .map { $0.showsBookmarkVC }
       .filter { $0 }
-      .bind(onNext: { [unowned self] _ in
-        self.toBookmarkVC()
-      })
+      .withUnretained(self)
+      .bind { owner, _ in
+        let coordinator = BookmarkCoordinator(navigationController: owner.navigationController)
+        owner.start(childCoordinator: coordinator)
+      }
       .disposed(by: disposeBag)
-  }
 
-  func toBookmarkVC() {
-    let coordinator = BookmarkCoordinator(navigationController: self.navigationController)
-    self.start(childCoordinator: coordinator)
+    // ProductVC
+    viewModel.state
+      .map { $0.showsProductVC }
+      .distinctUntilChanged()
+      .withUnretained(self)
+      .bind { owner, product in
+        let coordinator = ProductCoordinator(owner.navigationController, model: product)
+        owner.start(childCoordinator: coordinator)
+      }
+      .disposed(by: disposeBag)
   }
 }

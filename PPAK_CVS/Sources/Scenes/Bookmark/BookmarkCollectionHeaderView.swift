@@ -38,7 +38,7 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
   let infoTouchView = UIView()
   let topCurveView = TopCurveView()
   let searchBar = SearchBar()
-  let pageControl = PageControl()
+  let pageControl = EventControl()
 
   // MARK: - Init
 

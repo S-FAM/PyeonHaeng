@@ -2,76 +2,132 @@ import RxSwift
 
 final class BookmarkViewModel: ViewModel {
 
-  enum FilterDropdownCase {
-    case ascending
-    case descending
-  }
-
   enum Action {
-    case currentCVSButtonTapped
-    case filterButtonTapped
-    case backButtonTapped
-    case backgroundTapped
-    case pageControlIndexEvent(Int)
-    case cvsButtonTappedInDropdown(CVSDropdownCase)
-    case filterButtonTappedInDropdown(FilterDropdownCase)
+    case didTapCVSButton
+    case didTapSortButton
+    case didTapBackButton
+    case didChangeEvent(EventType)
+    case didTapDropdownCVS(CVSDropdownCase)
+    case didTapDropdownSort(SortType)
+    case didChangeSearchBarText(String)
   }
 
   enum Mutation {
-    case toggleCVSDropdown
-    case toggleFilterDropdown
-    case toggleShowHomeVC
+    case setCVSDropdown
+    case setSortDropdown
+    case setHomeVC(Bool)
     case hideDropdown
-    case onChangedCVSType(CVSType?)
-    case onChangedFilter(FilterDropdownCase)
-    case onChnagedPageIndex(Int)
+    case setCVS(CVSType)
+    case setSort(SortType)
+    case setEvent(EventType)
+    case setTarget(String)
+    case setLoading(Bool)
+    case setProducts([ProductModel])
   }
 
   struct State {
-    var isVisibleCVSDropdown: Bool = false
-    var isVisibleFilterDropdown: Bool = false
-    var showHomeVC: Bool = false
-    var currentFilter: FilterDropdownCase = .ascending
-    var currentCVSType: CVSType? = .all
-    var pageIndex: Int = 0
+    var isHiddenCVSDropdown: Bool = true
+    var isHiddenSortDropdown: Bool = true
+    var showsHomeVC: Bool = false
+    var currentSort: SortType = .ascending
+    var currentCVS: CVSType = .all
+    var currentEvent: EventType = .all
+    var currentTarget: String = ""
+    var isLoading: Bool = false
+    var currentProducts: [ProductModel] = Storage.shared.products
   }
 
   var initialState = State()
 
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
-    case .currentCVSButtonTapped:
-      return Observable.just(.toggleCVSDropdown)
+    case .didTapCVSButton:
+      return .just(.setCVSDropdown)
 
-    case .filterButtonTapped:
-      return Observable.just(.toggleFilterDropdown)
+    case .didTapSortButton:
+      return .just(.setSortDropdown)
 
-    case .backgroundTapped:
-      return Observable.just(.hideDropdown)
-
-    case .backButtonTapped:
-      return Observable.just(.toggleShowHomeVC)
-
-    case .pageControlIndexEvent(let index):
-      return Observable.just(.onChnagedPageIndex(index))
-
-    case .cvsButtonTappedInDropdown(let cvsDropdownCase):
-      var newCvsType: CVSType?
-      switch cvsDropdownCase {
-      case .cvs(let cvsType):
-        newCvsType = cvsType
-      case .setting:
-        break // 셋팅 페이지로 가야할 곳
-      }
-      return Observable.concat([
-        Observable.just(.hideDropdown),
-        Observable.just(.onChangedCVSType(newCvsType))
+    case .didTapBackButton:
+      return .concat([
+        .just(.setHomeVC(true)),
+        .just(.setHomeVC(false))
       ])
 
-    case .filterButtonTappedInDropdown(let filterDropdownCase):
-      return Observable.concat([
-        Observable.just(.onChangedFilter(filterDropdownCase)),
-        Observable.just(.hideDropdown)
+    case .didChangeEvent(let event):
+
+      let updatedProducts = Storage.shared.retrieve(
+        cvs: currentState.currentCVS,
+        event: event,
+        sort: .none,
+        target: currentState.currentTarget)
+
+      return .concat([
+        .just(.setEvent(event)),
+        .just(.hideDropdown),
+        .just(.setLoading(true)),
+        .just(.setProducts([])).delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
+        .just(.setProducts(updatedProducts)),
+        .just(.setLoading(false))
+      ])
+
+    case .didTapDropdownCVS(let cvsDropdownCase):
+
+      switch cvsDropdownCase {
+      case .cvs(let cvs):
+
+        let updatedProducts = Storage.shared.retrieve(
+          cvs: cvs,
+          event: currentState.currentEvent,
+          sort: .none)
+
+        return .concat([
+          .just(.setCVS(cvs)),
+          .just(.hideDropdown),
+          .just(.setTarget("")),
+          .just(.setLoading(true)),
+          .just(.setProducts([])).delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
+          .just(.setProducts(updatedProducts)),
+          .just(.setLoading(false))
+        ])
+
+      case .setting:
+        return .empty()
+      }
+
+    case .didChangeSearchBarText(let target):
+
+      let updatedProducts = Storage.shared.retrieve(
+        cvs: currentState.currentCVS,
+        event: currentState.currentEvent,
+        sort: currentState.currentSort,
+        target: target
+      )
+
+      return .concat([
+        .just(.setTarget(target)),
+        .just(.hideDropdown),
+        .just(.setLoading(true)),
+        .just(.setProducts([])).delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
+        .just(.setProducts(updatedProducts)),
+        .just(.setLoading(false))
+      ])
+
+    case .didTapDropdownSort(let sort):
+
+      let updatedProducts = Storage.shared.retrieve(
+        cvs: currentState.currentCVS,
+        event: currentState.currentEvent,
+        sort: sort,
+        target: currentState.currentTarget
+      )
+
+      return .concat([
+        .just(.setSort(sort)),
+        .just(.hideDropdown),
+        .just(.setLoading(true)),
+        .just(.setProducts([])).delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
+        .just(.setProducts(updatedProducts)),
+        .just(.setLoading(false))
       ])
     }
   }
@@ -80,27 +136,38 @@ final class BookmarkViewModel: ViewModel {
     var nextState = state
 
     switch mutation {
-    case .toggleCVSDropdown:
-      nextState.isVisibleCVSDropdown.toggle()
+    case .setCVSDropdown:
+      nextState.isHiddenCVSDropdown.toggle()
+      nextState.isHiddenSortDropdown = true
 
-    case .toggleFilterDropdown:
-      nextState.isVisibleFilterDropdown.toggle()
+    case .setSortDropdown:
+      nextState.isHiddenSortDropdown.toggle()
+      nextState.isHiddenCVSDropdown = true
 
-    case .toggleShowHomeVC:
-      nextState.showHomeVC = true
+    case .setHomeVC(let state):
+      nextState.showsHomeVC = state
 
     case .hideDropdown:
-      nextState.isVisibleFilterDropdown = false
-      nextState.isVisibleCVSDropdown = false
+      nextState.isHiddenSortDropdown = true
+      nextState.isHiddenCVSDropdown = true
 
-    case .onChangedCVSType(let cvsType):
-      nextState.currentCVSType = cvsType
+    case .setCVS(let cvsType):
+      nextState.currentCVS = cvsType
 
-    case .onChangedFilter(let filterDropdownCase):
-      nextState.currentFilter = filterDropdownCase
+    case .setSort(let filterDropdownCase):
+      nextState.currentSort = filterDropdownCase
 
-    case .onChnagedPageIndex(let index):
-      nextState.pageIndex = index
+    case .setEvent(let event):
+      nextState.currentEvent = event
+
+    case .setTarget(let text):
+      nextState.currentTarget = text
+
+    case .setLoading(let isLoading):
+      nextState.isLoading = isLoading
+
+    case .setProducts(let products):
+      nextState.currentProducts = products
     }
     return nextState
   }

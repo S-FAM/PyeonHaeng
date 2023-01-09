@@ -96,39 +96,39 @@ final class HomeViewController: BaseViewController, Viewable {
 
     // 북마크 버튼 클릭
     header.bookmarkButton.rx.tap
-      .map { HomeViewModel.Action.bookmarkButtonDidTap }
+      .map { HomeViewModel.Action.didTapBookmarkButton }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 현재 편의점 로고 버튼 클릭
     header.cvsButton.rx.tap
-      .map { HomeViewModel.Action.currentCVSButtonDidTap }
+      .map { HomeViewModel.Action.didTapCVSButton }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 필터 버튼 클릭
     header.filterButton.rx.tap
-      .map { HomeViewModel.Action.filterButtonDidTap }
+      .map { HomeViewModel.Action.didTapSortButton }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 편의점 드롭다운 리스트 버튼 클릭
     cvsDropdownView.buttonEventSubject
-      .map { HomeViewModel.Action.dropdownCVSButtonDidTap($0) }
+      .map { HomeViewModel.Action.didTapDropdownCVS($0) }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 필터 드롭다운 리스트 버튼 클릭
     sortDropdownView.buttonEventSubject
-      .map { HomeViewModel.Action.dropdownFilterButtonDidTap($0) }
+      .map { HomeViewModel.Action.didTapDropdownSort($0) }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
     // 페이지 컨트롤 인덱스 감지
-    header.pageControl.pageIndexSubject
+    header.pageControl.didChangeEvent
       .skip(1)
       .distinctUntilChanged()
-      .map { HomeViewModel.Action.pageControlIndexDidChange($0) }
+      .map { HomeViewModel.Action.didChangeEvent($0) }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
@@ -137,7 +137,7 @@ final class HomeViewController: BaseViewController, Viewable {
       .withUnretained(self)
       .map { $0.0.header.searchBar.textField.text }
       .filterNil()
-      .map { HomeViewModel.Action.didChangeSearchBar($0) }
+      .map { HomeViewModel.Action.didChangeSearchBarText($0) }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
@@ -320,6 +320,10 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     _ collectionView: UICollectionView,
     didSelectItemAt indexPath: IndexPath
   ) {
+    guard let product = viewModel?.currentState.products[indexPath.row] else { return }
+
+    // 특정 제품 클릭
+    viewModel?.action.onNext(.didSelectItemAt(product))
   }
 
   func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
