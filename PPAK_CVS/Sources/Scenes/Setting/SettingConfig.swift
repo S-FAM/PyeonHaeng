@@ -14,7 +14,7 @@ struct Message {
   static let email = "bang.hyeonseok.dev@gmail.com"
 
   static let cancel = "취소"
-  static let moveAppStore = "취소"
+  static let moveAppStore = "App Store로 이동"
 }
 
 struct Configs {
