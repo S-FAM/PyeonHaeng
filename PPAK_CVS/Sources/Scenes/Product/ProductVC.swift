@@ -14,12 +14,32 @@ import Then
 
 final class ProductViewController: BaseViewController, Viewable {
 
+  private let navigationHeaderBarView = UIView().then {
+    $0.backgroundColor = .white
+  }
+
+  private let featureStackView = UIStackView().then {
+    $0.spacing = 20
+  }
+
+  private let backButton = UIButton().then {
+    $0.setImage(UIImage(named: "ic_back"), for: .normal)
+  }
+
+  private let bookmarkButton = UIButton().then {
+    $0.setImage(UIImage(named: "ic_heart_gray"), for: .normal)
+  }
+
+  private let shareButton = UIButton().then {
+    $0.setImage(UIImage(named: "ic_share"), for: .normal)
+  }
+
   private lazy var collectionView = UICollectionView(
     frame: .zero,
     collectionViewLayout: .init()
   ).then {
     $0.collectionViewLayout = UICollectionViewFlowLayout().then { layout in
-      layout.headerReferenceSize = CGSize(width: view.bounds.width, height: 460)
+      layout.headerReferenceSize = CGSize(width: view.bounds.width, height: 404)
       layout.itemSize = CGSize(width: self.view.bounds.width, height: 125)
       layout.sectionInset = UIEdgeInsets(top: 24, left: 0, bottom: 16, right: 0)
     }
@@ -51,28 +71,47 @@ final class ProductViewController: BaseViewController, Viewable {
 
   override func setupLayouts() {
     super.setupLayouts()
-
-    // navigation bar
-    navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(
-      image: UIImage(systemName: "heart"),
-      style: .plain,
-      target: self,
-      action: nil
-    )
-
-    navigationItem.titleView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 50)).then {
-      $0.backgroundColor = .systemGray
+    [navigationHeaderBarView, collectionView].forEach {
+      view.addSubview($0)
     }
 
-    // add views
-    view.addSubview(collectionView)
+    [backButton, featureStackView].forEach {
+      navigationHeaderBarView.addSubview($0)
+    }
+
+    [bookmarkButton, shareButton].forEach {
+      featureStackView.addArrangedSubview($0)
+    }
   }
 
   override func setupConstraints() {
     super.setupConstraints()
 
+    navigationHeaderBarView.snp.makeConstraints { make in
+      make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+      make.height.equalTo(60)
+    }
+
+    backButton.snp.makeConstraints { make in
+      make.centerY.equalToSuperview()
+      make.leading.equalToSuperview().inset(16)
+      make.size.equalTo(44)
+    }
+
+    featureStackView.snp.makeConstraints { make in
+      make.centerY.equalToSuperview()
+      make.trailing.equalToSuperview().inset(16)
+    }
+
+    [bookmarkButton, shareButton].forEach {
+      $0.snp.makeConstraints { make in
+        make.size.equalTo(44)
+      }
+    }
+
     collectionView.snp.makeConstraints { make in
-      make.edges.equalTo(view.safeAreaLayoutGuide)
+      make.top.equalTo(navigationHeaderBarView.snp.bottom)
+      make.horizontalEdges.bottom.equalToSuperview()
     }
   }
 
