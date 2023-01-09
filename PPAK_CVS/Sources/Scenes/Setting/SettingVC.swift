@@ -135,4 +135,19 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
       failAlertVC()
     }
   }
+
+  /// 전송실패 메세지 얼럿
+  func failAlertVC() {
+    let title = Message.sendMailFail
+    let message = Message.retry
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+    let close = UIAlertAction(title: Message.cancel, style: .cancel)
+    let move = UIAlertAction(title: Message.moveAppStore, style: .default) { [weak self] _ in
+      self?.moveToAppStore()
+    }
+
+    [move, close].forEach { alert.addAction($0) }
+    present(alert, animated: true)
+  }
 }
