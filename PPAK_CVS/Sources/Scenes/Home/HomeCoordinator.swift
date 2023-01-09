@@ -31,6 +31,7 @@ final class HomeCoordinator: BaseCoordinator {
     viewModel.state
       .map { $0.showsProductVC }
       .distinctUntilChanged()
+      .skip(1)
       .withUnretained(self)
       .bind { owner, product in
         let coordinator = ProductCoordinator(owner.navigationController, model: product)
