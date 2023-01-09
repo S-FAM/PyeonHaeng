@@ -98,6 +98,8 @@ extension ProductCollectionHeaderView {
     previousHistoryLabel.snp.makeConstraints { make in
       make.bottom.trailing.equalToSuperview().inset(Inset.previousHistoryLabel)
     }
+
+    wholeStackView.setCustomSpacing(16, after: productImageView)
   }
 
   private func setupStyles() {
