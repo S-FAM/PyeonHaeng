@@ -27,6 +27,7 @@ final class HomeViewController: BaseViewController, Viewable {
                 forCellWithReuseIdentifier: LoadingCell.id)
   }
 
+  override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
   private let indicator = UIActivityIndicatorView()
   private let cvsDropdownView = CVSDropdownView()
   private let sortDropdownView = SortDropdownView()

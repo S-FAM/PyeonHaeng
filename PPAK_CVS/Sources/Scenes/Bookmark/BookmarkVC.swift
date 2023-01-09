@@ -28,6 +28,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
     )
   }
 
+  override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
   private let indicator = UIActivityIndicatorView()
   private let sortDropdownView = SortDropdownView()
   private let cvsDropdownView = CVSDropdownView()

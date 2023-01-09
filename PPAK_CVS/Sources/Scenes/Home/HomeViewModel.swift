@@ -32,14 +32,14 @@ final class HomeViewModel: ViewModel {
     case resetProducts
     case appendProductes([ProductModel])
     case setPagination(Bool)
-    case setProductVC(ProductModel)
+    case setProductVC(Bool, ProductModel)
   }
 
   struct State {
     var isVisibleCVSDropdown: Bool = false
     var isVisibleFilterDropdown: Bool = false
     var showsBookmarkVC: Bool = false
-    var showsProductVC: ProductModel = .init(imageLink: nil, name: "", price: 0, store: .all, saleType: .all)
+    var showsProductVC: (Bool, ProductModel) = (false, .init(imageLink: nil, name: "", price: 0, store: .all, saleType: .all))
     var currentSortType: SortType = .none
     var currentEventType: EventType = .all
     var currentCVSType: CVSType = .all
@@ -161,7 +161,10 @@ final class HomeViewModel: ViewModel {
       ])
 
     case .didSelectItemAt(let product):
-      return .just(.setProductVC(product))
+      return .concat([
+        .just(.setProductVC(true, product)),
+        .just(.setProductVC(false, product))
+      ])
     }
   }
 
@@ -215,8 +218,8 @@ final class HomeViewModel: ViewModel {
     case .setPagination(let isPagination):
       nextState.isPagination = isPagination
 
-    case .setProductVC(let product):
-      nextState.showsProductVC = product
+    case let .setProductVC(state, product):
+      nextState.showsProductVC = (state, product)
     }
     return nextState
   }
