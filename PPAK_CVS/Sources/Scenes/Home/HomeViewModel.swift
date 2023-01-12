@@ -225,7 +225,7 @@ final class HomeViewModel: ViewModel {
 
     case let .setProductVC(state, product):
       nextState.showsProductVC = (state, product)
-      
+
     case .setSettingVC(let state):
       nextState.showsSettingVC = state
     }

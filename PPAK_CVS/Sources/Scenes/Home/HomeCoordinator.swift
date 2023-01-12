@@ -37,5 +37,16 @@ final class HomeCoordinator: BaseCoordinator {
         owner.start(childCoordinator: coordinator)
       }
       .disposed(by: disposeBag)
+
+    // SettingVC
+    viewModel.state
+      .map { $0.showsSettingVC }
+      .filter { $0 }
+      .withUnretained(self)
+      .bind { owner, _ in
+        let coordinator = SettingCoordinator(navigationController: owner.navigationController)
+        coordinator.start(childCoordinator: coordinator)
+      }
+      .disposed(by: disposeBag)
   }
 }
