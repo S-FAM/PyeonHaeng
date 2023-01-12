@@ -15,25 +15,26 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
   // MAKR: - Properties
   static let id = "HomeCollectionViewHeader"
 
-  lazy var cvsButton = UIButton().then {
+  let cvsButton = UIButton().then {
     $0.setImage(CVSType.all.image, for: .normal)
   }
 
-  lazy var filterButton = UIButton().then {
+  let filterButton = UIButton().then {
     $0.setImage(UIImage(named: "ic_sort"), for: .normal)
   }
 
-  lazy var iconContainerView = UIView().then {
+  private let iconContainerView = UIView().then {
     $0.backgroundColor = .clear
   }
 
-  lazy var bookmarkButton = UIButton().then {
+  let bookmarkButton = UIButton().then {
     $0.setImage(UIImage(named: "ic_heart_white"), for: .normal)
   }
 
-  lazy var pageControl = EventControl()
-  lazy var topCurveView = TopCurveView()
-  lazy var searchBar = SearchBar()
+  let pageControl = EventControl()
+  let searchBar = SearchBar()
+  let topCurveView = TopCurveView()
+  private let appIconImageView = UIImageView(image: UIImage(named: "ic_home_appIcon"))
 
   // MARK: - Init
 
@@ -67,7 +68,8 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
 
     [
       bookmarkButton,
-      cvsButton
+      cvsButton,
+      appIconImageView
     ]
       .forEach { iconContainerView.addSubview($0) }
   }
@@ -111,6 +113,11 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
       make.centerY.equalToSuperview()
       make.trailing.equalTo(cvsButton.snp.leading).offset(-20)
       make.width.height.equalTo(44)
+    }
+
+    appIconImageView.snp.makeConstraints { make in
+      make.leading.equalToSuperview().inset(40)
+      make.centerY.equalToSuperview()
     }
   }
 }

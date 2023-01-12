@@ -62,11 +62,10 @@ final class HomeViewController: BaseViewController, Viewable {
     [
       cvsDropdownView,
       sortDropdownView
-    ]
-      .forEach {
-        view.addSubview($0)
-        $0.isHidden = true
-      }
+    ].forEach {
+      view.addSubview($0)
+      $0.isHidden = true
+    }
 
     cvsDropdownView.snp.makeConstraints { make in
       make.top.equalTo(header.cvsButton.snp.bottom).offset(10)
