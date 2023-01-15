@@ -18,11 +18,11 @@ final class SettingTableViewCell: UITableViewCell {
   private let iconList = ["icon_alert", "icon_noti", "icon_review", "icon_mail", "info_cheer", "icon_version"]
   private let titleList = ["알림", "공지사항", "리뷰 남기기", "문의하기", "개발자 응원하기", "버전정보"]
   private let containerView = UIView()
-  private let iconImage = UIImageView().then {
+  let iconImage = UIImageView().then {
     $0.tintColor = .black
   }
 
-  private let titleLabel = UILabel().then {
+  let titleLabel = UILabel().then {
     $0.font = .systemFont(ofSize: 15, weight: .regular)
   }
 
@@ -50,8 +50,6 @@ final class SettingTableViewCell: UITableViewCell {
   }
 
   private func setDetail(_ row: Int) {
-    iconImage.image = UIImage(named: iconList[row])
-    titleLabel.text = titleList[row]
 
     // 버전정보 셀
     let isVersionCell = row == 5

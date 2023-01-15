@@ -93,14 +93,17 @@ final class SettingViewController: BaseViewController, Viewable {
 
 extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 6
+
+    return SettingCellType.allCases.count
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(
       withIdentifier: SettingTableViewCell.identifier
     ) as? SettingTableViewCell else { return UITableViewCell() }
-
+    let settingValue = SettingCellType(rawValue: indexPath.row)
+    cell.titleLabel.text = settingValue?.description
+    cell.iconImage.image = settingValue?.image
     cell.setUI(indexPath.row)
     return cell
   }
@@ -231,7 +234,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
   func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
     dismiss(animated: true)
   }
-  
+
   /// 시스템페이지로 이동처리
   func moveToSystemSetting() {
     guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
