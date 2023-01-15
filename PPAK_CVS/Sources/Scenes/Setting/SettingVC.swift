@@ -104,7 +104,7 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     let settingValue = SettingCellType(rawValue: indexPath.row)
     cell.titleLabel.text = settingValue?.description
     cell.iconImage.image = settingValue?.image
-    cell.setUI(indexPath.row)
+    cell.setDetail(indexPath.row)
     return cell
   }
 
