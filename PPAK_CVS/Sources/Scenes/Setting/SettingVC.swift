@@ -111,10 +111,27 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-    print("click: \(indexPath.row)")
-
-    if indexPath.row == 3 {
+    switch indexPath.row {
+    case 0:
+      // 푸시설정
+      moveToSystemSetting()
+    case 1:
+      // 공지사항
+      print("click: \(indexPath.row)")
+    case 2:
+      // 리뷰남기기
+      print("click: \(indexPath.row)")
+    case 3:
+      // 문의하기
       sendMail()
+    case 4:
+      // 개발자 응원학
+      print("click: \(indexPath.row)")
+    case 5:
+      // 버전정보
+      print("click: \(indexPath.row)")
+    default:
+      break
     }
   }
 }
@@ -214,5 +231,13 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
   func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
     dismiss(animated: true)
   }
+  
+  /// 시스템페이지로 이동처리
+  func moveToSystemSetting() {
+    guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
 
+    if UIApplication.shared.canOpenURL(url) {
+        UIApplication.shared.open(url)
+    }
+  }
 }
