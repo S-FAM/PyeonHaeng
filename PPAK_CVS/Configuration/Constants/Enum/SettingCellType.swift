@@ -5,7 +5,7 @@
 //  Created by hyeonseok on 2023/01/15.
 //
 
-import Foundation
+import UIKit
 
 enum SettingCellType: Int, CaseIterable, CustomStringConvertible {
 
