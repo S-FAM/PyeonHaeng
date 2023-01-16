@@ -78,7 +78,7 @@ final class EventControl: UIControl {
       label.text = items[index]
       label.textColor = .white
       label.textAlignment = .center
-      label.font = .systemFont(ofSize: 18.0, weight: .heavy)
+      label.font = .appFont(family: .extraBold, size: 18)
       self.addSubview(label)
       self.labels.append(label)
     }

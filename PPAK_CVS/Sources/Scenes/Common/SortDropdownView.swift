@@ -87,7 +87,7 @@ extension SortDropdownView {
   private func createButton(_ title: String) -> UIButton {
     var config = UIButton.Configuration.plain()
     var container = AttributeContainer()
-    container.font = .systemFont(ofSize: 14.0, weight: .bold)
+    container.font = .appFont(family: .bold, size: 14)
     config.attributedTitle = AttributedString(title, attributes: container)
     config.baseForegroundColor = .black
     config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)

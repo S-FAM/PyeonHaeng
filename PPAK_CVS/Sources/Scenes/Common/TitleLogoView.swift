@@ -15,7 +15,7 @@ final class TitleLogoView: UIView {
   lazy var titleLabel = UILabel().then {
     $0.text = cvsType.rawValue
     $0.textColor = cvsType.fontColor
-    $0.font = .systemFont(ofSize: 16, weight: .bold)
+    $0.font = .appFont(family: .bold, size: 12)
   }
 
   private let cvsType: CVSType
@@ -35,7 +35,7 @@ final class TitleLogoView: UIView {
 
   private func setupStyles() {
     backgroundColor = cvsType.bgColor
-    layer.cornerRadius = 16
+    layer.cornerRadius = 10
   }
 
   private func setTitle() {
@@ -43,7 +43,7 @@ final class TitleLogoView: UIView {
 
     titleLabel.snp.makeConstraints { make in
       make.leading.trailing.equalToSuperview().inset(16)
-      make.top.bottom.equalToSuperview().inset(8)
+      make.top.bottom.equalToSuperview()
     }
   }
 }

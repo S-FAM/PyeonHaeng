@@ -11,7 +11,7 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
   private let mainLabel = UILabel().then {
     $0.text = "찜"
     $0.textColor = .white
-    $0.font = .systemFont(ofSize: 22.0, weight: .heavy)
+    $0.font = .appFont(family: .extraBold, size: 22)
   }
 
   private let infoButton = UIButton().then {

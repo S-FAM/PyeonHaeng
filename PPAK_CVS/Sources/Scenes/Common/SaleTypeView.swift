@@ -15,7 +15,7 @@ final class SaleTypeView: UIView {
   lazy var titleLabel = UILabel().then {
     $0.text = cvsType.rawValue
     $0.textColor = cvsType.fontColor
-    $0.font = .systemFont(ofSize: 12, weight: .bold)
+    $0.font = .appFont(family: .bold, size: 12)
   }
 
   private let cvsType: CVSType
@@ -35,7 +35,7 @@ final class SaleTypeView: UIView {
 
   private func setupStyles() {
     backgroundColor = cvsType.bgColor
-    layer.cornerRadius = 8
+    layer.cornerRadius = 10
   }
 
   private func setTitle() {
