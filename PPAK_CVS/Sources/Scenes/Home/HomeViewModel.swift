@@ -33,6 +33,7 @@ final class HomeViewModel: ViewModel {
     case appendProductes([ProductModel])
     case setPagination(Bool)
     case setProductVC(Bool, ProductModel)
+    case setSettingVC(Bool)
   }
 
   struct State {
@@ -40,6 +41,7 @@ final class HomeViewModel: ViewModel {
     var isVisibleFilterDropdown: Bool = false
     var showsBookmarkVC: Bool = false
     var showsProductVC: (Bool, ProductModel) = (false, .init(imageLink: nil, name: "", price: 0, store: .all, saleType: .all))
+    var showsSettingVC: Bool = false
     var currentSortType: SortType = .none
     var currentEventType: EventType = .all
     var currentCVSType: CVSType = .all
@@ -126,8 +128,11 @@ final class HomeViewModel: ViewModel {
         ])
 
       case .setting:
-        // TODO: Setting Page로 이동해야 합니다.
-        return .just(.hideDropdown)
+        return .concat([
+          .just(.hideDropdown),
+          .just(.setSettingVC(true)),
+          .just(.setSettingVC(false))
+        ])
       }
 
     case .didTapDropdownSort(let sortType):
@@ -220,6 +225,9 @@ final class HomeViewModel: ViewModel {
 
     case let .setProductVC(state, product):
       nextState.showsProductVC = (state, product)
+
+    case .setSettingVC(let state):
+      nextState.showsSettingVC = state
     }
     return nextState
   }
