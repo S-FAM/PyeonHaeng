@@ -42,8 +42,8 @@ final class HomeViewController: BaseViewController, Viewable {
   }
 
   override func setupStyles() {
-    navigationController?.isNavigationBarHidden = true
-    navigationController?.interactivePopGestureRecognizer?.delegate = nil
+    super.setupStyles()
+    navigationController?.setNavigationBarHidden(true, animated: true)
     view.backgroundColor = CVSType.all.bgColor
   }
 
