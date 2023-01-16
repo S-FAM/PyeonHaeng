@@ -39,6 +39,7 @@ final class SettingViewController: BaseViewController, Viewable {
     super.setupStyles()
     view.backgroundColor = .white
     setGesture()
+    tableView.separatorStyle = .none
   }
 
   override func setupLayouts() {
