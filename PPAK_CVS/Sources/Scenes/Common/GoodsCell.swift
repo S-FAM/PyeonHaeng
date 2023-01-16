@@ -40,7 +40,7 @@ final class GoodsCell: UICollectionViewCell {
       stackView.addArrangedSubview($0)
     }
       stackView.axis = .vertical
-      stackView.spacing = 4.0
+      stackView.spacing = 6
       stackView.alignment = .leading
   }
 
@@ -95,6 +95,11 @@ final class GoodsCell: UICollectionViewCell {
       make.centerY.equalToSuperview()
       make.leading.equalTo(goodsImage.snp.trailing).offset(8.0)
       make.trailing.equalToSuperview().inset(16)
+    }
+
+    saleTypeView.snp.makeConstraints { make in
+      make.width.equalTo(45)
+      make.height.equalTo(20)
     }
   }
 }
