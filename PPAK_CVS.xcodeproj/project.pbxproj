@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9C07AE832934D763002CFE3F /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C07AE822934D763002CFE3F /* SettingTableViewCell.swift */; };
+		9C1E41BD297439AE006948F7 /* SettingCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1E41BC297439AE006948F7 /* SettingCellType.swift */; };
 		9C40085B295DCAB500C7E2DE /* SettingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C40085A295DCAB500C7E2DE /* SettingCoordinator.swift */; };
 		9C40085D295DCACA00C7E2DE /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C40085C295DCACA00C7E2DE /* SettingViewModel.swift */; };
 		9C5C03A5292B9F770000989F /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5C03A4292B9F770000989F /* SettingVC.swift */; };
@@ -102,6 +103,7 @@
 
 /* Begin PBXFileReference section */
 		9C07AE822934D763002CFE3F /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingTableViewCell.swift; path = PPAK_CVS/SettingTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		9C1E41BC297439AE006948F7 /* SettingCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCellType.swift; sourceTree = "<group>"; };
 		9C40085A295DCAB500C7E2DE /* SettingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCoordinator.swift; sourceTree = "<group>"; };
 		9C40085C295DCACA00C7E2DE /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		9C5C03A4292B9F770000989F /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				9CCFA4FD28F4585E00963A95 /* EventType.swift */,
 				BAD70BD7291A58CB00C39863 /* SortType.swift */,
 				A5F8288B28DECEE700C5D6A2 /* Strings.swift */,
+				9C1E41BC297439AE006948F7 /* SettingCellType.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -675,6 +678,7 @@
 				BA9EBC16294A04E500167970 /* Encodable+.swift in Sources */,
 				9CCFA4FE28F4585E00963A95 /* EventType.swift in Sources */,
 				E59041DE2928FB8100135ECA /* SaleTypeView.swift in Sources */,
+				9C1E41BD297439AE006948F7 /* SettingCellType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -814,7 +818,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2ZQR76M3UH;
+				DEVELOPMENT_TEAM = 69J4V4ULVW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PPAK_CVS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "편행";
@@ -849,7 +853,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2ZQR76M3UH;
+				DEVELOPMENT_TEAM = 69J4V4ULVW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PPAK_CVS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "편행";
