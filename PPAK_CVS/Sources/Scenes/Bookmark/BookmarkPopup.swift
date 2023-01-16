@@ -21,6 +21,7 @@ final class BookmarkPopup: BaseViewController {
 
   private let infoLabel = UILabel().then {
     $0.text = "찜한 제품이 행사하는 경우, 매달 초(1~7일 사이)에 알림이 전송됩니다."
+    $0.font = .appFont(family: .regular, size: 14)
     $0.textColor = .white
     $0.numberOfLines = 2
   }

@@ -24,15 +24,11 @@ final class GoodsCell: UICollectionViewCell {
   }
 
   private let goodsLabel = UILabel().then {
-    $0.font = .systemFont(ofSize: 16.0, weight: .bold)
+    $0.font = .appFont(family: .bold, size: 14)
   }
 
   private let priceLabel = UILabel().then {
-    $0.font = .systemFont(ofSize: 14.0, weight: .light)
-  }
-
-  private let descriptionLabel = UILabel().then {
-    $0.font = .systemFont(ofSize: 12.0, weight: .light)
+    $0.font = .appFont(family: .regular, size: 14)
   }
 
   private let goodsImage = UIImageView().then {
@@ -40,14 +36,11 @@ final class GoodsCell: UICollectionViewCell {
   }
 
   private lazy var stackView = UIStackView().then { stackView in
-    let horiStack = UIStackView(arrangedSubviews: [priceLabel, descriptionLabel])
-    horiStack.axis = .horizontal
-    horiStack.spacing = 2.0
-    [goodsLabel, horiStack, saleTypeView].forEach {
+    [goodsLabel, priceLabel, saleTypeView].forEach {
       stackView.addArrangedSubview($0)
     }
       stackView.axis = .vertical
-      stackView.spacing = 4.0
+      stackView.spacing = 6
       stackView.alignment = .leading
   }
 
@@ -88,8 +81,7 @@ final class GoodsCell: UICollectionViewCell {
 
     titleLogoView.snp.makeConstraints { make in
       make.trailing.equalTo(containerView.snp.trailing).offset(-12)
-      make.centerY.equalTo(containerView.snp.top)
-      make.height.equalTo(30)
+      make.centerY.equalTo(containerView.snp.top).offset(4)
     }
 
     goodsImage.snp.makeConstraints { make in
@@ -102,6 +94,11 @@ final class GoodsCell: UICollectionViewCell {
       make.centerY.equalToSuperview()
       make.leading.equalTo(goodsImage.snp.trailing).offset(8.0)
       make.trailing.equalToSuperview().inset(16)
+    }
+
+    saleTypeView.snp.makeConstraints { make in
+      make.width.equalTo(45)
+      make.height.equalTo(20)
     }
   }
 }

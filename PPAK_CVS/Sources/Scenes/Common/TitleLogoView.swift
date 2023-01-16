@@ -12,13 +12,18 @@ import Then
 
 final class TitleLogoView: UIView {
 
+  // MARK: - Properties
+
   lazy var titleLabel = UILabel().then {
     $0.text = cvsType.rawValue
     $0.textColor = cvsType.fontColor
-    $0.font = .systemFont(ofSize: 16, weight: .bold)
+    $0.font = .appFont(family: .bold, size: 12)
   }
 
   private let cvsType: CVSType
+  private var isInitialized: Bool = false
+
+  // MARK: - Initializer
 
   init(cvsType: CVSType) {
     self.cvsType = cvsType
@@ -35,15 +40,14 @@ final class TitleLogoView: UIView {
 
   private func setupStyles() {
     backgroundColor = cvsType.bgColor
-    layer.cornerRadius = 16
+    layer.cornerRadius = 10
   }
 
   private func setTitle() {
     addSubview(titleLabel)
 
     titleLabel.snp.makeConstraints { make in
-      make.leading.trailing.equalToSuperview().inset(16)
-      make.top.bottom.equalToSuperview().inset(8)
+      make.center.equalToSuperview()
     }
   }
 }
@@ -53,5 +57,28 @@ extension TitleLogoView {
     titleLabel.text = product.store.rawValue
     titleLabel.textColor = product.store.fontColor
     backgroundColor = product.store.bgColor
+
+    let width: Int
+
+    switch product.store {
+    case .eMart, .miniStop, .sevenEleven:
+      width = 80
+    default:
+      width = 50
+    }
+
+    if isInitialized {
+      self.snp.updateConstraints { make in
+        make.height.equalTo(20)
+        make.width.equalTo(width)
+      }
+    } else {
+      self.snp.makeConstraints { make in
+        make.height.equalTo(20)
+        make.width.equalTo(width)
+      }
+    }
+
+    isInitialized = true
   }
 }
