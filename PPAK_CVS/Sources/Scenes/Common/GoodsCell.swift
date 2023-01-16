@@ -81,8 +81,7 @@ final class GoodsCell: UICollectionViewCell {
 
     titleLogoView.snp.makeConstraints { make in
       make.trailing.equalTo(containerView.snp.trailing).offset(-12)
-      make.centerY.equalTo(containerView.snp.top)
-      make.height.equalTo(20)
+      make.centerY.equalTo(containerView.snp.top).offset(4)
     }
 
     goodsImage.snp.makeConstraints { make in

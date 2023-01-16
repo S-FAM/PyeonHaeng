@@ -12,6 +12,8 @@ import Then
 
 final class TitleLogoView: UIView {
 
+  // MARK: - Properties
+
   lazy var titleLabel = UILabel().then {
     $0.text = cvsType.rawValue
     $0.textColor = cvsType.fontColor
@@ -19,6 +21,9 @@ final class TitleLogoView: UIView {
   }
 
   private let cvsType: CVSType
+  private var isInitialized: Bool = false
+
+  // MARK: - Initializer
 
   init(cvsType: CVSType) {
     self.cvsType = cvsType
@@ -42,8 +47,7 @@ final class TitleLogoView: UIView {
     addSubview(titleLabel)
 
     titleLabel.snp.makeConstraints { make in
-      make.leading.trailing.equalToSuperview().inset(16)
-      make.top.bottom.equalToSuperview()
+      make.center.equalToSuperview()
     }
   }
 }
@@ -53,5 +57,28 @@ extension TitleLogoView {
     titleLabel.text = product.store.rawValue
     titleLabel.textColor = product.store.fontColor
     backgroundColor = product.store.bgColor
+
+    let width: Int
+
+    switch product.store {
+    case .eMart, .miniStop, .sevenEleven:
+      width = 80
+    default:
+      width = 50
+    }
+
+    if isInitialized {
+      self.snp.updateConstraints { make in
+        make.height.equalTo(20)
+        make.width.equalTo(width)
+      }
+    } else {
+      self.snp.makeConstraints { make in
+        make.height.equalTo(20)
+        make.width.equalTo(width)
+      }
+    }
+
+    isInitialized = true
   }
 }
