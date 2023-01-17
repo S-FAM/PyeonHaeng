@@ -124,7 +124,7 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
       print("click: \(indexPath.row)")
     case 2:
       // 리뷰남기기
-      print("click: \(indexPath.row)")
+      requestReview()
     case 3:
       // 문의하기
       sendMail()
