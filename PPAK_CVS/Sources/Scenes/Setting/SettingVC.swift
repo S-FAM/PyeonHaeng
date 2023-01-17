@@ -107,6 +107,12 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     cell.iconImage.image = settingValue?.image
     cell.setDetail(indexPath.row)
     cell.selectionStyle = .none
+
+    // 민지님 요청으로 클릭제한처리
+    if indexPath.row == 2 {
+      cell.isUserInteractionEnabled = false
+    }
+
     return cell
   }
 
