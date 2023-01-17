@@ -126,15 +126,18 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     case 0:
       // 푸시설정
       moveToSystemSetting()
+      print("click: \(indexPath.row)")
     case 1:
       // 공지사항
       print("click: \(indexPath.row)")
     case 2:
       // 리뷰남기기
       requestReview()
+      print("click: \(indexPath.row)")
     case 3:
       // 문의하기
       sendMail()
+      print("click: \(indexPath.row)")
     case 4:
       // 개발자 응원학
       print("click: \(indexPath.row)")
