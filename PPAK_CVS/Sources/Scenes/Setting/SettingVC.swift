@@ -245,3 +245,14 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
     }
   }
 }
+
+// MARK: RequestReview
+
+extension SettingViewController {
+
+  func requestReview() {
+    guard let writeReviewURL = URL(string: "https://apps.apple.com/app/\(Configs.appID)?action=write-review")
+        else { fatalError("Expected a valid URL") }
+    UIApplication.shared.open(writeReviewURL, options: [:], completionHandler: nil)
+  }
+}
