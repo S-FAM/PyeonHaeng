@@ -106,6 +106,7 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     cell.titleLabel.text = settingValue?.description
     cell.iconImage.image = settingValue?.image
     cell.setDetail(indexPath.row)
+    cell.selectionStyle = .none
     return cell
   }
 
