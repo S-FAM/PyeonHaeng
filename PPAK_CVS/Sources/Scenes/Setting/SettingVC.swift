@@ -185,7 +185,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
   // TODO: 앱스토어 링크 수정필요
   /// 앱스토어로 이동시키는 함수
   private func moveToAppStore() {
-    if let url = URL(string: Configs.appStoreURL),
+    if let url = URL(string: Configs.appStoreMailURL),
         UIApplication.shared.canOpenURL(url) {
       if #available(iOS 10.0, *) {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
