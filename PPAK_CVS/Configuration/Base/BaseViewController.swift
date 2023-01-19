@@ -16,6 +16,7 @@ class BaseViewController: UIViewController {
     setupConstraints()
     setupStyles()
     bind() // deprecated soon
+    navigationController?.interactivePopGestureRecognizer?.delegate = self
   }
 
   /// UI 프로퍼티를 view에 할당합니다.
@@ -52,7 +53,7 @@ class BaseViewController: UIViewController {
   ///   // codes..
   /// }
   /// ```
-  func setupStyles() { }
+  func setupStyles() {}
 
   /// Action, State 스트림을 bind합니다.
   /// 예를들어, Button이 tap 되었을 때, 또는 tableView를 rx로 설정할 때 이용됩니다.
@@ -69,4 +70,10 @@ class BaseViewController: UIViewController {
   /// ```
   @available(*, deprecated, renamed: "bind(viewModel:)")
   func bind() { }
+}
+
+extension BaseViewController: UIGestureRecognizerDelegate {
+  func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    return navigationController?.viewControllers.count ?? 0 > 1
+  }
 }

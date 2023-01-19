@@ -38,7 +38,6 @@ final class BookmarkViewController: BaseViewController, Viewable {
 
   override func setupStyles() {
     super.setupStyles()
-    navigationController?.isNavigationBarHidden = true
     view.backgroundColor = CVSType.all.bgColor
   }
 
