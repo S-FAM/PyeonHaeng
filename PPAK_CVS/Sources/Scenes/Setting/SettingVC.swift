@@ -39,6 +39,7 @@ final class SettingViewController: BaseViewController, Viewable {
     super.setupStyles()
     view.backgroundColor = .white
     setGesture()
+    tableView.separatorStyle = .none
   }
 
   override func setupLayouts() {
@@ -105,6 +106,13 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     cell.titleLabel.text = settingValue?.description
     cell.iconImage.image = settingValue?.image
     cell.setDetail(indexPath.row)
+    cell.selectionStyle = .none
+
+    // 민지님 요청으로 클릭제한처리
+    if indexPath.row == 2 {
+      cell.isUserInteractionEnabled = false
+    }
+
     return cell
   }
 
@@ -118,15 +126,18 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     case 0:
       // 푸시설정
       moveToSystemSetting()
+      print("click: \(indexPath.row)")
     case 1:
       // 공지사항
       print("click: \(indexPath.row)")
     case 2:
       // 리뷰남기기
+      requestReview()
       print("click: \(indexPath.row)")
     case 3:
       // 문의하기
       sendMail()
+      print("click: \(indexPath.row)")
     case 4:
       // 개발자 응원학
       print("click: \(indexPath.row)")
@@ -174,7 +185,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
   // TODO: 앱스토어 링크 수정필요
   /// 앱스토어로 이동시키는 함수
   private func moveToAppStore() {
-    if let url = URL(string: Configs.appStoreURL),
+    if let url = URL(string: Configs.appStoreMailURL),
         UIApplication.shared.canOpenURL(url) {
       if #available(iOS 10.0, *) {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -242,5 +253,16 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
     if UIApplication.shared.canOpenURL(url) {
         UIApplication.shared.open(url)
     }
+  }
+}
+
+// MARK: RequestReview
+
+extension SettingViewController {
+
+  func requestReview() {
+    guard let writeReviewURL = URL(string: "https://apps.apple.com/app/\(Configs.appID)?action=write-review")
+        else { fatalError("Expected a valid URL") }
+    UIApplication.shared.open(writeReviewURL, options: [:], completionHandler: nil)
   }
 }
