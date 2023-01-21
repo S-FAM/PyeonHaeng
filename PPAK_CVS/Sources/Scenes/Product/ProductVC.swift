@@ -88,7 +88,8 @@ final class ProductViewController: BaseViewController, Viewable {
     super.setupConstraints()
 
     navigationHeaderBarView.snp.makeConstraints { make in
-      make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+      make.top.equalTo(view.safeAreaLayoutGuide)
+      make.leading.trailing.equalToSuperview()
       make.height.equalTo(60)
     }
 
@@ -111,8 +112,13 @@ final class ProductViewController: BaseViewController, Viewable {
 
     collectionView.snp.makeConstraints { make in
       make.top.equalTo(navigationHeaderBarView.snp.bottom)
-      make.horizontalEdges.bottom.equalToSuperview()
+      make.leading.trailing.bottom.equalToSuperview()
     }
+  }
+  
+  override func setupStyles() {
+    super.setupStyles()
+    view.backgroundColor = .white
   }
 
   func bind(viewModel: ProductViewModel) {
