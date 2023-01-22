@@ -105,11 +105,18 @@ final class GoodsCell: UICollectionViewCell {
 
 extension GoodsCell {
   /// 명시적으로 호출해야 합니다.
-  func updateCell(_ product: ProductModel) {
+  func updateCell(_ product: ProductModel, showTitleLogoView: Bool) {
     goodsLabel.text = product.name
-    priceLabel.text = "\(product.price)원"
+    
+    let discount = product.saleType == .onePlusOne ? 2 : 3
+    let multiply = product.saleType == .onePlusOne ? 1 : 2
+    let unitPrice = Int(product.price / discount * multiply).commaRepresentation
+    priceLabel.text = "\(product.price.commaRepresentation)원(개당 \(unitPrice)원)"
+    
     saleTypeView.updateStyles(product)
-    titleLogoView.updateStyles(product)
+    if showTitleLogoView {
+      titleLogoView.updateStyles(product)
+    }
 
     goodsImage.kf.setImage(
       with: URL(string: product.imageLink ?? ""),

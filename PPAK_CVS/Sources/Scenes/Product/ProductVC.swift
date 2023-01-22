@@ -13,6 +13,9 @@ import SnapKit
 import Then
 
 final class ProductViewController: BaseViewController, Viewable {
+  
+  // test data (will delete)
+  private var previousHistory: [ProductModel] = []
 
   private let navigationHeaderBarView = UIView().then {
     $0.backgroundColor = .white
@@ -41,7 +44,7 @@ final class ProductViewController: BaseViewController, Viewable {
     $0.collectionViewLayout = UICollectionViewFlowLayout().then { layout in
       layout.headerReferenceSize = CGSize(width: view.bounds.width, height: 404)
       layout.itemSize = CGSize(width: self.view.bounds.width, height: 125)
-      layout.sectionInset = UIEdgeInsets(top: 24, left: 0, bottom: 16, right: 0)
+      layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
     }
     $0.bounces = false
     $0.register(GoodsCell.self, forCellWithReuseIdentifier: GoodsCell.id)
@@ -129,6 +132,38 @@ final class ProductViewController: BaseViewController, Viewable {
     Observable.combineLatest(modelObservable, headerViewObservable)
       .subscribe(onNext: { [weak self] model, headerView in
         headerView.configureUI(with: model)
+        
+        // --- test data(will delete) ---
+        self?.previousHistory.append(
+          ProductModel(
+            imageLink: model.imageLink,
+            name: "2022년 12월 행사 가격",
+            price: model.price,
+            store: model.store,
+            saleType: model.saleType
+          )
+        )
+        self?.previousHistory.append(
+          ProductModel(
+            imageLink: model.imageLink,
+            name: "2022년 11월 행사 가격",
+            price: model.price,
+            store: model.store,
+            saleType: model.saleType
+          )
+        )
+        self?.previousHistory.append(
+          ProductModel(
+            imageLink: model.imageLink,
+            name: "2022년 10월 행사 가격",
+            price: model.price,
+            store: model.store,
+            saleType: model.saleType
+          )
+        )
+        // -------------------
+        
+        self?.collectionView.reloadData()
         self?.collectionView.backgroundColor = model.store.bgColor
       })
       .disposed(by: disposeBag)
@@ -157,16 +192,21 @@ final class ProductViewController: BaseViewController, Viewable {
 extension ProductViewController: UICollectionViewDataSource {
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 10
+    return self.previousHistory.count
   }
 
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    cellForItemAt indexPath: IndexPath
+  ) -> UICollectionViewCell {
     guard let cell = collectionView.dequeueReusableCell(
       withReuseIdentifier: GoodsCell.id,
       for: indexPath
     ) as? GoodsCell else {
       fatalError("GoodsCell을 생성할 수 없습니다.")
     }
+    
+    cell.updateCell(self.previousHistory[indexPath.row], showTitleLogoView: false)
     return cell
   }
 
