@@ -7,18 +7,23 @@
 
 import Foundation
 
+import RxSwift
+
 final class CVSStorage {
 
   static let shared = CVSStorage()
-  
+
   private let key = "CVS"
   private let userDefaults = UserDefaults.standard
   private init() {}
-  
+
+  lazy var didChangeCVS = BehaviorSubject<CVSType>(value: cvs)
+
   lazy var cvs: CVSType = load() {
     didSet {
       if let encoded = try? JSONEncoder().encode(cvs) {
         userDefaults.set(encoded, forKey: key)
+        didChangeCVS.onNext(cvs)
       }
     }
   }
@@ -31,7 +36,7 @@ final class CVSStorage {
       return .all
     }
   }
-  
+
   func save(_ cvs: CVSType) {
     self.cvs = cvs
   }
