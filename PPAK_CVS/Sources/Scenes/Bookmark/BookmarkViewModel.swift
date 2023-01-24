@@ -30,11 +30,11 @@ final class BookmarkViewModel: ViewModel {
     var isHiddenSortDropdown: Bool = true
     var showsHomeVC: Bool = false
     var currentSort: SortType = .ascending
-    var currentCVS: CVSType = .all
+    var currentCVS: CVSType = CVSStorage.shared.cvs
     var currentEvent: EventType = .all
     var currentTarget: String = ""
     var isLoading: Bool = false
-    var currentProducts: [ProductModel] = ProductStorage.shared.products
+    var currentProducts: [ProductModel] = ProductStorage.shared.retrieve(cvs: CVSStorage.shared.cvs)
   }
 
   var initialState = State()
@@ -74,6 +74,8 @@ final class BookmarkViewModel: ViewModel {
 
       switch cvsDropdownCase {
       case .cvs(let cvs):
+        CVSStorage.shared.save(cvs)
+        CVSStorage.shared.didChangeCVS.onNext(cvs)
 
         let updatedProducts = ProductStorage.shared.retrieve(
           cvs: cvs,
