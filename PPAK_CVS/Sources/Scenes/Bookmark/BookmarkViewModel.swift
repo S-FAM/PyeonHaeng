@@ -34,7 +34,7 @@ final class BookmarkViewModel: ViewModel {
     var currentEvent: EventType = .all
     var currentTarget: String = ""
     var isLoading: Bool = false
-    var currentProducts: [ProductModel] = Storage.shared.products
+    var currentProducts: [ProductModel] = ProductStorage.shared.products
   }
 
   var initialState = State()
@@ -55,7 +55,7 @@ final class BookmarkViewModel: ViewModel {
 
     case .didChangeEvent(let event):
 
-      let updatedProducts = Storage.shared.retrieve(
+      let updatedProducts = ProductStorage.shared.retrieve(
         cvs: currentState.currentCVS,
         event: event,
         sort: .none,
@@ -75,7 +75,7 @@ final class BookmarkViewModel: ViewModel {
       switch cvsDropdownCase {
       case .cvs(let cvs):
 
-        let updatedProducts = Storage.shared.retrieve(
+        let updatedProducts = ProductStorage.shared.retrieve(
           cvs: cvs,
           event: currentState.currentEvent,
           sort: .none)
@@ -96,7 +96,7 @@ final class BookmarkViewModel: ViewModel {
 
     case .didChangeSearchBarText(let target):
 
-      let updatedProducts = Storage.shared.retrieve(
+      let updatedProducts = ProductStorage.shared.retrieve(
         cvs: currentState.currentCVS,
         event: currentState.currentEvent,
         sort: currentState.currentSort,
@@ -114,7 +114,7 @@ final class BookmarkViewModel: ViewModel {
 
     case .didTapDropdownSort(let sort):
 
-      let updatedProducts = Storage.shared.retrieve(
+      let updatedProducts = ProductStorage.shared.retrieve(
         cvs: currentState.currentCVS,
         event: currentState.currentEvent,
         sort: sort,
