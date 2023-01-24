@@ -56,7 +56,7 @@ final class BookmarkViewModel: ViewModel {
       ])
 
     case .didChangeEvent(let event):
-      
+
       let updatedProducts = Storage.shared.retrieve(
         cvs: currentState.currentCVS,
         event: event,
@@ -152,7 +152,7 @@ final class BookmarkViewModel: ViewModel {
 
     case .setHomeVC(let state):
       nextState.showsHomeVC = state
-      
+
     case .setSettingVC(let state):
       nextState.showsSettingVC = state
 
