@@ -17,7 +17,7 @@ final class CVSStorage {
   private let userDefaults = UserDefaults.standard
   private init() {}
 
-  lazy var didChangeCVS = BehaviorSubject<CVSType>(value: cvs)
+  lazy var didChangeCVS = PublishSubject<CVSType>()
 
   lazy var cvs: CVSType = load() {
     didSet {
