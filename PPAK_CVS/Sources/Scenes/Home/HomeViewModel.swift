@@ -44,7 +44,7 @@ final class HomeViewModel: ViewModel {
     var showsSettingVC: Bool = false
     var currentSortType: SortType = .none
     var currentEventType: EventType = .all
-    var currentCVSType: CVSType = .all
+    var currentCVSType: CVSType = CVSStorage.shared.cvs
     var currentTarget: String = ""
     var isLoading: Bool = false
     var isBlockedRequest: Bool = false
@@ -58,7 +58,7 @@ final class HomeViewModel: ViewModel {
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
     case .viewDidLoad:
-      return requestProducts(cvs: .all, event: .all, sort: .none)
+      return requestProducts(cvs: currentState.currentCVSType, event: .all, sort: .none)
 
     case .fetchMoreData:
       let nextOffset = currentState.currentOffset + 20
@@ -92,6 +92,7 @@ final class HomeViewModel: ViewModel {
     case .didTapBookmarkButton:
       guard currentState.showsBookmarkVC == false else { return .empty() }
       return .concat([
+        .just(.hideDropdown),
         .just(.setBookmarkVC(true)),
         .just(.setBookmarkVC(false))
       ])
@@ -114,6 +115,8 @@ final class HomeViewModel: ViewModel {
     case .didTapDropdownCVS(let cvsDropdownCase):
       switch cvsDropdownCase {
       case .cvs(let cvsType):
+        CVSStorage.shared.save(cvsType)
+
         return .concat([
           .just(.setLoading(true)),
           .just(.hideDropdown),
