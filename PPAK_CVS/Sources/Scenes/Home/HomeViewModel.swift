@@ -110,7 +110,7 @@ final class HomeViewModel: ViewModel {
           name: currentState.currentTarget
         )
       ])
-
+      
     case .didTapDropdownCVS(let cvsDropdownCase):
       switch cvsDropdownCase {
       case .cvs(let cvsType):
