@@ -23,7 +23,6 @@ final class CVSStorage {
     didSet {
       if let encoded = try? JSONEncoder().encode(cvs) {
         userDefaults.set(encoded, forKey: key)
-        didChangeCVS.onNext(cvs)
       }
     }
   }
