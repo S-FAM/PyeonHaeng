@@ -141,6 +141,13 @@ final class HomeViewController: BaseViewController, Viewable {
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
+    // CVSStorage 편의점 변경 감지
+    CVSStorage.shared.didChangeCVS
+      .distinctUntilChanged()
+      .map { HomeViewModel.Action.didTapDropdownCVS(.cvs($0)) }
+      .bind(to: viewModel.action)
+      .disposed(by: disposeBag)
+
     // MARK: - State
 
     // 편의점 로고 드롭다운 애니메이션 동작
