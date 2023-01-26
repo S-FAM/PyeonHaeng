@@ -105,7 +105,7 @@ final class GoodsCell: UICollectionViewCell {
 
 extension GoodsCell {
   /// 명시적으로 호출해야 합니다.
-  func updateCell(_ product: ProductModel, showTitleLogoView: Bool) {
+  func updateCell(_ product: ProductModel, isShowTitleLogoView: Bool) {
     goodsLabel.text = product.name
     
     let discount = product.saleType == .onePlusOne ? 2 : 3
@@ -114,7 +114,7 @@ extension GoodsCell {
     priceLabel.text = "\(product.price.commaRepresentation)원(개당 \(unitPrice)원)"
     
     saleTypeView.updateStyles(product)
-    if showTitleLogoView {
+    if isShowTitleLogoView {
       titleLogoView.updateStyles(product)
     }
 

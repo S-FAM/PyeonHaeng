@@ -206,7 +206,7 @@ extension ProductViewController: UICollectionViewDataSource {
       fatalError("GoodsCell을 생성할 수 없습니다.")
     }
     
-    cell.updateCell(self.previousHistory[indexPath.row], showTitleLogoView: false)
+    cell.updateCell(self.previousHistory[indexPath.row], isShowTitleLogoView: false)
     return cell
   }
 

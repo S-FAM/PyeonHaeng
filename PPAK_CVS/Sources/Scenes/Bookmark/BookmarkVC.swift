@@ -232,7 +232,7 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
     ) as? GoodsCell else {
       return UICollectionViewCell()
     }
-    cell.updateCell(products[indexPath.row], showTitleLogoView: true)
+    cell.updateCell(products[indexPath.row], isShowTitleLogoView: true)
 
     return cell
   }
