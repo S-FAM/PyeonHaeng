@@ -218,7 +218,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       ) as? GoodsCell else {
         return UICollectionViewCell()
       }
-      cell.updateCell(currentState.products[indexPath.row])
+      cell.updateCell(currentState.products[indexPath.row], isShowTitleLogoView: true)
 
       return cell
     } else {
