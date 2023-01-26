@@ -7,9 +7,9 @@
 
 import Foundation
 
-final class Storage {
+final class ProductStorage {
 
-  static let shared = Storage()
+  static let shared = ProductStorage()
 
   private let key = "Storage"
   private let userDefaults = UserDefaults.standard
