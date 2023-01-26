@@ -20,13 +20,19 @@ final class BookmarkCoordinator: BaseCoordinator {
     viewModel.state
       .map { $0.showsHomeVC }
       .filter { $0 }
-      .bind(onNext: { [unowned self] _ in
-        self.toHomeVC()
-      })
+      .withUnretained(self)
+      .bind { $0.0.navigationController.popViewController(animated: true) }
       .disposed(by: disposeBag)
-  }
 
-  func toHomeVC() {
-    self.navigationController.popViewController(animated: true)
+    // BookmarkVC -> SettingVC
+    viewModel.state
+      .map { $0.showsSettingVC }
+      .filter { $0 }
+      .withUnretained(self)
+      .bind { owner, _ in
+        let coordinator = SettingCoordinator(navigationController: owner.navigationController)
+        coordinator.start(childCoordinator: owner.self)
+      }
+      .disposed(by: disposeBag)
   }
 }

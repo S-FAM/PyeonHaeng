@@ -16,6 +16,7 @@ final class BookmarkViewModel: ViewModel {
     case setCVSDropdown
     case setSortDropdown
     case setHomeVC(Bool)
+    case setSettingVC(Bool)
     case hideDropdown
     case setCVS(CVSType)
     case setSort(SortType)
@@ -29,6 +30,7 @@ final class BookmarkViewModel: ViewModel {
     var isHiddenCVSDropdown: Bool = true
     var isHiddenSortDropdown: Bool = true
     var showsHomeVC: Bool = false
+    var showsSettingVC: Bool = false
     var currentSort: SortType = .ascending
     var currentCVS: CVSType = .all
     var currentEvent: EventType = .all
@@ -91,7 +93,11 @@ final class BookmarkViewModel: ViewModel {
         ])
 
       case .setting:
-        return .empty()
+        return .concat([
+          .just(.hideDropdown),
+          .just(.setSettingVC(true)),
+          .just(.setSettingVC(false))
+        ])
       }
 
     case .didChangeSearchBarText(let target):
@@ -146,6 +152,9 @@ final class BookmarkViewModel: ViewModel {
 
     case .setHomeVC(let state):
       nextState.showsHomeVC = state
+
+    case .setSettingVC(let state):
+      nextState.showsSettingVC = state
 
     case .hideDropdown:
       nextState.isHiddenSortDropdown = true
