@@ -148,6 +148,15 @@ final class HomeViewController: BaseViewController, Viewable {
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
+    // 헤더 터치 이밴트
+    header.rx.tapGesture { _, delegate in
+      delegate.simultaneousRecognitionPolicy = .never
+    }
+      .when(.recognized)
+      .map { _ in HomeViewModel.Action.didTapHeader }
+      .bind(to: viewModel.action)
+      .disposed(by: disposeBag)
+
     // MARK: - State
 
     // 편의점 로고 드롭다운 애니메이션 동작

@@ -5,6 +5,7 @@ final class HomeViewModel: ViewModel {
 
   enum Action {
     case viewDidLoad
+    case didTapHeader
     case didTapCVSButton
     case didTapSortButton
     case didTapBookmarkButton
@@ -74,6 +75,9 @@ final class HomeViewModel: ViewModel {
         )
         .delay(.seconds(1), scheduler: MainScheduler.instance)
       ])
+
+    case .didTapHeader:
+      return .just(.hideDropdown)
 
     case .didTapCVSButton:
       let isVisible = currentState.isVisibleCVSDropdown

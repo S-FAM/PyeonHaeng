@@ -107,12 +107,12 @@ extension GoodsCell {
   /// 명시적으로 호출해야 합니다.
   func updateCell(_ product: ProductModel, isShowTitleLogoView: Bool) {
     goodsLabel.text = product.name
-    
+
     let discount = product.saleType == .onePlusOne ? 2 : 3
     let multiply = product.saleType == .onePlusOne ? 1 : 2
     let unitPrice = Int(product.price / discount * multiply).commaRepresentation
     priceLabel.text = "\(product.price.commaRepresentation)원(개당 \(unitPrice)원)"
-    
+
     saleTypeView.updateStyles(product)
     if isShowTitleLogoView {
       titleLogoView.updateStyles(product)

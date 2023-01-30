@@ -13,7 +13,7 @@ import SnapKit
 import Then
 
 final class ProductViewController: BaseViewController, Viewable {
-  
+
   // test data (will delete)
   private var previousHistory: [ProductModel] = []
 
@@ -118,7 +118,7 @@ final class ProductViewController: BaseViewController, Viewable {
       make.leading.trailing.bottom.equalToSuperview()
     }
   }
-  
+
   override func setupStyles() {
     super.setupStyles()
     view.backgroundColor = .white
@@ -132,7 +132,7 @@ final class ProductViewController: BaseViewController, Viewable {
     Observable.combineLatest(modelObservable, headerViewObservable)
       .subscribe(onNext: { [weak self] model, headerView in
         headerView.configureUI(with: model)
-        
+
         // --- test data(will delete) ---
         self?.previousHistory.append(
           ProductModel(
@@ -162,7 +162,7 @@ final class ProductViewController: BaseViewController, Viewable {
           )
         )
         // -------------------
-        
+
         self?.collectionView.reloadData()
         self?.collectionView.backgroundColor = model.store.bgColor
       })
@@ -205,7 +205,7 @@ extension ProductViewController: UICollectionViewDataSource {
     ) as? GoodsCell else {
       fatalError("GoodsCell을 생성할 수 없습니다.")
     }
-    
+
     cell.updateCell(self.previousHistory[indexPath.row], isShowTitleLogoView: false)
     return cell
   }
