@@ -31,7 +31,7 @@ final class BookmarkCoordinator: BaseCoordinator {
       .withUnretained(self)
       .bind { owner, _ in
         let coordinator = SettingCoordinator(navigationController: owner.navigationController)
-        coordinator.start(childCoordinator: owner.self)
+        owner.start(childCoordinator: coordinator)
       }
       .disposed(by: disposeBag)
   }
