@@ -165,7 +165,6 @@ final class HomeViewController: BaseViewController, Viewable {
         }
       }
     }
-    .debug()
     .map { _ in HomeViewModel.Action.didTapBackground }
     .bind(to: viewModel.action)
     .disposed(by: disposeBag)
