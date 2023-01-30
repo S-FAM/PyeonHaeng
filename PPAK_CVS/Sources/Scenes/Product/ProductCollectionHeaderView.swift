@@ -19,6 +19,7 @@ final class ProductCollectionHeaderView: UICollectionReusableView, Viewable {
   var disposeBag = DisposeBag()
 
   private let productImageView = UIImageView().then {
+    $0.image = UIImage(named: "ic_noImage_large")
     $0.contentMode = .scaleAspectFit
   }
 
@@ -141,7 +142,10 @@ extension ProductCollectionHeaderView {
     titleLogoView.updateStyles(model)
     saleTypeView.updateStyles(model)
 
-    productImageView.kf.setImage(with: URL(string: model.imageLink ?? ""))
+    if let imageLink = model.imageLink,
+       imageLink != "None" {
+      productImageView.kf.setImage(with: URL(string: imageLink))
+    }
 
     curveView.backgroundColor = model.store.bgColor
   }

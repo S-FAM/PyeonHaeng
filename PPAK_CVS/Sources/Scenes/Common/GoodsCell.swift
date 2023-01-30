@@ -32,6 +32,7 @@ final class GoodsCell: UICollectionViewCell {
   }
 
   private let goodsImage = UIImageView().then {
+    $0.image = UIImage(named: "ic_noImage_small")
     $0.contentMode = .scaleAspectFit
   }
 
@@ -118,11 +119,9 @@ extension GoodsCell {
       titleLogoView.updateStyles(product)
     }
 
-    goodsImage.kf.setImage(
-      with: URL(string: product.imageLink ?? ""),
-      options: [
-        .transition(.fade(0.5))
-      ]
-    )
+    if let imageLink = product.imageLink,
+       imageLink != "None" {
+      goodsImage.kf.setImage(with: URL(string: imageLink), options: [.transition(.fade(0.5))])
+    }
   }
 }
