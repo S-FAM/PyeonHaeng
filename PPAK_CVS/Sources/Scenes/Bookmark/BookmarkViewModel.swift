@@ -6,6 +6,7 @@ final class BookmarkViewModel: ViewModel {
     case didTapCVSButton
     case didTapSortButton
     case didTapBackButton
+    case didTapBackground
     case didChangeEvent(EventType)
     case didTapDropdownCVS(CVSDropdownCase)
     case didTapDropdownSort(SortType)
@@ -18,6 +19,7 @@ final class BookmarkViewModel: ViewModel {
     case setHomeVC(Bool)
     case setSettingVC(Bool)
     case hideDropdown
+    case hideKeyboard(Bool)
     case setCVS(CVSType)
     case setSort(SortType)
     case setEvent(EventType)
@@ -29,6 +31,7 @@ final class BookmarkViewModel: ViewModel {
   struct State {
     var isHiddenCVSDropdown: Bool = true
     var isHiddenSortDropdown: Bool = true
+    var showsKeyboard: Bool = false
     var showsHomeVC: Bool = false
     var showsSettingVC: Bool = false
     var currentSort: SortType = .ascending
@@ -53,6 +56,13 @@ final class BookmarkViewModel: ViewModel {
       return .concat([
         .just(.setHomeVC(true)),
         .just(.setHomeVC(false))
+      ])
+
+    case .didTapBackground:
+      return .concat([
+        .just(.hideDropdown),
+        .just(.hideKeyboard(true)),
+        .just(.hideKeyboard(false))
       ])
 
     case .didChangeEvent(let event):
@@ -161,6 +171,9 @@ final class BookmarkViewModel: ViewModel {
     case .hideDropdown:
       nextState.isHiddenSortDropdown = true
       nextState.isHiddenCVSDropdown = true
+
+    case .hideKeyboard(let state):
+      nextState.showsKeyboard = state
 
     case .setCVS(let cvsType):
       nextState.currentCVS = cvsType

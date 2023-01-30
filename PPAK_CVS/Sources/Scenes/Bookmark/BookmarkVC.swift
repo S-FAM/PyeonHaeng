@@ -125,7 +125,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
-    // 테스트 로직
+    // 찜 정보 터치
     header.infoTouchView.rx.tapGesture()
       .skip(1)
       .bind { _ in
@@ -148,6 +148,26 @@ final class BookmarkViewController: BaseViewController, Viewable {
       .map { BookmarkViewModel.Action.didChangeEvent($0) }
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
+
+    // 빈공간 터치 이벤트
+    view.rx.tapGesture { gesture, delegate in
+      gesture.cancelsTouchesInView = false
+      delegate.beginPolicy = .custom { [weak self] gesture in
+        guard let self = self else { return false }
+
+        let hitView = self.view.hitTest(gesture.location(in: self.view), with: .none)
+
+        if hitView === self.header.cvsButton ||
+            hitView === self.header.filterButton {
+          return false
+        } else {
+          return true
+        }
+      }
+    }
+    .map { _ in BookmarkViewModel.Action.didTapBackground }
+    .bind(to: viewModel.action)
+    .disposed(by: disposeBag)
 
     // MARK: - State
 
@@ -211,6 +231,14 @@ final class BookmarkViewController: BaseViewController, Viewable {
       .map { $0.currentTarget }
       .distinctUntilChanged()
       .bind(to: header.searchBar.textField.rx.text)
+      .disposed(by: disposeBag)
+
+    // 키보드 숨김
+    viewModel.state
+      .map { $0.showsKeyboard }
+      .filter { $0 }
+      .withUnretained(self)
+      .bind { owner, _ in owner.view.endEditing(true) }
       .disposed(by: disposeBag)
   }
 }
