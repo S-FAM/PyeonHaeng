@@ -14,6 +14,10 @@ final class SettingViewController: BaseViewController, Viewable {
     $0.backgroundColor = .white
   }
 
+  private var separateView = UIView().then {
+    $0.backgroundColor = UIColor.init(hex: "#DDDDDD")
+  }
+
   private lazy var titleLabel = UILabel().then {
     $0.text = "설정"
     $0.font = .systemFont(ofSize: 18, weight: .bold)
@@ -44,7 +48,7 @@ final class SettingViewController: BaseViewController, Viewable {
 
   override func setupLayouts() {
     super.setupLayouts()
-    [headerBar, tableView].forEach {
+    [headerBar, separateView, tableView].forEach {
       view.addSubview($0)
     }
 
@@ -62,6 +66,12 @@ final class SettingViewController: BaseViewController, Viewable {
       make.height.equalTo(60)
     }
 
+    separateView.snp.makeConstraints { make in
+      make.top.equalTo(headerBar.snp.bottom)
+      make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+      make.height.equalTo(0.5)
+    }
+
     backButton.snp.makeConstraints { make in
       make.width.height.equalTo(44)
       make.centerY.equalToSuperview()
@@ -73,7 +83,7 @@ final class SettingViewController: BaseViewController, Viewable {
     }
 
     tableView.snp.makeConstraints { make in
-      make.top.equalTo(headerBar.snp.bottom).offset(10)
+      make.top.equalTo(separateView.snp.bottom).offset(10)
       make.leading.bottom.equalToSuperview()
       make.trailing.equalToSuperview().inset(16)
     }
