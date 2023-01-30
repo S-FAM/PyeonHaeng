@@ -32,13 +32,13 @@ final class ProductCollectionHeaderView: UICollectionReusableView, Viewable {
     $0.font = Font.priceLabel
     $0.text = "1,500원"
   }
-  
+
   private let badgeStackView = UIStackView().then {
     $0.axis = .horizontal
     $0.distribution = .fill
     $0.spacing = 10
   }
-  
+
   private let titleLogoView = TitleLogoView(cvsType: .all)
   private let saleTypeView = SaleTypeView(cvsType: .all)
 
@@ -85,7 +85,7 @@ extension ProductCollectionHeaderView {
     [productImageView, nameLabel, priceLabel, badgeStackView].forEach {
       wholeStackView.addArrangedSubview($0)
     }
-    
+
     [titleLogoView, saleTypeView].forEach {
       badgeStackView.addArrangedSubview($0)
     }
@@ -108,7 +108,7 @@ extension ProductCollectionHeaderView {
     productImageView.snp.makeConstraints { make in
       make.size.equalTo(150)
     }
-    
+
     saleTypeView.snp.makeConstraints { make in
       make.width.equalTo(45)
       make.height.equalTo(20)
@@ -138,7 +138,7 @@ extension ProductCollectionHeaderView {
 
     nameLabel.text = model.name
     priceLabel.text = "\(model.price.commaRepresentation)원(개당 \(unitPrice)원)"
-    
+
     titleLogoView.updateStyles(model)
     saleTypeView.updateStyles(model)
 

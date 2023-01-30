@@ -33,6 +33,8 @@ final class HomeViewController: BaseViewController, Viewable {
   private let sortDropdownView = SortDropdownView()
   private var header: HomeCollectionHeaderView!
 
+  // MARK: - LifeCycle
+
   // MARK: - Setup
 
   override func setupLayouts() {
@@ -148,6 +150,28 @@ final class HomeViewController: BaseViewController, Viewable {
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
+    // 백그라운드 터치
+    view.rx.tapGesture { gesture, delegate in
+      gesture.cancelsTouchesInView = false
+      delegate.beginPolicy = .custom { [weak self] gesture in
+        guard let self = self else { return false }
+
+        let hitView = self.view.hitTest(gesture.location(in: self.view), with: .none)
+
+        if hitView === self.header.cvsButton ||
+            hitView === self.header.filterButton ||
+            hitView === self.header.searchBar.textField {
+          return false
+        } else {
+          return true
+        }
+      }
+    }
+    .map { _ in HomeViewModel.Action.didTapBackground }
+    .debug()
+    .bind(to: viewModel.action)
+    .disposed(by: disposeBag)
+
     // MARK: - State
 
     // 편의점 로고 드롭다운 애니메이션 동작
@@ -203,6 +227,14 @@ final class HomeViewController: BaseViewController, Viewable {
       .distinctUntilChanged()
       .bind(to: header.searchBar.textField.rx.text)
       .disposed(by: disposeBag)
+
+    // 키보드 숨김
+    viewModel.state
+      .map { $0.showsKeyboard }
+      .filter { $0 }
+      .withUnretained(self)
+      .bind { owner, _ in owner.view.endEditing(true) }
+      .disposed(by: disposeBag)
   }
 }
 
@@ -225,7 +257,11 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       ) as? GoodsCell else {
         return UICollectionViewCell()
       }
-      cell.updateCell(currentState.products[indexPath.row], isShowTitleLogoView: true)
+
+      cell.updateCell(
+        currentState.products[indexPath.row],
+        isShowTitleLogoView: true
+      )
 
       return cell
     } else {
