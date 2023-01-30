@@ -74,7 +74,8 @@ final class SettingViewController: BaseViewController, Viewable {
 
     tableView.snp.makeConstraints { make in
       make.top.equalTo(headerBar.snp.bottom).offset(10)
-      make.leading.trailing.bottom.equalToSuperview()
+      make.leading.bottom.equalToSuperview()
+      make.trailing.equalToSuperview().inset(16)
     }
   }
 
