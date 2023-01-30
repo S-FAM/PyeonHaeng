@@ -33,6 +33,8 @@ final class HomeViewController: BaseViewController, Viewable {
   private let sortDropdownView = SortDropdownView()
   private var header: HomeCollectionHeaderView!
 
+  // MARK: - LifeCycle
+
   // MARK: - Setup
 
   override func setupLayouts() {
@@ -148,14 +150,25 @@ final class HomeViewController: BaseViewController, Viewable {
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
-    // 헤더 터치 이밴트
-    header.rx.tapGesture { _, delegate in
-      delegate.simultaneousRecognitionPolicy = .never
+    view.rx.tapGesture { gesture, delegate in
+      gesture.cancelsTouchesInView = false
+      delegate.beginPolicy = .custom { [weak self] gesture in
+        guard let self = self else { return false }
+
+        let hitView = self.view.hitTest(gesture.location(in: self.view), with: .none)
+
+        if hitView === self.header.cvsButton ||
+            hitView === self.header.filterButton {
+          return false
+        } else {
+          return true
+        }
+      }
     }
-      .when(.recognized)
-      .map { _ in HomeViewModel.Action.didTapHeader }
-      .bind(to: viewModel.action)
-      .disposed(by: disposeBag)
+    .debug()
+    .map { _ in HomeViewModel.Action.didTapBackground }
+    .bind(to: viewModel.action)
+    .disposed(by: disposeBag)
 
     // MARK: - State
 
@@ -212,6 +225,14 @@ final class HomeViewController: BaseViewController, Viewable {
       .distinctUntilChanged()
       .bind(to: header.searchBar.textField.rx.text)
       .disposed(by: disposeBag)
+
+    // 키보드 숨김
+    viewModel.state
+      .map { $0.showsKeyboard }
+      .filter { $0 }
+      .withUnretained(self)
+      .bind { owner, _ in owner.view.endEditing(true) }
+      .disposed(by: disposeBag)
   }
 }
 
@@ -234,7 +255,11 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       ) as? GoodsCell else {
         return UICollectionViewCell()
       }
-      cell.updateCell(currentState.products[indexPath.row], isShowTitleLogoView: true)
+
+      cell.updateCell(
+        currentState.products[indexPath.row],
+        isShowTitleLogoView: true
+      )
 
       return cell
     } else {
@@ -336,6 +361,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     _ collectionView: UICollectionView,
     didSelectItemAt indexPath: IndexPath
   ) {
+    print(#function)
     guard let product = viewModel?.currentState.products[indexPath.row] else { return }
 
     // 특정 제품 클릭
