@@ -150,6 +150,7 @@ final class HomeViewController: BaseViewController, Viewable {
       .bind(to: viewModel.action)
       .disposed(by: disposeBag)
 
+    // 백그라운드 터치
     view.rx.tapGesture { gesture, delegate in
       gesture.cancelsTouchesInView = false
       delegate.beginPolicy = .custom { [weak self] gesture in
@@ -158,7 +159,8 @@ final class HomeViewController: BaseViewController, Viewable {
         let hitView = self.view.hitTest(gesture.location(in: self.view), with: .none)
 
         if hitView === self.header.cvsButton ||
-            hitView === self.header.filterButton {
+            hitView === self.header.filterButton ||
+            hitView === self.header.searchBar.textField {
           return false
         } else {
           return true
@@ -166,6 +168,7 @@ final class HomeViewController: BaseViewController, Viewable {
       }
     }
     .map { _ in HomeViewModel.Action.didTapBackground }
+    .debug()
     .bind(to: viewModel.action)
     .disposed(by: disposeBag)
 
@@ -360,7 +363,6 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     _ collectionView: UICollectionView,
     didSelectItemAt indexPath: IndexPath
   ) {
-    print(#function)
     guard let product = viewModel?.currentState.products[indexPath.row] else { return }
 
     // 특정 제품 클릭
