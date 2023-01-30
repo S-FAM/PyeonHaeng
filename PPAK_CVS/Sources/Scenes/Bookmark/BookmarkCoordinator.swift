@@ -7,17 +7,17 @@ final class BookmarkCoordinator: BaseCoordinator {
 
   override func start() {
     let viewController = BookmarkViewController()
-    let viewModel = BookmarkViewModel()
+    let reactor = BookmarkViewReactor()
     viewController.coordinator = self
-    viewController.viewModel = viewModel
-    bind(viewModel)
+    viewController.reactor = reactor
+    bind(reactor)
     self.navigationController.pushViewController(viewController, animated: true)
   }
 
-  func bind(_ viewModel: BookmarkViewModel) {
+  func bind(_ reactor: BookmarkViewReactor) {
 
     // BookmarkVC -> HomeVC
-    viewModel.state
+    reactor.state
       .map { $0.showsHomeVC }
       .filter { $0 }
       .withUnretained(self)
@@ -25,7 +25,7 @@ final class BookmarkCoordinator: BaseCoordinator {
       .disposed(by: disposeBag)
 
     // BookmarkVC -> SettingVC
-    viewModel.state
+    reactor.state
       .map { $0.showsSettingVC }
       .filter { $0 }
       .withUnretained(self)

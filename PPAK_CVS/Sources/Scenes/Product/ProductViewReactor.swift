@@ -1,14 +1,15 @@
 //
-//  ProductViewModel.swift
+//  ProductViewReactor.swift
 //  PPAK_CVS
 //
 //  Created by 홍승현 on 2023/01/02.
 //
 
+import ReactorKit
 import RxSwift
 import RxCocoa
 
-final class ProductViewModel: ViewModel {
+final class ProductViewReactor: Reactor {
 
   enum Action {
     case updateProduct(ProductModel)

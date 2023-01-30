@@ -7,12 +7,13 @@
 
 import UIKit
 
+import ReactorKit
 import RxSwift
 import RxCocoa
 import SnapKit
 import Then
 
-final class ProductViewController: BaseViewController, Viewable {
+final class ProductViewController: BaseViewController, View {
 
   // test data (will delete)
   private var previousHistory: [ProductModel] = []
@@ -60,7 +61,7 @@ final class ProductViewController: BaseViewController, Viewable {
   private var collectionHeaderView: ProductCollectionHeaderView? {
     willSet {
       guard let newValue = newValue else { return }
-      newValue.viewModel = ProductHeaderViewViewModel()
+      newValue.reactor = ProductHeaderViewReactor()
       bind(newValue)
       self.headerViewInitializeRelay.accept(newValue)
     }
@@ -124,9 +125,9 @@ final class ProductViewController: BaseViewController, Viewable {
     view.backgroundColor = .white
   }
 
-  func bind(viewModel: ProductViewModel) {
+  func bind(reactor: ProductViewReactor) {
 
-    let modelObservable = viewModel.state.map { $0.model }
+    let modelObservable = reactor.state.map { $0.model }
     let headerViewObservable = headerViewInitializeRelay.asObservable()
 
     Observable.combineLatest(modelObservable, headerViewObservable)
@@ -170,7 +171,7 @@ final class ProductViewController: BaseViewController, Viewable {
   }
 
   func bind(_ headerView: ProductCollectionHeaderView) {
-    guard let headerViewModel = headerView.viewModel else { return }
+    guard let headerViewModel = headerView.reactor else { return }
 
     headerViewModel.state
       .map { $0.shareImage }
@@ -232,12 +233,3 @@ extension ProductViewController: UICollectionViewDataSource {
     return headerView
   }
 }
-
-#if canImport(SwiftUI) && DEBUG
-import SwiftUI
-struct ProductViewControllerPreview: PreviewProvider {
-  static var previews: some View {
-    ProductViewController().toPreview()
-  }
-}
-#endif

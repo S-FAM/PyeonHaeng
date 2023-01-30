@@ -2,11 +2,12 @@ import UIKit
 
 import Then
 import SnapKit
+import ReactorKit
 import RxSwift
 import RxCocoa
 import RxGesture
 
-final class BookmarkViewController: BaseViewController, Viewable {
+final class BookmarkViewController: BaseViewController, View {
 
   // MARK: - Properties
 
@@ -85,35 +86,35 @@ final class BookmarkViewController: BaseViewController, Viewable {
 
   // MARK: - Bind
 
-  func bind(viewModel: BookmarkViewModel) {}
+  func bind(reactor: BookmarkViewReactor) {}
 
   private func bindHeader() {
-    guard let viewModel = viewModel else { return }
+    guard let reactor = reactor else { return }
 
     // MARK: - Action
 
     // 뒤로 가기 버튼 클릭
     header.backButton.rx.tap
-      .map { BookmarkViewModel.Action.didTapBackButton }
-      .bind(to: viewModel.action)
+      .map { BookmarkViewReactor.Action.didTapBackButton }
+      .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // 현재 편의점 로고 버튼 클릭
     header.cvsButton.rx.tap
-      .map { BookmarkViewModel.Action.didTapCVSButton }
-      .bind(to: viewModel.action)
+      .map { BookmarkViewReactor.Action.didTapCVSButton }
+      .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // 필터 버튼 클릭
     header.filterButton.rx.tap
-      .map { BookmarkViewModel.Action.didTapSortButton }
-      .bind(to: viewModel.action)
+      .map { BookmarkViewReactor.Action.didTapSortButton }
+      .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // 편의점 드롭다운 리스트 버튼 클릭
     cvsDropdownView.buttonEventSubject
-      .map { BookmarkViewModel.Action.didTapDropdownCVS($0) }
-      .bind(to: viewModel.action)
+      .map { BookmarkViewReactor.Action.didTapDropdownCVS($0) }
+      .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // 서치바 텍스트 반응
@@ -121,8 +122,8 @@ final class BookmarkViewController: BaseViewController, Viewable {
       .withUnretained(self)
       .map { $0.0.header.searchBar.textField.text }
       .filterNil()
-      .map { BookmarkViewModel.Action.didChangeSearchBarText($0) }
-      .bind(to: viewModel.action)
+      .map { BookmarkViewReactor.Action.didChangeSearchBarText($0) }
+      .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // 찜 정보 터치
@@ -137,16 +138,16 @@ final class BookmarkViewController: BaseViewController, Viewable {
 
     // 정렬조건 변경
     sortDropdownView.buttonEventSubject
-      .map { BookmarkViewModel.Action.didTapDropdownSort($0) }
-      .bind(to: viewModel.action)
+      .map { BookmarkViewReactor.Action.didTapDropdownSort($0) }
+      .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // 이벤트 감지
     header.pageControl.didChangeEvent
       .skip(1)
       .distinctUntilChanged()
-      .map { BookmarkViewModel.Action.didChangeEvent($0) }
-      .bind(to: viewModel.action)
+      .map { BookmarkViewReactor.Action.didChangeEvent($0) }
+      .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // 빈공간 터치 이벤트
@@ -166,14 +167,14 @@ final class BookmarkViewController: BaseViewController, Viewable {
         }
       }
     }
-    .map { _ in BookmarkViewModel.Action.didTapBackground }
-    .bind(to: viewModel.action)
+    .map { _ in BookmarkViewReactor.Action.didTapBackground }
+    .bind(to: reactor.action)
     .disposed(by: disposeBag)
 
     // MARK: - State
 
     // 편의점 로고 드롭다운 애니메이션 동작
-    viewModel.state
+    reactor.state
       .map { $0.isHiddenCVSDropdown }
       .distinctUntilChanged()
       .withUnretained(self)
@@ -187,7 +188,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
       .disposed(by: disposeBag)
 
     // 필터 드롭다운 애니메이션 동작
-    viewModel.state
+    reactor.state
       .map { $0.isHiddenSortDropdown }
       .distinctUntilChanged()
       .withUnretained(self)
@@ -201,7 +202,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
       .disposed(by: disposeBag)
 
     // 현재 편의점 타입 변경 반응
-    viewModel.state
+    reactor.state
       .map { $0.currentCVS }
       .withUnretained(self)
       .bind { owner, cvs in
@@ -213,7 +214,7 @@ final class BookmarkViewController: BaseViewController, Viewable {
       .disposed(by: disposeBag)
 
     // 현재 상품 목록
-    viewModel.state
+    reactor.state
       .map { $0.currentProducts }
       .distinctUntilChanged()
       .withUnretained(self)
@@ -221,21 +222,21 @@ final class BookmarkViewController: BaseViewController, Viewable {
       .disposed(by: disposeBag)
 
     // 로딩 중
-    viewModel.state
+    reactor.state
       .map { $0.isLoading }
       .distinctUntilChanged()
       .bind(to: indicator.rx.isAnimating)
       .disposed(by: disposeBag)
 
     // 서치바 텍스트
-    viewModel.state
+    reactor.state
       .map { $0.currentTarget }
       .distinctUntilChanged()
       .bind(to: header.searchBar.textField.rx.text)
       .disposed(by: disposeBag)
 
     // 키보드 숨김
-    viewModel.state
+    reactor.state
       .map { $0.showsKeyboard }
       .filter { $0 }
       .withUnretained(self)
@@ -251,7 +252,7 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
     _ collectionView: UICollectionView,
     cellForItemAt indexPath: IndexPath
   ) -> UICollectionViewCell {
-    guard let products = viewModel?.currentState.currentProducts else {
+    guard let products = reactor?.currentState.currentProducts else {
       return UICollectionViewCell()
     }
 
@@ -270,7 +271,7 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
     _ collectionView: UICollectionView,
     numberOfItemsInSection section: Int
   ) -> Int {
-    guard let products = viewModel?.currentState.currentProducts else { return 0 }
+    guard let products = reactor?.currentState.currentProducts else { return 0 }
     return products.count
   }
 

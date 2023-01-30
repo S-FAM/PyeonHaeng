@@ -2,12 +2,13 @@ import UIKit
 
 import Then
 import SnapKit
+import ReactorKit
 import RxSwift
 import RxCocoa
 import RxGesture
 import MessageUI
 
-final class SettingViewController: BaseViewController, Viewable {
+final class SettingViewController: BaseViewController, View {
 
   // MARK: - Properties
   private lazy var headerBar = UIView().then {
@@ -98,7 +99,7 @@ final class SettingViewController: BaseViewController, Viewable {
     navigationController?.popViewController(animated: true)
   }
 
-  func bind(viewModel: SettingViewModel) { }
+  func bind(reactor: SettingViewReactor) { }
 }
 
 // MARK: - TableView Delegate

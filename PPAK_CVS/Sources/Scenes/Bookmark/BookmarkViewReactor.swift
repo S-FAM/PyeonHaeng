@@ -1,6 +1,7 @@
+import ReactorKit
 import RxSwift
 
-final class BookmarkViewModel: ViewModel {
+final class BookmarkViewReactor: Reactor {
 
   enum Action {
     case didTapCVSButton

@@ -6,18 +6,18 @@ import RxCocoa
 final class HomeCoordinator: BaseCoordinator {
 
   override func start() {
-    let viewModel = HomeViewModel()
+    let reactor = HomeViewReactor()
     let viewController = HomeViewController()
     viewController.coordinator = self
-    viewController.viewModel = viewModel
-    bind(viewModel)
+    viewController.reactor = reactor
+    bind(reactor)
     self.navigationController.setViewControllers([viewController], animated: true)
   }
 
-  func bind(_ viewModel: HomeViewModel) {
+  func bind(_ reactor: HomeViewReactor) {
 
     // Bookmark VC
-    viewModel.state
+    reactor.state
       .map { $0.showsBookmarkVC }
       .filter { $0 }
       .withUnretained(self)
@@ -28,7 +28,7 @@ final class HomeCoordinator: BaseCoordinator {
       .disposed(by: disposeBag)
 
     // ProductVC
-    viewModel.state
+    reactor.state
       .map { $0.showsProductVC }
       .filter { $0.0 }
       .withUnretained(self)
@@ -39,7 +39,7 @@ final class HomeCoordinator: BaseCoordinator {
       .disposed(by: disposeBag)
 
     // SettingVC
-    viewModel.state
+    reactor.state
       .map { $0.showsSettingVC }
       .filter { $0 }
       .withUnretained(self)

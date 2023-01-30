@@ -1,7 +1,8 @@
+import ReactorKit
 import RxSwift
 import RxCocoa
 
-final class HomeViewModel: ViewModel {
+final class HomeViewReactor: Reactor {
 
   enum Action {
     case viewDidLoad
@@ -249,7 +250,7 @@ final class HomeViewModel: ViewModel {
   }
 }
 
-extension HomeViewModel {
+extension HomeViewReactor {
   func requestProducts(
     cvs: CVSType,
     event: EventType,
