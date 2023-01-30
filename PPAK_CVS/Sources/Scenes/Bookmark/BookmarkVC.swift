@@ -159,8 +159,9 @@ final class BookmarkViewController: BaseViewController, View {
         let hitView = self.view.hitTest(gesture.location(in: self.view), with: .none)
 
         if hitView === self.header.cvsButton ||
-            hitView === self.header.filterButton ||
-            hitView === self.header.searchBar.textField {
+           hitView === self.header.filterButton ||
+           hitView === self.header.searchBar.textField ||
+           self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) != nil {
           return false
         } else {
           return true

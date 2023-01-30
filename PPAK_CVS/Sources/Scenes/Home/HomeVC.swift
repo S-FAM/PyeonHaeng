@@ -152,26 +152,26 @@ final class HomeViewController: BaseViewController, View {
       .disposed(by: disposeBag)
 
     // 백그라운드 터치
-//    view.rx.tapGesture { gesture, delegate in
-//      gesture.cancelsTouchesInView = false
-//      delegate.beginPolicy = .custom { [weak self] gesture in
-//        guard let self = self else { return false }
-//
-//        let hitView = self.view.hitTest(gesture.location(in: self.view), with: .none)
-//
-//        if hitView === self.header.cvsButton ||
-//            hitView === self.header.filterButton ||
-//            hitView === self.header.searchBar.textField {
-//          return false
-//        } else {
-//          return true
-//        }
-//      }
-//    }
-//    .map { _ in HomeViewReactor.Action.didTapBackground }
-//    .debug()
-//    .bind(to: viewModel.action)
-//    .disposed(by: disposeBag)
+    view.rx.tapGesture { gesture, delegate in
+      gesture.cancelsTouchesInView = false
+      delegate.beginPolicy = .custom { [weak self] gesture in
+        guard let self = self else { return false }
+        
+        let hitView = self.view.hitTest(gesture.location(in: self.view), with: .none)
+        
+        if hitView === self.header.cvsButton ||
+           hitView === self.header.filterButton ||
+           hitView === self.header.searchBar.textField ||
+           self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) != nil {
+          return false
+        } else {
+          return true
+        }
+      }
+    }
+    .map { _ in HomeViewReactor.Action.didTapBackground }
+    .bind(to: reactor.action)
+    .disposed(by: disposeBag)
 
     // MARK: - State
 
