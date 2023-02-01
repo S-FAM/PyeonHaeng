@@ -47,7 +47,6 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
     setupStyles()
     setupLayout()
     setupConstraints()
-
   }
 
   required init?(coder: NSCoder) {

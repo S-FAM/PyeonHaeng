@@ -62,6 +62,7 @@ final class BookmarkViewController: BaseViewController, View {
     super.setupLayouts()
     view.addSubview(collectionView)
     view.addSubview(animationContainerView)
+    view.addSubview(indicator)
   }
 
   override func setupConstraints() {
@@ -69,21 +70,19 @@ final class BookmarkViewController: BaseViewController, View {
       make.leading.trailing.bottom.equalToSuperview()
       make.top.equalTo(view.safeAreaLayoutGuide)
     }
+
+    indicator.snp.makeConstraints { make in
+      make.center.equalToSuperview()
+    }
   }
 
   private func setupDropdown() {
-    view.addSubview(indicator)
-
     [
       sortDropdownView,
       cvsDropdownView
     ].forEach {
       view.addSubview($0)
       $0.isHidden = true
-    }
-
-    indicator.snp.makeConstraints { make in
-      make.center.equalToSuperview()
     }
 
     cvsDropdownView.snp.makeConstraints { make in
@@ -272,6 +271,7 @@ final class BookmarkViewController: BaseViewController, View {
     reactor.state
       .map { $0.isLoading }
       .distinctUntilChanged()
+      .debug()
       .bind(to: indicator.rx.isAnimating)
       .disposed(by: disposeBag)
 
@@ -288,6 +288,13 @@ final class BookmarkViewController: BaseViewController, View {
       .filter { $0 }
       .withUnretained(self)
       .bind { owner, _ in owner.view.endEditing(true) }
+      .disposed(by: disposeBag)
+
+    // 애니메이션 숨김
+    reactor.state
+      .map { $0.isHiddenAnimationView }
+      .distinctUntilChanged()
+      .bind(to: animationContainerView.rx.isHidden)
       .disposed(by: disposeBag)
   }
 }
