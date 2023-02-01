@@ -32,6 +32,7 @@ final class BookmarkViewReactor: Reactor {
   struct State {
     var isHiddenCVSDropdown: Bool = true
     var isHiddenSortDropdown: Bool = true
+    var isHiddenAnimationView: Bool = false
     var showsKeyboard: Bool = false
     var showsHomeVC: Bool = false
     var showsSettingVC: Bool = false
@@ -78,8 +79,8 @@ final class BookmarkViewReactor: Reactor {
         .just(.setEvent(event)),
         .just(.hideDropdown),
         .just(.setLoading(true)),
-        .just(.setProducts([])).delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
-        .just(.setProducts(updatedProducts)),
+        .just(.setProducts(updatedProducts))
+        .delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
         .just(.setLoading(false))
       ])
 
@@ -100,8 +101,8 @@ final class BookmarkViewReactor: Reactor {
           .just(.hideDropdown),
           .just(.setTarget("")),
           .just(.setLoading(true)),
-          .just(.setProducts([])).delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
-          .just(.setProducts(updatedProducts)),
+          .just(.setProducts(updatedProducts))
+          .delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
           .just(.setLoading(false))
         ])
 
@@ -126,8 +127,8 @@ final class BookmarkViewReactor: Reactor {
         .just(.setTarget(target)),
         .just(.hideDropdown),
         .just(.setLoading(true)),
-        .just(.setProducts([])).delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
-        .just(.setProducts(updatedProducts)),
+        .just(.setProducts(updatedProducts))
+        .delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
         .just(.setLoading(false))
       ])
 
@@ -144,8 +145,8 @@ final class BookmarkViewReactor: Reactor {
         .just(.setSort(sort)),
         .just(.hideDropdown),
         .just(.setLoading(true)),
-        .just(.setProducts([])).delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
-        .just(.setProducts(updatedProducts)),
+        .just(.setProducts(updatedProducts))
+        .delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
         .just(.setLoading(false))
       ])
     }
@@ -192,6 +193,12 @@ final class BookmarkViewReactor: Reactor {
       nextState.isLoading = isLoading
 
     case .setProducts(let products):
+      if products.isEmpty {
+        nextState.isHiddenAnimationView = false
+      } else {
+        nextState.isHiddenAnimationView = true
+      }
+
       nextState.currentProducts = products
     }
     return nextState
