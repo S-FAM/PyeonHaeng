@@ -1,5 +1,6 @@
 import UIKit
 
+import ReactorKit
 import RxSwift
 import RxCocoa
 import RxGesture
@@ -7,7 +8,7 @@ import RxOptional
 import SnapKit
 import Then
 
-final class HomeViewController: BaseViewController, Viewable {
+final class HomeViewController: BaseViewController, View {
 
   // MARK: - Properties
 
@@ -32,6 +33,8 @@ final class HomeViewController: BaseViewController, Viewable {
   private let cvsDropdownView = CVSDropdownView()
   private let sortDropdownView = SortDropdownView()
   private var header: HomeCollectionHeaderView!
+
+  // MARK: - LifeCycle
 
   // MARK: - Setup
 
@@ -84,52 +87,52 @@ final class HomeViewController: BaseViewController, Viewable {
 
   // MARK: - Event
 
-  func bind(viewModel: HomeViewModel) {}
+  func bind(reactor: HomeViewReactor) {}
 
   private func bindHeader() {
-    guard let viewModel = viewModel else { return }
+    guard let reactor = reactor else { return }
 
     // MARK: - Action
 
     // 화면 최초 실행
-    viewModel.action.onNext(.viewDidLoad)
+    reactor.action.onNext(.viewDidLoad)
 
     // 북마크 버튼 클릭
     header.bookmarkButton.rx.tap
-      .map { HomeViewModel.Action.didTapBookmarkButton }
-      .bind(to: viewModel.action)
+      .map { HomeViewReactor.Action.didTapBookmarkButton }
+      .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // 현재 편의점 로고 버튼 클릭
     header.cvsButton.rx.tap
-      .map { HomeViewModel.Action.didTapCVSButton }
-      .bind(to: viewModel.action)
+      .map { HomeViewReactor.Action.didTapCVSButton }
+      .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // 필터 버튼 클릭
     header.filterButton.rx.tap
-      .map { HomeViewModel.Action.didTapSortButton }
-      .bind(to: viewModel.action)
+      .map { HomeViewReactor.Action.didTapSortButton }
+      .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // 편의점 드롭다운 리스트 버튼 클릭
     cvsDropdownView.buttonEventSubject
-      .map { HomeViewModel.Action.didTapDropdownCVS($0) }
-      .bind(to: viewModel.action)
+      .map { HomeViewReactor.Action.didTapDropdownCVS($0) }
+      .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // 필터 드롭다운 리스트 버튼 클릭
     sortDropdownView.buttonEventSubject
-      .map { HomeViewModel.Action.didTapDropdownSort($0) }
-      .bind(to: viewModel.action)
+      .map { HomeViewReactor.Action.didTapDropdownSort($0) }
+      .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // 페이지 컨트롤 인덱스 감지
     header.pageControl.didChangeEvent
       .skip(1)
       .distinctUntilChanged()
-      .map { HomeViewModel.Action.didChangeEvent($0) }
-      .bind(to: viewModel.action)
+      .map { HomeViewReactor.Action.didChangeEvent($0) }
+      .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // 서치바 텍스트 반응
@@ -137,21 +140,43 @@ final class HomeViewController: BaseViewController, Viewable {
       .withUnretained(self)
       .map { $0.0.header.searchBar.textField.text }
       .filterNil()
-      .map { HomeViewModel.Action.didChangeSearchBarText($0) }
-      .bind(to: viewModel.action)
+      .map { HomeViewReactor.Action.didChangeSearchBarText($0) }
+      .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // CVSStorage 편의점 변경 감지
     CVSStorage.shared.didChangeCVS
       .distinctUntilChanged()
-      .map { HomeViewModel.Action.didTapDropdownCVS(.cvs($0)) }
-      .bind(to: viewModel.action)
+      .map { HomeViewReactor.Action.didTapDropdownCVS(.cvs($0)) }
+      .bind(to: reactor.action)
       .disposed(by: disposeBag)
+
+    // 백그라운드 터치
+    view.rx.tapGesture { gesture, delegate in
+      gesture.cancelsTouchesInView = false
+      delegate.beginPolicy = .custom { [weak self] gesture in
+        guard let self = self else { return false }
+
+        let hitView = self.view.hitTest(gesture.location(in: self.view), with: .none)
+
+        if hitView === self.header.cvsButton ||
+           hitView === self.header.filterButton ||
+           hitView === self.header.searchBar.textField ||
+           self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) != nil {
+          return false
+        } else {
+          return true
+        }
+      }
+    }
+    .map { _ in HomeViewReactor.Action.didTapBackground }
+    .bind(to: reactor.action)
+    .disposed(by: disposeBag)
 
     // MARK: - State
 
     // 편의점 로고 드롭다운 애니메이션 동작
-    viewModel.state
+    reactor.state
       .map { $0.isVisibleCVSDropdown }
       .distinctUntilChanged()
       .withUnretained(self)
@@ -161,7 +186,7 @@ final class HomeViewController: BaseViewController, Viewable {
       .disposed(by: disposeBag)
 
     // 필터 드롭다운 애니메이션 동작
-    viewModel.state
+    reactor.state
       .map { $0.isVisibleFilterDropdown }
       .distinctUntilChanged()
       .withUnretained(self)
@@ -171,7 +196,7 @@ final class HomeViewController: BaseViewController, Viewable {
       .disposed(by: disposeBag)
 
     // 현재 편의점 타입 반응
-    viewModel.state
+    reactor.state
       .compactMap { $0.currentCVSType }
       .withUnretained(self)
       .bind { owner, cvsType in
@@ -183,13 +208,13 @@ final class HomeViewController: BaseViewController, Viewable {
       .disposed(by: disposeBag)
 
     // 인디케이터 애니메이션 제어
-    viewModel.state
+    reactor.state
       .map { $0.isLoading }
       .bind(to: indicator.rx.isAnimating)
       .disposed(by: disposeBag)
 
     // 새로운 상품 목록들로 업데이트
-    viewModel.state
+    reactor.state
       .map { $0.products }
       .map { _ in Void() }
       .withUnretained(self)
@@ -198,10 +223,18 @@ final class HomeViewController: BaseViewController, Viewable {
       .disposed(by: disposeBag)
 
     // 현재 SearchBar text
-    viewModel.state
+    reactor.state
       .map { $0.currentTarget }
       .distinctUntilChanged()
       .bind(to: header.searchBar.textField.rx.text)
+      .disposed(by: disposeBag)
+
+    // 키보드 숨김
+    reactor.state
+      .map { $0.showsKeyboard }
+      .filter { $0 }
+      .withUnretained(self)
+      .bind { owner, _ in owner.view.endEditing(true) }
       .disposed(by: disposeBag)
   }
 }
@@ -214,7 +247,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     cellForItemAt indexPath: IndexPath
   ) -> UICollectionViewCell {
 
-    guard let currentState = viewModel?.currentState else {
+    guard let currentState = reactor?.currentState else {
       return UICollectionViewCell()
     }
 
@@ -225,7 +258,11 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       ) as? GoodsCell else {
         return UICollectionViewCell()
       }
-      cell.updateCell(currentState.products[indexPath.row], isShowTitleLogoView: true)
+
+      cell.updateCell(
+        currentState.products[indexPath.row],
+        isShowTitleLogoView: true
+      )
 
       return cell
     } else {
@@ -250,7 +287,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     _ collectionView: UICollectionView,
     numberOfItemsInSection section: Int
   ) -> Int {
-    guard let products = viewModel?.currentState.products else { return 0 }
+    guard let products = reactor?.currentState.products else { return 0 }
     return products.count > 0 ? products.count + 1 : 0
   }
 
@@ -275,7 +312,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     layout collectionViewLayout: UICollectionViewLayout,
     sizeForItemAt indexPath: IndexPath
   ) -> CGSize {
-    guard let currentState = viewModel?.currentState else { return CGSize() }
+    guard let currentState = reactor?.currentState else { return CGSize() }
 
     let width = Int(view.frame.width)
     let height: Int
@@ -294,12 +331,12 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     willDisplay cell: UICollectionViewCell,
     forItemAt indexPath: IndexPath
   ) {
-    guard let viewModel = viewModel else { return }
+    guard let reactor = reactor else { return }
 
-    if indexPath.row == viewModel.currentState.products.count &&
-       !viewModel.currentState.isBlockedRequest &&
-       !viewModel.currentState.isPagination {
-      viewModel.action.onNext(.fetchMoreData)
+    if indexPath.row == reactor.currentState.products.count &&
+       !reactor.currentState.isBlockedRequest &&
+       !reactor.currentState.isPagination {
+      reactor.action.onNext(.fetchMoreData)
     }
   }
 
@@ -327,10 +364,10 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     _ collectionView: UICollectionView,
     didSelectItemAt indexPath: IndexPath
   ) {
-    guard let product = viewModel?.currentState.products[indexPath.row] else { return }
+    guard let product = reactor?.currentState.products[indexPath.row] else { return }
 
     // 특정 제품 클릭
-    viewModel?.action.onNext(.didSelectItemAt(product))
+    reactor?.action.onNext(.didSelectItemAt(product))
   }
 
   func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {

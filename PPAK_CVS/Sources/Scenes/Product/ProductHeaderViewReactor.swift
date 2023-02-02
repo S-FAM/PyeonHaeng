@@ -1,5 +1,5 @@
 //
-//  ProductHeaderViewViewModel.swift
+//  ProductHeaderViewReactor.swift
 //  PPAK_CVS
 //
 //  Created by 홍승현 on 2022/10/29.
@@ -7,9 +7,10 @@
 
 import UIKit
 
+import ReactorKit
 import RxSwift
 
-final class ProductHeaderViewViewModel: ViewModel {
+final class ProductHeaderViewReactor: Reactor {
 
   enum Action {
     case share(UIImage)
@@ -28,7 +29,7 @@ final class ProductHeaderViewViewModel: ViewModel {
   var initialState = State()
 }
 
-extension ProductHeaderViewViewModel {
+extension ProductHeaderViewReactor {
 
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {

@@ -9,12 +9,13 @@ import AVFoundation
 import UIKit
 
 import Lottie
+import ReactorKit
 import RxCocoa
 import RxGesture
 import SnapKit
 import Then
 
-final class OnboardingViewController: BaseViewController, Viewable {
+final class OnboardingViewController: BaseViewController, View {
 
   // MARK: - Properties
 
@@ -125,41 +126,41 @@ final class OnboardingViewController: BaseViewController, Viewable {
     view.backgroundColor = Color.viewBgColor
   }
 
-  func bind(viewModel: OnboardingViewModel) {
+  func bind(reactor: OnboardingViewReactor) {
     self.setOnboardingData()
 
     // --- Action ---
 
     // 건너뛰기 버튼 클릭
     self.skipButton.rx.tap
-      .map { OnboardingViewModel.Action.skip }
-      .bind(to: viewModel.action)
+      .map { OnboardingViewReactor.Action.skip }
+      .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // 다음 버튼 클릭
     self.nextButton.rx.tap
-      .map { OnboardingViewModel.Action.next }
-      .bind(to: viewModel.action)
+      .map { OnboardingViewReactor.Action.next }
+      .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // 왼쪽 스와이프 제스처
     self.view.rx.swipeGesture(.left)
       .when(.recognized)
-      .map { _ in OnboardingViewModel.Action.leftSwipe }
-      .bind(to: viewModel.action)
+      .map { _ in OnboardingViewReactor.Action.leftSwipe }
+      .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // 오른쪽 스와이프 제스처
     self.view.rx.swipeGesture(.right)
       .when(.recognized)
-      .map { _ in OnboardingViewModel.Action.rightSwipe }
-      .bind(to: viewModel.action)
+      .map { _ in OnboardingViewReactor.Action.rightSwipe }
+      .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // --- State ---
 
     // 현재 페이지가 변할 때
-    viewModel.state.map { $0.currentPage }
+    reactor.state.map { $0.currentPage }
       .distinctUntilChanged()
       .bind { [weak self] currentPage in
         self?.pageControl.currentPage = currentPage

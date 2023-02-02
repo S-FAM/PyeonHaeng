@@ -12,19 +12,19 @@ import RxSwift
 final class OnboardingCoordinator: BaseCoordinator {
 
   override func start() {
-    let onboardingViewModel = OnboardingViewModel()
+    let reactor = OnboardingViewReactor()
     let onboardingVC = OnboardingViewController()
     onboardingVC.coordinator = self
-    onboardingVC.viewModel = onboardingViewModel
+    onboardingVC.reactor = reactor
     self.navigationController.setViewControllers([onboardingVC], animated: true)
 
-    self.bind(onboardingViewModel)
+    self.bind(reactor)
   }
 
-  private func bind(_ viewModel: OnboardingViewModel) {
+  private func bind(_ reactor: OnboardingViewReactor) {
 
     // 홈 화면으로 이동하기
-    viewModel.state.map { $0.isPushHomeVC }
+    reactor.state.map { $0.isPushHomeVC }
       .distinctUntilChanged()
       .bind { [weak self] isPush in
         guard let self = self,

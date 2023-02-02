@@ -1,7 +1,8 @@
+import ReactorKit
 import RxSwift
 import RxCocoa
 
-final class SettingViewModel: ViewModel {
+final class SettingViewReactor: Reactor {
 
   enum Action {
 

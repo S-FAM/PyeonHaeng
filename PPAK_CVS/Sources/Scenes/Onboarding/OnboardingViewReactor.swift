@@ -1,5 +1,5 @@
 //
-//  OnboardingViewModel.swift
+//  OnboardingViewReactor.swift
 //  PPAK_CVS
 //
 //  Created by 김민지 on 2022/10/05.
@@ -7,10 +7,11 @@
 
 import UIKit
 
+import ReactorKit
 import RxSwift
 import RxCocoa
 
-final class OnboardingViewModel: ViewModel {
+final class OnboardingViewReactor: Reactor {
   enum Action {
     case skip
     case next

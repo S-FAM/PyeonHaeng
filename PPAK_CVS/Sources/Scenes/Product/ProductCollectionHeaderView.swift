@@ -8,17 +8,19 @@
 import UIKit
 
 import Kingfisher
+import ReactorKit
 import RxSwift
 import RxCocoa
 import SnapKit
 import Then
 
-final class ProductCollectionHeaderView: UICollectionReusableView, Viewable {
+final class ProductCollectionHeaderView: UICollectionReusableView, View {
   static let id = "ProductCollectionHeaderView"
 
   var disposeBag = DisposeBag()
 
   private let productImageView = UIImageView().then {
+    $0.image = UIImage(named: "ic_noImage_large")
     $0.contentMode = .scaleAspectFit
   }
 
@@ -31,13 +33,13 @@ final class ProductCollectionHeaderView: UICollectionReusableView, Viewable {
     $0.font = Font.priceLabel
     $0.text = "1,500원"
   }
-  
+
   private let badgeStackView = UIStackView().then {
     $0.axis = .horizontal
     $0.distribution = .fill
     $0.spacing = 10
   }
-  
+
   private let titleLogoView = TitleLogoView(cvsType: .all)
   private let saleTypeView = SaleTypeView(cvsType: .all)
 
@@ -84,7 +86,7 @@ extension ProductCollectionHeaderView {
     [productImageView, nameLabel, priceLabel, badgeStackView].forEach {
       wholeStackView.addArrangedSubview($0)
     }
-    
+
     [titleLogoView, saleTypeView].forEach {
       badgeStackView.addArrangedSubview($0)
     }
@@ -107,7 +109,7 @@ extension ProductCollectionHeaderView {
     productImageView.snp.makeConstraints { make in
       make.size.equalTo(150)
     }
-    
+
     saleTypeView.snp.makeConstraints { make in
       make.width.equalTo(45)
       make.height.equalTo(20)
@@ -125,9 +127,7 @@ extension ProductCollectionHeaderView {
     wholeStackView.setCustomSpacing(16, after: productImageView)
   }
 
-  func bind(viewModel: ProductHeaderViewViewModel) {
-
-  }
+  func bind(reactor: ProductHeaderViewReactor) { }
 
   func configureUI(with model: ProductModel) {
     let discount = model.saleType == .onePlusOne ? 2 : 3
@@ -137,11 +137,14 @@ extension ProductCollectionHeaderView {
 
     nameLabel.text = model.name
     priceLabel.text = "\(model.price.commaRepresentation)원(개당 \(unitPrice)원)"
-    
+
     titleLogoView.updateStyles(model)
     saleTypeView.updateStyles(model)
 
-    productImageView.kf.setImage(with: URL(string: model.imageLink ?? ""))
+    if let imageLink = model.imageLink,
+       imageLink != "None" {
+      productImageView.kf.setImage(with: URL(string: imageLink))
+    }
 
     curveView.backgroundColor = model.store.bgColor
   }

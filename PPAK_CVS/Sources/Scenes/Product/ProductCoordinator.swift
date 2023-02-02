@@ -32,16 +32,16 @@ final class ProductCoordinator: BaseCoordinator {
 
   override func start() {
     let viewController = ProductViewController()
-    let viewModel = ProductViewModel()
+    let reactor = ProductViewReactor()
     viewController.coordinator = self
-    viewController.viewModel = viewModel
+    viewController.reactor = reactor
     self.navigationController.pushViewController(viewController, animated: true)
-    bind(viewModel)
+    bind(reactor)
   }
 
-  private func bind(_ viewModel: ProductViewModel) {
-    Observable<ProductViewModel.Action>.just(.updateProduct(self.model))
-      .bind(to: viewModel.action)
+  private func bind(_ reactor: ProductViewReactor) {
+    Observable<ProductViewReactor.Action>.just(.updateProduct(self.model))
+      .bind(to: reactor.action)
       .disposed(by: disposeBag)
   }
 }

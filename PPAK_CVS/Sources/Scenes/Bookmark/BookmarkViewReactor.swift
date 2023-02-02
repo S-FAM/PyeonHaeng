@@ -1,11 +1,13 @@
+import ReactorKit
 import RxSwift
 
-final class BookmarkViewModel: ViewModel {
+final class BookmarkViewReactor: Reactor {
 
   enum Action {
     case didTapCVSButton
     case didTapSortButton
     case didTapBackButton
+    case didTapBackground
     case didChangeEvent(EventType)
     case didTapDropdownCVS(CVSDropdownCase)
     case didTapDropdownSort(SortType)
@@ -18,6 +20,7 @@ final class BookmarkViewModel: ViewModel {
     case setHomeVC(Bool)
     case setSettingVC(Bool)
     case hideDropdown
+    case hideKeyboard(Bool)
     case setCVS(CVSType)
     case setSort(SortType)
     case setEvent(EventType)
@@ -29,6 +32,8 @@ final class BookmarkViewModel: ViewModel {
   struct State {
     var isHiddenCVSDropdown: Bool = true
     var isHiddenSortDropdown: Bool = true
+    var isHiddenAnimationView: Bool = false
+    var showsKeyboard: Bool = false
     var showsHomeVC: Bool = false
     var showsSettingVC: Bool = false
     var currentSort: SortType = .ascending
@@ -55,6 +60,13 @@ final class BookmarkViewModel: ViewModel {
         .just(.setHomeVC(false))
       ])
 
+    case .didTapBackground:
+      return .concat([
+        .just(.hideDropdown),
+        .just(.hideKeyboard(true)),
+        .just(.hideKeyboard(false))
+      ])
+
     case .didChangeEvent(let event):
 
       let updatedProducts = ProductStorage.shared.retrieve(
@@ -67,8 +79,8 @@ final class BookmarkViewModel: ViewModel {
         .just(.setEvent(event)),
         .just(.hideDropdown),
         .just(.setLoading(true)),
-        .just(.setProducts([])).delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
-        .just(.setProducts(updatedProducts)),
+        .just(.setProducts(updatedProducts))
+        .delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
         .just(.setLoading(false))
       ])
 
@@ -89,8 +101,8 @@ final class BookmarkViewModel: ViewModel {
           .just(.hideDropdown),
           .just(.setTarget("")),
           .just(.setLoading(true)),
-          .just(.setProducts([])).delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
-          .just(.setProducts(updatedProducts)),
+          .just(.setProducts(updatedProducts))
+          .delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
           .just(.setLoading(false))
         ])
 
@@ -115,8 +127,8 @@ final class BookmarkViewModel: ViewModel {
         .just(.setTarget(target)),
         .just(.hideDropdown),
         .just(.setLoading(true)),
-        .just(.setProducts([])).delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
-        .just(.setProducts(updatedProducts)),
+        .just(.setProducts(updatedProducts))
+        .delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
         .just(.setLoading(false))
       ])
 
@@ -133,8 +145,8 @@ final class BookmarkViewModel: ViewModel {
         .just(.setSort(sort)),
         .just(.hideDropdown),
         .just(.setLoading(true)),
-        .just(.setProducts([])).delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
-        .just(.setProducts(updatedProducts)),
+        .just(.setProducts(updatedProducts))
+        .delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
         .just(.setLoading(false))
       ])
     }
@@ -162,6 +174,9 @@ final class BookmarkViewModel: ViewModel {
       nextState.isHiddenSortDropdown = true
       nextState.isHiddenCVSDropdown = true
 
+    case .hideKeyboard(let state):
+      nextState.showsKeyboard = state
+
     case .setCVS(let cvsType):
       nextState.currentCVS = cvsType
 
@@ -178,6 +193,12 @@ final class BookmarkViewModel: ViewModel {
       nextState.isLoading = isLoading
 
     case .setProducts(let products):
+      if products.isEmpty {
+        nextState.isHiddenAnimationView = false
+      } else {
+        nextState.isHiddenAnimationView = true
+      }
+
       nextState.currentProducts = products
     }
     return nextState

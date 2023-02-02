@@ -1,10 +1,12 @@
+import ReactorKit
 import RxSwift
 import RxCocoa
 
-final class HomeViewModel: ViewModel {
+final class HomeViewReactor: Reactor {
 
   enum Action {
     case viewDidLoad
+    case didTapBackground
     case didTapCVSButton
     case didTapSortButton
     case didTapBookmarkButton
@@ -21,6 +23,7 @@ final class HomeViewModel: ViewModel {
     case setFilterDropdown(Bool)
     case setBookmarkVC(Bool)
     case hideDropdown
+    case hideKeyboard(Bool)
     case setCVS(CVSType)
     case setSort(SortType)
     case setEvent(EventType)
@@ -39,6 +42,7 @@ final class HomeViewModel: ViewModel {
   struct State {
     var isVisibleCVSDropdown: Bool = false
     var isVisibleFilterDropdown: Bool = false
+    var showsKeyboard: Bool = false
     var showsBookmarkVC: Bool = false
     var showsProductVC: (Bool, ProductModel) = (false, .init(imageLink: nil, name: "", price: 0, store: .all, saleType: .all))
     var showsSettingVC: Bool = false
@@ -73,6 +77,13 @@ final class HomeViewModel: ViewModel {
           name: currentState.currentTarget
         )
         .delay(.seconds(1), scheduler: MainScheduler.instance)
+      ])
+
+    case .didTapBackground:
+      return .concat([
+        .just(.hideDropdown),
+        .just(.hideKeyboard(true)),
+        .just(.hideKeyboard(false))
       ])
 
     case .didTapCVSButton:
@@ -195,6 +206,9 @@ final class HomeViewModel: ViewModel {
     case .setFilterDropdown(let isVisible):
       nextState.isVisibleFilterDropdown = isVisible
 
+    case .hideKeyboard(let state):
+      nextState.showsKeyboard = state
+
     case .hideDropdown:
       nextState.isVisibleFilterDropdown = false
       nextState.isVisibleCVSDropdown = false
@@ -236,7 +250,7 @@ final class HomeViewModel: ViewModel {
   }
 }
 
-extension HomeViewModel {
+extension HomeViewReactor {
   func requestProducts(
     cvs: CVSType,
     event: EventType,
