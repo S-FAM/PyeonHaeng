@@ -5,6 +5,8 @@
 //  Created by 홍승현 on 2023/01/02.
 //
 
+import UIKit
+
 import ReactorKit
 import RxSwift
 import RxCocoa
@@ -14,16 +16,21 @@ final class ProductViewReactor: Reactor {
   enum Action {
     case updateProduct(ProductModel)
     case back
+    case share(UIImage)
   }
 
   enum Mutation {
     case updateProduct(ProductModel)
     case goToHomeVC
+    case showShareWindow(Bool)
+    case setItem(UIImage)
   }
 
   struct State {
     var model = ProductModel(imageLink: "", name: "", price: 0, store: .all, saleType: .all)
     var isPopProductVC: Bool = false
+    var isShareButtonTapped: Bool = false
+    var shareImage: UIImage?
   }
 
   var initialState = State()
@@ -34,6 +41,16 @@ final class ProductViewReactor: Reactor {
       return .just(.updateProduct(model))
     case .back:
       return .just(.goToHomeVC)
+    case let .share(image):
+      // prevent from multiple requests
+      if self.currentState.isShareButtonTapped {
+        return .empty()
+      }
+      return .concat([
+        .just(.showShareWindow(true)),
+        .just(.setItem(image)),
+        .just(.showShareWindow(false))
+      ])
     }
   }
 
@@ -45,6 +62,10 @@ final class ProductViewReactor: Reactor {
       newState.model = model
     case .goToHomeVC:
       newState.isPopProductVC = true
+    case let .showShareWindow(isShareButtonTapped):
+      newState.isShareButtonTapped = isShareButtonTapped
+    case let .setItem(newImage):
+      newState.shareImage = newImage
     }
 
     return newState

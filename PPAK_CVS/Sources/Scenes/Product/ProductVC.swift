@@ -58,11 +58,9 @@ final class ProductViewController: BaseViewController, View {
     $0.backgroundColor = .systemPurple
   }
 
-  private var collectionHeaderView: ProductCollectionHeaderView? {
+  private var collectionHeaderView: ProductCollectionHeaderView! {
     willSet {
       guard let newValue = newValue else { return }
-      newValue.reactor = ProductHeaderViewReactor()
-      bind(newValue)
       self.headerViewInitializeRelay.accept(newValue)
     }
   }
@@ -135,6 +133,12 @@ final class ProductViewController: BaseViewController, View {
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
     
+    // 공유 버튼 클릭
+    self.shareButton.rx.tap
+      .map { ProductViewReactor.Action.share((self.collectionHeaderView.getShareImage())) }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
     // --- State ---
 
     let modelObservable = reactor.state.map { $0.model }
@@ -178,12 +182,8 @@ final class ProductViewController: BaseViewController, View {
         self?.collectionView.backgroundColor = model.store.bgColor
       })
       .disposed(by: disposeBag)
-  }
-
-  func bind(_ headerView: ProductCollectionHeaderView) {
-    guard let headerViewModel = headerView.reactor else { return }
-
-    headerViewModel.state
+    
+    reactor.state
       .map { $0.shareImage }
       .distinctUntilChanged()
       .compactMap { $0 }

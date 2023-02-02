@@ -8,13 +8,12 @@
 import UIKit
 
 import Kingfisher
-import ReactorKit
 import RxSwift
 import RxCocoa
 import SnapKit
 import Then
 
-final class ProductCollectionHeaderView: UICollectionReusableView, View {
+final class ProductCollectionHeaderView: UICollectionReusableView{
   static let id = "ProductCollectionHeaderView"
 
   var disposeBag = DisposeBag()
@@ -127,8 +126,6 @@ extension ProductCollectionHeaderView {
     wholeStackView.setCustomSpacing(16, after: productImageView)
   }
 
-  func bind(reactor: ProductHeaderViewReactor) { }
-
   func configureUI(with model: ProductModel) {
     let discount = model.saleType == .onePlusOne ? 2 : 3
     let multiply = model.saleType == .onePlusOne ? 1 : 2
@@ -147,6 +144,13 @@ extension ProductCollectionHeaderView {
     }
 
     curveView.backgroundColor = model.store.bgColor
+  }
+  
+  func getShareImage() -> UIImage {
+    let renderer = UIGraphicsImageRenderer(bounds: self.wholeStackView.bounds)
+    return renderer.image { rendererContext in
+      self.wholeStackView.layer.render(in: rendererContext.cgContext)
+    }
   }
 }
 
