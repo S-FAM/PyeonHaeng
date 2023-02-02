@@ -156,9 +156,9 @@ final class HomeViewController: BaseViewController, View {
       gesture.cancelsTouchesInView = false
       delegate.beginPolicy = .custom { [weak self] gesture in
         guard let self = self else { return false }
-        
+
         let hitView = self.view.hitTest(gesture.location(in: self.view), with: .none)
-        
+
         if hitView === self.header.cvsButton ||
            hitView === self.header.filterButton ||
            hitView === self.header.searchBar.textField ||

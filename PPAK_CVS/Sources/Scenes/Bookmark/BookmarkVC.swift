@@ -1,5 +1,6 @@
 import UIKit
 
+import Lottie
 import Then
 import SnapKit
 import ReactorKit
@@ -29,6 +30,21 @@ final class BookmarkViewController: BaseViewController, View {
     )
   }
 
+  private let animationContainerView = UIView().then {
+    $0.backgroundColor = .clear
+  }
+
+  private let animationView = AnimationView(name: "noBookmark").then {
+    $0.contentMode = .scaleAspectFill
+    $0.loopMode = .loop
+  }
+
+  private let noBookmarkLabel = UILabel().then {
+    $0.textColor = .lightGray
+    $0.font = .appFont(family: .regular, size: 15)
+    $0.text = "찜한 제품이 없습니다."
+  }
+
   override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
   private let indicator = UIActivityIndicatorView()
   private let sortDropdownView = SortDropdownView()
@@ -45,6 +61,8 @@ final class BookmarkViewController: BaseViewController, View {
   override func setupLayouts() {
     super.setupLayouts()
     view.addSubview(collectionView)
+    view.addSubview(animationContainerView)
+    view.addSubview(indicator)
   }
 
   override func setupConstraints() {
@@ -52,21 +70,19 @@ final class BookmarkViewController: BaseViewController, View {
       make.leading.trailing.bottom.equalToSuperview()
       make.top.equalTo(view.safeAreaLayoutGuide)
     }
+
+    indicator.snp.makeConstraints { make in
+      make.center.equalToSuperview()
+    }
   }
 
   private func setupDropdown() {
-    view.addSubview(indicator)
-
     [
       sortDropdownView,
       cvsDropdownView
     ].forEach {
       view.addSubview($0)
       $0.isHidden = true
-    }
-
-    indicator.snp.makeConstraints { make in
-      make.center.equalToSuperview()
     }
 
     cvsDropdownView.snp.makeConstraints { make in
@@ -82,6 +98,35 @@ final class BookmarkViewController: BaseViewController, View {
       make.width.equalTo(100)
       make.height.equalTo(80)
     }
+  }
+
+  private func setupAnimationView() {
+    let stack = UIStackView(arrangedSubviews: [
+      animationView,
+      noBookmarkLabel
+    ])
+
+    stack.axis = .vertical
+    stack.spacing = 40
+    stack.alignment = .center
+
+    animationContainerView.addSubview(stack)
+
+    stack.snp.makeConstraints { make in
+      make.center.equalToSuperview()
+    }
+
+    animationContainerView.snp.makeConstraints { make in
+      make.leading.trailing.bottom.equalTo(collectionView)
+      make.top.equalTo(header.snp.bottom)
+    }
+
+    animationView.snp.makeConstraints { make in
+      make.width.equalTo(165)
+      make.height.equalTo(107)
+    }
+
+    animationView.play()
   }
 
   // MARK: - Bind
@@ -226,6 +271,7 @@ final class BookmarkViewController: BaseViewController, View {
     reactor.state
       .map { $0.isLoading }
       .distinctUntilChanged()
+      .debug()
       .bind(to: indicator.rx.isAnimating)
       .disposed(by: disposeBag)
 
@@ -242,6 +288,13 @@ final class BookmarkViewController: BaseViewController, View {
       .filter { $0 }
       .withUnretained(self)
       .bind { owner, _ in owner.view.endEditing(true) }
+      .disposed(by: disposeBag)
+
+    // 애니메이션 숨김
+    reactor.state
+      .map { $0.isHiddenAnimationView }
+      .distinctUntilChanged()
+      .bind(to: animationContainerView.rx.isHidden)
       .disposed(by: disposeBag)
   }
 }
@@ -293,6 +346,7 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
       self.header = header
       bindHeader()
       setupDropdown()
+      setupAnimationView()
     }
 
     return header
