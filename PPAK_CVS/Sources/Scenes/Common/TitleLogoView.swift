@@ -15,7 +15,6 @@ final class TitleLogoView: UIView {
   // MARK: - Properties
 
   lazy var titleLabel = UILabel().then {
-    $0.text = cvsType.rawValue
     $0.textColor = cvsType.fontColor
     $0.font = .appFont(family: .bold, size: 12)
   }
