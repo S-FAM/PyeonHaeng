@@ -126,6 +126,16 @@ final class ProductViewController: BaseViewController, View {
   }
 
   func bind(reactor: ProductViewReactor) {
+    
+    // --- Action ---
+    
+    // 뒤로 가기 버튼 클릭
+    self.backButton.rx.tap
+      .map { ProductViewReactor.Action.back }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
+    // --- State ---
 
     let modelObservable = reactor.state.map { $0.model }
     let headerViewObservable = headerViewInitializeRelay.asObservable()

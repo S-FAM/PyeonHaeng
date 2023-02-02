@@ -13,14 +13,17 @@ final class ProductViewReactor: Reactor {
 
   enum Action {
     case updateProduct(ProductModel)
+    case back
   }
 
   enum Mutation {
     case updateProduct(ProductModel)
+    case goToHomeVC
   }
 
   struct State {
     var model = ProductModel(imageLink: "", name: "", price: 0, store: .all, saleType: .all)
+    var isPopProductVC: Bool = false
   }
 
   var initialState = State()
@@ -29,6 +32,8 @@ final class ProductViewReactor: Reactor {
     switch action {
     case .updateProduct(let model):
       return .just(.updateProduct(model))
+    case .back:
+      return .just(.goToHomeVC)
     }
   }
 
@@ -38,6 +43,8 @@ final class ProductViewReactor: Reactor {
     switch mutation {
     case .updateProduct(let model):
       newState.model = model
+    case .goToHomeVC:
+      newState.isPopProductVC = true
     }
 
     return newState
