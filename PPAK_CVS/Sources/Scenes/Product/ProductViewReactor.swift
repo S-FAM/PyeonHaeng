@@ -16,12 +16,14 @@ final class ProductViewReactor: Reactor {
   enum Action {
     case updateProduct(ProductModel)
     case back
+    case bookmark(Bool)
     case share(UIImage)
   }
 
   enum Mutation {
     case updateProduct(ProductModel)
     case goToHomeVC
+    case changeBookmarkState(Bool)
     case showShareWindow(Bool)
     case setItem(UIImage)
   }
@@ -29,6 +31,7 @@ final class ProductViewReactor: Reactor {
   struct State {
     var model = ProductModel(imageLink: "", name: "", price: 0, store: .all, saleType: .all)
     var isPopProductVC: Bool = false
+    var isBookmark: Bool = false
     var isShareButtonTapped: Bool = false
     var shareImage: UIImage?
   }
@@ -41,6 +44,8 @@ final class ProductViewReactor: Reactor {
       return .just(.updateProduct(model))
     case .back:
       return .just(.goToHomeVC)
+    case .bookmark(let isBookmark):
+      return .just(.changeBookmarkState(isBookmark))
     case let .share(image):
       // prevent from multiple requests
       if self.currentState.isShareButtonTapped {
@@ -62,6 +67,8 @@ final class ProductViewReactor: Reactor {
       newState.model = model
     case .goToHomeVC:
       newState.isPopProductVC = true
+    case .changeBookmarkState(let isBookmark):
+      newState.isBookmark = !isBookmark
     case let .showShareWindow(isShareButtonTapped):
       newState.isShareButtonTapped = isShareButtonTapped
     case let .setItem(newImage):

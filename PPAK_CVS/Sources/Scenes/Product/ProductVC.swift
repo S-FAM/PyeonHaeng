@@ -14,6 +14,9 @@ import SnapKit
 import Then
 
 final class ProductViewController: BaseViewController, View {
+  
+  var productModel = ProductModel.EMPTY
+  var isBookmarkedProduct: Bool = false
 
   // test data (will delete)
   private var previousHistory: [ProductModel] = []
@@ -133,6 +136,12 @@ final class ProductViewController: BaseViewController, View {
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
     
+    // 북마크 버튼 클릭
+    self.bookmarkButton.rx.tap
+      .map { ProductViewReactor.Action.bookmark(self.isBookmarkedProduct) }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
     // 공유 버튼 클릭
     self.shareButton.rx.tap
       .map { ProductViewReactor.Action.share((self.collectionHeaderView.getShareImage())) }
@@ -141,15 +150,22 @@ final class ProductViewController: BaseViewController, View {
     
     // --- State ---
 
+    // 제품 정보 받아오기
     let modelObservable = reactor.state.map { $0.model }
     let headerViewObservable = headerViewInitializeRelay.asObservable()
 
     Observable.combineLatest(modelObservable, headerViewObservable)
       .subscribe(onNext: { [weak self] model, headerView in
+        guard let self = self else { return }
+        
         headerView.configureUI(with: model)
+        
+        self.productModel = model
+        self.isBookmarkedProduct = ProductStorage.shared.contains(self.productModel)
+        self.updateBookmarkState(isBookmark: self.isBookmarkedProduct)
 
         // --- test data(will delete) ---
-        self?.previousHistory.append(
+        self.previousHistory.append(
           ProductModel(
             imageLink: model.imageLink,
             name: "2022년 12월 행사 가격",
@@ -158,7 +174,7 @@ final class ProductViewController: BaseViewController, View {
             saleType: model.saleType
           )
         )
-        self?.previousHistory.append(
+        self.previousHistory.append(
           ProductModel(
             imageLink: model.imageLink,
             name: "2022년 11월 행사 가격",
@@ -167,7 +183,7 @@ final class ProductViewController: BaseViewController, View {
             saleType: model.saleType
           )
         )
-        self?.previousHistory.append(
+        self.previousHistory.append(
           ProductModel(
             imageLink: model.imageLink,
             name: "2022년 10월 행사 가격",
@@ -178,11 +194,12 @@ final class ProductViewController: BaseViewController, View {
         )
         // -------------------
 
-        self?.collectionView.reloadData()
-        self?.collectionView.backgroundColor = model.store.bgColor
+        self.collectionView.reloadData()
+        self.collectionView.backgroundColor = model.store.bgColor
       })
       .disposed(by: disposeBag)
     
+    // 이미지 공유하기
     reactor.state
       .map { $0.shareImage }
       .distinctUntilChanged()
@@ -191,12 +208,31 @@ final class ProductViewController: BaseViewController, View {
         self?.presentShareSheet(items: [image])
       })
       .disposed(by: disposeBag)
+    
+    // 북마크 상태 저장하기
+    reactor.state
+      .map { $0.isBookmark }
+      .bind { [weak self] isBookmark in
+        self?.updateBookmarkState(isBookmark: isBookmark)
+      }
+      .disposed(by: disposeBag)
   }
 
   /// 공유버튼을 눌렀을 때 실행되는 메서드입니다.
   private func presentShareSheet(items: [Any]) {
     let shareSheetVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
     self.present(shareSheetVC, animated: true)
+  }
+  
+  /// 북마크버튼을 눌렀을 때 실행되는 메서드입니다.
+  private func updateBookmarkState(isBookmark: Bool) {
+    if isBookmark {
+      self.bookmarkButton.setImage(UIImage(named: "ic_heart_red"), for: .normal)
+      ProductStorage.shared.add(self.productModel)
+    } else {
+      self.bookmarkButton.setImage(UIImage(named: "ic_heart_gray"), for: .normal)
+      ProductStorage.shared.remove(self.productModel)
+    }
   }
 }
 

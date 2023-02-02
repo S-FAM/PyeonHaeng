@@ -13,7 +13,7 @@ import RxCocoa
 import SnapKit
 import Then
 
-final class ProductCollectionHeaderView: UICollectionReusableView{
+final class ProductCollectionHeaderView: UICollectionReusableView {
   static let id = "ProductCollectionHeaderView"
 
   var disposeBag = DisposeBag()

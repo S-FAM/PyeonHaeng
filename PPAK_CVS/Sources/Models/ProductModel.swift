@@ -27,3 +27,7 @@ struct ProductModel: Codable, Equatable {
     case saleType = "tag"
   }
 }
+
+extension ProductModel {
+  static let EMPTY = ProductModel(imageLink: "", name: "", price: 0, store: .all, saleType: .all)
+}
