@@ -202,6 +202,7 @@ final class ProductViewController: BaseViewController, View {
     // 이미지 공유하기
     reactor.state
       .map { $0.shareImage }
+      .distinctUntilChanged()
       .compactMap { $0 }
       .subscribe(onNext: { [weak self] image in
         self?.presentShareSheet(items: [image])
