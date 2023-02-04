@@ -19,6 +19,7 @@
 		9CDBFCD1296C331C00357474 /* SettingConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDBFCD0296C331C00357474 /* SettingConfig.swift */; };
 		A54949D3296F052F00844828 /* noBookmark.json in Resources */ = {isa = PBXBuildFile; fileRef = A54949D2296F052F00844828 /* noBookmark.json */; };
 		A57D32E428EDBA0200944C7E /* OnboardingViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57D32E328EDBA0200944C7E /* OnboardingViewReactor.swift */; };
+		A5840070298EABC400DB57F8 /* SelectStoreViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A584006F298EABC400DB57F8 /* SelectStoreViewReactor.swift */; };
 		A5932EA028E0435200457AD3 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = A5932E9F28E0435200457AD3 /* Lottie */; };
 		A5932EA328E044CB00457AD3 /* onboarding1.json in Resources */ = {isa = PBXBuildFile; fileRef = A5932EA228E044CB00457AD3 /* onboarding1.json */; };
 		A5932EA528E045EF00457AD3 /* onboarding3.json in Resources */ = {isa = PBXBuildFile; fileRef = A5932EA428E045EF00457AD3 /* onboarding3.json */; };
@@ -119,6 +120,7 @@
 		9CDBFCD0296C331C00357474 /* SettingConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingConfig.swift; sourceTree = "<group>"; };
 		A54949D2296F052F00844828 /* noBookmark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = noBookmark.json; sourceTree = "<group>"; };
 		A57D32E328EDBA0200944C7E /* OnboardingViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewReactor.swift; sourceTree = "<group>"; };
+		A584006F298EABC400DB57F8 /* SelectStoreViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStoreViewReactor.swift; sourceTree = "<group>"; };
 		A5932EA228E044CB00457AD3 /* onboarding1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding1.json; sourceTree = "<group>"; };
 		A5932EA428E045EF00457AD3 /* onboarding3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding3.json; sourceTree = "<group>"; };
 		A5932EA628E0472B00457AD3 /* onboarding2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding2.json; sourceTree = "<group>"; };
@@ -294,9 +296,10 @@
 		A5D5A6E9298556AE00AD4F6E /* SelectStore */ = {
 			isa = PBXGroup;
 			children = (
-				A5D5A6EA298556D300AD4F6E /* SelectStoreVC.swift */,
 				A5D5A6EC2985571100AD4F6E /* SelectStoreCoordinator.swift */,
 				A5D5A6EE29855D6200AD4F6E /* SelectStoreStackView.swift */,
+				A5D5A6EA298556D300AD4F6E /* SelectStoreVC.swift */,
+				A584006F298EABC400DB57F8 /* SelectStoreViewReactor.swift */,
 			);
 			path = SelectStore;
 			sourceTree = "<group>";
@@ -705,6 +708,7 @@
 				BAA0581028D36F75000CDD11 /* BaseViewController.swift in Sources */,
 				BA9EBC16294A04E500167970 /* Encodable+.swift in Sources */,
 				9CCFA4FE28F4585E00963A95 /* EventType.swift in Sources */,
+				A5840070298EABC400DB57F8 /* SelectStoreViewReactor.swift in Sources */,
 				E59041DE2928FB8100135ECA /* SaleTypeView.swift in Sources */,
 				9C1E41BD297439AE006948F7 /* SettingCellType.swift in Sources */,
 			);

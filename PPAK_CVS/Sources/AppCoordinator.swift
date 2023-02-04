@@ -14,16 +14,22 @@ final class AppCoordinator: BaseCoordinator {
 
     // == first launch check ==
     let coordinator: Coordinator
-//    if FTUXStorage().isAlreadyCome() {
-//      coordinator = HomeCoordinator(navigationController: self.navigationController)
-//    } else {
-//      coordinator = OnboardingCoordinator(navigationController: self.navigationController)
-//    }
-    coordinator = SelectStoreCoordinator(navigationController: self.navigationController)
+    if FTUXStorage().isAlreadyCome() {
+      coordinator = HomeCoordinator(navigationController: self.navigationController)
+    } else {
+      coordinator = OnboardingCoordinator(navigationController: self.navigationController)
+    }
     start(childCoordinator: coordinator)
   }
+  
+  /// OnboardingVC -> SelectStoreVC
+  func switchToSelectStore(coordinator: OnboardingCoordinator) {
+    finish(childCoordinator: coordinator)
+    start(childCoordinator: SelectStoreCoordinator(navigationController: self.navigationController))
+  }
 
-  func switchToHome(coordinator: OnboardingCoordinator) {
+  /// SelectStoreVC -> HomeVC
+  func switchToHome(coordinator: SelectStoreCoordinator) {
     finish(childCoordinator: coordinator)
     start(childCoordinator: HomeCoordinator(navigationController: self.navigationController))
   }

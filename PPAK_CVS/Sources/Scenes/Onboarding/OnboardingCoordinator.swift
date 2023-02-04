@@ -23,8 +23,8 @@ final class OnboardingCoordinator: BaseCoordinator {
 
   private func bind(_ reactor: OnboardingViewReactor) {
 
-    // 홈 화면으로 이동하기
-    reactor.state.map { $0.isPushHomeVC }
+    // 편의점 선택 화면으로 이동하기
+    reactor.state.map { $0.isPushSelectStoreVC }
       .distinctUntilChanged()
       .bind { [weak self] isPush in
         guard let self = self,
@@ -32,7 +32,7 @@ final class OnboardingCoordinator: BaseCoordinator {
 
         if isPush {
           FTUXStorage().saveFTUXStatus()
-          parentCoordinator.switchToHome(coordinator: self)
+          parentCoordinator.switchToSelectStore(coordinator: self)
         }
       }
       .disposed(by: disposeBag)

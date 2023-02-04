@@ -22,12 +22,12 @@ final class OnboardingViewReactor: Reactor {
   enum Mutation {
     case goToNextPage
     case goToPreviousPage
-    case goToHomeVC
+    case goToSelectStoreVC
   }
 
   struct State {
     var currentPage: Int = 0
-    var isPushHomeVC: Bool = false
+    var isPushSelectStoreVC: Bool = false
   }
 
   let initialState: State = State()
@@ -35,7 +35,7 @@ final class OnboardingViewReactor: Reactor {
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
     case .skip:
-      return Observable.just(Mutation.goToHomeVC)
+      return Observable.just(Mutation.goToSelectStoreVC)
     case .next, .leftSwipe:
       return Observable.just(Mutation.goToNextPage)
     case .rightSwipe:
@@ -47,13 +47,13 @@ final class OnboardingViewReactor: Reactor {
     var nextState = state
 
     switch mutation {
-    case .goToHomeVC:
-      nextState.isPushHomeVC = true
+    case .goToSelectStoreVC:
+      nextState.isPushSelectStoreVC = true
     case .goToNextPage:
       if nextState.currentPage < 2 {
         nextState.currentPage += 1
       } else {
-        nextState.isPushHomeVC = true
+        nextState.isPushSelectStoreVC = true
       }
     case .goToPreviousPage:
       if nextState.currentPage > 0 {

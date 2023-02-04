@@ -7,7 +7,9 @@
 
 import UIKit
 
-final class SelectStoreViewController: BaseViewController {
+import ReactorKit
+
+final class SelectStoreViewController: BaseViewController, View {
   
   // MARK: - Properties
   
@@ -62,6 +64,17 @@ final class SelectStoreViewController: BaseViewController {
     super.setupStyles()
     self.navigationController?.setNavigationBarHidden(true, animated: true)
     self.view.backgroundColor = CVSType.all.bgColor
+  }
+  
+  func bind(reactor: SelectStoreViewReactor) {
+    
+    // --- Action ---
+    
+    // 건너뛰기 버튼 클릭
+    self.skipButton.rx.tap
+      .map { SelectStoreViewReactor.Action.skip }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
   }
 }
 
