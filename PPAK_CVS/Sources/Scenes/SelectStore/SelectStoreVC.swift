@@ -13,9 +13,21 @@ final class SelectStoreViewController: BaseViewController, View {
   
   // MARK: - Properties
   
+  private lazy var textContainer = UIStackView().then {
+    $0.axis = .vertical
+    $0.alignment = .center
+    $0.distribution = .fill
+    $0.spacing = 20
+  }
+  
   private lazy var titleLabel = UILabel().then {
     $0.text = Strings.SelectStore.title
     $0.onboardingExplainLabel(textColor: Color.titleLabel, font: Font.titleLabel)
+  }
+  
+  private lazy var descLabel = UILabel().then {
+    $0.text = Strings.SelectStore.description
+    $0.onboardingExplainLabel(textColor: Color.descLabel, font: Font.descLabel)
   }
   
   private lazy var selectStoreView = SelectStoreView()
@@ -34,21 +46,24 @@ final class SelectStoreViewController: BaseViewController, View {
   override func setupLayouts() {
     super.setupLayouts()
     
-    [self.titleLabel, self.selectStoreView, self.skipButton].forEach {
+    [self.textContainer, self.selectStoreView, self.skipButton].forEach {
       self.view.addSubview($0)
     }
+    
+    self.textContainer.addArrangedSubview(self.titleLabel)
+    self.textContainer.addArrangedSubview(self.descLabel)
   }
   
   override func setupConstraints() {
     super.setupConstraints()
     
-    self.titleLabel.snp.makeConstraints { make in
-      make.top.equalToSuperview().inset(Inset.titleLabelTop)
+    self.textContainer.snp.makeConstraints { make in
+      make.top.equalToSuperview().inset(Inset.textContainerTop)
       make.centerX.equalToSuperview()
     }
     
     self.selectStoreView.snp.makeConstraints { make in
-      make.top.equalTo(self.titleLabel.snp.bottom).offset(Offset.selectStoreView)
+      make.top.equalTo(self.textContainer.snp.bottom).offset(Offset.selectStoreView)
       make.centerX.equalToSuperview()
     }
     
@@ -119,11 +134,13 @@ extension SelectStoreViewController {
 
   private enum Font {
     static let titleLabel = UIFont.appFont(family: .extraBold, size: 22.0)
+    static let descLabel = UIFont.appFont(family: .regular, size: 15.0)
     static let button = UIFont.appFont(family: .semiBold, size: 15.0)
   }
 
   private enum Color {
     static let titleLabel = UIColor.white
+    static let descLabel = UIColor.white.withAlphaComponent(0.5)
   }
 
   private enum Width {
@@ -135,7 +152,7 @@ extension SelectStoreViewController {
   }
 
   private enum Inset {
-    static let titleLabelTop = 180.0
+    static let textContainerTop = 100.0
     static let skipButtonBottom = 84.0
   }
 
