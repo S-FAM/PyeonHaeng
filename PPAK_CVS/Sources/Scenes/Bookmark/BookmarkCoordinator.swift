@@ -4,6 +4,17 @@ import RxSwift
 import RxCocoa
 
 final class BookmarkCoordinator: BaseCoordinator {
+  
+  // MARK: - Properties
+  
+  private let cvsType: CVSType
+  
+  // MARK: - Init
+  
+  init(_ navigationController: UINavigationController, cvsType: CVSType) {
+    self.cvsType = cvsType
+    super.init(navigationController: navigationController)
+  }
 
   override func start() {
     let viewController = BookmarkViewController()
@@ -15,6 +26,7 @@ final class BookmarkCoordinator: BaseCoordinator {
   }
 
   func bind(_ reactor: BookmarkViewReactor) {
+    reactor.initialState.currentCVS = self.cvsType
 
     // BookmarkVC -> HomeVC
     reactor.state

@@ -11,11 +11,11 @@ final class SelectStoreView: UIView {
   
   // MARK: - Properties
   
-  private lazy var cuButton = makeCVSButton(type: .cu)
-  private lazy var gsButton = makeCVSButton(type: .gs)
-  private lazy var emartButton = makeCVSButton(type: .eMart)
-  private lazy var sevenElevenButton = makeCVSButton(type: .sevenEleven)
-  private lazy var miniStopButton = makeCVSButton(type: .miniStop)
+  public lazy var cuButton = makeCVSButton(type: .cu)
+  public lazy var gsButton = makeCVSButton(type: .gs)
+  public lazy var emartButton = makeCVSButton(type: .eMart)
+  public lazy var sevenElevenButton = makeCVSButton(type: .sevenEleven)
+  public lazy var miniStopButton = makeCVSButton(type: .miniStop)
   
   private lazy var firstHStackView = makeHStackView()
   private lazy var secondHStackView = makeHStackView()
@@ -33,6 +33,7 @@ final class SelectStoreView: UIView {
   }
   
   // MARK: - Setup
+  
   private func setupLayout() {
     self.firstHStackView.addArrangedSubview(self.cuButton)
     self.firstHStackView.addArrangedSubview(self.gsButton)
@@ -46,6 +47,11 @@ final class SelectStoreView: UIView {
   }
   
   private func setupConstraints() {
+    
+    self.snp.makeConstraints { make in
+      make.width.equalTo(264)
+      make.height.equalTo(332)
+    }
     
     [
       self.cuButton,

@@ -70,6 +70,41 @@ final class SelectStoreViewController: BaseViewController, View {
     
     // --- Action ---
     
+    // CU 버튼 클릭
+    self.selectStoreView.cuButton.rx.tap
+      .debug()
+      .map { SelectStoreViewReactor.Action.selectStore(.cu) }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
+    // GS25 버튼 클릭
+    self.selectStoreView.gsButton.rx.tap
+      .debug()
+      .map { SelectStoreViewReactor.Action.selectStore(.gs) }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
+    // emart24 버튼 클릭
+    self.selectStoreView.emartButton.rx.tap
+      .debug()
+      .map { SelectStoreViewReactor.Action.selectStore(.eMart) }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
+    // 7-ELEVEn 버튼 클릭
+    self.selectStoreView.sevenElevenButton.rx.tap
+      .debug()
+      .map { SelectStoreViewReactor.Action.selectStore(.sevenEleven) }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
+    // MINISTOP 버튼 클릭
+    self.selectStoreView.miniStopButton.rx.tap
+      .debug()
+      .map { SelectStoreViewReactor.Action.selectStore(.miniStop) }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
     // 건너뛰기 버튼 클릭
     self.skipButton.rx.tap
       .map { SelectStoreViewReactor.Action.skip }

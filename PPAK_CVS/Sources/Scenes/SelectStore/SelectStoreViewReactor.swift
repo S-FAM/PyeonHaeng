@@ -13,6 +13,7 @@ import RxCocoa
 
 final class SelectStoreViewReactor: Reactor {
   enum Action {
+    case selectStore(CVSType)
     case skip
   }
   
@@ -28,7 +29,11 @@ final class SelectStoreViewReactor: Reactor {
   
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
+    case .selectStore(let cvsType):
+      CVSStorage.shared.saveToFavorite(cvsType)
+      return .just(.goToHomeVC)
     case .skip:
+      CVSStorage.shared.saveToFavorite(.all)
       return .just(.goToHomeVC)
     }
   }

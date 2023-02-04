@@ -19,10 +19,10 @@ final class HomeCoordinator: BaseCoordinator {
     // Bookmark VC
     reactor.state
       .map { $0.showsBookmarkVC }
-      .filter { $0 }
+      .filter { $0.0 }
       .withUnretained(self)
-      .bind { owner, _ in
-        let coordinator = BookmarkCoordinator(navigationController: owner.navigationController)
+      .bind { owner, cvsType in
+        let coordinator = BookmarkCoordinator(owner.navigationController, cvsType: cvsType.1)
         owner.start(childCoordinator: coordinator)
       }
       .disposed(by: disposeBag)
