@@ -228,7 +228,9 @@ final class ProductViewController: BaseViewController, View {
   private func updateBookmarkState(isBookmark: Bool) {
     if isBookmark {
       self.bookmarkButton.setImage(UIImage(named: "ic_heart_red"), for: .normal)
-      ProductStorage.shared.add(self.productModel)
+      if ProductStorage.shared.contains(self.productModel) == false {
+        ProductStorage.shared.add(self.productModel)
+      }
     } else {
       self.bookmarkButton.setImage(UIImage(named: "ic_heart_gray"), for: .normal)
       ProductStorage.shared.remove(self.productModel)
