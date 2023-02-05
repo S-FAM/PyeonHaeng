@@ -23,6 +23,7 @@ final class SelectStoreView: UIView {
   private let checkImageView = UIImageView().then {
     $0.image = UIImage(named: "ic_check")
     $0.backgroundColor = .black.withAlphaComponent(0.5)
+    $0.layer.cornerRadius = 40
   }
   
   // MARK: - Init

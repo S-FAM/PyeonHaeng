@@ -5,6 +5,7 @@
 //  Created by 김민지 on 2023/02/05.
 //
 
+import AVFoundation
 import UIKit
 
 import ReactorKit
@@ -35,6 +36,7 @@ final class SelectStoreViewReactor: Reactor {
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
     case .selectStore(let cvsType, let fromSettings):
+      AudioServicesPlaySystemSound(1520)
       CVSStorage.shared.saveToFavorite(cvsType)
       return fromSettings ? .just(.updateSelectButton) : .just(.goToHomeVC)
     case .skip:
