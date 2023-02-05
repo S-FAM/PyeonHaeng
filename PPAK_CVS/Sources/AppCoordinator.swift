@@ -21,18 +21,6 @@ final class AppCoordinator: BaseCoordinator {
     }
     start(childCoordinator: coordinator)
   }
-  
-  /// OnboardingVC -> SelectStoreVC
-  func switchToSelectStore(coordinator: OnboardingCoordinator) {
-    finish(childCoordinator: coordinator)
-    start(childCoordinator: SelectStoreCoordinator(navigationController: self.navigationController))
-  }
-
-  /// SelectStoreVC -> HomeVC
-  func switchToHome(coordinator: SelectStoreCoordinator) {
-    finish(childCoordinator: coordinator)
-    start(childCoordinator: HomeCoordinator(navigationController: self.navigationController))
-  }
 }
 
 // MARK: - Delegates

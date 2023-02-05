@@ -23,17 +23,16 @@ final class OnboardingCoordinator: BaseCoordinator {
 
   private func bind(_ reactor: OnboardingViewReactor) {
 
-    // 편의점 선택 화면으로 이동하기
-    reactor.state.map { $0.isPushSelectStoreVC }
+    // OnboardingVC -> SelectStoreVC
+    reactor.state
+      .map { $0.isPushSelectStoreVC }
+      .filter { $0 }
       .distinctUntilChanged()
-      .bind { [weak self] isPush in
-        guard let self = self,
-              let parentCoordinator = self.parentCoordinator as? AppCoordinator else { return }
-
-        if isPush {
-          FTUXStorage().saveFTUXStatus()
-          parentCoordinator.switchToSelectStore(coordinator: self)
-        }
+      .withUnretained(self)
+      .bind { owner, _ in
+        FTUXStorage().saveFTUXStatus()
+        let coordinator = SelectStoreCoordinator(owner.navigationController, fromSettings: false)
+        owner.start(childCoordinator: coordinator)
       }
       .disposed(by: disposeBag)
   }

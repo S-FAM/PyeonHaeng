@@ -41,6 +41,19 @@ final class SelectStoreViewController: BaseViewController, View {
     .lightContent
   }
   
+  private let fromSettings: Bool
+  
+  // MARK: - Init
+  
+  init(fromSettings: Bool) {
+    self.fromSettings = fromSettings
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   // MARK: - Setup
   
   override func setupLayouts() {
@@ -79,52 +92,92 @@ final class SelectStoreViewController: BaseViewController, View {
     super.setupStyles()
     self.navigationController?.setNavigationBarHidden(true, animated: true)
     self.view.backgroundColor = CVSType.all.bgColor
+    
+    if self.fromSettings {
+      self.skipButton.setTitle(Strings.SelectStore.save, for: .normal)
+    }
   }
   
   func bind(reactor: SelectStoreViewReactor) {
+    if self.fromSettings {
+      reactor.action.onNext(.selectStore(CVSStorage.shared.favoriteCVS, self.fromSettings))
+    }
     
     // --- Action ---
     
     // CU 버튼 클릭
     self.selectStoreView.cuButton.rx.tap
       .debug()
-      .map { SelectStoreViewReactor.Action.selectStore(.cu) }
+      .map { SelectStoreViewReactor.Action.selectStore(.cu, self.fromSettings) }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
     
     // GS25 버튼 클릭
     self.selectStoreView.gsButton.rx.tap
-      .debug()
-      .map { SelectStoreViewReactor.Action.selectStore(.gs) }
+      .map { SelectStoreViewReactor.Action.selectStore(.gs, self.fromSettings) }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
     
     // emart24 버튼 클릭
     self.selectStoreView.emartButton.rx.tap
-      .debug()
-      .map { SelectStoreViewReactor.Action.selectStore(.eMart) }
+      .map { SelectStoreViewReactor.Action.selectStore(.eMart, self.fromSettings) }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
     
     // 7-ELEVEn 버튼 클릭
     self.selectStoreView.sevenElevenButton.rx.tap
-      .debug()
-      .map { SelectStoreViewReactor.Action.selectStore(.sevenEleven) }
+      .map { SelectStoreViewReactor.Action.selectStore(.sevenEleven, self.fromSettings) }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
     
     // MINISTOP 버튼 클릭
     self.selectStoreView.miniStopButton.rx.tap
-      .debug()
-      .map { SelectStoreViewReactor.Action.selectStore(.miniStop) }
+      .map { SelectStoreViewReactor.Action.selectStore(.miniStop, self.fromSettings) }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
     
     // 건너뛰기 버튼 클릭
     self.skipButton.rx.tap
-      .map { SelectStoreViewReactor.Action.skip }
+      .map {
+        if self.fromSettings {
+          return SelectStoreViewReactor.Action.save
+        } else {
+          return SelectStoreViewReactor.Action.skip
+        }
+      }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
+    
+    // --- State ---
+    
+    reactor.state
+      .map { $0.updateSelectButton }
+      .bind { [weak self] isUpdate in
+        if isUpdate {
+          self?.updateButtonUI()
+        }
+      }
+      .disposed(by: disposeBag)
+  }
+  
+  /// 저장된 '자주 가는 편의점' 정보에 맞게 버튼의 UI를 업데이트 합니다.
+  private func updateButtonUI() {
+    self.selectStoreView.hideCheckImage()
+    
+    switch CVSStorage.shared.favoriteCVS {
+    case .cu:
+      self.selectStoreView.showCheckImage(at: self.selectStoreView.cuButton)
+    case .gs:
+      self.selectStoreView.showCheckImage(at: self.selectStoreView.gsButton)
+    case .eMart:
+      self.selectStoreView.showCheckImage(at: self.selectStoreView.emartButton)
+    case .sevenEleven:
+      self.selectStoreView.showCheckImage(at: self.selectStoreView.sevenElevenButton)
+    case .miniStop:
+      self.selectStoreView.showCheckImage(at: self.selectStoreView.miniStopButton)
+    default:
+      break
+    }
   }
 }
 

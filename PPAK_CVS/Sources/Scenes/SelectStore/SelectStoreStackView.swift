@@ -20,6 +20,11 @@ final class SelectStoreView: UIView {
   private lazy var firstHStackView = makeHStackView()
   private lazy var secondHStackView = makeHStackView()
   
+  private let checkImageView = UIImageView().then {
+    $0.image = UIImage(named: "ic_check")
+    $0.backgroundColor = .black.withAlphaComponent(0.5)
+  }
+  
   // MARK: - Init
   
   init() {
@@ -126,6 +131,20 @@ extension SelectStoreView {
       $0.spacing = Spacing.stackiView
     }
     return stackView
+  }
+  
+  func showCheckImage(at button: UIButton) {
+    self.addSubview(self.checkImageView)
+    
+    self.checkImageView.snp.makeConstraints { make in
+      make.width.height.equalTo(Width.button)
+      make.top.equalTo(button.snp.top)
+      make.leading.equalTo(button.snp.leading)
+    }
+  }
+  
+  func hideCheckImage() {
+    self.checkImageView.removeFromSuperview()
   }
 }
 

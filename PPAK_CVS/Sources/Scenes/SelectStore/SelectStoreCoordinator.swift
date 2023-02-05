@@ -5,32 +5,46 @@
 //  Created by 김민지 on 2023/01/28.
 //
 
-import Foundation
+import UIKit
 
 final class SelectStoreCoordinator: BaseCoordinator {
   
+  private let fromSettings: Bool
+  
+  init(_ navigationController: UINavigationController, fromSettings: Bool) {
+    self.fromSettings = fromSettings
+    super.init(navigationController: navigationController)
+  }
+  
   override func start() {
     let reactor = SelectStoreViewReactor()
-    let selectStoreVC = SelectStoreViewController()
+    let selectStoreVC = SelectStoreViewController(fromSettings: self.fromSettings)
     selectStoreVC.coordinator = self
     selectStoreVC.reactor = reactor
-    self.navigationController.setViewControllers([selectStoreVC], animated: true)
+    self.navigationController.pushViewController(selectStoreVC, animated: true)
     
     self.bind(reactor)
   }
   
-  private func bind(_ reactor: SelectStoreViewReactor) {
+  func bind(_ reactor: SelectStoreViewReactor) {
+    
+    // SelectStoreVC -> SettingsVC (Pop)
+    reactor.state
+      .map { $0.isPopSelectStoreVC }
+      .filter { $0 }
+      .withUnretained(self)
+      .bind { $0.0.navigationController.popViewController(animated: true) }
+      .disposed(by: disposeBag)
 
-    // 홈 화면으로 이동하기
-    reactor.state.map { $0.isPushHomeVC }
+    // SelectStroeVC -> HomeVC (Push)
+    reactor.state
+      .map { $0.isPushHomeVC }
+      .filter { $0 }
       .distinctUntilChanged()
-      .bind { [weak self] isPush in
-        guard let self = self,
-              let parentCoordinator = self.parentCoordinator as? AppCoordinator else { return }
-
-        if isPush {
-          parentCoordinator.switchToHome(coordinator: self)
-        }
+      .withUnretained(self)
+      .bind { owner, _ in
+        let coordinator = HomeCoordinator(navigationController: owner.navigationController)
+        owner.start(childCoordinator: coordinator)
       }
       .disposed(by: disposeBag)
   }
