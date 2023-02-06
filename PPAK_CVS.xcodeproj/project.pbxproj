@@ -38,7 +38,7 @@
 		A5B69C3C29600A1000052D2B /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B69C3B29600A1000052D2B /* UIFont+.swift */; };
 		A5D5A6EB298556D300AD4F6E /* SelectStoreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D5A6EA298556D300AD4F6E /* SelectStoreVC.swift */; };
 		A5D5A6ED2985571100AD4F6E /* SelectStoreCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D5A6EC2985571100AD4F6E /* SelectStoreCoordinator.swift */; };
-		A5D5A6EF29855D6200AD4F6E /* SelectStoreStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D5A6EE29855D6200AD4F6E /* SelectStoreStackView.swift */; };
+		A5D5A6EF29855D6200AD4F6E /* SelectStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D5A6EE29855D6200AD4F6E /* SelectStoreView.swift */; };
 		A5D5A6F12985629100AD4F6E /* EF_jejudoldam.otf in Resources */ = {isa = PBXBuildFile; fileRef = A5D5A6F02985629100AD4F6E /* EF_jejudoldam.otf */; };
 		A5E8DD07291FA217006AF2CE /* NetworkCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E8DD06291FA217006AF2CE /* NetworkCheck.swift */; };
 		A5E8DD0A291FA75A006AF2CE /* NetworkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E8DD09291FA75A006AF2CE /* NetworkVC.swift */; };
@@ -137,7 +137,7 @@
 		A5B69C3B29600A1000052D2B /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		A5D5A6EA298556D300AD4F6E /* SelectStoreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStoreVC.swift; sourceTree = "<group>"; };
 		A5D5A6EC2985571100AD4F6E /* SelectStoreCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStoreCoordinator.swift; sourceTree = "<group>"; };
-		A5D5A6EE29855D6200AD4F6E /* SelectStoreStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStoreStackView.swift; sourceTree = "<group>"; };
+		A5D5A6EE29855D6200AD4F6E /* SelectStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStoreView.swift; sourceTree = "<group>"; };
 		A5D5A6F02985629100AD4F6E /* EF_jejudoldam.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EF_jejudoldam.otf; sourceTree = "<group>"; };
 		A5E8DD06291FA217006AF2CE /* NetworkCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCheck.swift; sourceTree = "<group>"; };
 		A5E8DD09291FA75A006AF2CE /* NetworkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkVC.swift; sourceTree = "<group>"; };
@@ -297,7 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				A5D5A6EC2985571100AD4F6E /* SelectStoreCoordinator.swift */,
-				A5D5A6EE29855D6200AD4F6E /* SelectStoreStackView.swift */,
+				A5D5A6EE29855D6200AD4F6E /* SelectStoreView.swift */,
 				A5D5A6EA298556D300AD4F6E /* SelectStoreVC.swift */,
 				A584006F298EABC400DB57F8 /* SelectStoreViewReactor.swift */,
 			);
@@ -675,7 +675,7 @@
 				9CA7150E293CE26300AEE436 /* NSAttributedString+.swift in Sources */,
 				BAEF774928F412FA006B0274 /* ProductCollectionHeaderView.swift in Sources */,
 				E50F851229589AFB008B7052 /* ProductStorage.swift in Sources */,
-				A5D5A6EF29855D6200AD4F6E /* SelectStoreStackView.swift in Sources */,
+				A5D5A6EF29855D6200AD4F6E /* SelectStoreView.swift in Sources */,
 				BABC84B228F58F5A00D6DF45 /* Preview.swift in Sources */,
 				E505D9EB28CF5B4A00EEFC65 /* AppDelegate.swift in Sources */,
 				BA9EDA9D2918BF9000B97C23 /* Date+.swift in Sources */,
