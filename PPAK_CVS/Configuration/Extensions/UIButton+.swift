@@ -26,7 +26,7 @@ extension UIButton {
   ) {
     let button = self
     button.setTitle(title, for: .normal)
-    button.setTitleColor(UIColor.white, for: .normal)
+    button.setTitleColor(titleColor, for: .normal)
     button.titleLabel?.font = font
     button.backgroundColor = bgColor.withAlphaComponent(alpha)
     button.layer.cornerRadius = radius
