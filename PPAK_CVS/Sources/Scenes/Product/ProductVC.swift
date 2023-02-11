@@ -14,9 +14,6 @@ import SnapKit
 import Then
 
 final class ProductViewController: BaseViewController, View {
-  
-  var productModel = ProductModel.EMPTY
-  var isBookmarkedProduct: Bool = false
 
   // test data (will delete)
   private var previousHistory: [ProductModel] = []
@@ -35,6 +32,7 @@ final class ProductViewController: BaseViewController, View {
 
   private let bookmarkButton = UIButton().then {
     $0.setImage(UIImage(named: "ic_heart_gray"), for: .normal)
+    $0.setImage(UIImage(named: "ic_heart_red"), for: .selected)
   }
 
   private let shareButton = UIButton().then {
@@ -138,7 +136,7 @@ final class ProductViewController: BaseViewController, View {
     
     // 북마크 버튼 클릭
     self.bookmarkButton.rx.tap
-      .map { ProductViewReactor.Action.bookmark(self.isBookmarkedProduct) }
+      .map { ProductViewReactor.Action.bookmark(!self.bookmarkButton.isSelected) }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
     
@@ -155,14 +153,11 @@ final class ProductViewController: BaseViewController, View {
     let headerViewObservable = headerViewInitializeRelay.asObservable()
 
     Observable.combineLatest(modelObservable, headerViewObservable)
+      .take(1)
       .subscribe(onNext: { [weak self] model, headerView in
         guard let self = self else { return }
         
         headerView.configureUI(with: model)
-        
-        self.productModel = model
-        self.isBookmarkedProduct = ProductStorage.shared.contains(self.productModel)
-        self.updateBookmarkState(isBookmark: self.isBookmarkedProduct)
 
         // --- test data(will delete) ---
         self.previousHistory.append(
@@ -209,12 +204,10 @@ final class ProductViewController: BaseViewController, View {
       })
       .disposed(by: disposeBag)
     
-    // 북마크 상태 저장하기
+    // 북마크 버튼 상태 적용하기
     reactor.state
       .map { $0.isBookmark }
-      .bind { [weak self] isBookmark in
-        self?.updateBookmarkState(isBookmark: isBookmark)
-      }
+      .bind(to: self.bookmarkButton.rx.isSelected)
       .disposed(by: disposeBag)
   }
 
@@ -222,19 +215,6 @@ final class ProductViewController: BaseViewController, View {
   private func presentShareSheet(items: [Any]) {
     let shareSheetVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
     self.present(shareSheetVC, animated: true)
-  }
-  
-  /// 북마크버튼을 눌렀을 때 실행되는 메서드입니다.
-  private func updateBookmarkState(isBookmark: Bool) {
-    if isBookmark {
-      self.bookmarkButton.setImage(UIImage(named: "ic_heart_red"), for: .normal)
-      if ProductStorage.shared.contains(self.productModel) == false {
-        ProductStorage.shared.add(self.productModel)
-      }
-    } else {
-      self.bookmarkButton.setImage(UIImage(named: "ic_heart_gray"), for: .normal)
-      ProductStorage.shared.remove(self.productModel)
-    }
   }
 }
 

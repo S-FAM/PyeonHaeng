@@ -41,11 +41,17 @@ final class ProductViewReactor: Reactor {
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
     case .updateProduct(let model):
-      return .just(.updateProduct(model))
+      return .concat([
+        .just(.updateProduct(model)),
+        .just(.changeBookmarkState(ProductStorage.shared.contains(model)))
+      ])
+      
     case .back:
       return .just(.goToHomeVC)
+      
     case .bookmark(let isBookmark):
       return .just(.changeBookmarkState(isBookmark))
+      
     case let .share(image):
       // prevent from multiple requests
       if self.currentState.isShareButtonTapped {
@@ -65,16 +71,32 @@ final class ProductViewReactor: Reactor {
     switch mutation {
     case .updateProduct(let model):
       newState.model = model
+      
     case .goToHomeVC:
       newState.isPopProductVC = true
+      
     case .changeBookmarkState(let isBookmark):
-      newState.isBookmark = !isBookmark
+      self.updateBookmarkState(isBookmark: isBookmark)
+      newState.isBookmark = isBookmark
+      
     case let .showShareWindow(isShareButtonTapped):
       newState.isShareButtonTapped = isShareButtonTapped
+      
     case let .setItem(newImage):
       newState.shareImage = newImage
     }
 
     return newState
+  }
+  
+  /// 북마크 상태를 UserDefaults에 적용하는 메서드입니다.
+  private func updateBookmarkState(isBookmark: Bool) {
+    if isBookmark {
+      if ProductStorage.shared.contains(currentState.model) == false {
+        ProductStorage.shared.add(currentState.model)
+      }
+    } else {
+      ProductStorage.shared.remove(currentState.model)
+    }
   }
 }
