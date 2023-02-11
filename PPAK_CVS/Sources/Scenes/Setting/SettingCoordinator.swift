@@ -22,5 +22,18 @@ final class SettingCoordinator: BaseCoordinator {
     self.navigationController.pushViewController(viewController, animated: true)
   }
 
-  func bind(_ reactor: SettingViewReactor) {}
+  func bind(_ reactor: SettingViewReactor) {
+
+    // NoticeVC로 이동처리
+    // TODO: NoticeVC가 완성되면 수정필요 Home >> Notice
+    reactor.state
+      .map { $0.showNoticeVC }
+      .filter { $0 }
+      .withUnretained(self)
+      .bind { owner, _ in
+        let coordinator = HomeCoordinator(navigationController: owner.navigationController)
+        coordinator.start(childCoordinator: coordinator)
+      }
+      .disposed(by: disposeBag)
+  }
 }
