@@ -43,12 +43,12 @@ final class HomeViewReactor: Reactor {
     var isVisibleCVSDropdown: Bool = false
     var isVisibleFilterDropdown: Bool = false
     var showsKeyboard: Bool = false
-    var showsBookmarkVC: Bool = false
+    var showsBookmarkVC: (Bool, CVSType) = (false, .all)
     var showsProductVC: (Bool, ProductModel) = (false, .init(imageLink: nil, name: "", price: 0, store: .all, saleType: .all))
     var showsSettingVC: Bool = false
     var currentSortType: SortType = .none
     var currentEventType: EventType = .all
-    var currentCVSType: CVSType = CVSStorage.shared.cvs
+    var currentCVSType: CVSType = CVSStorage.shared.favoriteCVS
     var currentTarget: String = ""
     var isLoading: Bool = false
     var isBlockedRequest: Bool = false
@@ -101,7 +101,7 @@ final class HomeViewReactor: Reactor {
       ])
 
     case .didTapBookmarkButton:
-      guard currentState.showsBookmarkVC == false else { return .empty() }
+//      guard currentState.showsBookmarkVC == false else { return .empty() }
       return .concat([
         .just(.hideDropdown),
         .just(.setBookmarkVC(true)),
@@ -214,7 +214,7 @@ final class HomeViewReactor: Reactor {
       nextState.isVisibleCVSDropdown = false
 
     case let .setBookmarkVC(isShowBookmarkVC):
-      nextState.showsBookmarkVC = isShowBookmarkVC
+      nextState.showsBookmarkVC = (isShowBookmarkVC, currentState.currentCVSType)
 
     case .setOffset:
       nextState.currentOffset += 20

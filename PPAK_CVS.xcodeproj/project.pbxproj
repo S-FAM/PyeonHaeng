@@ -19,6 +19,7 @@
 		9CDBFCD1296C331C00357474 /* SettingConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDBFCD0296C331C00357474 /* SettingConfig.swift */; };
 		A54949D3296F052F00844828 /* noBookmark.json in Resources */ = {isa = PBXBuildFile; fileRef = A54949D2296F052F00844828 /* noBookmark.json */; };
 		A57D32E428EDBA0200944C7E /* OnboardingViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57D32E328EDBA0200944C7E /* OnboardingViewReactor.swift */; };
+		A5840070298EABC400DB57F8 /* SelectStoreViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A584006F298EABC400DB57F8 /* SelectStoreViewReactor.swift */; };
 		A5932EA028E0435200457AD3 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = A5932E9F28E0435200457AD3 /* Lottie */; };
 		A5932EA328E044CB00457AD3 /* onboarding1.json in Resources */ = {isa = PBXBuildFile; fileRef = A5932EA228E044CB00457AD3 /* onboarding1.json */; };
 		A5932EA528E045EF00457AD3 /* onboarding3.json in Resources */ = {isa = PBXBuildFile; fileRef = A5932EA428E045EF00457AD3 /* onboarding3.json */; };
@@ -35,6 +36,10 @@
 		A5B69C392960095100052D2B /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A5B69C302960095100052D2B /* Pretendard-ExtraBold.otf */; };
 		A5B69C3A2960095100052D2B /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = A5B69C312960095100052D2B /* Pretendard-Medium.otf */; };
 		A5B69C3C29600A1000052D2B /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B69C3B29600A1000052D2B /* UIFont+.swift */; };
+		A5D5A6EB298556D300AD4F6E /* SelectStoreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D5A6EA298556D300AD4F6E /* SelectStoreVC.swift */; };
+		A5D5A6ED2985571100AD4F6E /* SelectStoreCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D5A6EC2985571100AD4F6E /* SelectStoreCoordinator.swift */; };
+		A5D5A6EF29855D6200AD4F6E /* SelectStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D5A6EE29855D6200AD4F6E /* SelectStoreView.swift */; };
+		A5D5A6F12985629100AD4F6E /* EF_jejudoldam.otf in Resources */ = {isa = PBXBuildFile; fileRef = A5D5A6F02985629100AD4F6E /* EF_jejudoldam.otf */; };
 		A5E8DD07291FA217006AF2CE /* NetworkCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E8DD06291FA217006AF2CE /* NetworkCheck.swift */; };
 		A5E8DD0A291FA75A006AF2CE /* NetworkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E8DD09291FA75A006AF2CE /* NetworkVC.swift */; };
 		A5F8288228DEAE3C00C5D6A2 /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F8288128DEAE3C00C5D6A2 /* OnboardingVC.swift */; };
@@ -114,6 +119,7 @@
 		9CDBFCD0296C331C00357474 /* SettingConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingConfig.swift; sourceTree = "<group>"; };
 		A54949D2296F052F00844828 /* noBookmark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = noBookmark.json; sourceTree = "<group>"; };
 		A57D32E328EDBA0200944C7E /* OnboardingViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewReactor.swift; sourceTree = "<group>"; };
+		A584006F298EABC400DB57F8 /* SelectStoreViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStoreViewReactor.swift; sourceTree = "<group>"; };
 		A5932EA228E044CB00457AD3 /* onboarding1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding1.json; sourceTree = "<group>"; };
 		A5932EA428E045EF00457AD3 /* onboarding3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding3.json; sourceTree = "<group>"; };
 		A5932EA628E0472B00457AD3 /* onboarding2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding2.json; sourceTree = "<group>"; };
@@ -128,6 +134,10 @@
 		A5B69C302960095100052D2B /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
 		A5B69C312960095100052D2B /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		A5B69C3B29600A1000052D2B /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
+		A5D5A6EA298556D300AD4F6E /* SelectStoreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStoreVC.swift; sourceTree = "<group>"; };
+		A5D5A6EC2985571100AD4F6E /* SelectStoreCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStoreCoordinator.swift; sourceTree = "<group>"; };
+		A5D5A6EE29855D6200AD4F6E /* SelectStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStoreView.swift; sourceTree = "<group>"; };
+		A5D5A6F02985629100AD4F6E /* EF_jejudoldam.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EF_jejudoldam.otf; sourceTree = "<group>"; };
 		A5E8DD06291FA217006AF2CE /* NetworkCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCheck.swift; sourceTree = "<group>"; };
 		A5E8DD09291FA75A006AF2CE /* NetworkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkVC.swift; sourceTree = "<group>"; };
 		A5F8288128DEAE3C00C5D6A2 /* OnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
@@ -267,6 +277,7 @@
 		A5B69C282960093500052D2B /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				A5D5A6F02985629100AD4F6E /* EF_jejudoldam.otf */,
 				A5B69C2B2960095100052D2B /* Pretendard-Black.otf */,
 				A5B69C2A2960095100052D2B /* Pretendard-Bold.otf */,
 				A5B69C302960095100052D2B /* Pretendard-ExtraBold.otf */,
@@ -278,6 +289,17 @@
 				A5B69C2C2960095100052D2B /* Pretendard-Thin.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		A5D5A6E9298556AE00AD4F6E /* SelectStore */ = {
+			isa = PBXGroup;
+			children = (
+				A5D5A6EC2985571100AD4F6E /* SelectStoreCoordinator.swift */,
+				A5D5A6EE29855D6200AD4F6E /* SelectStoreView.swift */,
+				A5D5A6EA298556D300AD4F6E /* SelectStoreVC.swift */,
+				A584006F298EABC400DB57F8 /* SelectStoreViewReactor.swift */,
+			);
+			path = SelectStore;
 			sourceTree = "<group>";
 		};
 		A5E8DD08291FA722006AF2CE /* Network */ = {
@@ -476,6 +498,7 @@
 				E54D9C4028F1A16700D028B2 /* Bookmark */,
 				A5E8DD08291FA722006AF2CE /* Network */,
 				A5F8288328DEAE4300C5D6A2 /* Onboarding */,
+				A5D5A6E9298556AE00AD4F6E /* SelectStore */,
 				9C5C03A6292B9F840000989F /* Setting */,
 				BA5A433A28F2BC4C008DCDCC /* Product */,
 			);
@@ -577,6 +600,7 @@
 				A54949D3296F052F00844828 /* noBookmark.json in Resources */,
 				A5B69C3A2960095100052D2B /* Pretendard-Medium.otf in Resources */,
 				A5932EA528E045EF00457AD3 /* onboarding3.json in Resources */,
+				A5D5A6F12985629100AD4F6E /* EF_jejudoldam.otf in Resources */,
 				A5932EA728E0472B00457AD3 /* onboarding2.json in Resources */,
 				A5B69C392960095100052D2B /* Pretendard-ExtraBold.otf in Resources */,
 				A5B69C372960095100052D2B /* Pretendard-Regular.otf in Resources */,
@@ -636,6 +660,7 @@
 				E5CFF6F8297FD06C00E11D9A /* CVSStorage.swift in Sources */,
 				9C07AE832934D763002CFE3F /* SettingTableViewCell.swift in Sources */,
 				E5A877C028D4A34D002A2402 /* EventControl.swift in Sources */,
+				A5D5A6EB298556D300AD4F6E /* SelectStoreVC.swift in Sources */,
 				E5B9965728E2872A00E39566 /* CVSDropdownView.swift in Sources */,
 				BA343AB12963139900DE8016 /* Int+.swift in Sources */,
 				BAD70BDA291A594F00C39863 /* RequestTypeModel.swift in Sources */,
@@ -647,6 +672,7 @@
 				9CA7150E293CE26300AEE436 /* NSAttributedString+.swift in Sources */,
 				BAEF774928F412FA006B0274 /* ProductCollectionHeaderView.swift in Sources */,
 				E50F851229589AFB008B7052 /* ProductStorage.swift in Sources */,
+				A5D5A6EF29855D6200AD4F6E /* SelectStoreView.swift in Sources */,
 				BABC84B228F58F5A00D6DF45 /* Preview.swift in Sources */,
 				E505D9EB28CF5B4A00EEFC65 /* AppDelegate.swift in Sources */,
 				BA9EDA9D2918BF9000B97C23 /* Date+.swift in Sources */,
@@ -657,6 +683,7 @@
 				BA9EBC102949BBC600167970 /* TargetType.swift in Sources */,
 				9C40085B295DCAB500C7E2DE /* SettingCoordinator.swift in Sources */,
 				E5B9965B28E2A16D00E39566 /* SortDropdownView.swift in Sources */,
+				A5D5A6ED2985571100AD4F6E /* SelectStoreCoordinator.swift in Sources */,
 				A5F8288228DEAE3C00C5D6A2 /* OnboardingVC.swift in Sources */,
 				9C5C03A5292B9F770000989F /* SettingVC.swift in Sources */,
 				BA9EBC1B294A115300167970 /* PyeonHaengAPI.swift in Sources */,
@@ -677,6 +704,7 @@
 				BAA0581028D36F75000CDD11 /* BaseViewController.swift in Sources */,
 				BA9EBC16294A04E500167970 /* Encodable+.swift in Sources */,
 				9CCFA4FE28F4585E00963A95 /* EventType.swift in Sources */,
+				A5840070298EABC400DB57F8 /* SelectStoreViewReactor.swift in Sources */,
 				E59041DE2928FB8100135ECA /* SaleTypeView.swift in Sources */,
 				9C1E41BD297439AE006948F7 /* SettingCellType.swift in Sources */,
 			);

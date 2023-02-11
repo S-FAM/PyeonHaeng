@@ -29,4 +29,9 @@ extension UIFont {
     let appFont = UIFont(name: "Pretendard-\(family.rawValue)", size: size)
     return appFont ?? UIFont.systemFont(ofSize: size)
   }
+  
+  static func accentFont(size: CGFloat) -> UIFont {
+    let appFont = UIFont(name: "EF_jejudoldam", size: size)
+    return appFont ?? UIFont.systemFont(ofSize: size)
+  }
 }
