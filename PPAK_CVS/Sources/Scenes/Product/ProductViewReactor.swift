@@ -12,14 +12,14 @@ import RxSwift
 import RxCocoa
 
 final class ProductViewReactor: Reactor {
-
+  
   enum Action {
     case updateProduct(ProductModel)
     case back
     case bookmark(Bool)
     case share(UIImage)
   }
-
+  
   enum Mutation {
     case updateProduct(ProductModel)
     case goToHomeVC
@@ -27,7 +27,7 @@ final class ProductViewReactor: Reactor {
     case showShareWindow(Bool)
     case setItem(UIImage)
   }
-
+  
   struct State {
     var model = ProductModel(imageLink: "", name: "", price: 0, store: .all, saleType: .all)
     var isPopProductVC: Bool = false
@@ -35,9 +35,9 @@ final class ProductViewReactor: Reactor {
     var isShareButtonTapped: Bool = false
     var shareImage: UIImage?
   }
-
+  
   var initialState = State()
-
+  
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
     case .updateProduct(let model):
@@ -64,10 +64,10 @@ final class ProductViewReactor: Reactor {
       ])
     }
   }
-
+  
   func reduce(state: State, mutation: Mutation) -> State {
     var newState = state
-
+    
     switch mutation {
     case .updateProduct(let model):
       newState.model = model
@@ -85,7 +85,7 @@ final class ProductViewReactor: Reactor {
     case let .setItem(newImage):
       newState.shareImage = newImage
     }
-
+    
     return newState
   }
   
@@ -101,4 +101,5 @@ final class ProductViewReactor: Reactor {
     } else {
       storage.add(currentState.model)
     }
+  }
 }
