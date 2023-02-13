@@ -5,16 +5,18 @@ import RxCocoa
 final class SettingViewReactor: Reactor {
 
   enum Action {
-
     case defaultAction
+    case didTapNoticeButton
   }
 
   enum Mutation {
     case defaultMutation
+    case setNoticeVC(Bool)
   }
 
   struct State {
     var value: Int = 0
+    var showNoticeVC: Bool = false
   }
 
   var initialState: State = State()
@@ -22,6 +24,10 @@ final class SettingViewReactor: Reactor {
   // 연결과정을 결합하는 곳
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
+    case .didTapNoticeButton:
+      return .concat([.just(.setNoticeVC(true)),
+                      .just(.setNoticeVC(false))
+      ])
     case .defaultAction:
       return Observable.just(.defaultMutation)
     }
@@ -31,6 +37,13 @@ final class SettingViewReactor: Reactor {
   func reduce(state: State, mutation: Mutation) -> State {
     var nextState = state
 
+    switch mutation {
+    case .defaultMutation:
+      break
+    case .setNoticeVC(let state):
+      nextState.showNoticeVC = state
+      print("moveToNoticeVC")
+    }
     return nextState
   }
 

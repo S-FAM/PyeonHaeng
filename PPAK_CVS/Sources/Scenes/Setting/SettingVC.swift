@@ -99,7 +99,17 @@ final class SettingViewController: BaseViewController, View {
     navigationController?.popViewController(animated: true)
   }
 
-  func bind(reactor: SettingViewReactor) { }
+  func bind(reactor: SettingViewReactor) {
+
+    // MARK: - Action
+
+    // 공지사항 클릭
+    tableView.rx.itemSelected
+      .filter { $0.row == 1 }
+      .map { _ in SettingViewReactor.Action.didTapNoticeButton }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+  }
 }
 
 // MARK: - TableView Delegate
@@ -141,6 +151,7 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
       print("click: \(indexPath.row)")
     case 1:
       // 공지사항
+      // reactor kit 세팅완료
       print("click: \(indexPath.row)")
     case 2:
       // 리뷰남기기
