@@ -91,12 +91,14 @@ final class ProductViewReactor: Reactor {
   
   /// 북마크 상태를 UserDefaults에 적용하는 메서드입니다.
   private func updateBookmarkState(isBookmark: Bool) {
-    if isBookmark {
-      if ProductStorage.shared.contains(currentState.model) == false {
-        ProductStorage.shared.add(currentState.model)
-      }
+    // guard isBookmark else { return } // 또는
+    if !isBookmark { return }
+    
+    let storage = ProductStorage.shared
+    
+    if storage.contains(currentState.model) {
+      storage.remove(currentState.model)
     } else {
-      ProductStorage.shared.remove(currentState.model)
+      storage.add(currentState.model)
     }
-  }
 }
