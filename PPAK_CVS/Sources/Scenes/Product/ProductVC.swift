@@ -32,6 +32,7 @@ final class ProductViewController: BaseViewController, View {
 
   private let bookmarkButton = UIButton().then {
     $0.setImage(UIImage(named: "ic_heart_gray"), for: .normal)
+    $0.setImage(UIImage(named: "ic_heart_red"), for: .selected)
   }
 
   private let shareButton = UIButton().then {
@@ -58,11 +59,9 @@ final class ProductViewController: BaseViewController, View {
     $0.backgroundColor = .systemPurple
   }
 
-  private var collectionHeaderView: ProductCollectionHeaderView? {
+  private var collectionHeaderView: ProductCollectionHeaderView! {
     willSet {
       guard let newValue = newValue else { return }
-      newValue.reactor = ProductHeaderViewReactor()
-      bind(newValue)
       self.headerViewInitializeRelay.accept(newValue)
     }
   }
@@ -126,16 +125,42 @@ final class ProductViewController: BaseViewController, View {
   }
 
   func bind(reactor: ProductViewReactor) {
+    
+    // --- Action ---
+    
+    // 뒤로 가기 버튼 클릭
+    self.backButton.rx.tap
+      .map { ProductViewReactor.Action.back }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
+    // 북마크 버튼 클릭
+    self.bookmarkButton.rx.tap
+      .map { ProductViewReactor.Action.bookmark(!self.bookmarkButton.isSelected) }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
+    // 공유 버튼 클릭
+    self.shareButton.rx.tap
+      .map { ProductViewReactor.Action.share((self.collectionHeaderView.getShareImage())) }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
+    // --- State ---
 
+    // 제품 정보 받아오기
     let modelObservable = reactor.state.map { $0.model }
     let headerViewObservable = headerViewInitializeRelay.asObservable()
 
     Observable.combineLatest(modelObservable, headerViewObservable)
+      .take(1)
       .subscribe(onNext: { [weak self] model, headerView in
+        guard let self = self else { return }
+        
         headerView.configureUI(with: model)
 
         // --- test data(will delete) ---
-        self?.previousHistory.append(
+        self.previousHistory.append(
           ProductModel(
             imageLink: model.imageLink,
             name: "2022년 12월 행사 가격",
@@ -144,7 +169,7 @@ final class ProductViewController: BaseViewController, View {
             saleType: model.saleType
           )
         )
-        self?.previousHistory.append(
+        self.previousHistory.append(
           ProductModel(
             imageLink: model.imageLink,
             name: "2022년 11월 행사 가격",
@@ -153,7 +178,7 @@ final class ProductViewController: BaseViewController, View {
             saleType: model.saleType
           )
         )
-        self?.previousHistory.append(
+        self.previousHistory.append(
           ProductModel(
             imageLink: model.imageLink,
             name: "2022년 10월 행사 가격",
@@ -164,22 +189,25 @@ final class ProductViewController: BaseViewController, View {
         )
         // -------------------
 
-        self?.collectionView.reloadData()
-        self?.collectionView.backgroundColor = model.store.bgColor
+        self.collectionView.reloadData()
+        self.collectionView.backgroundColor = model.store.bgColor
       })
       .disposed(by: disposeBag)
-  }
-
-  func bind(_ headerView: ProductCollectionHeaderView) {
-    guard let headerViewModel = headerView.reactor else { return }
-
-    headerViewModel.state
+    
+    // 이미지 공유하기
+    reactor.state
       .map { $0.shareImage }
       .distinctUntilChanged()
       .compactMap { $0 }
       .subscribe(onNext: { [weak self] image in
         self?.presentShareSheet(items: [image])
       })
+      .disposed(by: disposeBag)
+    
+    // 북마크 버튼 상태 적용하기
+    reactor.state
+      .map { $0.isBookmark }
+      .bind(to: self.bookmarkButton.rx.isSelected)
       .disposed(by: disposeBag)
   }
 
