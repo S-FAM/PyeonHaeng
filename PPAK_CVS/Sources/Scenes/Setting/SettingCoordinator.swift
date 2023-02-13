@@ -32,7 +32,7 @@ final class SettingCoordinator: BaseCoordinator {
       .withUnretained(self)
       .bind { owner, _ in
         let coordinator = HomeCoordinator(navigationController: owner.navigationController)
-        coordinator.start(childCoordinator: coordinator)
+        owner.start(childCoordinator: coordinator)
       }
       .disposed(by: disposeBag)
   }
