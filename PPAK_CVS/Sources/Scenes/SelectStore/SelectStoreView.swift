@@ -135,6 +135,7 @@ extension SelectStoreView {
   }
   
   func showCheckImage(at button: UIButton) {
+    button.isSelected = true
     self.addSubview(self.checkImageView)
     
     self.checkImageView.snp.makeConstraints { make in
@@ -145,6 +146,14 @@ extension SelectStoreView {
   }
   
   func hideCheckImage() {
+    [self.cuButton,
+     self.gsButton,
+     self.emartButton,
+     self.sevenElevenButton,
+     self.miniStopButton
+    ].forEach {
+      $0.isSelected = false
+    }
     self.checkImageView.removeFromSuperview()
   }
 }
