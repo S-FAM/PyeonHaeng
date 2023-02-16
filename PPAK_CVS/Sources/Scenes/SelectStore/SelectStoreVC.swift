@@ -100,50 +100,55 @@ final class SelectStoreViewController: BaseViewController, View {
   
   func bind(reactor: SelectStoreViewReactor) {
     if self.fromSettings {
-      reactor.action.onNext(.selectStore(CVSStorage.shared.favoriteCVS, self.fromSettings))
+      reactor.action.onNext(.selectStore(CVSStorage.shared.favoriteCVS, false, self.fromSettings))
     }
     
     // --- Action ---
     
     // CU 버튼 클릭
     self.selectStoreView.cuButton.rx.tap
-      .debug()
-      .map { SelectStoreViewReactor.Action.selectStore(.cu, self.fromSettings) }
+      .map { [unowned self] in
+        SelectStoreViewReactor.Action.selectStore(.cu, self.selectStoreView.cuButton.isSelected, self.fromSettings)
+      }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
     
     // GS25 버튼 클릭
     self.selectStoreView.gsButton.rx.tap
-      .map { SelectStoreViewReactor.Action.selectStore(.gs, self.fromSettings) }
+      .map { [unowned self] in
+        SelectStoreViewReactor.Action.selectStore(.gs, self.selectStoreView.gsButton.isSelected, self.fromSettings)
+      }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
     
     // emart24 버튼 클릭
     self.selectStoreView.emartButton.rx.tap
-      .map { SelectStoreViewReactor.Action.selectStore(.eMart, self.fromSettings) }
+      .map { [unowned self] in
+        SelectStoreViewReactor.Action.selectStore(.eMart, self.selectStoreView.emartButton.isSelected, self.fromSettings)
+      }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
     
     // 7-ELEVEn 버튼 클릭
     self.selectStoreView.sevenElevenButton.rx.tap
-      .map { SelectStoreViewReactor.Action.selectStore(.sevenEleven, self.fromSettings) }
+      .map { [unowned self] in
+        SelectStoreViewReactor.Action.selectStore(.sevenEleven, self.selectStoreView.sevenElevenButton.isSelected, self.fromSettings)
+      }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
     
     // MINISTOP 버튼 클릭
     self.selectStoreView.miniStopButton.rx.tap
-      .map { SelectStoreViewReactor.Action.selectStore(.miniStop, self.fromSettings) }
+      .map { [unowned self] in
+        SelectStoreViewReactor.Action.selectStore(.miniStop, self.selectStoreView.miniStopButton.isSelected, self.fromSettings)
+      }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
     
     // 건너뛰기 버튼 클릭
     self.skipButton.rx.tap
-      .map {
-        if self.fromSettings {
-          return SelectStoreViewReactor.Action.save
-        } else {
-          return SelectStoreViewReactor.Action.skip
-        }
+      .map { [unowned self] in
+        return self.fromSettings ? SelectStoreViewReactor.Action.save : SelectStoreViewReactor.Action.skip
       }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
@@ -152,10 +157,10 @@ final class SelectStoreViewController: BaseViewController, View {
     
     reactor.state
       .map { $0.updateSelectButton }
-      .bind { [weak self] isUpdate in
-        if isUpdate {
-          self?.updateButtonUI()
-        }
+      .filter { $0 }
+      .withUnretained(self)
+      .bind { owner, _ in
+        owner.updateButtonUI()
       }
       .disposed(by: disposeBag)
   }
@@ -175,8 +180,8 @@ final class SelectStoreViewController: BaseViewController, View {
       self.selectStoreView.showCheckImage(at: self.selectStoreView.sevenElevenButton)
     case .miniStop:
       self.selectStoreView.showCheckImage(at: self.selectStoreView.miniStopButton)
-    default:
-      break
+    case .all:
+      self.selectStoreView.hideCheckImage()
     }
   }
 }

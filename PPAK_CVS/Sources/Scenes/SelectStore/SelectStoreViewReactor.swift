@@ -14,7 +14,7 @@ import RxCocoa
 
 final class SelectStoreViewReactor: Reactor {
   enum Action {
-    case selectStore(CVSType, Bool)
+    case selectStore(CVSType, Bool, Bool)
     case skip
     case save
   }
@@ -35,9 +35,13 @@ final class SelectStoreViewReactor: Reactor {
   
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
-    case .selectStore(let cvsType, let fromSettings):
+    case .selectStore(let cvsType, let isSelected, let fromSettings):
       AudioServicesPlaySystemSound(1520)
-      CVSStorage.shared.saveToFavorite(cvsType)
+      if isSelected {
+        CVSStorage.shared.saveToFavorite(.all)
+      } else {
+        CVSStorage.shared.saveToFavorite(cvsType)
+      }
       return fromSettings ? .just(.updateSelectButton) : .just(.goToHomeVC)
     case .skip:
       CVSStorage.shared.saveToFavorite(.all)
