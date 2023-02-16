@@ -146,11 +146,12 @@ extension SelectStoreView {
   }
   
   func hideCheckImage() {
-    [self.cuButton,
-     self.gsButton,
-     self.emartButton,
-     self.sevenElevenButton,
-     self.miniStopButton
+    [
+      self.cuButton,
+      self.gsButton,
+      self.emartButton,
+      self.sevenElevenButton,
+      self.miniStopButton
     ].forEach {
       $0.isSelected = false
     }
