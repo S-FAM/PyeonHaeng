@@ -40,9 +40,9 @@ final class CVSStorage {
   func save(_ cvs: CVSType) {
     self.cvs = cvs
   }
-  
+
   // --- 자주 가는 편의점 ---
-  
+
   lazy var favoriteCVS: CVSType = self.loadFavoriteCVS() {
     didSet {
       if let encoded = try? JSONEncoder().encode(self.favoriteCVS) {
@@ -50,19 +50,19 @@ final class CVSStorage {
       }
     }
   }
-  
+
   private func loadFavoriteCVS() -> CVSType {
     guard let data = userDefaults.object(forKey: self.favoriteCVSKey) as? Data else {
       return .all
     }
-    
+
     if let cvs = try? JSONDecoder().decode(CVSType.self, from: data) {
       return cvs
     } else {
       return .all
     }
   }
-  
+
   func saveToFavorite(_ cvs: CVSType) {
     self.favoriteCVS = cvs
   }

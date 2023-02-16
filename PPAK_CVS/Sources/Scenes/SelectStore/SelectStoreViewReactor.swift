@@ -18,21 +18,21 @@ final class SelectStoreViewReactor: Reactor {
     case skip
     case save
   }
-  
+
   enum Mutation {
     case goToHomeVC
     case popSelectStoreVC
     case updateSelectButton
   }
-  
+
   struct State {
     var isPushHomeVC: Bool = false
     var isPopSelectStoreVC: Bool = false
     var updateSelectButton: Bool = false
   }
-  
+
   let initialState: State = State()
-  
+
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
     case .selectStore(let cvsType, let isSelected, let fromSettings):
@@ -50,10 +50,10 @@ final class SelectStoreViewReactor: Reactor {
       return .just(.popSelectStoreVC)
     }
   }
-  
+
   func reduce(state: State, mutation: Mutation) -> State {
     var nextState = state
-    
+
     switch mutation {
     case .goToHomeVC:
       nextState.isPushHomeVC = true
@@ -62,7 +62,7 @@ final class SelectStoreViewReactor: Reactor {
     case .updateSelectButton:
       nextState.updateSelectButton = true
     }
-    
+
     return nextState
   }
 }

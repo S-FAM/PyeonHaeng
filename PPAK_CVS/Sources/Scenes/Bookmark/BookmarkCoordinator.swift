@@ -4,13 +4,13 @@ import RxSwift
 import RxCocoa
 
 final class BookmarkCoordinator: BaseCoordinator {
-  
+
   // MARK: - Properties
-  
+
   private let cvsType: CVSType
-  
+
   // MARK: - Init
-  
+
   init(_ navigationController: UINavigationController, cvsType: CVSType) {
     self.cvsType = cvsType
     super.init(navigationController: navigationController)

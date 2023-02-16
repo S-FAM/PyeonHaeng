@@ -28,11 +28,11 @@ enum Strings {
     static let pleseCheckNetwork = "네트워크 연결 상태를 확인해주세요."
     static let goToSettings = "설정으로"
   }
-  
+
   enum SelectStore {
     static let save = "저장하기"
     static let skip = "건너뛰기"
-    
+
     static let title = "자주 가는 편의점은\n어디인가요?"
     static let description = "앱을 실행할 때마다 선택된 편의점의\n행사 정보를 바로 볼 수 있습니다."
   }

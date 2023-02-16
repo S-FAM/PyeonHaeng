@@ -145,7 +145,7 @@ extension ProductCollectionHeaderView {
 
     curveView.backgroundColor = model.store.bgColor
   }
-  
+
   func getShareImage() -> UIImage {
     let renderer = UIGraphicsImageRenderer(bounds: self.wholeStackView.bounds)
     return renderer.image { rendererContext in

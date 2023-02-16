@@ -10,76 +10,76 @@ import UIKit
 import ReactorKit
 
 final class SelectStoreViewController: BaseViewController, View {
-  
+
   // MARK: - Properties
-  
+
   private lazy var textContainer = UIStackView().then {
     $0.axis = .vertical
     $0.alignment = .center
     $0.distribution = .fill
     $0.spacing = 20
   }
-  
+
   private lazy var titleLabel = UILabel().then {
     $0.text = Strings.SelectStore.title
     $0.onboardingExplainLabel(textColor: Color.titleLabel, font: Font.titleLabel)
   }
-  
+
   private lazy var descLabel = UILabel().then {
     $0.text = Strings.SelectStore.description
     $0.onboardingExplainLabel(textColor: Color.descLabel, font: Font.descLabel)
   }
-  
+
   private lazy var selectStoreView = SelectStoreView()
-  
+
   private lazy var skipButton = UIButton().then {
     $0.setTitle(Strings.SelectStore.skip, for: .normal)
     $0.withAlphaButton(title: Strings.Onboarding.skip, font: Font.button)
   }
-  
+
   override var preferredStatusBarStyle: UIStatusBarStyle {
     .lightContent
   }
-  
+
   private let fromSettings: Bool
-  
+
   // MARK: - Init
-  
+
   init(fromSettings: Bool) {
     self.fromSettings = fromSettings
     super.init(nibName: nil, bundle: nil)
   }
-  
+
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  
+
   // MARK: - Setup
-  
+
   override func setupLayouts() {
     super.setupLayouts()
-    
+
     [self.textContainer, self.selectStoreView, self.skipButton].forEach {
       self.view.addSubview($0)
     }
-    
+
     self.textContainer.addArrangedSubview(self.titleLabel)
     self.textContainer.addArrangedSubview(self.descLabel)
   }
-  
+
   override func setupConstraints() {
     super.setupConstraints()
-    
+
     self.textContainer.snp.makeConstraints { make in
       make.top.equalToSuperview().inset(Inset.textContainerTop)
       make.centerX.equalToSuperview()
     }
-    
+
     self.selectStoreView.snp.makeConstraints { make in
       make.top.equalTo(self.textContainer.snp.bottom).offset(Offset.selectStoreView)
       make.centerX.equalToSuperview()
     }
-    
+
     self.skipButton.snp.makeConstraints { make in
       make.bottom.equalToSuperview().inset(Inset.skipButtonBottom)
       make.centerX.equalToSuperview()
@@ -87,24 +87,24 @@ final class SelectStoreViewController: BaseViewController, View {
       make.height.equalTo(Height.button)
     }
   }
-  
+
   override func setupStyles() {
     super.setupStyles()
     self.navigationController?.setNavigationBarHidden(true, animated: true)
     self.view.backgroundColor = CVSType.all.bgColor
-    
+
     if self.fromSettings {
       self.skipButton.setTitle(Strings.SelectStore.save, for: .normal)
     }
   }
-  
+
   func bind(reactor: SelectStoreViewReactor) {
     if self.fromSettings {
       reactor.action.onNext(.selectStore(CVSStorage.shared.favoriteCVS, false, self.fromSettings))
     }
-    
+
     // --- Action ---
-    
+
     // CU 버튼 클릭
     self.selectStoreView.cuButton.rx.tap
       .map { [unowned self] in
@@ -112,7 +112,7 @@ final class SelectStoreViewController: BaseViewController, View {
       }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
-    
+
     // GS25 버튼 클릭
     self.selectStoreView.gsButton.rx.tap
       .map { [unowned self] in
@@ -120,7 +120,7 @@ final class SelectStoreViewController: BaseViewController, View {
       }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
-    
+
     // emart24 버튼 클릭
     self.selectStoreView.emartButton.rx.tap
       .map { [unowned self] in
@@ -128,7 +128,7 @@ final class SelectStoreViewController: BaseViewController, View {
       }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
-    
+
     // 7-ELEVEn 버튼 클릭
     self.selectStoreView.sevenElevenButton.rx.tap
       .map { [unowned self] in
@@ -136,7 +136,7 @@ final class SelectStoreViewController: BaseViewController, View {
       }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
-    
+
     // MINISTOP 버튼 클릭
     self.selectStoreView.miniStopButton.rx.tap
       .map { [unowned self] in
@@ -144,7 +144,7 @@ final class SelectStoreViewController: BaseViewController, View {
       }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
-    
+
     // 건너뛰기 버튼 클릭
     self.skipButton.rx.tap
       .map { [unowned self] in
@@ -152,9 +152,9 @@ final class SelectStoreViewController: BaseViewController, View {
       }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
-    
+
     // --- State ---
-    
+
     reactor.state
       .map { $0.updateSelectButton }
       .filter { $0 }
@@ -164,11 +164,11 @@ final class SelectStoreViewController: BaseViewController, View {
       }
       .disposed(by: disposeBag)
   }
-  
+
   /// 저장된 '자주 가는 편의점' 정보에 맞게 버튼의 UI를 업데이트 합니다.
   private func updateButtonUI() {
     self.selectStoreView.hideCheckImage()
-    
+
     switch CVSStorage.shared.favoriteCVS {
     case .cu:
       self.selectStoreView.showCheckImage(at: self.selectStoreView.cuButton)
