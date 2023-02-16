@@ -107,7 +107,7 @@ final class SelectStoreViewController: BaseViewController, View {
     
     // CU 버튼 클릭
     self.selectStoreView.cuButton.rx.tap
-      .compactMap { [unowned self] in
+      .map { [unowned self] in
         SelectStoreViewReactor.Action.selectStore(.cu, self.selectStoreView.cuButton.isSelected, self.fromSettings)
       }
       .bind(to: reactor.action)
@@ -115,7 +115,7 @@ final class SelectStoreViewController: BaseViewController, View {
     
     // GS25 버튼 클릭
     self.selectStoreView.gsButton.rx.tap
-      .compactMap { [unowned self] in
+      .map { [unowned self] in
         SelectStoreViewReactor.Action.selectStore(.gs, self.selectStoreView.gsButton.isSelected, self.fromSettings)
       }
       .bind(to: reactor.action)
@@ -123,7 +123,7 @@ final class SelectStoreViewController: BaseViewController, View {
     
     // emart24 버튼 클릭
     self.selectStoreView.emartButton.rx.tap
-      .compactMap { [unowned self] in
+      .map { [unowned self] in
         SelectStoreViewReactor.Action.selectStore(.eMart, self.selectStoreView.emartButton.isSelected, self.fromSettings)
       }
       .bind(to: reactor.action)
@@ -131,7 +131,7 @@ final class SelectStoreViewController: BaseViewController, View {
     
     // 7-ELEVEn 버튼 클릭
     self.selectStoreView.sevenElevenButton.rx.tap
-      .compactMap { [unowned self] in
+      .map { [unowned self] in
         SelectStoreViewReactor.Action.selectStore(.sevenEleven, self.selectStoreView.sevenElevenButton.isSelected, self.fromSettings)
       }
       .bind(to: reactor.action)
@@ -139,7 +139,7 @@ final class SelectStoreViewController: BaseViewController, View {
     
     // MINISTOP 버튼 클릭
     self.selectStoreView.miniStopButton.rx.tap
-      .compactMap { [unowned self] in
+      .map { [unowned self] in
         SelectStoreViewReactor.Action.selectStore(.miniStop, self.selectStoreView.miniStopButton.isSelected, self.fromSettings)
       }
       .bind(to: reactor.action)
@@ -147,7 +147,7 @@ final class SelectStoreViewController: BaseViewController, View {
     
     // 건너뛰기 버튼 클릭
     self.skipButton.rx.tap
-      .compactMap { [unowned self] in
+      .map { [unowned self] in
         return self.fromSettings ? SelectStoreViewReactor.Action.save : SelectStoreViewReactor.Action.skip
       }
       .bind(to: reactor.action)
