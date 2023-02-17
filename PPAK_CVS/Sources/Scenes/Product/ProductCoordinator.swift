@@ -24,7 +24,7 @@ final class ProductCoordinator: BaseCoordinator {
   }
 
   private override init(navigationController: UINavigationController) {
-    self.model = ProductModel(imageLink: "", name: "", price: 0, store: .all, saleType: .all)
+    self.model = ProductModel(imageLink: "", name: "", dateString: "", price: 0, store: .all, saleType: .all)
     super.init(navigationController: navigationController)
   }
 

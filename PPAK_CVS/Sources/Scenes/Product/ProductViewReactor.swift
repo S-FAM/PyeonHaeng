@@ -29,7 +29,7 @@ final class ProductViewReactor: Reactor {
   }
 
   struct State {
-    var model = ProductModel(imageLink: "", name: "", price: 0, store: .all, saleType: .all)
+    var model = ProductModel(imageLink: "", name: "", dateString: "", price: 0, store: .all, saleType: .all)
     var isPopProductVC: Bool = false
     var isBookmark: Bool = false
     var isShareButtonTapped: Bool = false
