@@ -13,55 +13,21 @@ final class CVSStorage {
 
   static let shared = CVSStorage()
 
-  private let key = "CVS"
-  private let favoriteCVSKey = "favoriteCVS"
-  private let userDefaults = UserDefaults.standard
   private init() {}
 
-  lazy var didChangeCVS = PublishSubject<CVSType>()
+  let didChangeCVS = PublishSubject<CVSType>()
 
-  lazy var cvs: CVSType = load() {
-    didSet {
-      if let encoded = try? JSONEncoder().encode(cvs) {
-        userDefaults.set(encoded, forKey: key)
-      }
-    }
-  }
-
-  private func load() -> CVSType {
-    guard let data = userDefaults.object(forKey: key) as? Data else { return .all }
-    if let cvs = try? JSONDecoder().decode(CVSType.self, from: data) {
-      return cvs
-    } else {
-      return .all
-    }
-  }
+  @UserDefaultsWrapper<CVSType>(key: "CVS", defaultValue: .all)
+  private(set) var cvs
 
   func save(_ cvs: CVSType) {
     self.cvs = cvs
   }
 
-  // --- 자주 가는 편의점 ---
+  // MARK: - 자주 가는 편의점
 
-  lazy var favoriteCVS: CVSType = self.loadFavoriteCVS() {
-    didSet {
-      if let encoded = try? JSONEncoder().encode(self.favoriteCVS) {
-        self.userDefaults.set(encoded, forKey: self.favoriteCVSKey)
-      }
-    }
-  }
-
-  private func loadFavoriteCVS() -> CVSType {
-    guard let data = userDefaults.object(forKey: self.favoriteCVSKey) as? Data else {
-      return .all
-    }
-
-    if let cvs = try? JSONDecoder().decode(CVSType.self, from: data) {
-      return cvs
-    } else {
-      return .all
-    }
-  }
+  @UserDefaultsWrapper<CVSType>(key: "favoriteCVS", defaultValue: .all)
+  private(set) var favoriteCVS
 
   func saveToFavorite(_ cvs: CVSType) {
     self.favoriteCVS = cvs
