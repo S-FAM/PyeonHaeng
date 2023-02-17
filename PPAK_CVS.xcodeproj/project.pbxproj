@@ -69,6 +69,7 @@
 		BA9EBC1D294AED8E00167970 /* ReponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EBC1C294AED8E00167970 /* ReponseModel.swift */; };
 		BA9EDA9B2918BF2B00B97C23 /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EDA9A2918BF2B00B97C23 /* ProductModel.swift */; };
 		BA9EDA9D2918BF9000B97C23 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9EDA9C2918BF8F00B97C23 /* Date+.swift */; };
+		BA9F765D299F4A2900D054D2 /* UserDefaultsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9F765C299F4A2900D054D2 /* UserDefaultsWrapper.swift */; };
 		BAA0581028D36F75000CDD11 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA0580F28D36F75000CDD11 /* BaseViewController.swift */; };
 		BAA0F53128FCF88300B632AC /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA0F53028FCF88300B632AC /* BaseCoordinator.swift */; };
 		BAA0F53528FD353500B632AC /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA0F53428FD353500B632AC /* AppCoordinator.swift */; };
@@ -160,6 +161,7 @@
 		BA9EBC1C294AED8E00167970 /* ReponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReponseModel.swift; sourceTree = "<group>"; };
 		BA9EDA9A2918BF2B00B97C23 /* ProductModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
 		BA9EDA9C2918BF8F00B97C23 /* Date+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		BA9F765C299F4A2900D054D2 /* UserDefaultsWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsWrapper.swift; sourceTree = "<group>"; };
 		BAA0580F28D36F75000CDD11 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		BAA0F53028FCF88300B632AC /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		BAA0F53428FD353500B632AC /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
@@ -342,9 +344,10 @@
 			children = (
 				BA27023428CF5F0D0039D9EA /* Assets */,
 				BA27023528CF5F180039D9EA /* Base */,
+				9CCFA4FB28F457E100963A95 /* Constants */,
 				A5F8288828DEC09B00C5D6A2 /* Extensions */,
 				A5932EA128E044BF00457AD3 /* Lottie */,
-				9CCFA4FB28F457E100963A95 /* Constants */,
+				BA9F765B299F4A1000D054D2 /* Manager */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -428,6 +431,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BA9F765B299F4A1000D054D2 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				BA9F765C299F4A2900D054D2 /* UserDefaultsWrapper.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		BAA21ACC29155A0F00056DB6 /* Network */ = {
@@ -694,6 +705,7 @@
 				BAD70BD8291A58CB00C39863 /* SortType.swift in Sources */,
 				E54D9C4628F1A19B00D028B2 /* BookmarkViewReactor.swift in Sources */,
 				9CDBFCD1296C331C00357474 /* SettingConfig.swift in Sources */,
+				BA9F765D299F4A2900D054D2 /* UserDefaultsWrapper.swift in Sources */,
 				E54D9C4828F1A1A300D028B2 /* BookmarkVC.swift in Sources */,
 				E55BEBE128D6A82400804FCB /* SearchBar.swift in Sources */,
 				E5467E4A28D45DF40031B785 /* TopCurveView.swift in Sources */,
