@@ -29,6 +29,12 @@ enum Strings {
     static let goToSettings = "설정으로"
   }
 
+  enum Notice {
+    static let plistName = "NoticeInfo"
+    static let remoteConfigKey = "notice_contents"
+    static let title = "공지사항"
+  }
+
   enum SelectStore {
     static let save = "저장하기"
     static let skip = "건너뛰기"

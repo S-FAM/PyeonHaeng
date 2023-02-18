@@ -29,16 +29,16 @@ final class NoticeViewController: BaseViewController, View {
   }
 
   private lazy var titleLabel = UILabel().then {
-    $0.text = "공지사항"
-    $0.font = UIFont.appFont(family: .bold, size: 18)
+    $0.text = Strings.Notice.title
+    $0.font = Font.titleLabel
   }
 
   private var separateView = UIView().then {
-    $0.backgroundColor = UIColor.init(hex: "#DDDDDD")
+    $0.backgroundColor = Color.separate
   }
 
   private lazy var textView = UITextView().then {
-    $0.font = UIFont.appFont(family: .regular, size: 14)
+    $0.font = Font.textView
     $0.isEditable = false
   }
 
@@ -50,7 +50,7 @@ final class NoticeViewController: BaseViewController, View {
     let settings = RemoteConfigSettings()
     settings.minimumFetchInterval = 0
     self.remoteConfig?.configSettings = settings
-    self.remoteConfig?.setDefaults(fromPlist: "NoticeInfo")
+    self.remoteConfig?.setDefaults(fromPlist: Strings.Notice.plistName)
 
     self.getNotice()
   }
@@ -79,13 +79,13 @@ final class NoticeViewController: BaseViewController, View {
     self.headerBar.snp.makeConstraints { make in
       make.top.equalTo(view.safeAreaLayoutGuide)
       make.leading.trailing.equalToSuperview()
-      make.height.equalTo(60)
+      make.height.equalTo(Height.headerBar)
     }
 
     self.backButton.snp.makeConstraints { make in
-      make.width.height.equalTo(44)
+      make.width.height.equalTo(Width.button)
       make.centerY.equalToSuperview()
-      make.leading.equalToSuperview().inset(16)
+      make.leading.equalToSuperview().inset(Inset.common)
     }
 
     self.titleLabel.snp.makeConstraints { make in
@@ -95,12 +95,12 @@ final class NoticeViewController: BaseViewController, View {
     self.separateView.snp.makeConstraints { make in
       make.top.equalTo(self.headerBar.snp.bottom)
       make.leading.trailing.equalToSuperview()
-      make.height.equalTo(0.5)
+      make.height.equalTo(Height.separate)
     }
 
     self.textView.snp.makeConstraints { make in
-      make.top.equalTo(self.separateView.snp.bottom).offset(16)
-      make.leading.trailing.bottom.equalToSuperview().inset(16)
+      make.top.equalTo(self.separateView.snp.bottom).offset(Inset.common)
+      make.leading.trailing.bottom.equalToSuperview().inset(Inset.common)
     }
   }
 
@@ -125,9 +125,36 @@ final class NoticeViewController: BaseViewController, View {
         print("Config not fetched")
         print("Error: \(error?.localizedDescription ?? "No error available.")")
       }
-      let noticeMessage = (remoteConfig["notice_contents"].stringValue ?? "")
+      let noticeMessage = (remoteConfig[Strings.Notice.remoteConfigKey].stringValue ?? "")
         .replacingOccurrences(of: "\\n", with: "\n")
       self?.textView.text = noticeMessage
     }
+  }
+}
+
+// MARK: - Constant Collection
+
+extension NoticeViewController {
+
+  private enum Font {
+    static let titleLabel = UIFont.appFont(family: .bold, size: 18)
+    static let textView = UIFont.appFont(family: .regular, size: 14)
+  }
+
+  private enum Color {
+   static let separate = UIColor.init(hex: "#DDDDDD")
+  }
+
+  private enum Width {
+    static let button = 44.0
+  }
+
+  private enum Height {
+    static let headerBar = 60
+    static let separate = 0.5
+  }
+
+  private enum Inset {
+    static let common = 16.0
   }
 }
