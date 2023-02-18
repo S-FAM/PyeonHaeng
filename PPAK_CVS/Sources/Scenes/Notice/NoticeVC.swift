@@ -113,7 +113,7 @@ final class NoticeViewController: BaseViewController, View {
   }
 
   /// Firebase Remote Config로 공지사항을 가져옵니다.
-  func getNotice() {
+  private func getNotice() {
     guard let remoteConfig = self.remoteConfig else {
       return
     }
