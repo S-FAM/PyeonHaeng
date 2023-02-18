@@ -23,6 +23,10 @@
 		A52F113729A09D6E009FFE02 /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = A52F113629A09D6E009FFE02 /* FirebaseInAppMessaging-Beta */; };
 		A52F113929A09D6E009FFE02 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = A52F113829A09D6E009FFE02 /* FirebaseMessaging */; };
 		A52F113B29A09D6E009FFE02 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = A52F113A29A09D6E009FFE02 /* FirebaseRemoteConfig */; };
+		A52F113D29A09FF4009FFE02 /* NoticeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52F113C29A09FF4009FFE02 /* NoticeVC.swift */; };
+		A52F114029A0A02F009FFE02 /* NoticeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52F113F29A0A02F009FFE02 /* NoticeCoordinator.swift */; };
+		A52F114229A0A07D009FFE02 /* NoticeViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52F114129A0A07D009FFE02 /* NoticeViewReactor.swift */; };
+		A52F114429A0A2F1009FFE02 /* NoticeInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = A52F114329A0A2F1009FFE02 /* NoticeInfo.plist */; };
 		A54949D3296F052F00844828 /* noBookmark.json in Resources */ = {isa = PBXBuildFile; fileRef = A54949D2296F052F00844828 /* noBookmark.json */; };
 		A57D32E428EDBA0200944C7E /* OnboardingViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57D32E328EDBA0200944C7E /* OnboardingViewReactor.swift */; };
 		A5840070298EABC400DB57F8 /* SelectStoreViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A584006F298EABC400DB57F8 /* SelectStoreViewReactor.swift */; };
@@ -124,6 +128,10 @@
 		9CCFA4FD28F4585E00963A95 /* EventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventType.swift; sourceTree = "<group>"; };
 		9CDBFCD0296C331C00357474 /* SettingConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingConfig.swift; sourceTree = "<group>"; };
 		A52F112C29A098F9009FFE02 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Documents/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A52F113C29A09FF4009FFE02 /* NoticeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeVC.swift; sourceTree = "<group>"; };
+		A52F113F29A0A02F009FFE02 /* NoticeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeCoordinator.swift; sourceTree = "<group>"; };
+		A52F114129A0A07D009FFE02 /* NoticeViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewReactor.swift; sourceTree = "<group>"; };
+		A52F114329A0A2F1009FFE02 /* NoticeInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = NoticeInfo.plist; sourceTree = "<group>"; };
 		A54949D2296F052F00844828 /* noBookmark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = noBookmark.json; sourceTree = "<group>"; };
 		A57D32E328EDBA0200944C7E /* OnboardingViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewReactor.swift; sourceTree = "<group>"; };
 		A584006F298EABC400DB57F8 /* SelectStoreViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStoreViewReactor.swift; sourceTree = "<group>"; };
@@ -262,6 +270,16 @@
 				9C1E41BC297439AE006948F7 /* SettingCellType.swift */,
 			);
 			path = Enum;
+			sourceTree = "<group>";
+		};
+		A52F113E29A0A017009FFE02 /* Notice */ = {
+			isa = PBXGroup;
+			children = (
+				A52F113F29A0A02F009FFE02 /* NoticeCoordinator.swift */,
+				A52F113C29A09FF4009FFE02 /* NoticeVC.swift */,
+				A52F114129A0A07D009FFE02 /* NoticeViewReactor.swift */,
+			);
+			path = Notice;
 			sourceTree = "<group>";
 		};
 		A5932EA128E044BF00457AD3 /* Lottie */ = {
@@ -476,6 +494,7 @@
 				BA27023328CF5EFF0039D9EA /* Sources */,
 				E505D9F828CF5B4B00EEFC65 /* Info.plist */,
 				A52F112C29A098F9009FFE02 /* GoogleService-Info.plist */,
+				A52F114329A0A2F1009FFE02 /* NoticeInfo.plist */,
 				E53D1A3B2987EBE20074308B /* .swiftlint.yml */,
 			);
 			path = PPAK_CVS;
@@ -510,6 +529,7 @@
 				BA27023628CF5F580039D9EA /* Home */,
 				E54D9C4028F1A16700D028B2 /* Bookmark */,
 				A5E8DD08291FA722006AF2CE /* Network */,
+				A52F113E29A0A017009FFE02 /* Notice */,
 				A5F8288328DEAE4300C5D6A2 /* Onboarding */,
 				A5D5A6E9298556AE00AD4F6E /* SelectStore */,
 				9C5C03A6292B9F840000989F /* Setting */,
@@ -608,6 +628,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A52F114429A0A2F1009FFE02 /* NoticeInfo.plist in Resources */,
 				E53D1A3C2987EBE20074308B /* .swiftlint.yml in Resources */,
 				E505D9F728CF5B4B00EEFC65 /* LaunchScreen.storyboard in Resources */,
 				E505D9F428CF5B4B00EEFC65 /* Assets.xcassets in Resources */,
@@ -678,6 +699,7 @@
 				E54D9C4228F1A18100D028B2 /* BookmarkCollectionHeaderView.swift in Sources */,
 				E505D9EF28CF5B4A00EEFC65 /* HomeVC.swift in Sources */,
 				E5CFF6F8297FD06C00E11D9A /* CVSStorage.swift in Sources */,
+				A52F113D29A09FF4009FFE02 /* NoticeVC.swift in Sources */,
 				9C07AE832934D763002CFE3F /* SettingTableViewCell.swift in Sources */,
 				E5A877C028D4A34D002A2402 /* EventControl.swift in Sources */,
 				A5D5A6EB298556D300AD4F6E /* SelectStoreVC.swift in Sources */,
@@ -685,8 +707,10 @@
 				BA343AB12963139900DE8016 /* Int+.swift in Sources */,
 				BAD70BDA291A594F00C39863 /* RequestTypeModel.swift in Sources */,
 				BA27024928CF618E0039D9EA /* HomeCoordinator.swift in Sources */,
+				A52F114029A0A02F009FFE02 /* NoticeCoordinator.swift in Sources */,
 				BA8CFD7D28E1E4AB00ADC4A8 /* UIColor+.swift in Sources */,
 				E5103251290B4A0300D2F007 /* UIView+.swift in Sources */,
+				A52F114229A0A07D009FFE02 /* NoticeViewReactor.swift in Sources */,
 				A5F8288C28DECEE700C5D6A2 /* Strings.swift in Sources */,
 				9C798F8A28EAE9DA00FE250C /* TitleLogoView.swift in Sources */,
 				9CA7150E293CE26300AEE436 /* NSAttributedString+.swift in Sources */,
