@@ -26,7 +26,6 @@ final class BookmarkViewReactor: Reactor {
     case setSort(SortType)
     case setEvent(EventType)
     case setTarget(String)
-    case setLoading(Bool)
     case setProducts([ProductModel])
   }
 
@@ -41,7 +40,6 @@ final class BookmarkViewReactor: Reactor {
     var currentCVS: CVSType = CVSStorage.shared.cvs
     var currentEvent: EventType = .all
     var currentTarget: String = ""
-    var isLoading: Bool = false
     var currentProducts: [ProductModel] = []
   }
 
@@ -84,9 +82,7 @@ final class BookmarkViewReactor: Reactor {
       return .concat([
         .just(.setEvent(event)),
         .just(.hideDropdown),
-//        .just(.setLoading(true)),
-        .just(.setProducts(updatedProducts)),
-        .just(.setLoading(false))
+        .just(.setProducts(updatedProducts))
       ])
 
     case .didTapDropdownCVS(let cvsDropdownCase):
@@ -105,10 +101,7 @@ final class BookmarkViewReactor: Reactor {
           .just(.setCVS(cvs)),
           .just(.hideDropdown),
           .just(.setTarget("")),
-          .just(.setLoading(true)),
           .just(.setProducts(updatedProducts))
-          .delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
-          .just(.setLoading(false))
         ])
 
       case .setting:
@@ -131,10 +124,7 @@ final class BookmarkViewReactor: Reactor {
       return .concat([
         .just(.setTarget(target)),
         .just(.hideDropdown),
-        .just(.setLoading(true)),
         .just(.setProducts(updatedProducts))
-        .delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
-        .just(.setLoading(false))
       ])
 
     case .didTapDropdownSort(let sort):
@@ -149,10 +139,7 @@ final class BookmarkViewReactor: Reactor {
       return .concat([
         .just(.setSort(sort)),
         .just(.hideDropdown),
-        .just(.setLoading(true)),
         .just(.setProducts(updatedProducts))
-        .delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
-        .just(.setLoading(false))
       ])
     }
   }
@@ -193,9 +180,6 @@ final class BookmarkViewReactor: Reactor {
 
     case .setTarget(let text):
       nextState.currentTarget = text
-
-    case .setLoading(let isLoading):
-      nextState.isLoading = isLoading
 
     case .setProducts(let products):
       if products.isEmpty {
