@@ -84,10 +84,8 @@ final class BookmarkViewReactor: Reactor {
       return .concat([
         .just(.setEvent(event)),
         .just(.hideDropdown),
-        .just(.setLoading(true)),
-        .just(.setProducts([])),
-        .just(.setProducts(updatedProducts))
-        .delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
+//        .just(.setLoading(true)),
+        .just(.setProducts(updatedProducts)),
         .just(.setLoading(false))
       ])
 

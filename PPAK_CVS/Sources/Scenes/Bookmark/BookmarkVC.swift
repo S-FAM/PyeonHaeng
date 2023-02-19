@@ -46,7 +46,6 @@ final class BookmarkViewController: BaseViewController, View {
   }
 
   override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
-  private let indicator = UIActivityIndicatorView()
   private let sortDropdownView = SortDropdownView()
   private let cvsDropdownView = CVSDropdownView()
   private var header: BookmarkCollectionHeaderView!
@@ -69,17 +68,12 @@ final class BookmarkViewController: BaseViewController, View {
     super.setupLayouts()
     view.addSubview(collectionView)
     view.addSubview(animationContainerView)
-    view.addSubview(indicator)
   }
 
   override func setupConstraints() {
     collectionView.snp.makeConstraints { make in
       make.leading.trailing.bottom.equalToSuperview()
       make.top.equalTo(view.safeAreaLayoutGuide)
-    }
-
-    indicator.snp.makeConstraints { make in
-      make.center.equalToSuperview()
     }
   }
 
@@ -272,13 +266,6 @@ final class BookmarkViewController: BaseViewController, View {
       .debug()
       .withUnretained(self)
       .bind { $0.0.collectionView.reloadData() }
-      .disposed(by: disposeBag)
-
-    // 로딩 중
-    reactor.state
-      .map { $0.isLoading }
-      .distinctUntilChanged()
-      .bind(to: indicator.rx.isAnimating)
       .disposed(by: disposeBag)
 
     // 서치바 텍스트
