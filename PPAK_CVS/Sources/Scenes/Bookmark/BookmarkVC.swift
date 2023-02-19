@@ -51,6 +51,13 @@ final class BookmarkViewController: BaseViewController, View {
   private let cvsDropdownView = CVSDropdownView()
   private var header: BookmarkCollectionHeaderView!
 
+  // MARK: - LIFE CYCLE
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    self.reactor?.action.onNext(.viewDidLoad)
+  }
+
   // MARK: - Setup
 
   override func setupStyles() {
@@ -109,24 +116,23 @@ final class BookmarkViewController: BaseViewController, View {
     stack.axis = .vertical
     stack.spacing = 40
     stack.alignment = .center
-
-    animationContainerView.addSubview(stack)
+    self.animationContainerView.addSubview(stack)
 
     stack.snp.makeConstraints { make in
       make.center.equalToSuperview()
     }
 
-    animationContainerView.snp.makeConstraints { make in
+    self.animationContainerView.snp.makeConstraints { make in
       make.leading.trailing.bottom.equalTo(collectionView)
       make.top.equalTo(header.snp.bottom)
     }
 
-    animationView.snp.makeConstraints { make in
+    self.animationView.snp.makeConstraints { make in
       make.width.equalTo(165)
       make.height.equalTo(107)
     }
 
-    animationView.play()
+    self.animationContainerView.isHidden = true
   }
 
   // MARK: - Bind
@@ -263,6 +269,7 @@ final class BookmarkViewController: BaseViewController, View {
     reactor.state
       .map { $0.currentProducts }
       .distinctUntilChanged()
+      .debug()
       .withUnretained(self)
       .bind { $0.0.collectionView.reloadData() }
       .disposed(by: disposeBag)
@@ -271,7 +278,6 @@ final class BookmarkViewController: BaseViewController, View {
     reactor.state
       .map { $0.isLoading }
       .distinctUntilChanged()
-      .debug()
       .bind(to: indicator.rx.isAnimating)
       .disposed(by: disposeBag)
 
@@ -290,11 +296,20 @@ final class BookmarkViewController: BaseViewController, View {
       .bind { owner, _ in owner.view.endEditing(true) }
       .disposed(by: disposeBag)
 
-    // 애니메이션 숨김
+    // 애니메이션 설정
     reactor.state
       .map { $0.isHiddenAnimationView }
       .distinctUntilChanged()
-      .bind(to: animationContainerView.rx.isHidden)
+      .debug()
+      .bind(with: self) { owner, isHidden in
+        if isHidden {
+          owner.animationContainerView.isHidden = true
+          owner.animationView.stop()
+        } else {
+          owner.animationContainerView.isHidden = false
+          owner.animationView.play()
+        }
+      }
       .disposed(by: disposeBag)
   }
 }
@@ -344,9 +359,9 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
 
     if self.header == nil {
       self.header = header
-      bindHeader()
-      setupDropdown()
-      setupAnimationView()
+      self.bindHeader()
+      self.setupDropdown()
+      self.setupAnimationView()
     }
 
     return header

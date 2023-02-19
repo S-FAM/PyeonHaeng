@@ -4,6 +4,7 @@ import RxSwift
 final class BookmarkViewReactor: Reactor {
 
   enum Action {
+    case viewDidLoad
     case didTapCVSButton
     case didTapSortButton
     case didTapBackButton
@@ -41,13 +42,17 @@ final class BookmarkViewReactor: Reactor {
     var currentEvent: EventType = .all
     var currentTarget: String = ""
     var isLoading: Bool = false
-    var currentProducts: [ProductModel] = ProductStorage.shared.retrieve(cvs: CVSStorage.shared.cvs)
+    var currentProducts: [ProductModel] = []
   }
 
   var initialState = State()
 
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
+    case .viewDidLoad:
+      let products = ProductStorage.shared.retrieve(cvs: currentState.currentCVS)
+      return .just(.setProducts(products))
+
     case .didTapCVSButton:
       return .just(.setCVSDropdown)
 
@@ -73,12 +78,14 @@ final class BookmarkViewReactor: Reactor {
         cvs: currentState.currentCVS,
         event: event,
         sort: .none,
-        target: currentState.currentTarget)
+        target: currentState.currentTarget
+      )
 
       return .concat([
         .just(.setEvent(event)),
         .just(.hideDropdown),
         .just(.setLoading(true)),
+        .just(.setProducts([])),
         .just(.setProducts(updatedProducts))
         .delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
         .just(.setLoading(false))
