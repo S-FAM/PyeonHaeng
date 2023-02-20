@@ -125,27 +125,27 @@ final class ProductViewController: BaseViewController, View {
   }
 
   func bind(reactor: ProductViewReactor) {
-    
+
     // --- Action ---
-    
+
     // 뒤로 가기 버튼 클릭
     self.backButton.rx.tap
       .map { ProductViewReactor.Action.back }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
-    
+
     // 북마크 버튼 클릭
     self.bookmarkButton.rx.tap
       .map { ProductViewReactor.Action.bookmark(!self.bookmarkButton.isSelected) }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
-    
+
     // 공유 버튼 클릭
     self.shareButton.rx.tap
       .map { ProductViewReactor.Action.share((self.collectionHeaderView.getShareImage())) }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
-    
+
     // --- State ---
 
     // 제품 정보 받아오기
@@ -156,7 +156,7 @@ final class ProductViewController: BaseViewController, View {
       .take(1)
       .subscribe(onNext: { [weak self] model, headerView in
         guard let self = self else { return }
-        
+
         headerView.configureUI(with: model)
 
         // --- test data(will delete) ---
@@ -164,6 +164,7 @@ final class ProductViewController: BaseViewController, View {
           ProductModel(
             imageLink: model.imageLink,
             name: "2022년 12월 행사 가격",
+            dateString: "",
             price: model.price,
             store: model.store,
             saleType: model.saleType
@@ -173,6 +174,7 @@ final class ProductViewController: BaseViewController, View {
           ProductModel(
             imageLink: model.imageLink,
             name: "2022년 11월 행사 가격",
+            dateString: "",
             price: model.price,
             store: model.store,
             saleType: model.saleType
@@ -182,6 +184,7 @@ final class ProductViewController: BaseViewController, View {
           ProductModel(
             imageLink: model.imageLink,
             name: "2022년 10월 행사 가격",
+            dateString: "",
             price: model.price,
             store: model.store,
             saleType: model.saleType
@@ -193,7 +196,7 @@ final class ProductViewController: BaseViewController, View {
         self.collectionView.backgroundColor = model.store.bgColor
       })
       .disposed(by: disposeBag)
-    
+
     // 이미지 공유하기
     reactor.state
       .map { $0.shareImage }
@@ -203,7 +206,7 @@ final class ProductViewController: BaseViewController, View {
         self?.presentShareSheet(items: [image])
       })
       .disposed(by: disposeBag)
-    
+
     // 북마크 버튼 상태 적용하기
     reactor.state
       .map { $0.isBookmark }

@@ -11,26 +11,10 @@ final class ProductStorage {
 
   static let shared = ProductStorage()
 
-  private let key = "Storage"
-  private let userDefaults = UserDefaults.standard
   private init() {}
 
-  private(set) lazy var products: [ProductModel] = load() {
-    didSet {
-      if let encoded = try? JSONEncoder().encode(products) {
-        userDefaults.set(encoded, forKey: key)
-      }
-    }
-  }
-
-  private func load() -> [ProductModel] {
-    guard let data = userDefaults.object(forKey: key) as? Data else { return [] }
-    if let products = try? JSONDecoder().decode([ProductModel].self, from: data) {
-      return products
-    } else {
-      return []
-    }
-  }
+  @UserDefaultsWrapper<[ProductModel]>(key: "Storage", defaultValue: [])
+  private(set) var products
 
   func add(_ from: ProductModel) {
     products.insert(from, at: 0)

@@ -44,7 +44,14 @@ final class HomeViewReactor: Reactor {
     var isVisibleFilterDropdown: Bool = false
     var showsKeyboard: Bool = false
     var showsBookmarkVC: (Bool, CVSType) = (false, .all)
-    var showsProductVC: (Bool, ProductModel) = (false, .init(imageLink: nil, name: "", price: 0, store: .all, saleType: .all))
+    var showsProductVC: (Bool, ProductModel) = (false, .init(
+      imageLink: nil,
+      name: "",
+      dateString: "",
+      price: 0,
+      store: .all,
+      saleType: .all
+    ))
     var showsSettingVC: Bool = false
     var currentSortType: SortType = .none
     var currentEventType: EventType = .all

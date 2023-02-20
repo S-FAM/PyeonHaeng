@@ -11,6 +11,7 @@ import Alamofire
 
 enum ProductTarget {
   case search(RequestTypeModel)
+  case history(RequestTypeModel)
 }
 
 extension ProductTarget: TargetType {
@@ -24,12 +25,16 @@ extension ProductTarget: TargetType {
     switch self {
     case .search:
       return "\(uri)/search"
+    case .history:
+      return "\(uri)/history"
     }
   }
 
   var parameters: Parameters {
     switch self {
     case .search(let model):
+      return model.parameters
+    case .history(let model):
       return model.parameters
     }
   }

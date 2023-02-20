@@ -24,7 +24,7 @@ final class ProductCoordinator: BaseCoordinator {
   }
 
   private override init(navigationController: UINavigationController) {
-    self.model = ProductModel(imageLink: "", name: "", price: 0, store: .all, saleType: .all)
+    self.model = ProductModel(imageLink: "", name: "", dateString: "", price: 0, store: .all, saleType: .all)
     super.init(navigationController: navigationController)
   }
 
@@ -43,7 +43,7 @@ final class ProductCoordinator: BaseCoordinator {
     Observable<ProductViewReactor.Action>.just(.updateProduct(self.model))
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
-    
+
     // 홈 화면으로 이동하기
     reactor.state.map { $0.isPopProductVC }
       .bind { [weak self] isPop in

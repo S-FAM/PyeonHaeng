@@ -7,6 +7,8 @@
 
 import UIKit
 
+import FirebaseCore
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -17,6 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // Start network monitoring
     NetworkCheck.shared.startMonitoring()
+
+    // Set Firebase
+    FirebaseApp.configure()
+
     Thread.sleep(forTimeInterval: 1.0)
     return true
   }

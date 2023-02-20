@@ -14,30 +14,34 @@ import RxCocoa
 
 final class SelectStoreViewReactor: Reactor {
   enum Action {
-    case selectStore(CVSType, Bool)
+    case selectStore(CVSType, Bool, Bool)
     case skip
     case save
   }
-  
+
   enum Mutation {
     case goToHomeVC
     case popSelectStoreVC
     case updateSelectButton
   }
-  
+
   struct State {
     var isPushHomeVC: Bool = false
     var isPopSelectStoreVC: Bool = false
     var updateSelectButton: Bool = false
   }
-  
+
   let initialState: State = State()
-  
+
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
-    case .selectStore(let cvsType, let fromSettings):
+    case .selectStore(let cvsType, let isSelected, let fromSettings):
       AudioServicesPlaySystemSound(1520)
-      CVSStorage.shared.saveToFavorite(cvsType)
+      if isSelected {
+        CVSStorage.shared.saveToFavorite(.all)
+      } else {
+        CVSStorage.shared.saveToFavorite(cvsType)
+      }
       return fromSettings ? .just(.updateSelectButton) : .just(.goToHomeVC)
     case .skip:
       CVSStorage.shared.saveToFavorite(.all)
@@ -46,10 +50,10 @@ final class SelectStoreViewReactor: Reactor {
       return .just(.popSelectStoreVC)
     }
   }
-  
+
   func reduce(state: State, mutation: Mutation) -> State {
     var nextState = state
-    
+
     switch mutation {
     case .goToHomeVC:
       nextState.isPushHomeVC = true
@@ -58,7 +62,7 @@ final class SelectStoreViewReactor: Reactor {
     case .updateSelectButton:
       nextState.updateSelectButton = true
     }
-    
+
     return nextState
   }
 }
