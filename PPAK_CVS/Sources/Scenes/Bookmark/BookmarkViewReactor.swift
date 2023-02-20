@@ -4,6 +4,7 @@ import RxSwift
 final class BookmarkViewReactor: Reactor {
 
   enum Action {
+    case viewDidLoad
     case didTapCVSButton
     case didTapSortButton
     case didTapBackButton
@@ -25,7 +26,6 @@ final class BookmarkViewReactor: Reactor {
     case setSort(SortType)
     case setEvent(EventType)
     case setTarget(String)
-    case setLoading(Bool)
     case setProducts([ProductModel])
   }
 
@@ -40,14 +40,17 @@ final class BookmarkViewReactor: Reactor {
     var currentCVS: CVSType = CVSStorage.shared.cvs
     var currentEvent: EventType = .all
     var currentTarget: String = ""
-    var isLoading: Bool = false
-    var currentProducts: [ProductModel] = ProductStorage.shared.retrieve(cvs: CVSStorage.shared.cvs)
+    var currentProducts: [ProductModel] = []
   }
 
   var initialState = State()
 
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
+    case .viewDidLoad:
+      let products = ProductStorage.shared.retrieve(cvs: currentState.currentCVS)
+      return .just(.setProducts(products))
+
     case .didTapCVSButton:
       return .just(.setCVSDropdown)
 
@@ -73,15 +76,13 @@ final class BookmarkViewReactor: Reactor {
         cvs: currentState.currentCVS,
         event: event,
         sort: .none,
-        target: currentState.currentTarget)
+        target: currentState.currentTarget
+      )
 
       return .concat([
         .just(.setEvent(event)),
         .just(.hideDropdown),
-        .just(.setLoading(true)),
         .just(.setProducts(updatedProducts))
-        .delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
-        .just(.setLoading(false))
       ])
 
     case .didTapDropdownCVS(let cvsDropdownCase):
@@ -100,10 +101,7 @@ final class BookmarkViewReactor: Reactor {
           .just(.setCVS(cvs)),
           .just(.hideDropdown),
           .just(.setTarget("")),
-          .just(.setLoading(true)),
           .just(.setProducts(updatedProducts))
-          .delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
-          .just(.setLoading(false))
         ])
 
       case .setting:
@@ -126,10 +124,7 @@ final class BookmarkViewReactor: Reactor {
       return .concat([
         .just(.setTarget(target)),
         .just(.hideDropdown),
-        .just(.setLoading(true)),
         .just(.setProducts(updatedProducts))
-        .delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
-        .just(.setLoading(false))
       ])
 
     case .didTapDropdownSort(let sort):
@@ -144,10 +139,7 @@ final class BookmarkViewReactor: Reactor {
       return .concat([
         .just(.setSort(sort)),
         .just(.hideDropdown),
-        .just(.setLoading(true)),
         .just(.setProducts(updatedProducts))
-        .delay(.milliseconds(100), scheduler: MainScheduler.asyncInstance),
-        .just(.setLoading(false))
       ])
     }
   }
@@ -188,9 +180,6 @@ final class BookmarkViewReactor: Reactor {
 
     case .setTarget(let text):
       nextState.currentTarget = text
-
-    case .setLoading(let isLoading):
-      nextState.isLoading = isLoading
 
     case .setProducts(let products):
       if products.isEmpty {
