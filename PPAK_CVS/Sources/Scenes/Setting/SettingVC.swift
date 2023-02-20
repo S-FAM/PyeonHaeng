@@ -181,35 +181,7 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     return 60
   }
 
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-    //    switch indexPath.row {
-    //    case 0:
-    //      // 푸시설정
-    //      moveToSystemSetting()
-    //      print("click: \(indexPath.row)")
-    //    case 1:
-    //      // 공지사항
-    //      // reactor kit 세팅완료
-    //      print("click: \(indexPath.row)")
-    //    case 2:
-    //      // 리뷰남기기
-    //      requestReview()
-    //      print("click: \(indexPath.row)")
-    //    case 3:
-    //      // 문의하기
-    //      sendMail()
-    //      print("click: \(indexPath.row)")
-    //    case 4:
-    //      // 개발자 응원학
-    //      print("click: \(indexPath.row)")
-    //    case 5:
-    //      // 버전정보
-    //      print("click: \(indexPath.row)")
-    //    default:
-    //      break
-    //    }
-  }
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { }
 }
 
 // MARK: Send Mail
