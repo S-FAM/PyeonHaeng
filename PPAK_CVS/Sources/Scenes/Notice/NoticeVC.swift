@@ -17,27 +17,27 @@ final class NoticeViewController: BaseViewController, View {
 
   // MARK: - Properties
 
-  var remoteConfig: RemoteConfig?
+  private var remoteConfig: RemoteConfig?
 
-  private lazy var headerBar = UIView().then {
+  private let headerBar = UIView().then {
     $0.backgroundColor = .white
   }
 
-  private lazy var backButton = UIButton().then {
+  private let backButton = UIButton().then {
     $0.setImage(UIImage(named: "icon_left"), for: .normal)
     $0.tintColor = .black
   }
 
-  private lazy var titleLabel = UILabel().then {
+  private let titleLabel = UILabel().then {
     $0.text = Strings.Notice.title
     $0.font = Font.titleLabel
   }
 
-  private var separateView = UIView().then {
+  private let separateView = UIView().then {
     $0.backgroundColor = Color.separate
   }
 
-  private lazy var textView = UITextView().then {
+  private let textView = UITextView().then {
     $0.font = Font.textView
     $0.isEditable = false
   }
@@ -46,12 +46,7 @@ final class NoticeViewController: BaseViewController, View {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.remoteConfig = RemoteConfig.remoteConfig()
-    let settings = RemoteConfigSettings()
-    settings.minimumFetchInterval = 0
-    self.remoteConfig?.configSettings = settings
-    self.remoteConfig?.setDefaults(fromPlist: Strings.Notice.plistName)
-
+    self.setRemoteConfig()
     self.getNotice()
   }
 
@@ -112,6 +107,15 @@ final class NoticeViewController: BaseViewController, View {
       .disposed(by: disposeBag)
   }
 
+  /// Remote Config를 설정하는 함수입니다.
+  private func setRemoteConfig() {
+    self.remoteConfig = RemoteConfig.remoteConfig()
+    let settings = RemoteConfigSettings()
+    settings.minimumFetchInterval = 0
+    self.remoteConfig?.configSettings = settings
+    self.remoteConfig?.setDefaults(fromPlist: Strings.Notice.plistName)
+  }
+
   /// Firebase Remote Config로 공지사항을 가져옵니다.
   private func getNotice() {
     guard let remoteConfig = self.remoteConfig else {
@@ -142,7 +146,7 @@ extension NoticeViewController {
   }
 
   private enum Color {
-   static let separate = UIColor.init(hex: "#DDDDDD")
+    static let separate = UIColor.init(hex: "#DDDDDD")
   }
 
   private enum Width {
