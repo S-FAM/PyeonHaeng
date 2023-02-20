@@ -9,14 +9,10 @@ import Foundation
 
 final class FTUXStorage {
 
-  private let key = "localStorage_is_already_come"
-  private let userDefaults = UserDefaults.standard
+  @UserDefaultsWrapper<Bool>(key: "localStorage_is_already_come", defaultValue: false)
+  private(set) var wasLaunchedBefore // 이전에 실행했던 적이 있는지 확인
 
-  public func isAlreadyCome() -> Bool {
-    self.userDefaults.bool(forKey: key)
-  }
-
-  public func saveFTUXStatus() {
-    self.userDefaults.set(true, forKey: key)
+  func saveFTUXStatus() {
+    wasLaunchedBefore = true
   }
 }

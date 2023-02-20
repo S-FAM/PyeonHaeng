@@ -14,7 +14,7 @@ final class AppCoordinator: BaseCoordinator {
 
     // == first launch check ==
     let coordinator: Coordinator
-    if FTUXStorage().isAlreadyCome() {
+    if FTUXStorage().wasLaunchedBefore {
       coordinator = HomeCoordinator(navigationController: self.navigationController)
     } else {
       coordinator = OnboardingCoordinator(navigationController: self.navigationController)
