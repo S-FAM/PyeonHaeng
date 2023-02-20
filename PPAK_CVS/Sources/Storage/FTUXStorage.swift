@@ -12,11 +12,7 @@ final class FTUXStorage {
   @UserDefaultsWrapper<Bool>(key: "localStorage_is_already_come", defaultValue: false)
   private(set) var wasLaunchedBefore // 이전에 실행했던 적이 있는지 확인
 
-  public func isAlreadyCome() -> Bool {
-    wasLaunchedBefore
-  }
-
-  public func saveFTUXStatus() {
+  func saveFTUXStatus() {
     wasLaunchedBefore = true
   }
 }
