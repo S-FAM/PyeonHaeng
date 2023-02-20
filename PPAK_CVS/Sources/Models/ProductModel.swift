@@ -12,6 +12,8 @@ struct ProductModel: Codable, Equatable {
   let imageLink: String?
   /// 물품명
   let name: String
+  /// 할인행사 날짜
+  let dateString: String
   /// 가격
   let price: Int
   /// 편의점 가게
@@ -23,6 +25,7 @@ struct ProductModel: Codable, Equatable {
     case name
     case price
     case store
+    case dateString = "date"
     case imageLink = "img"
     case saleType = "tag"
   }

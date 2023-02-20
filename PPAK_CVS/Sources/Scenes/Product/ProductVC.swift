@@ -164,6 +164,7 @@ final class ProductViewController: BaseViewController, View {
           ProductModel(
             imageLink: model.imageLink,
             name: "2022년 12월 행사 가격",
+            dateString: "",
             price: model.price,
             store: model.store,
             saleType: model.saleType
@@ -173,6 +174,7 @@ final class ProductViewController: BaseViewController, View {
           ProductModel(
             imageLink: model.imageLink,
             name: "2022년 11월 행사 가격",
+            dateString: "",
             price: model.price,
             store: model.store,
             saleType: model.saleType
@@ -182,6 +184,7 @@ final class ProductViewController: BaseViewController, View {
           ProductModel(
             imageLink: model.imageLink,
             name: "2022년 10월 행사 가격",
+            dateString: "",
             price: model.price,
             store: model.store,
             saleType: model.saleType
