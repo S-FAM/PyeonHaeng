@@ -22,7 +22,7 @@ enum SettingCellType: Int, CaseIterable, CustomStringConvertible {
     case .push:
       return UIImage(named: "icon_alert")
     case .selectStore:
-      return UIImage(named: "icon_alert")
+      return UIImage(named: "icon_selectStore")
     case .notice:
       return UIImage(named: "icon_noti")
     case .review:
