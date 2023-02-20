@@ -103,11 +103,48 @@ final class SettingViewController: BaseViewController, View {
 
     // MARK: - Action
 
-    // 공지사항 클릭
     tableView.rx.itemSelected
-      .filter { $0.row == 1 }
-      .map { _ in SettingViewReactor.Action.didTapNoticeButton }
+      .map {
+        SettingViewReactor.Action.didSelectRow(indexPath: $0) }
       .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+
+    // MARK: - State
+
+    reactor.state
+      .map { $0.selectedCell }
+      .withUnretained(self)
+      .bind { owner, settingCellType in
+        switch settingCellType {
+
+        case .push:
+          owner.moveToSystemSetting()
+
+        case .selectStore:
+          print("selectStore Act")
+          return
+
+        case .notice:
+          print("notice Act")
+          return
+
+        case .review:
+          owner.requestReview()
+          return
+
+        case .sendMail:
+          owner.sendMail()
+          return
+
+        case .supportDeveloper:
+          print("supportDeveloper Act")
+          return
+
+        default:
+          print("전체")
+          return
+        }
+      }
       .disposed(by: disposeBag)
   }
 }
@@ -130,10 +167,10 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     cell.setDetail(indexPath.row)
     cell.selectionStyle = .none
 
-    // 민지님 요청으로 클릭제한처리
-    if indexPath.row == 2 {
-      cell.isUserInteractionEnabled = false
-    }
+    //    // 민지님 요청으로 클릭제한처리
+    //    if indexPath.row == 2 {
+    //      cell.isUserInteractionEnabled = false
+    //    }
 
     return cell
   }
@@ -142,35 +179,7 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     return 60
   }
 
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-    switch indexPath.row {
-    case 0:
-      // 푸시설정
-      moveToSystemSetting()
-      print("click: \(indexPath.row)")
-    case 1:
-      // 공지사항
-      // reactor kit 세팅완료
-      print("click: \(indexPath.row)")
-    case 2:
-      // 리뷰남기기
-      requestReview()
-      print("click: \(indexPath.row)")
-    case 3:
-      // 문의하기
-      sendMail()
-      print("click: \(indexPath.row)")
-    case 4:
-      // 개발자 응원학
-      print("click: \(indexPath.row)")
-    case 5:
-      // 버전정보
-      print("click: \(indexPath.row)")
-    default:
-      break
-    }
-  }
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { }
 }
 
 // MARK: Send Mail
@@ -178,6 +187,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
 
   /// 메일보내기 기능
   private func sendMail() {
+    print("sendMail")
     if MFMailComposeViewController.canSendMail() {
       let mailComposeVC = MFMailComposeViewController()
       mailComposeVC.mailComposeDelegate = self
@@ -210,6 +220,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
   private func moveToAppStore() {
     if let url = URL(string: Configs.appStoreMailURL),
         UIApplication.shared.canOpenURL(url) {
+      print("moveToAppStore")
       if #available(iOS 10.0, *) {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
       } else {
@@ -284,6 +295,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
 extension SettingViewController {
 
   func requestReview() {
+    print("requestReview")
     guard let writeReviewURL = URL(string: "https://apps.apple.com/app/\(Configs.appID)?action=write-review")
         else { fatalError("Expected a valid URL") }
     UIApplication.shared.open(writeReviewURL, options: [:], completionHandler: nil)

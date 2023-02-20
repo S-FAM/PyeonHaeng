@@ -24,15 +24,15 @@ final class SettingCoordinator: BaseCoordinator {
 
   func bind(_ reactor: SettingViewReactor) {
 
-    // NoticeVC로 이동처리
+    // NoticeVC로 이동
     reactor.state
-      .map { $0.showNoticeVC }
-      .filter { $0 }
+      .filter { $0.selectedCell == .notice }
       .withUnretained(self)
       .bind { owner, _ in
         let coordinator = NoticeCoordinator(navigationController: owner.navigationController)
         owner.start(childCoordinator: coordinator)
       }
       .disposed(by: disposeBag)
+
   }
 }
