@@ -10,6 +10,7 @@ import UIKit
 enum SettingCellType: Int, CaseIterable, CustomStringConvertible {
 
   case push
+  case selectStore
   case notice
   case review
   case sendMail
@@ -19,6 +20,8 @@ enum SettingCellType: Int, CaseIterable, CustomStringConvertible {
   var image: UIImage? {
     switch self {
     case .push:
+      return UIImage(named: "icon_alert")
+    case .selectStore:
       return UIImage(named: "icon_alert")
     case .notice:
       return UIImage(named: "icon_noti")
@@ -37,6 +40,8 @@ enum SettingCellType: Int, CaseIterable, CustomStringConvertible {
     switch self {
     case .push:
       return "알림"
+    case .selectStore:
+      return "자주 가는 편의점"
     case .notice:
       return "공지사항"
     case .review:
