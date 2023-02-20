@@ -114,12 +114,11 @@ final class SettingViewController: BaseViewController, View {
     reactor.state
       .map { $0.selectedCell }
       .withUnretained(self)
-      .bind(onNext: { [weak self] (_, settingCellType) in
-        guard let self = self else { return }
+      .bind { owner, settingCellType in
         switch settingCellType {
 
         case .push:
-          self.moveToSystemSetting()
+          owner.moveToSystemSetting()
 
         case .selectStore:
           print("selectStore Act")
@@ -130,11 +129,11 @@ final class SettingViewController: BaseViewController, View {
           return
 
         case .review:
-          self.requestReview()
+          owner.requestReview()
           return
 
         case .sendMail:
-          self.sendMail()
+          owner.sendMail()
           return
 
         case .supportDeveloper:
@@ -144,9 +143,8 @@ final class SettingViewController: BaseViewController, View {
         default:
           print("전체")
           return
-
         }
-      })
+      }
       .disposed(by: disposeBag)
   }
 }
