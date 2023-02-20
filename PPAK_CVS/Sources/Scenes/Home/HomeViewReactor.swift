@@ -47,6 +47,7 @@ final class HomeViewReactor: Reactor {
     var showsProductVC: (Bool, ProductModel) = (false, .init(
       imageLink: nil,
       name: "",
+      dateString: "",
       price: 0,
       store: .all,
       saleType: .all
