@@ -194,7 +194,16 @@ extension ProductViewController: UICollectionViewDataSource {
     }
 
     guard let reactor else { return cell }
-    cell.updateCell(reactor.currentState.historyModels[indexPath.row], isShowTitleLogoView: false)
+    let product = reactor.currentState.historyModels[indexPath.row]
+    let transformedProduct = ProductModel(
+      imageLink: product.imageLink,
+      name: product.dateString.components(separatedBy: ":").joined(separator: "년 ") + "월 행사 가격",
+      dateString: product.dateString,
+      price: product.price,
+      store: product.store,
+      saleType: product.saleType
+    )
+    cell.updateCell(transformedProduct, isShowTitleLogoView: false)
 
     return cell
   }
