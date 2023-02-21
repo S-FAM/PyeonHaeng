@@ -41,13 +41,8 @@ final class ProductViewController: BaseViewController, View {
 
   private lazy var collectionView = UICollectionView(
     frame: .zero,
-    collectionViewLayout: .init()
+    collectionViewLayout: UICollectionViewFlowLayout()
   ).then {
-    $0.collectionViewLayout = UICollectionViewFlowLayout().then { layout in
-      layout.headerReferenceSize = CGSize(width: view.bounds.width, height: 404)
-      layout.itemSize = CGSize(width: self.view.bounds.width, height: 125)
-      layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
-    }
     $0.bounces = false
     $0.register(GoodsCell.self, forCellWithReuseIdentifier: GoodsCell.id)
     $0.register(
@@ -55,6 +50,7 @@ final class ProductViewController: BaseViewController, View {
       forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
       withReuseIdentifier: ProductCollectionHeaderView.id
     )
+    $0.delegate = self
     $0.dataSource = self
     $0.backgroundColor = .systemPurple
   }
@@ -262,5 +258,30 @@ extension ProductViewController: UICollectionViewDataSource {
     }
 
     return headerView
+  }
+}
+
+extension ProductViewController: UICollectionViewDelegateFlowLayout {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    sizeForItemAt indexPath: IndexPath
+  ) -> CGSize {
+    return CGSize(width: self.view.bounds.width, height: 125)
+  }
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    insetForSectionAt section: Int
+  ) -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
+  }
+
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    referenceSizeForHeaderInSection section: Int
+  ) -> CGSize {
+    return CGSize(width: self.view.bounds.width, height: 404)
   }
 }
