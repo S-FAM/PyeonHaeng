@@ -48,7 +48,7 @@ final class ProductViewReactor: Reactor {
         .just(.changeBookmarkState(ProductStorage.shared.contains(model))),
         // API 요청 후 Mutation으로 매핑
         PyeonHaengAPI.shared.history(request: RequestHistoryModel(cvs: model.store, name: model.name))
-          .flatMap { Observable<Mutation>.just(.updateHistoryProduct($0.products)) }
+          .flatMap { Observable<Mutation>.just(.updateHistoryProduct($0.products.reversed())) }
       ])
 
     case .back:
