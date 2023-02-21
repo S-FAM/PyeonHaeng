@@ -15,9 +15,6 @@ import Then
 
 final class ProductViewController: BaseViewController, View {
 
-  // test data (will delete)
-  private var previousHistory: [ProductModel] = []
-
   private let navigationHeaderBarView = UIView().then {
     $0.backgroundColor = .white
   }
@@ -154,40 +151,7 @@ final class ProductViewController: BaseViewController, View {
         guard let self = self else { return }
 
         headerView.configureUI(with: model)
-
-        // --- test data(will delete) ---
-        self.previousHistory.append(
-          ProductModel(
-            imageLink: model.imageLink,
-            name: "2022년 12월 행사 가격",
-            dateString: "",
-            price: model.price,
-            store: model.store,
-            saleType: model.saleType
-          )
-        )
-        self.previousHistory.append(
-          ProductModel(
-            imageLink: model.imageLink,
-            name: "2022년 11월 행사 가격",
-            dateString: "",
-            price: model.price,
-            store: model.store,
-            saleType: model.saleType
-          )
-        )
-        self.previousHistory.append(
-          ProductModel(
-            imageLink: model.imageLink,
-            name: "2022년 10월 행사 가격",
-            dateString: "",
-            price: model.price,
-            store: model.store,
-            saleType: model.saleType
-          )
-        )
-        // -------------------
-
+        
         self.collectionView.reloadData()
         self.collectionView.backgroundColor = model.store.bgColor
       })
@@ -220,7 +184,7 @@ final class ProductViewController: BaseViewController, View {
 extension ProductViewController: UICollectionViewDataSource {
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return self.previousHistory.count
+    return 0
   }
 
   func collectionView(
@@ -234,7 +198,6 @@ extension ProductViewController: UICollectionViewDataSource {
       fatalError("GoodsCell을 생성할 수 없습니다.")
     }
 
-    cell.updateCell(self.previousHistory[indexPath.row], isShowTitleLogoView: false)
     return cell
   }
 
