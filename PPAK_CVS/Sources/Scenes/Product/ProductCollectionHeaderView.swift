@@ -13,10 +13,14 @@ import RxCocoa
 import SnapKit
 import Then
 
+protocol ProductDataStore {
+  var shareImage: UIImage { get }
+}
+
 final class ProductCollectionHeaderView: UICollectionReusableView {
   static let id = "ProductCollectionHeaderView"
 
-  var disposeBag = DisposeBag()
+  private let disposeBag = DisposeBag()
 
   private let productImageView = UIImageView().then {
     $0.image = UIImage(named: "ic_noImage_large")
@@ -145,8 +149,12 @@ extension ProductCollectionHeaderView {
 
     curveView.backgroundColor = model.store.bgColor
   }
+}
 
-  func getShareImage() -> UIImage {
+// MARK: - ProductDataStore
+
+extension ProductCollectionHeaderView: ProductDataStore {
+  var shareImage: UIImage {
     let renderer = UIGraphicsImageRenderer(bounds: self.wholeStackView.bounds)
     return renderer.image { rendererContext in
       self.wholeStackView.layer.render(in: rendererContext.cgContext)

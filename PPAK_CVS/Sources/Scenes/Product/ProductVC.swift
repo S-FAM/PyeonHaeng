@@ -15,6 +15,8 @@ import Then
 
 final class ProductViewController: BaseViewController, View {
 
+  private var dataStore: ProductDataStore?
+
   private let navigationHeaderBarView = UIView().then {
     $0.backgroundColor = .white
   }
@@ -49,15 +51,6 @@ final class ProductViewController: BaseViewController, View {
     )
     $0.backgroundColor = .systemPurple
   }
-
-  private var collectionHeaderView: ProductCollectionHeaderView! {
-    willSet {
-      guard let newValue = newValue else { return }
-      self.headerViewInitializeRelay.accept(newValue)
-    }
-  }
-
-  private let headerViewInitializeRelay = PublishRelay<ProductCollectionHeaderView>()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -135,26 +128,18 @@ final class ProductViewController: BaseViewController, View {
 
     // 공유 버튼 클릭
     self.shareButton.rx.tap
-      .map { ProductViewReactor.Action.share((self.collectionHeaderView.getShareImage())) }
+      .compactMap { [weak self] in self?.dataStore?.shareImage }
+      .map { Reactor.Action.share($0) }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // --- State ---
 
-    // 제품 정보 받아오기
-    let modelObservable = reactor.state.map { $0.model }
-    let headerViewObservable = headerViewInitializeRelay.asObservable()
-
-    Observable.combineLatest(modelObservable, headerViewObservable)
-      .take(1)
-      .subscribe(onNext: { [weak self] model, headerView in
-        guard let self = self else { return }
-
-        headerView.configureUI(with: model)
-        
-        self.collectionView.reloadData()
-        self.collectionView.backgroundColor = model.store.bgColor
-      })
+    reactor.state
+      .map { $0.model.store.bgColor }
+      .subscribe(with: self) { owner, backgroundColor in
+        owner.collectionView.backgroundColor = backgroundColor
+      }
       .disposed(by: disposeBag)
 
     // 이미지 공유하기
@@ -216,9 +201,10 @@ extension ProductViewController: UICollectionViewDataSource {
       fatalError()
     }
 
-    if self.collectionHeaderView == nil {
-      self.collectionHeaderView = headerView
-    }
+    guard let reactor else { return headerView }
+
+    headerView.configureUI(with: reactor.currentState.model)
+    dataStore = headerView
 
     return headerView
   }
