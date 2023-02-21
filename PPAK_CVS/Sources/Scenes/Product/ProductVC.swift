@@ -157,6 +157,15 @@ final class ProductViewController: BaseViewController, View {
       .map { $0.isBookmark }
       .bind(to: self.bookmarkButton.rx.isSelected)
       .disposed(by: disposeBag)
+
+    // 이전 행사 내역 업데이트
+    reactor.state
+      .map { $0.historyModels }
+      .distinctUntilChanged()
+      .subscribe(with: self) { owner, _ in
+        owner.collectionView.reloadData()
+      }
+      .disposed(by: disposeBag)
   }
 
   /// 공유버튼을 눌렀을 때 실행되는 메서드입니다.
@@ -169,7 +178,8 @@ final class ProductViewController: BaseViewController, View {
 extension ProductViewController: UICollectionViewDataSource {
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 0
+    guard let reactor else { return 0 }
+    return reactor.currentState.historyModels.count
   }
 
   func collectionView(
@@ -182,6 +192,9 @@ extension ProductViewController: UICollectionViewDataSource {
     ) as? GoodsCell else {
       fatalError("GoodsCell을 생성할 수 없습니다.")
     }
+
+    guard let reactor else { return cell }
+    cell.updateCell(reactor.currentState.historyModels[indexPath.row], isShowTitleLogoView: false)
 
     return cell
   }
