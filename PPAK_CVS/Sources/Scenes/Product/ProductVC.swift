@@ -39,7 +39,7 @@ final class ProductViewController: BaseViewController, View {
     $0.setImage(UIImage(named: "ic_share"), for: .normal)
   }
 
-  private lazy var collectionView = UICollectionView(
+  private let collectionView = UICollectionView(
     frame: .zero,
     collectionViewLayout: UICollectionViewFlowLayout()
   ).then {
@@ -50,8 +50,6 @@ final class ProductViewController: BaseViewController, View {
       forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
       withReuseIdentifier: ProductCollectionHeaderView.id
     )
-    $0.delegate = self
-    $0.dataSource = self
     $0.backgroundColor = .systemPurple
   }
 
@@ -66,6 +64,8 @@ final class ProductViewController: BaseViewController, View {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    collectionView.dataSource = self
+    collectionView.delegate = self
   }
 
   override func setupLayouts() {
