@@ -137,9 +137,7 @@ final class ProductViewController: BaseViewController, View {
 
     reactor.state
       .map { $0.model.store.bgColor }
-      .subscribe(with: self) { owner, backgroundColor in
-        owner.collectionView.backgroundColor = backgroundColor
-      }
+      .bind(to: self.collectionView.rx.backgroundColor)
       .disposed(by: disposeBag)
 
     // 이미지 공유하기
