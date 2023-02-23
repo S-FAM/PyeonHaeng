@@ -7,6 +7,8 @@
 
 import Foundation
 
+import Then
+
 struct ProductModel: Codable, Equatable {
   /// 이미지 주소
   let imageLink: String?
@@ -30,3 +32,5 @@ struct ProductModel: Codable, Equatable {
     case saleType = "tag"
   }
 }
+
+extension ProductModel: Then { }
