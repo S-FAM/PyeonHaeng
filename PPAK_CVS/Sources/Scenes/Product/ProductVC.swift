@@ -15,8 +15,7 @@ import Then
 
 final class ProductViewController: BaseViewController, View {
 
-  // test data (will delete)
-  private var previousHistory: [ProductModel] = []
+  private var dataStore: ProductDataStore?
 
   private let navigationHeaderBarView = UIView().then {
     $0.backgroundColor = .white
@@ -39,15 +38,10 @@ final class ProductViewController: BaseViewController, View {
     $0.setImage(UIImage(named: "ic_share"), for: .normal)
   }
 
-  private lazy var collectionView = UICollectionView(
+  private let collectionView = UICollectionView(
     frame: .zero,
-    collectionViewLayout: .init()
+    collectionViewLayout: UICollectionViewFlowLayout()
   ).then {
-    $0.collectionViewLayout = UICollectionViewFlowLayout().then { layout in
-      layout.headerReferenceSize = CGSize(width: view.bounds.width, height: 404)
-      layout.itemSize = CGSize(width: self.view.bounds.width, height: 125)
-      layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
-    }
     $0.bounces = false
     $0.register(GoodsCell.self, forCellWithReuseIdentifier: GoodsCell.id)
     $0.register(
@@ -55,21 +49,13 @@ final class ProductViewController: BaseViewController, View {
       forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
       withReuseIdentifier: ProductCollectionHeaderView.id
     )
-    $0.dataSource = self
     $0.backgroundColor = .systemPurple
   }
 
-  private var collectionHeaderView: ProductCollectionHeaderView! {
-    willSet {
-      guard let newValue = newValue else { return }
-      self.headerViewInitializeRelay.accept(newValue)
-    }
-  }
-
-  private let headerViewInitializeRelay = PublishRelay<ProductCollectionHeaderView>()
-
   override func viewDidLoad() {
     super.viewDidLoad()
+    collectionView.dataSource = self
+    collectionView.delegate = self
   }
 
   override func setupLayouts() {
@@ -142,59 +128,16 @@ final class ProductViewController: BaseViewController, View {
 
     // 공유 버튼 클릭
     self.shareButton.rx.tap
-      .map { ProductViewReactor.Action.share((self.collectionHeaderView.getShareImage())) }
+      .compactMap { [weak self] in self?.dataStore?.shareImage }
+      .map { Reactor.Action.share($0) }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // --- State ---
 
-    // 제품 정보 받아오기
-    let modelObservable = reactor.state.map { $0.model }
-    let headerViewObservable = headerViewInitializeRelay.asObservable()
-
-    Observable.combineLatest(modelObservable, headerViewObservable)
-      .take(1)
-      .subscribe(onNext: { [weak self] model, headerView in
-        guard let self = self else { return }
-
-        headerView.configureUI(with: model)
-
-        // --- test data(will delete) ---
-        self.previousHistory.append(
-          ProductModel(
-            imageLink: model.imageLink,
-            name: "2022년 12월 행사 가격",
-            dateString: "",
-            price: model.price,
-            store: model.store,
-            saleType: model.saleType
-          )
-        )
-        self.previousHistory.append(
-          ProductModel(
-            imageLink: model.imageLink,
-            name: "2022년 11월 행사 가격",
-            dateString: "",
-            price: model.price,
-            store: model.store,
-            saleType: model.saleType
-          )
-        )
-        self.previousHistory.append(
-          ProductModel(
-            imageLink: model.imageLink,
-            name: "2022년 10월 행사 가격",
-            dateString: "",
-            price: model.price,
-            store: model.store,
-            saleType: model.saleType
-          )
-        )
-        // -------------------
-
-        self.collectionView.reloadData()
-        self.collectionView.backgroundColor = model.store.bgColor
-      })
+    reactor.state
+      .map { $0.model.store.bgColor }
+      .bind(to: self.collectionView.rx.backgroundColor)
       .disposed(by: disposeBag)
 
     // 이미지 공유하기
@@ -212,6 +155,15 @@ final class ProductViewController: BaseViewController, View {
       .map { $0.isBookmark }
       .bind(to: self.bookmarkButton.rx.isSelected)
       .disposed(by: disposeBag)
+
+    // 이전 행사 내역 업데이트
+    reactor.state
+      .map { $0.historyModels }
+      .distinctUntilChanged()
+      .subscribe(with: self) { owner, _ in
+        owner.collectionView.reloadData()
+      }
+      .disposed(by: disposeBag)
   }
 
   /// 공유버튼을 눌렀을 때 실행되는 메서드입니다.
@@ -224,7 +176,8 @@ final class ProductViewController: BaseViewController, View {
 extension ProductViewController: UICollectionViewDataSource {
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return self.previousHistory.count
+    guard let reactor else { return 0 }
+    return reactor.currentState.historyModels.count
   }
 
   func collectionView(
@@ -238,7 +191,12 @@ extension ProductViewController: UICollectionViewDataSource {
       fatalError("GoodsCell을 생성할 수 없습니다.")
     }
 
-    cell.updateCell(self.previousHistory[indexPath.row], isShowTitleLogoView: false)
+    guard let reactor else { return cell }
+    let product = reactor.currentState.historyModels[indexPath.row].with {
+      $0.name = $0.dateString.components(separatedBy: ":").joined(separator: "년 ") + "월 행사 가격"
+    }
+    cell.updateCell(product, isShowTitleLogoView: false)
+
     return cell
   }
 
@@ -257,10 +215,36 @@ extension ProductViewController: UICollectionViewDataSource {
       fatalError()
     }
 
-    if self.collectionHeaderView == nil {
-      self.collectionHeaderView = headerView
-    }
+    guard let reactor else { return headerView }
+
+    headerView.configureUI(with: reactor.currentState.model)
+    dataStore = headerView
 
     return headerView
+  }
+}
+
+extension ProductViewController: UICollectionViewDelegateFlowLayout {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    sizeForItemAt indexPath: IndexPath
+  ) -> CGSize {
+    return CGSize(width: self.view.bounds.width, height: 125)
+  }
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    insetForSectionAt section: Int
+  ) -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
+  }
+
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    referenceSizeForHeaderInSection section: Int
+  ) -> CGSize {
+    return CGSize(width: self.view.bounds.width, height: 404)
   }
 }
