@@ -170,10 +170,10 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     cell.setDetail(indexPath.row)
     cell.selectionStyle = .none
 
-    //    // 민지님 요청으로 클릭제한처리
-    //    if indexPath.row == 2 {
-    //      cell.isUserInteractionEnabled = false
-    //    }
+    // TODO: 개발자응원하기 수정후 삭제필요
+    if settingValue == .supportDeveloper {
+      cell.isHidden = true
+      cell.isUserInteractionEnabled = false
 
     return cell
   }
