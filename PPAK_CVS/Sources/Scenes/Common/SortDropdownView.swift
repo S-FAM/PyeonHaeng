@@ -27,7 +27,7 @@ final class SortDropdownView: UIView {
   }
 
   let disposeBag = DisposeBag()
-  let buttonEventSubject = PublishSubject<SortType>()
+  let sortSwitch = PublishSubject<SortType>()
 
   // MARK: - Init
 
@@ -70,13 +70,13 @@ final class SortDropdownView: UIView {
     // 낮은가격순 터치
     ascendingButton.rx.tap
       .map { SortType.ascending }
-      .bind(to: buttonEventSubject)
+      .bind(to: sortSwitch)
       .disposed(by: disposeBag)
 
     // 높은가격순 터치
     descendingButton.rx.tap
       .map { SortType.descending }
-      .bind(to: buttonEventSubject)
+      .bind(to: sortSwitch)
       .disposed(by: disposeBag)
   }
 }

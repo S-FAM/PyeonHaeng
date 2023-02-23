@@ -157,7 +157,7 @@ final class BookmarkViewController: BaseViewController, View {
       .disposed(by: disposeBag)
 
     // 편의점 드롭다운 리스트 버튼 클릭
-    cvsDropdownView.buttonEventSubject
+    cvsDropdownView.cvsSwitch
       .map { BookmarkViewReactor.Action.didTapDropdownCVS($0) }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
@@ -182,7 +182,7 @@ final class BookmarkViewController: BaseViewController, View {
       .disposed(by: disposeBag)
 
     // 정렬조건 변경
-    sortDropdownView.buttonEventSubject
+    sortDropdownView.sortSwitch
       .map { BookmarkViewReactor.Action.didTapDropdownSort($0) }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
@@ -226,9 +226,9 @@ final class BookmarkViewController: BaseViewController, View {
       .withUnretained(self)
       .bind { owner, isHidden in
         if isHidden {
-          owner.cvsDropdownView.willDisappearDropdown()
+          owner.cvsDropdownView.hideDropdown()
         } else {
-          owner.cvsDropdownView.willAppearDropdown()
+          owner.cvsDropdownView.showDropdown()
         }
       }
       .disposed(by: disposeBag)
@@ -240,9 +240,9 @@ final class BookmarkViewController: BaseViewController, View {
       .withUnretained(self)
       .bind { owner, isHidden in
         if isHidden {
-          owner.sortDropdownView.willDisappearDropdown()
+          owner.sortDropdownView.hideDropdown()
         } else {
-          owner.sortDropdownView.willAppearDropdown()
+          owner.sortDropdownView.showDropdown()
         }
       }
       .disposed(by: disposeBag)
@@ -379,7 +379,7 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
   }
 
   func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-    sortDropdownView.willDisappearDropdown()
-    cvsDropdownView.willDisappearDropdown()
+    sortDropdownView.hideDropdown()
+    cvsDropdownView.hideDropdown()
   }
 }
