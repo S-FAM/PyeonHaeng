@@ -7,7 +7,7 @@ final class SettingViewReactor: Reactor {
 
   enum Action {
     case defaultAction
-    case didSelectRow(indexPath: IndexPath)
+    case didSelectRow(SettingCellType)
   }
 
   enum Mutation {
@@ -32,21 +32,20 @@ final class SettingViewReactor: Reactor {
     case .defaultAction:
       return Observable.just(.defaultMutation)
 
-    case .didSelectRow(let indexPath):
-      switch indexPath.row {
-      case 0:
+    case .didSelectRow(let currentCellType):
+      switch currentCellType {
+      case .push:
         return Observable.just(.setPush)
-      case 1:
+      case .selectStore:
         return Observable.just(.setSelectStore)
-      case 2:
+      case .notice:
         return Observable.just(.setNotice)
-      case 3:
+      case .review:
         return Observable.just(.setReview)
-      case 4:
+      case .sendMail:
         return Observable.just(.setSendMail)
-      case 5:
+      case .supportDeveloper:
         return Observable.just(.setSupportDeveloper)
-
       default:
         return Observable.just(.defaultMutation)
       }

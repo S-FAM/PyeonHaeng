@@ -104,8 +104,11 @@ final class SettingViewController: BaseViewController, View {
     // MARK: - Action
 
     tableView.rx.itemSelected
+      .compactMap {
+        SettingCellType(rawValue: $0.row)
+      }
       .map {
-        SettingViewReactor.Action.didSelectRow(indexPath: $0) }
+        SettingViewReactor.Action.didSelectRow($0) }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
@@ -113,37 +116,37 @@ final class SettingViewController: BaseViewController, View {
 
     reactor.state
       .map { $0.selectedCell }
+      .filter { $0 == .push }
       .withUnretained(self)
-      .bind { owner, settingCellType in
-        switch settingCellType {
+      .bind { owner, _ in
+        owner.moveToSystemSetting()
+      }
+      .disposed(by: disposeBag)
 
-        case .push:
-          owner.moveToSystemSetting()
+    reactor.state
+      .map { $0.selectedCell }
+      .filter { $0 == .review }
+      .withUnretained(self)
+      .bind { owner, _ in
+        owner.requestReview()
+      }
+      .disposed(by: disposeBag)
 
-        case .selectStore:
-          print("selectStore Act")
-          return
+    reactor.state
+      .map { $0.selectedCell }
+      .filter { $0 == .sendMail }
+      .withUnretained(self)
+      .bind { owner, _ in
+        owner.sendMail()
+      }
+      .disposed(by: disposeBag)
 
-        case .notice:
-          print("notice Act")
-          return
-
-        case .review:
-          owner.requestReview()
-          return
-
-        case .sendMail:
-          owner.sendMail()
-          return
-
-        case .supportDeveloper:
-          print("supportDeveloper Act")
-          return
-
-        default:
-          print("전체")
-          return
-        }
+    reactor.state
+      .map { $0.selectedCell }
+      .filter { $0 == .supportDeveloper }
+      .withUnretained(self)
+      .bind { _, _ in
+        print("supportDeveloper Act")
       }
       .disposed(by: disposeBag)
   }
