@@ -22,6 +22,7 @@ final class ProductViewReactor: Reactor {
 
   enum Mutation {
     case updateProduct(ProductModel)
+    case updateHistoryProduct([ProductModel])
     case goToHomeVC
     case changeBookmarkState(Bool)
     case showShareWindow(Bool)
@@ -30,6 +31,7 @@ final class ProductViewReactor: Reactor {
 
   struct State {
     var model = ProductModel(imageLink: "", name: "", dateString: "", price: 0, store: .all, saleType: .all)
+    var historyModels: [ProductModel] = []
     var isPopProductVC: Bool = false
     var isBookmark: Bool = false
     var isShareButtonTapped: Bool = false
@@ -43,7 +45,10 @@ final class ProductViewReactor: Reactor {
     case .updateProduct(let model):
       return .concat([
         .just(.updateProduct(model)),
-        .just(.changeBookmarkState(ProductStorage.shared.contains(model)))
+        .just(.changeBookmarkState(ProductStorage.shared.contains(model))),
+        // API 요청 후 Mutation으로 매핑
+        PyeonHaengAPI.shared.history(request: RequestHistoryModel(cvs: model.store, name: model.name))
+          .flatMap { Observable<Mutation>.just(.updateHistoryProduct($0.products.reversed())) }
       ])
 
     case .back:
@@ -71,6 +76,9 @@ final class ProductViewReactor: Reactor {
     switch mutation {
     case .updateProduct(let model):
       newState.model = model
+
+    case .updateHistoryProduct(let models):
+      newState.historyModels = models
 
     case .goToHomeVC:
       newState.isPopProductVC = true

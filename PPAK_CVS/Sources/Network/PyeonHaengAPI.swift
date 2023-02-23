@@ -31,7 +31,7 @@ final class PyeonHaengAPI {
     .asObservable()
   }
 
-  func history(request: RequestTypeModel) -> Observable<ResponseModel> {
+  func history(request: RequestHistoryModel) -> Observable<ResponseModel> {
     return Single.create { observer in
       AF.request(ProductTarget.history(request))
         .responseDecodable(of: ResponseModel.self) { response in

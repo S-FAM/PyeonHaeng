@@ -11,7 +11,7 @@ import Alamofire
 
 enum ProductTarget {
   case search(RequestTypeModel)
-  case history(RequestTypeModel)
+  case history(RequestHistoryModel)
 }
 
 extension ProductTarget: TargetType {
