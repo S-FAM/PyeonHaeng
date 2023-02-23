@@ -15,9 +15,9 @@
 		9C798F8C28EAEC5D00FE250C /* CvsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C798F8B28EAEC5D00FE250C /* CvsType.swift */; };
 		9CA7150E293CE26300AEE436 /* NSAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA7150D293CE26300AEE436 /* NSAttributedString+.swift */; };
 		9CB55E9629A77FE800F6760A /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB55E9529A77FE700F6760A /* SettingTableViewCell.swift */; };
+		9CB55E9829A7810700F6760A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9CB55E9729A7810700F6760A /* GoogleService-Info.plist */; };
 		9CCFA4FE28F4585E00963A95 /* EventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFA4FD28F4585E00963A95 /* EventType.swift */; };
 		9CDBFCD1296C331C00357474 /* SettingConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDBFCD0296C331C00357474 /* SettingConfig.swift */; };
-		A52F112D29A098FA009FFE02 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A52F112C29A098F9009FFE02 /* GoogleService-Info.plist */; };
 		A52F113329A09D6E009FFE02 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = A52F113229A09D6E009FFE02 /* FirebaseAnalytics */; };
 		A52F113529A09D6E009FFE02 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A52F113429A09D6E009FFE02 /* FirebaseCrashlytics */; };
 		A52F113729A09D6E009FFE02 /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = A52F113629A09D6E009FFE02 /* FirebaseInAppMessaging-Beta */; };
@@ -126,9 +126,9 @@
 		9C798F8B28EAEC5D00FE250C /* CvsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvsType.swift; sourceTree = "<group>"; };
 		9CA7150D293CE26300AEE436 /* NSAttributedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+.swift"; sourceTree = "<group>"; };
 		9CB55E9529A77FE700F6760A /* SettingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
+		9CB55E9729A7810700F6760A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9CCFA4FD28F4585E00963A95 /* EventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventType.swift; sourceTree = "<group>"; };
 		9CDBFCD0296C331C00357474 /* SettingConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingConfig.swift; sourceTree = "<group>"; };
-		A52F112C29A098F9009FFE02 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Documents/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A52F113C29A09FF4009FFE02 /* NoticeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeVC.swift; sourceTree = "<group>"; };
 		A52F113F29A0A02F009FFE02 /* NoticeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeCoordinator.swift; sourceTree = "<group>"; };
 		A52F114129A0A07D009FFE02 /* NoticeViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewReactor.swift; sourceTree = "<group>"; };
@@ -506,7 +506,7 @@
 				BA27023228CF5EF30039D9EA /* Configuration */,
 				BA27023328CF5EFF0039D9EA /* Sources */,
 				E505D9F828CF5B4B00EEFC65 /* Info.plist */,
-				A52F112C29A098F9009FFE02 /* GoogleService-Info.plist */,
+				9CB55E9729A7810700F6760A /* GoogleService-Info.plist */,
 				A52F114329A0A2F1009FFE02 /* NoticeInfo.plist */,
 				E53D1A3B2987EBE20074308B /* .swiftlint.yml */,
 			);
@@ -653,11 +653,11 @@
 				A54949D3296F052F00844828 /* noBookmark.json in Resources */,
 				A5B69C3A2960095100052D2B /* Pretendard-Medium.otf in Resources */,
 				A5932EA528E045EF00457AD3 /* onboarding3.json in Resources */,
-				A52F112D29A098FA009FFE02 /* GoogleService-Info.plist in Resources */,
 				A5D5A6F12985629100AD4F6E /* EF_jejudoldam.otf in Resources */,
 				A5932EA728E0472B00457AD3 /* onboarding2.json in Resources */,
 				A5B69C392960095100052D2B /* Pretendard-ExtraBold.otf in Resources */,
 				A5B69C372960095100052D2B /* Pretendard-Regular.otf in Resources */,
+				9CB55E9829A7810700F6760A /* GoogleService-Info.plist in Resources */,
 				A5B69C342960095100052D2B /* Pretendard-Black.otf in Resources */,
 				A5B69C322960095100052D2B /* Pretendard-Light.otf in Resources */,
 			);
