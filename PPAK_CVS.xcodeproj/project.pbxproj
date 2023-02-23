@@ -216,7 +216,7 @@
 		E5B9965A28E2A16D00E39566 /* SortDropdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortDropdownView.swift; sourceTree = "<group>"; };
 		E5C9025128E2DB480086BDE9 /* HomeViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewReactor.swift; sourceTree = "<group>"; };
 		E5CFF6F7297FD06C00E11D9A /* CVSStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVSStorage.swift; sourceTree = "<group>"; };
-		E5D8019E29A70BC100A83CEE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E5D8019E29A70BC100A83CEE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -287,6 +287,14 @@
 				A52F114129A0A07D009FFE02 /* NoticeViewReactor.swift */,
 			);
 			path = Notice;
+			sourceTree = "<group>";
+		};
+		A53B466429A7A175009F9019 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				BA1FC11B29A4D2D500AB3F91 /* GoogleService-Info.plist */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		A5932EA128E044BF00457AD3 /* Lottie */ = {
@@ -493,6 +501,7 @@
 				E505D9E928CF5B4A00EEFC65 /* PPAK_CVS */,
 				E505D9E828CF5B4A00EEFC65 /* Products */,
 				BA9EDA8F2917F98B00B97C23 /* Frameworks */,
+				A53B466429A7A175009F9019 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
