@@ -46,5 +46,17 @@ final class BookmarkCoordinator: BaseCoordinator {
         owner.start(childCoordinator: coordinator)
       }
       .disposed(by: disposeBag)
+
+    // BookmarkVC -> ProductVC
+    reactor.state
+      .map { $0.showsProductVC }
+      .filter { $0.0 }
+      .map { $0.1 }
+      .withUnretained(self)
+      .bind { owner, product in
+        let coordinator = ProductCoordinator(owner.navigationController, model: product)
+        owner.start(childCoordinator: coordinator)
+      }
+      .disposed(by: disposeBag)
   }
 }

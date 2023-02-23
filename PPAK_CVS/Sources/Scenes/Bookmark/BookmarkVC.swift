@@ -303,7 +303,9 @@ final class BookmarkViewController: BaseViewController, View {
 
 // MARK: - CollectionView Setup
 
-extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension BookmarkViewController: UICollectionViewDataSource {
+
+  // 셀 생성
   func collectionView(
     _ collectionView: UICollectionView,
     cellForItemAt indexPath: IndexPath
@@ -323,6 +325,7 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
     return cell
   }
 
+  // 셀 갯수
   func collectionView(
     _ collectionView: UICollectionView,
     numberOfItemsInSection section: Int
@@ -331,6 +334,7 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
     return products.count
   }
 
+  // 헤더 생성
   func collectionView(
     _ collectionView: UICollectionView,
     viewForSupplementaryElementOfKind kind: String,
@@ -353,7 +357,11 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
 
     return header
   }
+}
 
+extension BookmarkViewController: UICollectionViewDelegateFlowLayout {
+
+  // 셀 마진
   func collectionView(
     _ collectionView: UICollectionView,
     layout collectionViewLayout: UICollectionViewLayout,
@@ -362,6 +370,7 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
     return .init(top: 24, left: 0, bottom: 16, right: 0)
   }
 
+  // 헤더 사이즈
   func collectionView(
     _ collectionView: UICollectionView,
     layout collectionViewLayout: UICollectionViewLayout,
@@ -370,6 +379,7 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
     return .init(width: view.frame.width, height: 280)
   }
 
+  // 셀 사이즈
   func collectionView(
     _ collectionView: UICollectionView,
     layout collectionViewLayout: UICollectionViewLayout,
@@ -378,8 +388,17 @@ extension BookmarkViewController: UICollectionViewDataSource, UICollectionViewDe
     return .init(width: view.frame.width, height: 125)
   }
 
+  // 스크롤 감지
   func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
     sortDropdownView.hideDropdown()
     cvsDropdownView.hideDropdown()
+  }
+
+  // 셀 클릭
+  func collectionView(
+    _ collectionView: UICollectionView,
+    didSelectItemAt indexPath: IndexPath
+  ) {
+    self.reactor?.action.onNext(.didTapProduct(indexPath.row))
   }
 }
