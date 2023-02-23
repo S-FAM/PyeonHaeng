@@ -173,7 +173,9 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     // TODO: 개발자응원하기 수정후 삭제필요
     if settingValue == .supportDeveloper {
       cell.isHidden = true
+    } else if settingValue == .versionInfo {
       cell.isUserInteractionEnabled = false
+    }
 
     return cell
   }
