@@ -13,6 +13,7 @@ final class BookmarkViewReactor: Reactor {
     case didTapDropdownCVS(CVSDropdownCase)
     case didTapDropdownSort(SortType)
     case didChangeSearchBarText(String)
+    case didTapProduct(Int)
   }
 
   enum Mutation {
@@ -20,6 +21,7 @@ final class BookmarkViewReactor: Reactor {
     case setSortDropdown
     case setHomeVC(Bool)
     case setSettingVC(Bool)
+    case setProductVC(Bool, ProductModel)
     case hideDropdown
     case hideKeyboard(Bool)
     case setCVS(CVSType)
@@ -35,6 +37,14 @@ final class BookmarkViewReactor: Reactor {
     var isHiddenAnimationView: Bool = false
     var showsKeyboard: Bool = false
     var showsHomeVC: Bool = false
+    var showsProductVC: (Bool, ProductModel) = (false, .init(
+      imageLink: nil,
+      name: "",
+      dateString: "",
+      price: 0,
+      store: .all,
+      saleType: .all
+    ))
     var showsSettingVC: Bool = false
     var currentSort: SortType = .ascending
     var currentCVS: CVSType = CVSStorage.shared.cvs
@@ -141,6 +151,13 @@ final class BookmarkViewReactor: Reactor {
         .just(.hideDropdown),
         .just(.setProducts(updatedProducts))
       ])
+
+    case let .didTapProduct(index):
+      let product = self.currentState.currentProducts[index]
+      return .concat([
+        .just(.setProductVC(true, product)),
+        .just(.setProductVC(false, product))
+      ])
     }
   }
 
@@ -189,6 +206,9 @@ final class BookmarkViewReactor: Reactor {
       }
 
       nextState.currentProducts = products
+
+    case let .setProductVC(state, product):
+      nextState.showsProductVC = (state, product)
     }
     return nextState
   }

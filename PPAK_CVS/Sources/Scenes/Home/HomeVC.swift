@@ -116,13 +116,13 @@ final class HomeViewController: BaseViewController, View {
       .disposed(by: disposeBag)
 
     // 편의점 드롭다운 리스트 버튼 클릭
-    cvsDropdownView.buttonEventSubject
+    cvsDropdownView.cvsSwitch
       .map { HomeViewReactor.Action.didTapDropdownCVS($0) }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
     // 필터 드롭다운 리스트 버튼 클릭
-    sortDropdownView.buttonEventSubject
+    sortDropdownView.sortSwitch
       .map { HomeViewReactor.Action.didTapDropdownSort($0) }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
@@ -181,7 +181,7 @@ final class HomeViewController: BaseViewController, View {
       .distinctUntilChanged()
       .withUnretained(self)
       .bind { owner, isVisible in
-        isVisible ? owner.cvsDropdownView.willAppearDropdown() : owner.cvsDropdownView.willDisappearDropdown()
+        isVisible ? owner.cvsDropdownView.showDropdown() : owner.cvsDropdownView.hideDropdown()
       }
       .disposed(by: disposeBag)
 
@@ -191,7 +191,7 @@ final class HomeViewController: BaseViewController, View {
       .distinctUntilChanged()
       .withUnretained(self)
       .bind { owner, isVisible in
-        isVisible ? owner.sortDropdownView.willAppearDropdown() : owner.sortDropdownView.willDisappearDropdown()
+        isVisible ? owner.sortDropdownView.showDropdown() : owner.sortDropdownView.hideDropdown()
       }
       .disposed(by: disposeBag)
 
@@ -371,7 +371,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
   }
 
   func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-    cvsDropdownView.willDisappearDropdown()
-    sortDropdownView.willDisappearDropdown()
+    cvsDropdownView.hideDropdown()
+    sortDropdownView.hideDropdown()
   }
 }
