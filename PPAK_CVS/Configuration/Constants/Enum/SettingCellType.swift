@@ -8,14 +8,14 @@
 import UIKit
 
 enum SettingCellType: Int, CaseIterable, CustomStringConvertible {
-
+  // TODO: - 개발자응원하기 수정후, versionInfo와 순서 수정
   case push
   case selectStore
   case notice
   case review
   case sendMail
-  case supportDeveloper
   case versionInfo
+  case supportDeveloper
 
   var image: UIImage? {
     switch self {
