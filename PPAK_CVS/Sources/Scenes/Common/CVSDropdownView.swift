@@ -29,7 +29,7 @@ final class CVSDropdownView: UIView {
     $0.axis = .vertical
   }
 
-  let buttonEventSubject = PublishSubject<CVSDropdownCase>()
+  let cvsSwitch = PublishSubject<CVSDropdownCase>()
   let disposeBag = DisposeBag()
 
   // MARK: - LifeCycle
@@ -73,43 +73,43 @@ final class CVSDropdownView: UIView {
     // All 버튼 이벤트
     allButton.rx.tap
       .map { CVSDropdownCase.cvs(.all) }
-      .bind(to: buttonEventSubject)
+      .bind(to: cvsSwitch)
       .disposed(by: disposeBag)
 
     // CU 버튼 이벤트
     cuButton.rx.tap
       .map { CVSDropdownCase.cvs(.cu) }
-      .bind(to: buttonEventSubject)
+      .bind(to: cvsSwitch)
       .disposed(by: disposeBag)
 
     // GS 버튼 이벤트
     gsButton.rx.tap
       .map { CVSDropdownCase.cvs(.gs) }
-      .bind(to: buttonEventSubject)
+      .bind(to: cvsSwitch)
       .disposed(by: disposeBag)
 
     // Emart 버튼 이벤트
     emartButton.rx.tap
       .map { CVSDropdownCase.cvs(.eMart) }
-      .bind(to: buttonEventSubject)
+      .bind(to: cvsSwitch)
       .disposed(by: disposeBag)
 
     // Ministop 버튼 이벤트
     ministopButton.rx.tap
       .map { CVSDropdownCase.cvs(.miniStop) }
-      .bind(to: buttonEventSubject)
+      .bind(to: cvsSwitch)
       .disposed(by: disposeBag)
 
     // 7Eleven 버튼 이벤트
     elevenButton.rx.tap
       .map { CVSDropdownCase.cvs(.sevenEleven) }
-      .bind(to: buttonEventSubject)
+      .bind(to: cvsSwitch)
       .disposed(by: disposeBag)
 
     // Setting 버튼 이벤트
     settingButton.rx.tap
       .map { CVSDropdownCase.setting }
-      .bind(to: buttonEventSubject)
+      .bind(to: cvsSwitch)
       .disposed(by: disposeBag)
   }
 
