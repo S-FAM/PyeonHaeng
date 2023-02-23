@@ -34,5 +34,13 @@ final class SettingCoordinator: BaseCoordinator {
       }
       .disposed(by: disposeBag)
 
+    reactor.state
+      .filter { $0.selectedCell == .selectStore }
+      .withUnretained(self)
+      .bind { owner, _ in
+        let coordinator = SelectStoreCoordinator(owner.navigationController, fromSettings: true)
+        owner.start(childCoordinator: coordinator)
+      }
+      .disposed(by: disposeBag)
   }
 }
