@@ -8,19 +8,39 @@
 import UIKit
 
 final class BottomCurveView: UIView {
+
+  private let heightRatio: CGFloat = 2.8  // height의 2.8분의 1 비율
+  private let widthRatio: CGFloat = 0.2   // width의 0.2배 비율
+
   override func draw(_ rect: CGRect) {
     super.draw(rect)
 
+    let middleBeforeWidth = bounds.maxX * widthRatio
+    let middleBeforeHeight = bounds.maxY - bounds.maxY / heightRatio
+    let middleAfterWidth = bounds.maxX - middleBeforeWidth
+    let endHeight = middleBeforeHeight / 2
+
     let path = UIBezierPath()
-    path.move(to: CGPoint(x: self.bounds.maxX, y: 0))
+    path.move(to: CGPoint(x: 0, y: bounds.maxY))
+
+    // draw curve
     path.addCurve(
-      to: CGPoint(x: 0, y: 150),
-      controlPoint1: CGPoint(x: self.bounds.maxX, y: 150),
-      controlPoint2: CGPoint(x: 0, y: 0)
+      to: CGPoint(x: middleBeforeWidth, y: middleBeforeHeight),
+      controlPoint1: CGPoint(x: 0, y: middleBeforeHeight),
+      controlPoint2: CGPoint(x: middleBeforeWidth, y: middleBeforeHeight)
     )
-    path.addLine(to: CGPoint(x: 0, y: self.bounds.maxY))
-    path.addLine(to: CGPoint(x: self.bounds.maxX, y: self.bounds.maxY))
-    path.addLine(to: CGPoint(x: self.bounds.maxX, y: 0))
+
+    // width의 4/5까지 선으로 그음
+    path.addLine(to: CGPoint(x: middleAfterWidth, y: middleBeforeHeight))
+
+    path.addCurve(
+      to: CGPoint(x: bounds.maxX, y: endHeight),
+      controlPoint1: CGPoint(x: bounds.maxX, y: middleBeforeHeight),
+      controlPoint2: CGPoint(x: bounds.maxX, y: endHeight)
+    )
+
+    path.addLine(to: CGPoint(x: bounds.maxX, y: bounds.maxY))
+    path.addLine(to: CGPoint(x: 0, y: bounds.maxY))
 
     let maskLayer = CAShapeLayer()
     maskLayer.frame = self.bounds
