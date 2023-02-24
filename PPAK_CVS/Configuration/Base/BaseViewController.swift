@@ -52,7 +52,9 @@ class BaseViewController: UIViewController {
   ///   // codes..
   /// }
   /// ```
-  func setupStyles() {}
+  func setupStyles() {
+    view.backgroundColor = .systemBackground
+  }
 }
 
 extension BaseViewController: UIGestureRecognizerDelegate {
