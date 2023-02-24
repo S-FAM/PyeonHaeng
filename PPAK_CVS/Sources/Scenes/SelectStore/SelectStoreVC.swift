@@ -11,7 +11,7 @@ import ReactorKit
 
 final class SelectStoreViewController: BaseViewController, View {
 
-  // MARK: - Properties
+  // MARK: - UI COMPONENTS
 
   private lazy var textContainer = UIStackView().then {
     $0.axis = .vertical
@@ -24,7 +24,7 @@ final class SelectStoreViewController: BaseViewController, View {
     $0.text = Strings.SelectStore.title
     $0.onboardingExplainLabel(textColor: Color.titleLabel, font: Font.titleLabel)
   }
-
+  
   private lazy var descLabel = UILabel().then {
     $0.text = Strings.SelectStore.description
     $0.onboardingExplainLabel(textColor: Color.descLabel, font: Font.descLabel)
@@ -40,8 +40,11 @@ final class SelectStoreViewController: BaseViewController, View {
   override var preferredStatusBarStyle: UIStatusBarStyle {
     .lightContent
   }
+  
+  // MARK: - PROPERTIES
 
   private let fromSettings: Bool
+  
 
   // MARK: - Init
 
@@ -59,7 +62,11 @@ final class SelectStoreViewController: BaseViewController, View {
   override func setupLayouts() {
     super.setupLayouts()
 
-    [self.textContainer, self.selectStoreView, self.skipButton].forEach {
+    [
+      self.textContainer,
+      self.selectStoreView,
+      self.skipButton
+    ].forEach {
       self.view.addSubview($0)
     }
 
