@@ -1020,8 +1020,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
+				branch = master;
+				kind = branch;
 			};
 		};
 		A596FD762987F6E40029AF0A /* XCRemoteSwiftPackageReference "ReactorKit" */ = {

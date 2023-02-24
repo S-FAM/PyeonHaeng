@@ -34,7 +34,7 @@ final class BookmarkViewController: BaseViewController, View {
     $0.backgroundColor = .clear
   }
 
-  private let animationView = AnimationView(name: "noBookmark").then {
+  private let animationView = LottieAnimationView(name: "noBookmark").then {
     $0.contentMode = .scaleAspectFill
     $0.loopMode = .loop
   }
