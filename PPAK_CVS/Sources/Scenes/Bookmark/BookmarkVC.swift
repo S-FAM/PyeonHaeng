@@ -165,8 +165,7 @@ final class BookmarkViewController: BaseViewController, View {
     // 서치바 텍스트 반응
     header.searchBar.textField.rx.controlEvent(.editingDidEndOnExit)
       .withUnretained(self)
-      .map { $0.0.header.searchBar.textField.text }
-      .filterNil()
+      .compactMap { $0.0.header.searchBar.textField.text }
       .map { BookmarkViewReactor.Action.didChangeSearchBarText($0) }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
