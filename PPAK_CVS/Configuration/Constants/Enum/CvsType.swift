@@ -1,5 +1,5 @@
 //
-//  CvsType.swift
+//  CVSType.swift
 //  PPAK_CVS
 //
 //  Created by hyeonseok on 2022/10/03.

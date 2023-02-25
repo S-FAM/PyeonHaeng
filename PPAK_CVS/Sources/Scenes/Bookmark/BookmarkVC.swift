@@ -34,7 +34,7 @@ final class BookmarkViewController: BaseViewController, View {
     $0.backgroundColor = .clear
   }
 
-  private let animationView = AnimationView(name: "noBookmark").then {
+  private let animationView = LottieAnimationView(name: "noBookmark").then {
     $0.contentMode = .scaleAspectFill
     $0.loopMode = .loop
   }
@@ -165,8 +165,7 @@ final class BookmarkViewController: BaseViewController, View {
     // 서치바 텍스트 반응
     header.searchBar.textField.rx.controlEvent(.editingDidEndOnExit)
       .withUnretained(self)
-      .map { $0.0.header.searchBar.textField.text }
-      .filterNil()
+      .compactMap { $0.0.header.searchBar.textField.text }
       .map { BookmarkViewReactor.Action.didChangeSearchBarText($0) }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)

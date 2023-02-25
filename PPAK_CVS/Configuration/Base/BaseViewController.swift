@@ -15,7 +15,6 @@ class BaseViewController: UIViewController {
     setupLayouts()
     setupConstraints()
     setupStyles()
-    bind() // deprecated soon
     navigationController?.interactivePopGestureRecognizer?.delegate = self
   }
 
@@ -53,23 +52,9 @@ class BaseViewController: UIViewController {
   ///   // codes..
   /// }
   /// ```
-  func setupStyles() {}
-
-  /// Action, State 스트림을 bind합니다.
-  /// 예를들어, Button이 tap 되었을 때, 또는 tableView를 rx로 설정할 때 이용됩니다.
-  ///
-  /// ```
-  /// func bind() {
-  ///   button.rx.tap
-  ///     .subscribe {
-  ///       print("Tapped")
-  ///     }
-  ///     .disposed(by: disposeBag)
-  ///   // codes..
-  /// }
-  /// ```
-  @available(*, deprecated, renamed: "bind(viewModel:)")
-  func bind() { }
+  func setupStyles() {
+    view.backgroundColor = .systemBackground
+  }
 }
 
 extension BaseViewController: UIGestureRecognizerDelegate {

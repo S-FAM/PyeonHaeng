@@ -19,7 +19,7 @@ final class OnboardingViewController: BaseViewController, View {
 
   // MARK: - Properties
 
-  private lazy var animationView = AnimationView()
+  private lazy var animationView = LottieAnimationView()
 
   private lazy var pageControl = UIPageControl().then {
     $0.numberOfPages = 3
@@ -200,7 +200,7 @@ extension OnboardingViewController {
     let currentPage = self.pageControl.currentPage
     let lottieName = self.onboardingData[currentPage].lottieName
 
-    self.animationView.animation = Animation.named(lottieName)
+    self.animationView.animation = LottieAnimation.named(lottieName)
     self.titleLabel.text = self.onboardingData[currentPage].title
     self.descLabel.text = self.onboardingData[currentPage].description
   }
