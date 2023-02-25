@@ -95,6 +95,8 @@
 		E50F851229589AFB008B7052 /* ProductStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50F851129589AFB008B7052 /* ProductStorage.swift */; };
 		E5103251290B4A0300D2F007 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5103250290B4A0300D2F007 /* UIView+.swift */; };
 		E51669F029338593006C9635 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51669EF29338593006C9635 /* LoadingCell.swift */; };
+		E517803029A84FF80011C220 /* DeviceKit in Frameworks */ = {isa = PBXBuildFile; productRef = E517802F29A84FF80011C220 /* DeviceKit */; };
+		E517803629A859800011C220 /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E517803529A859800011C220 /* DeviceManager.swift */; };
 		E53D1A3C2987EBE20074308B /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = E53D1A3B2987EBE20074308B /* .swiftlint.yml */; };
 		E5467E4A28D45DF40031B785 /* TopCurveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5467E4928D45DF40031B785 /* TopCurveView.swift */; };
 		E5467E4C28D45DFE0031B785 /* BottomCurveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5467E4B28D45DFE0031B785 /* BottomCurveView.swift */; };
@@ -195,6 +197,7 @@
 		E50F851129589AFB008B7052 /* ProductStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductStorage.swift; sourceTree = "<group>"; };
 		E5103250290B4A0300D2F007 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		E51669EF29338593006C9635 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
+		E517803529A859800011C220 /* DeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
 		E53D1A3B2987EBE20074308B /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		E5467E4928D45DF40031B785 /* TopCurveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCurveView.swift; sourceTree = "<group>"; };
 		E5467E4B28D45DFE0031B785 /* BottomCurveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCurveView.swift; sourceTree = "<group>"; };
@@ -224,6 +227,7 @@
 				A52F113729A09D6E009FFE02 /* FirebaseInAppMessaging-Beta in Frameworks */,
 				BA1CCAC228FAFE500002FD8C /* WeakMapTable in Frameworks */,
 				A52F113329A09D6E009FFE02 /* FirebaseAnalytics in Frameworks */,
+				E517803029A84FF80011C220 /* DeviceKit in Frameworks */,
 				A596FD782987F6E40029AF0A /* ReactorKit in Frameworks */,
 				A5932EA028E0435200457AD3 /* Lottie in Frameworks */,
 				A52F113B29A09D6E009FFE02 /* FirebaseRemoteConfig in Frameworks */,
@@ -475,6 +479,7 @@
 			isa = PBXGroup;
 			children = (
 				BA9F765C299F4A2900D054D2 /* UserDefaultsWrapper.swift */,
+				E517803529A859800011C220 /* DeviceManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -592,6 +597,7 @@
 				A52F113629A09D6E009FFE02 /* FirebaseInAppMessaging-Beta */,
 				A52F113829A09D6E009FFE02 /* FirebaseMessaging */,
 				A52F113A29A09D6E009FFE02 /* FirebaseRemoteConfig */,
+				E517802F29A84FF80011C220 /* DeviceKit */,
 			);
 			productName = PPAK_CVS;
 			productReference = E505D9E728CF5B4A00EEFC65 /* PPAK_CVS.app */;
@@ -632,6 +638,7 @@
 				BA1CCAC028FAFE500002FD8C /* XCRemoteSwiftPackageReference "WeakMapTable" */,
 				A596FD762987F6E40029AF0A /* XCRemoteSwiftPackageReference "ReactorKit" */,
 				A52F113129A09D6D009FFE02 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				E517802E29A84FF80011C220 /* XCRemoteSwiftPackageReference "DeviceKit" */,
 			);
 			productRefGroup = E505D9E828CF5B4A00EEFC65 /* Products */;
 			projectDirPath = "";
@@ -755,6 +762,7 @@
 				E5467E4C28D45DFE0031B785 /* BottomCurveView.swift in Sources */,
 				BAD70BD8291A58CB00C39863 /* SortType.swift in Sources */,
 				E54D9C4628F1A19B00D028B2 /* BookmarkViewReactor.swift in Sources */,
+				E517803629A859800011C220 /* DeviceManager.swift in Sources */,
 				9CDBFCD1296C331C00357474 /* SettingConfig.swift in Sources */,
 				BA9F765D299F4A2900D054D2 /* UserDefaultsWrapper.swift in Sources */,
 				E54D9C4828F1A1A300D028B2 /* BookmarkVC.swift in Sources */,
@@ -1076,6 +1084,14 @@
 				kind = branch;
 			};
 		};
+		E517802E29A84FF80011C220 /* XCRemoteSwiftPackageReference "DeviceKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devicekit/DeviceKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		E5F9CCA028EF10EA0084CD63 /* XCRemoteSwiftPackageReference "RxGesture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture.git";
@@ -1156,6 +1172,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BA27024528CF61020039D9EA /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		E517802F29A84FF80011C220 /* DeviceKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E517802E29A84FF80011C220 /* XCRemoteSwiftPackageReference "DeviceKit" */;
+			productName = DeviceKit;
 		};
 		E5F9CCA128EF10EA0084CD63 /* RxGesture */ = {
 			isa = XCSwiftPackageProductDependency;
