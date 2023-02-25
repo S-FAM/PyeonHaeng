@@ -44,12 +44,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // User Notification Authorization
     let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-    UNUserNotificationCenter.current().requestAuthorization(
-      options: authOptions,
-      completionHandler: { _, error in
+    UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { _, error in
         print("Error request notifications Authorization: \(error.debugDescription)")
       }
-    )
     application.registerForRemoteNotifications()
 
     Thread.sleep(forTimeInterval: 1.0)
