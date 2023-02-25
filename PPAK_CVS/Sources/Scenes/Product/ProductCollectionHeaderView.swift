@@ -106,7 +106,7 @@ extension ProductCollectionHeaderView {
 
     curveView.snp.makeConstraints { make in
       make.leading.trailing.bottom.equalToSuperview()
-      make.top.equalTo(wholeStackView.snp.bottom).inset(Inset.curveView)
+      make.top.equalTo(wholeStackView.snp.bottom).offset(Offset.curveView)
     }
 
     productImageView.snp.makeConstraints { make in
@@ -127,7 +127,6 @@ extension ProductCollectionHeaderView {
 
   private func setupStyles() {
     backgroundColor = .white
-    wholeStackView.setCustomSpacing(16, after: productImageView)
   }
 
   func configureUI(with model: ProductModel) {
@@ -172,13 +171,16 @@ extension ProductCollectionHeaderView {
     static let previousHistoryLabel = UIFont.appFont(family: .bold, size: 14)
   }
 
+  private enum Offset {
+
+    static let curveView = -20
+  }
+
   private enum Inset {
 
     static let shareButton = 5
 
     static let previousHistoryLabel = 20
-
-    static let curveView = 10
 
     static let stackViewTop = 25
   }

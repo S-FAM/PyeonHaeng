@@ -26,8 +26,8 @@ final class BottomCurveView: UIView {
     // draw curve
     path.addCurve(
       to: CGPoint(x: middleBeforeWidth, y: middleBeforeHeight),
-      controlPoint1: CGPoint(x: 0, y: middleBeforeHeight),
-      controlPoint2: CGPoint(x: middleBeforeWidth, y: middleBeforeHeight)
+      controlPoint1: CGPoint(x: 0, y: (bounds.maxY + middleBeforeHeight) / 2),
+      controlPoint2: CGPoint(x: middleBeforeWidth / 2, y: middleBeforeHeight)
     )
 
     // width의 4/5까지 선으로 그음
@@ -35,8 +35,8 @@ final class BottomCurveView: UIView {
 
     path.addCurve(
       to: CGPoint(x: bounds.maxX, y: endHeight),
-      controlPoint1: CGPoint(x: bounds.maxX, y: middleBeforeHeight),
-      controlPoint2: CGPoint(x: bounds.maxX, y: endHeight)
+      controlPoint1: CGPoint(x: (bounds.maxX + middleAfterWidth) / 2, y: middleBeforeHeight),
+      controlPoint2: CGPoint(x: bounds.maxX, y: (endHeight + middleBeforeHeight) / 2)
     )
 
     path.addLine(to: CGPoint(x: bounds.maxX, y: bounds.maxY))
