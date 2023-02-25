@@ -172,6 +172,7 @@ final class BookmarkViewController: BaseViewController, View {
       .disposed(by: disposeBag)
 
     // 찜 정보 터치
+    /*
     header.infoTouchView.rx.tapGesture()
       .skip(1)
       .bind { _ in
@@ -180,6 +181,7 @@ final class BookmarkViewController: BaseViewController, View {
         self.present(popup, animated: false)
       }
       .disposed(by: disposeBag)
+     */
 
     // 정렬조건 변경
     sortDropdownView.sortSwitch

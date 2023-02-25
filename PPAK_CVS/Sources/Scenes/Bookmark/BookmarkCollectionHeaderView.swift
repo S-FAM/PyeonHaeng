@@ -76,9 +76,10 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
       infoStack
     ].forEach { iconContainerView.addSubview($0) }
 
+    // NOTE: 찜한 제품의 알림 기능은 추후 업데이트
     [
-      mainLabel,
-      infoButton
+      mainLabel// ,
+//      infoButton
     ].forEach { infoStack.addArrangedSubview($0) }
   }
 
