@@ -113,7 +113,7 @@ final class SelectStoreViewController: BaseViewController, View {
       self.skipButton.setTitle(Strings.SelectStore.save, for: .normal)
     }
   }
-  
+
   func bind(reactor: SelectStoreViewReactor) {
     if self.fromSettings {
       reactor.action.onNext(.selectStore(CVSStorage.shared.favoriteCVS, false, self.fromSettings))
