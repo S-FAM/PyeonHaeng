@@ -12,7 +12,7 @@
 		9C40085D295DCACA00C7E2DE /* SettingViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C40085C295DCACA00C7E2DE /* SettingViewReactor.swift */; };
 		9C5C03A5292B9F770000989F /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5C03A4292B9F770000989F /* SettingVC.swift */; };
 		9C798F8A28EAE9DA00FE250C /* TitleLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C798F8928EAE9DA00FE250C /* TitleLogoView.swift */; };
-		9C798F8C28EAEC5D00FE250C /* CvsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C798F8B28EAEC5D00FE250C /* CvsType.swift */; };
+		9C798F8C28EAEC5D00FE250C /* CVSType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C798F8B28EAEC5D00FE250C /* CVSType.swift */; };
 		9CA7150E293CE26300AEE436 /* NSAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA7150D293CE26300AEE436 /* NSAttributedString+.swift */; };
 		9CB55E9629A77FE800F6760A /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB55E9529A77FE700F6760A /* SettingTableViewCell.swift */; };
 		9CCFA4FE28F4585E00963A95 /* EventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCFA4FD28F4585E00963A95 /* EventType.swift */; };
@@ -84,7 +84,6 @@
 		BAA0F53128FCF88300B632AC /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA0F53028FCF88300B632AC /* BaseCoordinator.swift */; };
 		BAA0F53528FD353500B632AC /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA0F53428FD353500B632AC /* AppCoordinator.swift */; };
 		BAA1AAE72962AFAE00E763D1 /* ProductViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA1AAE62962AFAE00E763D1 /* ProductViewReactor.swift */; };
-		BABC84B228F58F5A00D6DF45 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABC84B128F58F5A00D6DF45 /* Preview.swift */; };
 		BAD70BD8291A58CB00C39863 /* SortType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD70BD7291A58CB00C39863 /* SortType.swift */; };
 		BAD70BDA291A594F00C39863 /* RequestTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD70BD9291A594F00C39863 /* RequestTypeModel.swift */; };
 		BAEF774928F412FA006B0274 /* ProductCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEF774828F412FA006B0274 /* ProductCollectionHeaderView.swift */; };
@@ -105,7 +104,6 @@
 		E54D9C4428F1A19000D028B2 /* BookmarkCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54D9C4328F1A19000D028B2 /* BookmarkCoordinator.swift */; };
 		E54D9C4628F1A19B00D028B2 /* BookmarkViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54D9C4528F1A19B00D028B2 /* BookmarkViewReactor.swift */; };
 		E54D9C4828F1A1A300D028B2 /* BookmarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54D9C4728F1A1A300D028B2 /* BookmarkVC.swift */; };
-		E5564B84295D401C00BDB7EE /* RxOptional in Frameworks */ = {isa = PBXBuildFile; productRef = E5564B83295D401C00BDB7EE /* RxOptional */; };
 		E55BEBE128D6A82400804FCB /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55BEBE028D6A82400804FCB /* SearchBar.swift */; };
 		E580BF2328E0646200BE7ADC /* GoodsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E580BF2228E0646200BE7ADC /* GoodsCell.swift */; };
 		E580BF2528E0649E00BE7ADC /* HomeCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E580BF2428E0649E00BE7ADC /* HomeCollectionHeaderView.swift */; };
@@ -126,7 +124,7 @@
 		9C40085C295DCACA00C7E2DE /* SettingViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewReactor.swift; sourceTree = "<group>"; };
 		9C5C03A4292B9F770000989F /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 		9C798F8928EAE9DA00FE250C /* TitleLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleLogoView.swift; sourceTree = "<group>"; };
-		9C798F8B28EAEC5D00FE250C /* CvsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CvsType.swift; sourceTree = "<group>"; };
+		9C798F8B28EAEC5D00FE250C /* CVSType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVSType.swift; sourceTree = "<group>"; };
 		9CA7150D293CE26300AEE436 /* NSAttributedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+.swift"; sourceTree = "<group>"; };
 		9CB55E9529A77FE700F6760A /* SettingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		9CCFA4FD28F4585E00963A95 /* EventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventType.swift; sourceTree = "<group>"; };
@@ -186,7 +184,6 @@
 		BAA0F53428FD353500B632AC /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		BAA1AAE62962AFAE00E763D1 /* ProductViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewReactor.swift; sourceTree = "<group>"; };
 		BAB7176E29A09969009DFC7A /* PPAK_CVS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PPAK_CVS.entitlements; sourceTree = "<group>"; };
-		BABC84B128F58F5A00D6DF45 /* Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
 		BAD70BD7291A58CB00C39863 /* SortType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortType.swift; sourceTree = "<group>"; };
 		BAD70BD9291A594F00C39863 /* RequestTypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTypeModel.swift; sourceTree = "<group>"; };
 		BAEF774828F412FA006B0274 /* ProductCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCollectionHeaderView.swift; sourceTree = "<group>"; };
@@ -232,7 +229,6 @@
 				A52F113329A09D6E009FFE02 /* FirebaseAnalytics in Frameworks */,
 				E517803029A84FF80011C220 /* DeviceKit in Frameworks */,
 				A596FD782987F6E40029AF0A /* ReactorKit in Frameworks */,
-				E5564B84295D401C00BDB7EE /* RxOptional in Frameworks */,
 				A5932EA028E0435200457AD3 /* Lottie in Frameworks */,
 				A52F113B29A09D6E009FFE02 /* FirebaseRemoteConfig in Frameworks */,
 				E5F9CCA228EF10EA0084CD63 /* RxGesture in Frameworks */,
@@ -273,7 +269,7 @@
 		9CCFA4FC28F4584400963A95 /* Enum */ = {
 			isa = PBXGroup;
 			children = (
-				9C798F8B28EAEC5D00FE250C /* CvsType.swift */,
+				9C798F8B28EAEC5D00FE250C /* CVSType.swift */,
 				9CCFA4FD28F4585E00963A95 /* EventType.swift */,
 				BAD70BD7291A58CB00C39863 /* SortType.swift */,
 				A5F8288B28DECEE700C5D6A2 /* Strings.swift */,
@@ -376,7 +372,6 @@
 				BA9EDA9C2918BF8F00B97C23 /* Date+.swift */,
 				BA343AB02963139900DE8016 /* Int+.swift */,
 				9CA7150D293CE26300AEE436 /* NSAttributedString+.swift */,
-				BABC84B128F58F5A00D6DF45 /* Preview.swift */,
 				A5F8288928DEC0CF00C5D6A2 /* UIButton+.swift */,
 				BA8CFD7C28E1E4AB00ADC4A8 /* UIColor+.swift */,
 				A5B69C3B29600A1000052D2B /* UIFont+.swift */,
@@ -596,7 +591,6 @@
 				A5932E9F28E0435200457AD3 /* Lottie */,
 				E5F9CCA128EF10EA0084CD63 /* RxGesture */,
 				BA1CCAC128FAFE500002FD8C /* WeakMapTable */,
-				E5564B83295D401C00BDB7EE /* RxOptional */,
 				A596FD772987F6E40029AF0A /* ReactorKit */,
 				A52F113229A09D6E009FFE02 /* FirebaseAnalytics */,
 				A52F113429A09D6E009FFE02 /* FirebaseCrashlytics */,
@@ -642,7 +636,6 @@
 				A5932E9E28E0435200457AD3 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				E5F9CCA028EF10EA0084CD63 /* XCRemoteSwiftPackageReference "RxGesture" */,
 				BA1CCAC028FAFE500002FD8C /* XCRemoteSwiftPackageReference "WeakMapTable" */,
-				E5564B82295D401B00BDB7EE /* XCRemoteSwiftPackageReference "RxOptional" */,
 				A596FD762987F6E40029AF0A /* XCRemoteSwiftPackageReference "ReactorKit" */,
 				A52F113129A09D6D009FFE02 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				E517802E29A84FF80011C220 /* XCRemoteSwiftPackageReference "DeviceKit" */,
@@ -723,7 +716,7 @@
 				A5F8288A28DEC0CF00C5D6A2 /* UIButton+.swift in Sources */,
 				BA9EDA9B2918BF2B00B97C23 /* ProductModel.swift in Sources */,
 				A5F8288E28DED76700C5D6A2 /* UILabel+.swift in Sources */,
-				9C798F8C28EAEC5D00FE250C /* CvsType.swift in Sources */,
+				9C798F8C28EAEC5D00FE250C /* CVSType.swift in Sources */,
 				BA5A433E28F2FF47008DCDCC /* ProductCoordinator.swift in Sources */,
 				9C40085D295DCACA00C7E2DE /* SettingViewReactor.swift in Sources */,
 				BA27023128CF5DCD0039D9EA /* Coordinator.swift in Sources */,
@@ -750,7 +743,6 @@
 				BAEF774928F412FA006B0274 /* ProductCollectionHeaderView.swift in Sources */,
 				E50F851229589AFB008B7052 /* ProductStorage.swift in Sources */,
 				A5D5A6EF29855D6200AD4F6E /* SelectStoreView.swift in Sources */,
-				BABC84B228F58F5A00D6DF45 /* Preview.swift in Sources */,
 				E505D9EB28CF5B4A00EEFC65 /* AppDelegate.swift in Sources */,
 				BA9EDA9D2918BF9000B97C23 /* Date+.swift in Sources */,
 				E505D9ED28CF5B4A00EEFC65 /* SceneDelegate.swift in Sources */,
@@ -1032,8 +1024,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
+				branch = master;
+				kind = branch;
 			};
 		};
 		A596FD762987F6E40029AF0A /* XCRemoteSwiftPackageReference "ReactorKit" */ = {
@@ -1098,14 +1090,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.0.0;
-			};
-		};
-		E5564B82295D401B00BDB7EE /* XCRemoteSwiftPackageReference "RxOptional" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RxSwiftCommunity/RxOptional.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 4.1.0;
 			};
 		};
 		E5F9CCA028EF10EA0084CD63 /* XCRemoteSwiftPackageReference "RxGesture" */ = {
@@ -1193,11 +1177,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E517802E29A84FF80011C220 /* XCRemoteSwiftPackageReference "DeviceKit" */;
 			productName = DeviceKit;
-		};
-		E5564B83295D401C00BDB7EE /* RxOptional */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E5564B82295D401B00BDB7EE /* XCRemoteSwiftPackageReference "RxOptional" */;
-			productName = RxOptional;
 		};
 		E5F9CCA128EF10EA0084CD63 /* RxGesture */ = {
 			isa = XCSwiftPackageProductDependency;

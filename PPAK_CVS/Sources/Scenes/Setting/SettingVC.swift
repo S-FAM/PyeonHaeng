@@ -42,7 +42,6 @@ final class SettingViewController: BaseViewController, View {
 
   override func setupStyles() {
     super.setupStyles()
-    view.backgroundColor = .white
     setGesture()
     tableView.separatorStyle = .none
   }

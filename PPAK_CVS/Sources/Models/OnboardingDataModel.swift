@@ -11,5 +11,4 @@ struct OnboardingDataModel {
   let lottieName: String
   let title: String
   let description: String
-
 }

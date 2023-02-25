@@ -52,11 +52,6 @@ final class NoticeViewController: BaseViewController, View {
 
   // MARK: - Setup
 
-  override func setupStyles() {
-    super.setupStyles()
-    view.backgroundColor = .white
-  }
-
   override func setupLayouts() {
     super.setupLayouts()
     [self.headerBar, self.separateView, self.textView].forEach {
