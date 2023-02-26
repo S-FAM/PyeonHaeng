@@ -14,7 +14,7 @@ import RxCocoa
 final class ProductViewReactor: Reactor {
 
   enum Action {
-    case updateProduct(ProductModel)
+    case fetchProduct(ProductModel)
     case back
     case bookmark(Bool)
     case share(UIImage)
@@ -42,7 +42,7 @@ final class ProductViewReactor: Reactor {
 
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
-    case .updateProduct(let model):
+    case .fetchProduct(let model):
       return .concat([
         .just(.updateProduct(model)),
         .just(.changeBookmarkState(ProductStorage.shared.contains(model))),

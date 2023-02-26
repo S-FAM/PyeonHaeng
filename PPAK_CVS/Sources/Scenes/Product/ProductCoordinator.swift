@@ -40,7 +40,7 @@ final class ProductCoordinator: BaseCoordinator {
   }
 
   private func bind(_ reactor: ProductViewReactor) {
-    Observable<ProductViewReactor.Action>.just(.updateProduct(self.model))
+    Observable<ProductViewReactor.Action>.just(.fetchProduct(self.model))
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
