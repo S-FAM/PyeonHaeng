@@ -122,7 +122,7 @@ final class ProductViewController: BaseViewController, View {
 
     // 북마크 버튼 클릭
     self.bookmarkButton.rx.tap
-      .map { ProductViewReactor.Action.bookmark(!self.bookmarkButton.isSelected) }
+      .map { [bookmarkButton] in ProductViewReactor.Action.bookmark(!bookmarkButton.isSelected) }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
