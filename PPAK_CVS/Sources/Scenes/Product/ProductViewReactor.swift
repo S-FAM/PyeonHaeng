@@ -24,6 +24,7 @@ final class ProductViewReactor: Reactor {
     case updateProduct(ProductModel)
     case updateHistoryProduct([ProductModel])
     case goToHomeVC
+    case fetchBookmark(Bool)
     case changeBookmarkState(Bool)
     case showShareWindow(Bool)
     case setItem(UIImage)
@@ -82,6 +83,9 @@ final class ProductViewReactor: Reactor {
 
     case .goToHomeVC:
       newState.isPopProductVC = true
+
+    case .fetchBookmark(let isBookmark):
+      newState.isBookmark = isBookmark
 
     case .changeBookmarkState(let isBookmark):
       self.updateBookmarkState(isBookmark: isBookmark)
