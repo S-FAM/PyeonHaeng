@@ -54,7 +54,12 @@ final class BookmarkViewController: BaseViewController, View {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.reactor?.action.onNext(.viewDidLoad)
+    reactor?.action.onNext(.viewDidLoad)
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    reactor?.action.onNext(.viewWillAppear)
   }
 
   // MARK: - Setup
