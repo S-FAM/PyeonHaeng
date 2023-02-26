@@ -46,7 +46,7 @@ final class ProductViewReactor: Reactor {
     case .fetchProduct(let model):
       return .concat([
         .just(.updateProduct(model)),
-        .just(.changeBookmarkState(ProductStorage.shared.contains(model))),
+        .just(.fetchBookmark(ProductStorage.shared.contains(model))),
         // API 요청 후 Mutation으로 매핑
         PyeonHaengAPI.shared.history(request: RequestHistoryModel(cvs: model.store, name: model.name))
           .flatMap { Observable<Mutation>.just(.updateHistoryProduct($0.products.reversed())) }
@@ -103,8 +103,6 @@ final class ProductViewReactor: Reactor {
 
   /// 북마크 상태를 UserDefaults에 적용하는 메서드입니다.
   private func updateBookmarkState(isBookmark: Bool) {
-    // guard isBookmark else { return } // 또는
-    if !isBookmark { return }
 
     let storage = ProductStorage.shared
 
