@@ -5,6 +5,7 @@ final class BookmarkViewReactor: Reactor {
 
   enum Action {
     case viewDidLoad
+    case viewWillAppear
     case didTapCVSButton
     case didTapSortButton
     case didTapBackButton
@@ -59,6 +60,15 @@ final class BookmarkViewReactor: Reactor {
     switch action {
     case .viewDidLoad:
       let products = ProductStorage.shared.retrieve(cvs: currentState.currentCVS)
+      return .just(.setProducts(products))
+
+    case .viewWillAppear:
+      let products = ProductStorage.shared.retrieve(
+        cvs: currentState.currentCVS,
+        event: currentState.currentEvent,
+        sort: currentState.currentSort,
+        target: currentState.currentTarget
+        )
       return .just(.setProducts(products))
 
     case .didTapCVSButton:

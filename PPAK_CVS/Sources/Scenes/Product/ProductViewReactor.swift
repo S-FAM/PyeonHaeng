@@ -14,7 +14,7 @@ import RxCocoa
 final class ProductViewReactor: Reactor {
 
   enum Action {
-    case updateProduct(ProductModel)
+    case fetchProduct(ProductModel)
     case back
     case bookmark(Bool)
     case share(UIImage)
@@ -24,6 +24,7 @@ final class ProductViewReactor: Reactor {
     case updateProduct(ProductModel)
     case updateHistoryProduct([ProductModel])
     case goToHomeVC
+    case fetchBookmark(Bool)
     case changeBookmarkState(Bool)
     case showShareWindow(Bool)
     case setItem(UIImage)
@@ -42,10 +43,10 @@ final class ProductViewReactor: Reactor {
 
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
-    case .updateProduct(let model):
+    case .fetchProduct(let model):
       return .concat([
         .just(.updateProduct(model)),
-        .just(.changeBookmarkState(ProductStorage.shared.contains(model))),
+        .just(.fetchBookmark(ProductStorage.shared.contains(model))),
         // API 요청 후 Mutation으로 매핑
         PyeonHaengAPI.shared.history(request: RequestHistoryModel(cvs: model.store, name: model.name))
           .flatMap { Observable<Mutation>.just(.updateHistoryProduct($0.products.reversed())) }
@@ -83,6 +84,9 @@ final class ProductViewReactor: Reactor {
     case .goToHomeVC:
       newState.isPopProductVC = true
 
+    case .fetchBookmark(let isBookmark):
+      newState.isBookmark = isBookmark
+
     case .changeBookmarkState(let isBookmark):
       self.updateBookmarkState(isBookmark: isBookmark)
       newState.isBookmark = isBookmark
@@ -99,8 +103,6 @@ final class ProductViewReactor: Reactor {
 
   /// 북마크 상태를 UserDefaults에 적용하는 메서드입니다.
   private func updateBookmarkState(isBookmark: Bool) {
-    // guard isBookmark else { return } // 또는
-    if !isBookmark { return }
 
     let storage = ProductStorage.shared
 
