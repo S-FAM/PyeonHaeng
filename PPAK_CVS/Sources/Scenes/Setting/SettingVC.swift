@@ -195,7 +195,7 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
     if MFMailComposeViewController.canSendMail() {
       let mailComposeVC = MFMailComposeViewController()
       mailComposeVC.mailComposeDelegate = self
-      mailComposeVC.setToRecipients(["bang.hyeonseok.dev@gmail.com"])
+      mailComposeVC.setToRecipients([Message.email])
       mailComposeVC.setSubject("<편행> 문의하기")
       mailComposeVC.setMessageBody(bodyString(), isHTML: false)
       present(mailComposeVC, animated: true)
