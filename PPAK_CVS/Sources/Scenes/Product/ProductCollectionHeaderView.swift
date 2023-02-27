@@ -155,7 +155,15 @@ extension ProductCollectionHeaderView {
 
 extension ProductCollectionHeaderView: ProductDataStore {
   var shareImage: UIImage {
-    let renderer = UIGraphicsImageRenderer(bounds: self.wholeStackView.bounds)
+    let horizontalPadding: Double = 20
+    let verticalPadding: Double = 40
+    var transformedBounds = self.wholeStackView.bounds.with {
+      $0.origin.x = -horizontalPadding
+      $0.origin.y = -verticalPadding
+      $0.size.width = $0.width + horizontalPadding * 2
+      $0.size.height = $0.height + verticalPadding * 2
+    }
+    let renderer = UIGraphicsImageRenderer(bounds: transformedBounds)
     return renderer.image { rendererContext in
       self.wholeStackView.layer.render(in: rendererContext.cgContext)
     }
