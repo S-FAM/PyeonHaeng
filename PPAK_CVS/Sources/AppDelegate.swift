@@ -41,6 +41,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("FCM registration token: \(token)")
       }
     }
+    Messaging.messaging().subscribe(toTopic: PrivateKeys.topic) { _ in
+      print("Subscribed to \(PrivateKeys.topic) topic")
+    }
 
     // User Notification Authorization
     let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
