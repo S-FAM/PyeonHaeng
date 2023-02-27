@@ -15,6 +15,10 @@ class BaseViewController: UIViewController {
     setupLayouts()
     setupConstraints()
     setupStyles()
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
     navigationController?.interactivePopGestureRecognizer?.delegate = self
   }
 

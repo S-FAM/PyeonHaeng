@@ -83,7 +83,6 @@ final class HomeViewReactor: Reactor {
           offset: nextOffset,
           name: currentState.currentTarget
         )
-        .delay(.seconds(1), scheduler: MainScheduler.instance)
       ])
 
     case .didTapBackground:
