@@ -12,15 +12,21 @@ final class TopCurveView: UIView {
     super.draw(rect)
 
     let path = UIBezierPath()
-    path.move(to: CGPoint(x: 0, y: self.bounds.maxY))
+    path.move(to: CGPoint(x: 0, y: bounds.maxY))
     path.addCurve(
-      to: CGPoint(x: self.bounds.maxX, y: self.bounds.maxY - 150),
-      controlPoint1: CGPoint(x: 0, y: self.bounds.maxY - 150),
-      controlPoint2: CGPoint(x: self.bounds.maxX, y: self.bounds.maxY)
+      to: CGPoint(x: 75, y: bounds.maxY - 75),
+      controlPoint1: CGPoint(x: 0, y: bounds.maxY - 75),
+      controlPoint2: CGPoint(x: 75, y: bounds.maxY - 75)
     )
-    path.addLine(to: CGPoint(x: self.bounds.maxX, y: 0))
+    path.addLine(to: CGPoint(x: bounds.maxX - 75, y: bounds.maxY - 75))
+    path.addCurve(
+      to: CGPoint(x: bounds.maxX, y: bounds.maxY - 150),
+      controlPoint1: CGPoint(x: bounds.maxX, y: bounds.maxY - 75),
+      controlPoint2: CGPoint(x: bounds.maxX, y: bounds.maxY - 150)
+    )
+    path.addLine(to: CGPoint(x: bounds.maxX, y: 0))
     path.addLine(to: CGPoint(x: 0, y: 0))
-    path.addLine(to: CGPoint(x: 0, y: self.bounds.maxY))
+    path.addLine(to: CGPoint(x: 0, y: bounds.maxY))
 
     let maskLayer = CAShapeLayer()
     maskLayer.frame = self.bounds

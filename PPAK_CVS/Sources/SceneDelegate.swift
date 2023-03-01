@@ -8,8 +8,8 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
   var window: UIWindow?
+  var coordinator: AppCoordinator?
 
   func scene(
     _ scene: UIScene,
@@ -21,8 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     self.window = window
 
     let navVC = UINavigationController()
-    let coordinator = HomeCoordinator(navigationController: navVC)
-    coordinator.start()
+    self.coordinator = AppCoordinator(navigationController: navVC)
+    self.coordinator?.start()
 
     window.rootViewController = navVC
     window.makeKeyAndVisible()

@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/macos,swift
-# Edit at https://www.toptal.com/developers/gitignore?templates=macos,swift
+# Created by https://www.toptal.com/developers/gitignore/api/macos,swift,xcode
+# Edit at https://www.toptal.com/developers/gitignore?templates=macos,swift,xcode
 
 ### macOS ###
 # General
@@ -118,4 +118,22 @@ fastlane/test_output
 
 iOSInjectionProject/
 
-# End of https://www.toptal.com/developers/gitignore/api/macos,swift
+### Xcode ###
+
+## Xcode 8 and earlier
+
+### Xcode Patch ###
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcworkspace/contents.xcworkspacedata
+/*.gcno
+**/xcshareddata/WorkspaceSettings.xcsettings
+
+# End of https://www.toptal.com/developers/gitignore/api/macos,swift,xcode
+
+# GoogleService-info
+GoogleService-info.plist
+
+# Custom Private files
+PrivateKeys.swift

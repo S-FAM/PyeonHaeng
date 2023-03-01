@@ -1,15 +1,52 @@
 import UIKit
 
-final class HomeCoordinator: Coordinator {
+import RxSwift
+import RxCocoa
 
-  var navigationController: UINavigationController
+final class HomeCoordinator: BaseCoordinator {
 
-  init(navigationController: UINavigationController) {
-    self.navigationController = navigationController
+  override func start() {
+    let reactor = HomeViewReactor()
+    let viewController = HomeViewController()
+    viewController.coordinator = self
+    viewController.reactor = reactor
+    bind(reactor)
+    self.navigationController.setViewControllers([viewController], animated: true)
   }
 
-  func start() {
-    let viewController = HomeViewController()
-    self.navigationController.setViewControllers([viewController], animated: false)
+  func bind(_ reactor: HomeViewReactor) {
+
+    // Bookmark VC
+    reactor.state
+      .map { $0.showsBookmarkVC }
+      .filter { $0.0 }
+      .withUnretained(self)
+      .bind { owner, cvsType in
+        let coordinator = BookmarkCoordinator(owner.navigationController, cvsType: cvsType.1)
+        owner.start(childCoordinator: coordinator)
+      }
+      .disposed(by: disposeBag)
+
+    // ProductVC
+    reactor.state
+      .map { $0.showsProductVC }
+      .filter { $0.0 }
+      .withUnretained(self)
+      .bind { owner, product in
+        let coordinator = ProductCoordinator(owner.navigationController, model: product.1)
+        owner.start(childCoordinator: coordinator)
+      }
+      .disposed(by: disposeBag)
+
+    // SettingVC
+    reactor.state
+      .map { $0.showsSettingVC }
+      .filter { $0 }
+      .withUnretained(self)
+      .bind { owner, _ in
+        let coordinator = SettingCoordinator(navigationController: owner.navigationController)
+        coordinator.start(childCoordinator: coordinator)
+      }
+      .disposed(by: disposeBag)
   }
 }
