@@ -130,8 +130,6 @@ final class BookmarkViewController: BaseViewController, View {
       make.width.equalTo(165)
       make.height.equalTo(107)
     }
-
-    self.animationContainerView.isHidden = true
   }
 
   // MARK: - Bind
@@ -281,7 +279,6 @@ final class BookmarkViewController: BaseViewController, View {
     // 서치바 텍스트
     reactor.state
       .map { $0.currentTarget }
-      .distinctUntilChanged()
       .bind(to: header.searchBar.textField.rx.text)
       .disposed(by: disposeBag)
 
