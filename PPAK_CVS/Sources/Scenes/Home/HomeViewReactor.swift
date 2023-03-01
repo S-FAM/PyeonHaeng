@@ -169,7 +169,7 @@ final class HomeViewReactor: Reactor {
           name: currentState.currentTarget
         )
       ])
-      
+
     case .didChangeSearchBarText(let target):
       return .just(.setTarget(target))
 

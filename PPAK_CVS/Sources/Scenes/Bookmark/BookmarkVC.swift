@@ -168,10 +168,15 @@ final class BookmarkViewController: BaseViewController, View {
       .disposed(by: disposeBag)
 
     // 서치바 텍스트 반응
-    header.searchBar.textField.rx.controlEvent(.editingDidEndOnExit)
-      .withUnretained(self)
-      .compactMap { $0.0.header.searchBar.textField.text }
+    header.searchBar.textField.rx.text
+      .orEmpty
       .map { BookmarkViewReactor.Action.didChangeSearchBarText($0) }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+
+    // 검색버튼 클릭
+    header.searchBar.textField.rx.controlEvent(.editingDidEndOnExit)
+      .map { BookmarkViewReactor.Action.didTapSearchButton }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
@@ -269,7 +274,6 @@ final class BookmarkViewController: BaseViewController, View {
     reactor.state
       .map { $0.currentProducts }
       .distinctUntilChanged()
-      .debug()
       .withUnretained(self)
       .bind { $0.0.collectionView.reloadData() }
       .disposed(by: disposeBag)
