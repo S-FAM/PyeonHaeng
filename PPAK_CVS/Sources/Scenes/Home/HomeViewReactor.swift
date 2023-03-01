@@ -14,6 +14,7 @@ final class HomeViewReactor: Reactor {
     case didTapDropdownCVS(CVSDropdownCase)
     case didTapDropdownSort(SortType)
     case didChangeSearchBarText(String)
+    case didTapSearchButton
     case didSelectItemAt(ProductModel)
     case fetchMoreData
   }
@@ -107,7 +108,6 @@ final class HomeViewReactor: Reactor {
       ])
 
     case .didTapBookmarkButton:
-//      guard currentState.showsBookmarkVC == false else { return .empty() }
       return .concat([
         .just(.hideDropdown),
         .just(.setBookmarkVC(true)),
@@ -171,17 +171,19 @@ final class HomeViewReactor: Reactor {
       ])
 
     case .didChangeSearchBarText(let target):
+      return .just(.setTarget(target))
+
+    case .didTapSearchButton:
       return .concat([
         .just(.setLoading(true)),
         .just(.resetProducts),
         .just(.resetOffset),
-        .just(.setTarget(target)),
         .just(.hideDropdown),
         requestProducts(
           cvs: currentState.currentCVSType,
           event: currentState.currentEventType,
           sort: currentState.currentSortType,
-          name: target
+          name: currentState.currentTarget
         )
       ])
 

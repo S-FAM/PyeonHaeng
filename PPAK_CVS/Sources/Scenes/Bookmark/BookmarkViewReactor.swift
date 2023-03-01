@@ -14,6 +14,7 @@ final class BookmarkViewReactor: Reactor {
     case didTapDropdownCVS(CVSDropdownCase)
     case didTapDropdownSort(SortType)
     case didChangeSearchBarText(String)
+    case didTapSearchButton
     case didTapProduct(Int)
   }
 
@@ -133,16 +134,17 @@ final class BookmarkViewReactor: Reactor {
       }
 
     case .didChangeSearchBarText(let target):
+      return .just(.setTarget(target))
 
+    case .didTapSearchButton:
       let updatedProducts = ProductStorage.shared.retrieve(
         cvs: currentState.currentCVS,
         event: currentState.currentEvent,
         sort: currentState.currentSort,
-        target: target
+        target: currentState.currentTarget
       )
 
       return .concat([
-        .just(.setTarget(target)),
         .just(.hideDropdown),
         .just(.setProducts(updatedProducts))
       ])
