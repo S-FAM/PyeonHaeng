@@ -135,10 +135,15 @@ final class HomeViewController: BaseViewController, View {
       .disposed(by: disposeBag)
 
     // 서치바 텍스트 반응
-    header.searchBar.textField.rx.controlEvent(.editingDidEndOnExit)
-      .withUnretained(self)
-      .compactMap { $0.0.header.searchBar.textField.text }
+    header.searchBar.textField.rx.text
+      .orEmpty
       .map { HomeViewReactor.Action.didChangeSearchBarText($0) }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+
+    // 검색 버튼 반응
+    header.searchBar.textField.rx.controlEvent(.editingDidEndOnExit)
+      .map { HomeViewReactor.Action.didTapSearchButton }
       .bind(to: reactor.action)
       .disposed(by: disposeBag)
 
@@ -214,6 +219,7 @@ final class HomeViewController: BaseViewController, View {
     // 새로운 상품 목록들로 업데이트
     reactor.state
       .map { $0.products }
+      .distinctUntilChanged()
       .map { _ in Void() }
       .withUnretained(self)
       .map { $0.0 }
