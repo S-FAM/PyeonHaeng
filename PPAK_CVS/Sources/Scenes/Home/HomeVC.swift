@@ -337,7 +337,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
   ) {
     guard let reactor = reactor else { return }
 
-    if indexPath.row == reactor.currentState.products.count &&
+    if indexPath.row == reactor.currentState.products.count - 5 &&
        !reactor.currentState.isBlockedRequest &&
        !reactor.currentState.isPagination {
       reactor.action.onNext(.fetchMoreData)
