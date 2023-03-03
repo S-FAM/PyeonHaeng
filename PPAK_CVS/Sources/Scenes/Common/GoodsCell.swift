@@ -22,14 +22,19 @@ final class GoodsCell: UICollectionViewCell {
     $0.layer.shadowOpacity = 0.1
     $0.layer.shadowColor = UIColor.black.cgColor
     $0.backgroundColor = .white
+    $0.isSkeletonable = true
   }
 
   private let goodsLabel = UILabel().then {
+    $0.text = "삼양사)상쾌한스틱18g"
     $0.font = .appFont(family: .bold, size: 14)
+    $0.isSkeletonable = true
   }
 
   private let priceLabel = UILabel().then {
+    $0.text = "3900원(개당 1,450원)"
     $0.font = .appFont(family: .regular, size: 14)
+    $0.isSkeletonable = true
   }
 
   private let goodsImage = UIImageView().then {
@@ -41,13 +46,19 @@ final class GoodsCell: UICollectionViewCell {
     [goodsLabel, priceLabel, saleTypeView].forEach {
       stackView.addArrangedSubview($0)
     }
-      stackView.axis = .vertical
-      stackView.spacing = 6
-      stackView.alignment = .leading
+    stackView.axis = .vertical
+    stackView.spacing = 6
+    stackView.alignment = .leading
+    stackView.isSkeletonable = true
   }
 
-  private let titleLogoView = TitleLogoView(cvsType: .all)
-  private let saleTypeView = SaleTypeView(cvsType: .all)
+  private let titleLogoView = TitleLogoView(cvsType: .all).then {
+    $0.isSkeletonable = true
+  }
+
+  private let saleTypeView = SaleTypeView(cvsType: .all).then {
+    $0.isSkeletonable = true
+  }
 
   // MARK: - LifeCycle
 
