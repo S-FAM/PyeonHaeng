@@ -206,11 +206,15 @@ final class HomeViewController: BaseViewController, View {
       }
       .disposed(by: disposeBag)
 
-    // 인디케이터 애니메이션 제어
-//    reactor.state
-//      .map { $0.isLoading }
-//      .bind(to: indicator.rx.isAnimating)
-//      .disposed(by: disposeBag)
+    // 스켈레톤뷰 애니메이션 제어
+    reactor.state
+      .map { $0.isLoading }
+      .bind(with: self) { owner, isLoading in
+//        let skeletonAnimation = SkeletonAnimationBuilder()
+//          .makeSlidingAnimation(withDirection: .leftRight)
+        isLoading ? owner.view.showSkeleton() : owner.view.hideSkeleton()
+      }
+      .disposed(by: disposeBag)
 
     // 새로운 상품 목록들로 업데이트
     reactor.state
