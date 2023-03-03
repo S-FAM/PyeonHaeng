@@ -33,8 +33,6 @@ final class HomeViewController: BaseViewController, View {
   private let sortDropdownView = SortDropdownView()
   private var header: HomeCollectionHeaderView!
 
-  // MARK: - LifeCycle
-
   // MARK: - Setup
 
   override func setupLayouts() {
