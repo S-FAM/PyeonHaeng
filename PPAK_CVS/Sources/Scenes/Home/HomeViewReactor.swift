@@ -38,6 +38,7 @@ final class HomeViewReactor: Reactor {
     case setPagination(Bool)
     case setProductVC(Bool, ProductModel)
     case setSettingVC(Bool)
+    case setReloadData(Bool)
   }
 
   struct State {
@@ -63,6 +64,7 @@ final class HomeViewReactor: Reactor {
     var isPagination: Bool = false
     var products: [ProductModel] = []
     var currentOffset: Int = 0
+    var reloadData: Bool = false
   }
 
   var initialState = State()
@@ -253,6 +255,9 @@ final class HomeViewReactor: Reactor {
 
     case .setSettingVC(let state):
       nextState.showsSettingVC = state
+
+    case .setReloadData(let state):
+      nextState.reloadData = state
     }
     return nextState
   }
@@ -288,6 +293,8 @@ extension HomeViewReactor {
           ])
         }
       },
+      .just(.setReloadData(true)),
+      .just(.setReloadData(false)),
       .just(.setLoading(false)),
       .just(.setPagination(false))
     ])

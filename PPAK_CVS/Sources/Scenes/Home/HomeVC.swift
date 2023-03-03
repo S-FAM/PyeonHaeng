@@ -216,14 +216,12 @@ final class HomeViewController: BaseViewController, View {
       }
       .disposed(by: disposeBag)
 
-    // 새로운 상품 목록들로 업데이트
+    // ReloadData
     reactor.state
-      .map { $0.products }
-      .distinctUntilChanged()
-      .map { _ in Void() }
+      .map { $0.reloadData }
+      .filter { $0 }
       .withUnretained(self)
-      .map { $0.0 }
-      .bind { $0.collectionView.reloadData() }
+      .bind { $0.0.collectionView.reloadData() }
       .disposed(by: disposeBag)
 
     // 현재 SearchBar text
