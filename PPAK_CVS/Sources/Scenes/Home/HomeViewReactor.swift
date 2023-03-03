@@ -28,7 +28,7 @@ final class HomeViewReactor: Reactor {
     case setCVS(CVSType)
     case setSort(SortType)
     case setEvent(EventType)
-    case setLoading(Bool)
+    case setSkeletonActive(Bool)
     case setTarget(String)
     case setOffset
     case setBlockRequest(Bool)
@@ -59,7 +59,7 @@ final class HomeViewReactor: Reactor {
     var currentEventType: EventType = .all
     var currentCVSType: CVSType = CVSStorage.shared.favoriteCVS
     var currentTarget: String = ""
-    var isLoading: Bool = false
+    var isSkeletonActive: Bool = false
     var isBlockedRequest: Bool = false
     var isPagination: Bool = false
     var products: [ProductModel] = []
@@ -72,7 +72,10 @@ final class HomeViewReactor: Reactor {
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
     case .viewDidLoad:
-      return requestProducts(cvs: currentState.currentCVSType, event: .all, sort: .none)
+      return .concat([
+        .just(.setSkeletonActive(true)),
+        requestProducts(cvs: currentState.currentCVSType, event: .all, sort: .none)
+      ])
 
     case .fetchMoreData:
       let nextOffset = currentState.currentOffset + 20
@@ -118,7 +121,7 @@ final class HomeViewReactor: Reactor {
 
     case .didChangeEvent(let event):
       return .concat([
-        .just(.setLoading(true)),
+        .just(.setSkeletonActive(true)),
         .just(.setEvent(event)),
         .just(.resetProducts),
         .just(.resetOffset),
@@ -137,7 +140,7 @@ final class HomeViewReactor: Reactor {
         CVSStorage.shared.save(cvsType)
 
         return .concat([
-          .just(.setLoading(true)),
+          .just(.setSkeletonActive(true)),
           .just(.hideDropdown),
           .just(.setCVS(cvsType)),
           .just(.setTarget("")),
@@ -159,7 +162,7 @@ final class HomeViewReactor: Reactor {
 
     case .didTapDropdownSort(let sortType):
       return .concat([
-        .just(.setLoading(true)),
+        .just(.setSkeletonActive(true)),
         .just(.hideDropdown),
         .just(.setSort(sortType)),
         .just(.resetProducts),
@@ -177,7 +180,7 @@ final class HomeViewReactor: Reactor {
 
     case .didTapSearchButton:
       return .concat([
-        .just(.setLoading(true)),
+        .just(.setSkeletonActive(true)),
         .just(.resetProducts),
         .just(.resetOffset),
         .just(.hideDropdown),
@@ -207,8 +210,8 @@ final class HomeViewReactor: Reactor {
     case .appendProductes(let products):
       nextState.products += products
 
-    case .setLoading(let isLoading):
-      nextState.isLoading = isLoading
+    case .setSkeletonActive(let isLoading):
+      nextState.isSkeletonActive = isLoading
 
     case .setCVSDropdown(let isVisible):
       nextState.isVisibleCVSDropdown = isVisible
@@ -293,9 +296,9 @@ extension HomeViewReactor {
           ])
         }
       },
+      .just(.setSkeletonActive(false)),
       .just(.setReloadData(true)),
       .just(.setReloadData(false)),
-      .just(.setLoading(false)),
       .just(.setPagination(false))
     ])
   }

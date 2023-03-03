@@ -17,6 +17,7 @@ final class HomeViewController: BaseViewController, View {
     $0.contentInsetAdjustmentBehavior = .never
     $0.keyboardDismissMode = .onDrag
     $0.bounces = false
+    $0.isSkeletonable = true
     $0.dataSource = self
     $0.delegate = self
     $0.register(
@@ -36,6 +37,13 @@ final class HomeViewController: BaseViewController, View {
   private let sortDropdownView = SortDropdownView()
   private var header: HomeCollectionHeaderView!
 
+  // MARK: - LIFE CYCLE
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    reactor?.action.onNext(.viewDidLoad)
+  }
+
   // MARK: - Setup
 
   override func setupLayouts() {
@@ -47,6 +55,7 @@ final class HomeViewController: BaseViewController, View {
     super.setupStyles()
     navigationController?.setNavigationBarHidden(true, animated: true)
     view.backgroundColor = CVSType.all.bgColor
+    view.isSkeletonable = true
   }
 
   override func setupConstraints() {
@@ -88,9 +97,6 @@ final class HomeViewController: BaseViewController, View {
     guard let reactor = reactor else { return }
 
     // MARK: - Action
-
-    // 화면 최초 실행
-    reactor.action.onNext(.viewDidLoad)
 
     // 북마크 버튼 클릭
     header.bookmarkButton.rx.tap
@@ -208,11 +214,21 @@ final class HomeViewController: BaseViewController, View {
 
     // 스켈레톤뷰 애니메이션 제어
     reactor.state
-      .map { $0.isLoading }
+      .map { $0.isSkeletonActive }
+      .distinctUntilChanged()
       .bind(with: self) { owner, isLoading in
-//        let skeletonAnimation = SkeletonAnimationBuilder()
-//          .makeSlidingAnimation(withDirection: .leftRight)
-        isLoading ? owner.view.showSkeleton() : owner.view.hideSkeleton()
+        let skeletetonAnimation = SkeletonAnimationBuilder()
+          .makeSlidingAnimation(withDirection: .leftRight)
+
+        if isLoading {
+          owner.view.showAnimatedGradientSkeleton(
+            usingGradient: .init(baseColor: .systemGray6),
+            animation: skeletetonAnimation,
+            transition: .none
+          )
+        } else {
+          owner.view.hideSkeleton()
+        }
       }
       .disposed(by: disposeBag)
 
@@ -266,7 +282,7 @@ extension HomeViewController: SkeletonCollectionViewDataSource {
     _ skeletonView: UICollectionView,
     numberOfItemsInSection section: Int
   ) -> Int {
-    return 10
+    return 20
   }
 
   // Cell 생성
@@ -384,7 +400,11 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
       height = indexPath.row == currentState.products.count ? 40 : 125
     }
 
-    return CGSize(width: width, height: height)
+    if currentState.isSkeletonActive {
+      return CGSize(width: width, height: 125)
+    } else {
+      return CGSize(width: width, height: height)
+    }
   }
 
   func collectionView(
@@ -394,7 +414,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
   ) {
     guard let reactor = reactor else { return }
 
-    if indexPath.row == reactor.currentState.products.count &&
+    if indexPath.row == reactor.currentState.products.count - 5 &&
        !reactor.currentState.isBlockedRequest &&
        !reactor.currentState.isPagination {
       reactor.action.onNext(.fetchMoreData)
