@@ -38,6 +38,7 @@ final class GoodsCell: UICollectionViewCell {
   }
 
   private let goodsImage = UIImageView().then {
+    $0.isSkeletonable = true
     $0.image = UIImage(named: "ic_noImage_small")
     $0.contentMode = .scaleAspectFit
   }
