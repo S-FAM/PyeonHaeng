@@ -8,6 +8,7 @@ import UIKit
 
 import Kingfisher
 import SnapKit
+import SkeletonView
 import Then
 
 final class GoodsCell: UICollectionViewCell {
@@ -55,6 +56,8 @@ final class GoodsCell: UICollectionViewCell {
     setupStyles()
     setupLayouts()
     setupConstraints()
+    self.isSkeletonable = true
+    self.contentView.isSkeletonable = true
   }
 
   required init?(coder: NSCoder) {

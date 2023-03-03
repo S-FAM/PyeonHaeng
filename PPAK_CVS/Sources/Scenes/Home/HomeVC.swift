@@ -5,6 +5,7 @@ import RxSwift
 import RxCocoa
 import RxGesture
 import SnapKit
+import SkeletonView
 import Then
 
 final class HomeViewController: BaseViewController, View {
@@ -18,17 +19,19 @@ final class HomeViewController: BaseViewController, View {
     $0.bounces = false
     $0.dataSource = self
     $0.delegate = self
-    $0.register(HomeCollectionHeaderView.self,
-                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                withReuseIdentifier: HomeCollectionHeaderView.id)
-    $0.register(GoodsCell.self,
-                forCellWithReuseIdentifier: GoodsCell.id)
-    $0.register(LoadingCell.self,
-                forCellWithReuseIdentifier: LoadingCell.id)
+    $0.register(
+      HomeCollectionHeaderView.self,
+      forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+      withReuseIdentifier: HomeCollectionHeaderView.id)
+    $0.register(
+      GoodsCell.self,
+      forCellWithReuseIdentifier: GoodsCell.id)
+    $0.register(
+      LoadingCell.self,
+      forCellWithReuseIdentifier: LoadingCell.id)
   }
 
   override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
-  private let indicator = UIActivityIndicatorView()
   private let cvsDropdownView = CVSDropdownView()
   private let sortDropdownView = SortDropdownView()
   private var header: HomeCollectionHeaderView!
@@ -38,7 +41,6 @@ final class HomeViewController: BaseViewController, View {
   override func setupLayouts() {
     super.setupLayouts()
     view.addSubview(collectionView)
-    view.addSubview(indicator)
   }
 
   override func setupStyles() {
@@ -51,10 +53,6 @@ final class HomeViewController: BaseViewController, View {
     collectionView.snp.makeConstraints { make in
       make.leading.trailing.bottom.equalToSuperview()
       make.top.equalTo(view.safeAreaLayoutGuide)
-    }
-
-    indicator.snp.makeConstraints { make in
-      make.center.equalToSuperview()
     }
   }
 
@@ -209,10 +207,10 @@ final class HomeViewController: BaseViewController, View {
       .disposed(by: disposeBag)
 
     // 인디케이터 애니메이션 제어
-    reactor.state
-      .map { $0.isLoading }
-      .bind(to: indicator.rx.isAnimating)
-      .disposed(by: disposeBag)
+//    reactor.state
+//      .map { $0.isLoading }
+//      .bind(to: indicator.rx.isAnimating)
+//      .disposed(by: disposeBag)
 
     // 새로운 상품 목록들로 업데이트
     reactor.state
@@ -241,9 +239,35 @@ final class HomeViewController: BaseViewController, View {
   }
 }
 
-// MARK: - CollectionView Setup
+// MARK: - COLLECTIONVIEW DATASOURCE
 
-extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension HomeViewController: SkeletonCollectionViewDataSource {
+
+  // MARK: - SKELETONVIEW SETUP
+
+  func collectionSkeletonView(
+    _ skeletonView: UICollectionView,
+    cellIdentifierForItemAt indexPath: IndexPath
+  ) -> SkeletonView.ReusableCellIdentifier {
+    return GoodsCell.id
+  }
+
+  func collectionSkeletonView(
+    _ skeletonView: UICollectionView,
+    supplementaryViewIdentifierOfKind: String,
+    at indexPath: IndexPath
+  ) -> ReusableCellIdentifier? {
+    return HomeCollectionHeaderView.id
+  }
+
+  func collectionSkeletonView(
+    _ skeletonView: UICollectionView,
+    numberOfItemsInSection section: Int
+  ) -> Int {
+    return 10
+  }
+
+  // Cell 생성
   func collectionView(
     _ collectionView: UICollectionView,
     cellForItemAt indexPath: IndexPath
@@ -285,6 +309,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
   }
 
+  // 셀 갯수
   func collectionView(
     _ collectionView: UICollectionView,
     numberOfItemsInSection section: Int
@@ -292,6 +317,38 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     guard let products = reactor?.currentState.products else { return 0 }
     return products.count > 0 ? products.count + 1 : 0
   }
+
+  // 헤더 생성
+  func collectionView(
+    _ collectionView: UICollectionView,
+    viewForSupplementaryElementOfKind kind: String,
+    at indexPath: IndexPath
+  ) -> UICollectionReusableView {
+    guard let header = collectionView.dequeueReusableSupplementaryView(
+      ofKind: UICollectionView.elementKindSectionHeader,
+      withReuseIdentifier: HomeCollectionHeaderView.id,
+      for: indexPath
+    ) as? HomeCollectionHeaderView else { return UICollectionReusableView() }
+
+    if self.header == nil {
+      self.header = header
+      bindHeader()
+      setupDropdown()
+    }
+
+    return header
+  }
+
+  // 스크롤 감지
+  func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    cvsDropdownView.hideDropdown()
+    sortDropdownView.hideDropdown()
+  }
+}
+
+// MARK: - COLLECTIONVIEW FLOW LAYOUT
+
+extension HomeViewController: UICollectionViewDelegateFlowLayout {
 
   func collectionView(
     _ collectionView: UICollectionView,
@@ -344,36 +401,11 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
 
   func collectionView(
     _ collectionView: UICollectionView,
-    viewForSupplementaryElementOfKind kind: String,
-    at indexPath: IndexPath
-  ) -> UICollectionReusableView {
-    guard let header = collectionView.dequeueReusableSupplementaryView(
-      ofKind: UICollectionView.elementKindSectionHeader,
-      withReuseIdentifier: HomeCollectionHeaderView.id,
-      for: indexPath
-    ) as? HomeCollectionHeaderView else { return UICollectionReusableView() }
-
-    if self.header == nil {
-      self.header = header
-      bindHeader()
-      setupDropdown()
-    }
-
-    return header
-  }
-
-  func collectionView(
-    _ collectionView: UICollectionView,
     didSelectItemAt indexPath: IndexPath
   ) {
     guard let product = reactor?.currentState.products[indexPath.row] else { return }
 
     // 특정 제품 클릭
     reactor?.action.onNext(.didSelectItemAt(product))
-  }
-
-  func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-    cvsDropdownView.hideDropdown()
-    sortDropdownView.hideDropdown()
   }
 }
