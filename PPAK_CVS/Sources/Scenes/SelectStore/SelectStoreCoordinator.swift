@@ -7,7 +7,12 @@
 
 import UIKit
 
-final class SelectStoreCoordinator: BaseCoordinator {
+protocol SelectStorePopDelegate: AnyObject {
+  var refreshCVSType: (() -> Void)? { get }
+}
+
+final class SelectStoreCoordinator: BaseCoordinator, SelectStorePopDelegate {
+  var refreshCVSType: (() -> Void)?
 
   private let fromSettings: Bool
 
@@ -26,14 +31,17 @@ final class SelectStoreCoordinator: BaseCoordinator {
     self.bind(reactor)
   }
 
-  func bind(_ reactor: SelectStoreViewReactor) {
+  private func bind(_ reactor: SelectStoreViewReactor) {
 
     // SelectStoreVC -> SettingsVC (Pop)
     reactor.state
       .map { $0.isPopSelectStoreVC }
       .filter { $0 }
       .withUnretained(self)
-      .bind { $0.0.navigationController.popViewController(animated: true) }
+      .bind { owner, _ in
+        owner.navigationController.popViewController(animated: true)
+        owner.refreshCVSType?()
+      }
       .disposed(by: disposeBag)
 
     // SelectStroeVC -> HomeVC (Push)

@@ -17,6 +17,7 @@ final class HomeViewReactor: Reactor {
     case didTapSearchButton
     case didSelectItemAt(ProductModel)
     case fetchMoreData
+    case refreshFavoriteCVS
   }
 
   enum Mutation {
@@ -191,6 +192,20 @@ final class HomeViewReactor: Reactor {
       return .concat([
         .just(.setProductVC(true, product)),
         .just(.setProductVC(false, product))
+      ])
+
+    case .refreshFavoriteCVS:
+      let cvsType = CVSStorage.shared.favoriteCVS
+      CVSStorage.shared.save(cvsType)
+      return .concat([
+        .just(.setCVS(cvsType)),
+        .just(.setTarget("")),
+        .just(.resetProducts),
+        requestProducts(
+          cvs: cvsType,
+          event: currentState.currentEventType,
+          sort: .none
+        )
       ])
     }
   }

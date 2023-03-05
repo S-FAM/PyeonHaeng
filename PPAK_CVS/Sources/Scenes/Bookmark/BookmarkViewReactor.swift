@@ -16,6 +16,7 @@ final class BookmarkViewReactor: Reactor {
     case didChangeSearchBarText(String)
     case didTapSearchButton
     case didTapProduct(Int)
+    case refreshFavoriteCVS
   }
 
   enum Mutation {
@@ -169,6 +170,21 @@ final class BookmarkViewReactor: Reactor {
       return .concat([
         .just(.setProductVC(true, product)),
         .just(.setProductVC(false, product))
+      ])
+
+    case .refreshFavoriteCVS:
+      let cvsType = CVSStorage.shared.favoriteCVS
+      CVSStorage.shared.save(cvsType)
+      CVSStorage.shared.didChangeCVS.onNext(cvsType)
+      let updatedProducts = ProductStorage.shared.retrieve(
+        cvs: cvsType,
+        event: currentState.currentEvent,
+        sort: .none
+      )
+      return .concat([
+        .just(.setCVS(cvsType)),
+        .just(.setTarget("")),
+        .just(.setProducts(updatedProducts))
       ])
     }
   }
