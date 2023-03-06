@@ -45,10 +45,7 @@ final class HomeCoordinator: BaseCoordinator {
       .withUnretained(self)
       .bind { owner, _ in
         let coordinator = SettingCoordinator(navigationController: owner.navigationController)
-        coordinator.refreshCVSType = {
-          reactor.action.onNext(.refreshFavoriteCVS)
-        }
-        owner.start(childCoordinator: coordinator)
+        coordinator.start(childCoordinator: coordinator)
       }
       .disposed(by: disposeBag)
   }

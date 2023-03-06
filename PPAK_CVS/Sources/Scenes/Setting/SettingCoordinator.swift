@@ -11,8 +11,7 @@ import ReactorKit
 import RxSwift
 import RxCocoa
 
-final class SettingCoordinator: BaseCoordinator, SelectStorePopDelegate {
-  var refreshCVSType: (() -> Void)?
+final class SettingCoordinator: BaseCoordinator {
 
   override func start() {
     let reactor = SettingViewReactor()
@@ -40,9 +39,6 @@ final class SettingCoordinator: BaseCoordinator, SelectStorePopDelegate {
       .withUnretained(self)
       .bind { owner, _ in
         let coordinator = SelectStoreCoordinator(owner.navigationController, fromSettings: true)
-        coordinator.refreshCVSType = {
-          owner.refreshCVSType?()
-        }
         owner.start(childCoordinator: coordinator)
       }
       .disposed(by: disposeBag)
