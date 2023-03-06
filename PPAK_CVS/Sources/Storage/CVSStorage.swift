@@ -31,5 +31,6 @@ final class CVSStorage {
 
   func saveToFavorite(_ cvs: CVSType) {
     self.favoriteCVS = cvs
+    self.didChangeCVS.onNext(cvs)
   }
 }

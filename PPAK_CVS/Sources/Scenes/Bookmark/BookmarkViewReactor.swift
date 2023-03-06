@@ -57,6 +57,11 @@ final class BookmarkViewReactor: Reactor {
 
   var initialState = State()
 
+  func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
+    let cvs = CVSStorage.shared.didChangeCVS
+    return .merge(mutation, cvs.map { Mutation.setCVS($0) })
+  }
+
   func mutate(action: Action) -> Observable<Mutation> {
     switch action {
     case .viewDidLoad:
