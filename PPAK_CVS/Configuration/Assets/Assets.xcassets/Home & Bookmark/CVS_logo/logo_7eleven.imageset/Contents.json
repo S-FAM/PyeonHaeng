@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "logo_7eleven_1x.png",
+      "filename" : "7eleven_1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "logo_7eleven_2x.png",
+      "filename" : "7eleven_2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "logo_7eleven_3x.png",
+      "filename" : "7eleven_3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
