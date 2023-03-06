@@ -39,7 +39,7 @@ enum CVSType: String, Codable {
     case .gs: return UIColor(hex: "#62504E")
     case .sevenEleven: return UIColor(hex: "#008061")
     case .miniStop: return UIColor(hex: "#17469E")
-    case .eMart: return UIColor(hex: "#56555B")
+    case .eMart: return UIColor(hex: "#FFB71D")
     case .all: return UIColor(hex: "#030026")
     }
   }
@@ -50,7 +50,7 @@ enum CVSType: String, Codable {
     case .gs: return UIColor(hex: "#1EC2DE")
     case .sevenEleven: return UIColor(hex: "#FFFFFF")
     case .miniStop: return UIColor(hex: "#F6F6F6")
-    case .eMart: return UIColor(hex: "#FFB41D")
+    case .eMart: return UIColor(hex: "#62656A")
     case .all: return UIColor.white
     }
   }
