@@ -54,4 +54,15 @@ enum CVSType: String, Codable {
     case .all: return UIColor.white
     }
   }
+
+  var badge: UIImage? {
+    switch self {
+    case .cu: return UIImage(named: "badge_cu")
+    case .gs: return UIImage(named: "badge_cu")
+    case .sevenEleven: return UIImage(named: "badge_cu")
+    case .miniStop: return UIImage(named: "badge_cu")
+    case .eMart: return UIImage(named: "badge_cu")
+    case .all: return UIImage(named: "badge_cu")
+    }
+  }
 }

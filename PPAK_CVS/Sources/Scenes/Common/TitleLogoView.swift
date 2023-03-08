@@ -14,9 +14,13 @@ final class TitleLogoView: UIView {
 
   // MARK: - Properties
 
-  lazy var titleLabel = UILabel().then {
-    $0.textColor = cvsType.fontColor
-    $0.font = .appFont(family: .bold, size: 12)
+//  lazy var titleLabel = UILabel().then {
+//    $0.textColor = cvsType.fontColor
+//    $0.font = .appFont(family: .bold, size: 12)
+//  }
+
+  private let imageView = UIImageView().then {
+    $0.contentMode = .scaleAspectFit
   }
 
   private let cvsType: CVSType
@@ -28,7 +32,7 @@ final class TitleLogoView: UIView {
     self.cvsType = cvsType
     super.init(frame: .zero)
     setupStyles()
-    setTitle()
+    setImage()
   }
 
   required init?(coder: NSCoder) {
@@ -42,20 +46,22 @@ final class TitleLogoView: UIView {
     layer.cornerRadius = 10
   }
 
-  private func setTitle() {
-    addSubview(titleLabel)
+  private func setImage() {
+    addSubview(imageView)
 
-    titleLabel.snp.makeConstraints { make in
-      make.center.equalToSuperview()
+    imageView.snp.makeConstraints { make in
+      make.edges.equalToSuperview()
     }
   }
 }
 
 extension TitleLogoView {
   func updateStyles(_ product: ProductModel) {
-    titleLabel.text = product.store.rawValue
-    titleLabel.textColor = product.store.fontColor
-    backgroundColor = product.store.bgColor
+//    titleLabel.text = product.store.rawValue
+//    titleLabel.textColor = product.store.fontColor
+    let cvsType = product.store
+    imageView.image = cvsType.badge
+//    backgroundColor = product.store.bgColor
 
     let width: Int
 
