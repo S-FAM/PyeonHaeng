@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "cu_badge_1x.jpg",
+      "filename" : "cu_badge_1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "cu_badge_2x.jpg",
+      "filename" : "cu_badge_2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "cu_badge_3x.jpg",
+      "filename" : "cu_badge_3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

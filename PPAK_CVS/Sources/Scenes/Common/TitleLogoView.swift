@@ -50,7 +50,7 @@ final class TitleLogoView: UIView {
     addSubview(imageView)
 
     imageView.snp.makeConstraints { make in
-      make.edges.equalToSuperview()
+      make.top.bottom.trailing.equalToSuperview()
     }
   }
 }
