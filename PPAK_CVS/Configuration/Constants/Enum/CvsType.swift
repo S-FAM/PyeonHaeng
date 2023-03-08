@@ -58,7 +58,7 @@ enum CVSType: String, Codable {
   var badge: UIImage? {
     switch self {
     case .cu: return UIImage(named: "badge_cu")
-    case .gs: return UIImage(named: "badge_cu")
+    case .gs: return UIImage(named: "badge_gs25")
     case .sevenEleven: return UIImage(named: "badge_cu")
     case .miniStop: return UIImage(named: "badge_cu")
     case .eMart: return UIImage(named: "badge_cu")

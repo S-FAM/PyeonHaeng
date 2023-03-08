@@ -31,7 +31,7 @@ final class TitleLogoView: UIView {
   init(cvsType: CVSType) {
     self.cvsType = cvsType
     super.init(frame: .zero)
-    setupStyles()
+//    setupStyles()
     setImage()
   }
 
@@ -41,10 +41,10 @@ final class TitleLogoView: UIView {
 
   // MARK: - Setup
 
-  private func setupStyles() {
-    backgroundColor = cvsType.bgColor
-    layer.cornerRadius = 10
-  }
+//  private func setupStyles() {
+//    backgroundColor = cvsType.bgColor
+//    layer.cornerRadius = 10
+//  }
 
   private func setImage() {
     addSubview(imageView)
