@@ -46,10 +46,10 @@ enum CVSType: String, Codable {
 
   var fontColor: UIColor {
     switch self {
-    case .cu: return UIColor(hex: "#AACE38")
-    case .gs: return UIColor(hex: "#1EC2DE")
+    case .cu: return UIColor(hex: "#FFFFFF")
+    case .gs: return UIColor(hex: "#FFFFFF")
     case .sevenEleven: return UIColor(hex: "#FFFFFF")
-    case .miniStop: return UIColor(hex: "#F6F6F6")
+    case .miniStop: return UIColor(hex: "#FFFFFF")
     case .eMart: return UIColor(hex: "#62656A")
     case .all: return UIColor.white
     }
@@ -60,7 +60,7 @@ enum CVSType: String, Codable {
     case .cu: return UIImage(named: "badge_cu")
     case .gs: return UIImage(named: "badge_gs25")
     case .sevenEleven: return UIImage(named: "badge_7eleven")
-    case .miniStop: return UIImage(named: "badge_cu")
+    case .miniStop: return UIImage(named: "badge_ministop")
     case .eMart: return UIImage(named: "badge_emart24")
     case .all: return UIImage(named: "badge_cu")
     }
