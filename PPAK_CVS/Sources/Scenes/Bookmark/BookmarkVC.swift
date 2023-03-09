@@ -262,7 +262,7 @@ final class BookmarkViewController: BaseViewController, View {
       .withUnretained(self)
       .bind { owner, cvs in
         owner.header.cvsButton.setImage(cvs.image, for: .normal)
-        owner.header.topCurveView.backgroundColor = cvs.bgColor
+        owner.header.topCurveView.tintColor = cvs.bgColor
         owner.header.pageControl.focusedView.backgroundColor = cvs.bgColor
         owner.view.backgroundColor = cvs.bgColor
       }
@@ -374,7 +374,7 @@ extension BookmarkViewController: UICollectionViewDelegateFlowLayout {
     layout collectionViewLayout: UICollectionViewLayout,
     insetForSectionAt section: Int
   ) -> UIEdgeInsets {
-    return .init(top: 24, left: 0, bottom: 16, right: 0)
+    return .init(top: 0, left: 0, bottom: 16, right: 0)
   }
 
   // 헤더 사이즈
