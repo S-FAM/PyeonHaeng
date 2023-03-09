@@ -33,8 +33,12 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
 
   let pageControl = EventControl()
   let searchBar = SearchBar()
-  let topCurveView = TopCurveView()
   private let appIconImageView = UIImageView(image: UIImage(named: "ic_home_appIcon"))
+
+  let topCurveView = UIImageView(
+    image: UIImage(named: "topCurveView")?
+      .withRenderingMode(.alwaysTemplate)
+  )
 
   // MARK: - Init
 
@@ -52,7 +56,8 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
   // MARK: - Setup
 
   private func setupStyles() {
-    topCurveView.backgroundColor = CVSType.all.bgColor
+    backgroundColor = .white
+    topCurveView.tintColor = CVSType.all.bgColor
     pageControl.focusedView.backgroundColor = CVSType.all.bgColor
   }
 
@@ -81,12 +86,12 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
 
     pageControl.snp.makeConstraints { make in
       make.leading.trailing.equalToSuperview().inset(40)
-      make.bottom.equalToSuperview().inset(110)
+      make.bottom.equalToSuperview().inset(125)
       make.height.equalTo(65)
     }
 
     searchBar.snp.makeConstraints { make in
-      make.bottom.equalToSuperview()
+      make.bottom.equalToSuperview().inset(25)
       make.leading.equalToSuperview().inset(40)
       make.trailing.equalTo(filterButton.snp.leading).offset(-13)
       make.height.equalTo(50)
@@ -100,7 +105,7 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
 
     iconContainerView.snp.makeConstraints { make in
       make.top.leading.trailing.equalTo(safeAreaLayoutGuide)
-      make.bottom.equalTo(pageControl.snp.top)
+      make.height.equalTo(60)
     }
 
     cvsButton.snp.makeConstraints { make in
