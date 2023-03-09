@@ -34,7 +34,7 @@ final class HomeCollectionHeaderView: UICollectionReusableView {
   let pageControl = EventControl()
   let searchBar = SearchBar()
   let topCurveView = TopCurveView()
-  private let appIconImageView = UIImageView(image: UIImage(named: "ic_home_appIcon"))
+  let appIconImageView = UIImageView(image: UIImage(named: "ic_home_appIcon"))
 
   // MARK: - Init
 
