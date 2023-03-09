@@ -261,9 +261,12 @@ final class BookmarkViewController: BaseViewController, View {
       .map { $0.currentCVS }
       .withUnretained(self)
       .bind { owner, cvs in
+        owner.header.backButton.tintColor = cvs.fontColor
+        owner.header.mainLabel.textColor = cvs.fontColor
         owner.header.cvsButton.setImage(cvs.image, for: .normal)
         owner.header.topCurveView.tintColor = cvs.bgColor
         owner.header.pageControl.focusedView.backgroundColor = cvs.bgColor
+        owner.header.pageControl.labels.forEach { $0.textColor = cvs.fontColor }
         owner.view.backgroundColor = cvs.bgColor
       }
       .disposed(by: disposeBag)
