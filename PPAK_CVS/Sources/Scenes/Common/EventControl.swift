@@ -18,7 +18,7 @@ final class EventControl: UIControl {
 
   private let items: [String] = ["All", "1+1", "2+1"]
 
-  private var labels: [UILabel] = []
+  var labels: [UILabel] = []
   var focusedView: UIView!
 
   private var selectedIndex: Int = 0 {

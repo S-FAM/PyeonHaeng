@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "logo_gs25_1x.png",
+      "filename" : "gs_1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "logo_gs25_2x.png",
+      "filename" : "gs_2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "logo_gs25_3x.png",
+      "filename" : "gs_3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

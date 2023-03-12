@@ -8,7 +8,7 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
   // MARK: - Properties
   static let id = "BookmarkCollectionHeaderView"
 
-  private let mainLabel = UILabel().then {
+  let mainLabel = UILabel().then {
     $0.text = "찜"
     $0.textColor = .white
     $0.font = .appFont(family: .extraBold, size: 22)

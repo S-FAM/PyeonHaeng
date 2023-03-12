@@ -205,9 +205,11 @@ final class HomeViewController: BaseViewController, View {
       .compactMap { $0.currentCVSType }
       .withUnretained(self)
       .bind { owner, cvsType in
+        owner.header.appIconImageView.tintColor = cvsType.fontColor
         owner.header.cvsButton.setImage(cvsType.image, for: .normal)
         owner.header.topCurveView.tintColor = cvsType.bgColor
         owner.header.pageControl.focusedView.backgroundColor = cvsType.bgColor
+        owner.header.pageControl.labels.forEach { $0.textColor = cvsType.fontColor }
         owner.view.backgroundColor = cvsType.bgColor
       }
       .disposed(by: disposeBag)
