@@ -23,7 +23,7 @@ final class SelectStoreView: UIView {
   private let checkImageView = UIImageView().then {
     $0.image = UIImage(named: "ic_check")
     $0.backgroundColor = .black.withAlphaComponent(0.5)
-    $0.layer.cornerRadius = 40
+    $0.layer.cornerRadius = 50
   }
 
   // MARK: - Init
@@ -90,38 +90,11 @@ final class SelectStoreView: UIView {
 extension SelectStoreView {
 
   private func makeCVSButton(type: CVSType) -> UIButton {
-    let title = {
-      switch type {
-      case .sevenEleven:
-        return "7\nELEVEn"
-      case .miniStop:
-        return "MINI\nSTOP"
-      default:
-        return type.rawValue
-      }
-    }
-
-    let titleColor = {
-      switch type {
-      case .cu, .miniStop:
-        return type.bgColor
-      default:
-        return type.fontColor
-      }
-    }
-
     let button = UIButton().then {
-      $0.withAlphaButton(
-        title: title(),
-        font: Font.button,
-        titleColor: titleColor(),
-        alpha: 1.0,
-        radius: 40.0
-      )
+      $0.setImage(type.image, for: .normal)
+      $0.contentHorizontalAlignment = .fill
+      $0.contentVerticalAlignment = .fill
     }
-
-    button.titleLabel?.lineBreakMode = .byCharWrapping
-    button.titleLabel?.textAlignment = .center
     return button
   }
 
