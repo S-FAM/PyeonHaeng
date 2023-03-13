@@ -12,6 +12,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 import Then
+import Lottie
 
 final class ProductViewController: BaseViewController, View {
 
@@ -52,15 +53,31 @@ final class ProductViewController: BaseViewController, View {
     $0.backgroundColor = .systemPurple
   }
 
+  private let animationContainerView = UIView().then {
+    $0.backgroundColor = .clear
+  }
+
+  private let animationView = LottieAnimationView(name: "noPreviousInfo").then {
+    $0.contentMode = .scaleAspectFill
+    $0.loopMode = .loop
+  }
+
+  private let noBookmarkLabel = UILabel().then {
+    $0.textColor = .white
+    $0.font = .appFont(family: .regular, size: 15)
+    $0.text = "이전 행사 내역이 없습니다."
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView.dataSource = self
     collectionView.delegate = self
+    setupAnimationView()
   }
 
   override func setupLayouts() {
     super.setupLayouts()
-    [navigationHeaderBarView, collectionView].forEach {
+    [navigationHeaderBarView, collectionView, animationContainerView].forEach {
       view.addSubview($0)
     }
 
@@ -103,6 +120,33 @@ final class ProductViewController: BaseViewController, View {
       make.top.equalTo(navigationHeaderBarView.snp.bottom)
       make.leading.trailing.bottom.equalToSuperview()
     }
+  }
+
+  private func setupAnimationView() {
+    let stack = UIStackView(arrangedSubviews: [
+      animationView,
+      noBookmarkLabel
+    ])
+    stack.axis = .vertical
+    stack.spacing = 40
+    stack.alignment = .center
+    self.animationContainerView.addSubview(stack)
+
+    stack.snp.makeConstraints { make in
+      make.center.equalToSuperview()
+    }
+
+    self.animationContainerView.snp.makeConstraints { make in
+      make.leading.trailing.bottom.equalTo(collectionView)
+      make.bottom.equalTo(collectionView.snp.bottom).inset(165)
+    }
+
+    self.animationView.snp.makeConstraints { make in
+      make.width.equalTo(165)
+      make.height.equalTo(107)
+    }
+
+    self.animationView.play()
   }
 
   override func setupStyles() {
