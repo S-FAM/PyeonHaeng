@@ -35,23 +35,34 @@ enum CVSType: String, Codable {
 
   var bgColor: UIColor {
     switch self {
-    case .cu: return UIColor(hex: "#751485")
-    case .gs: return UIColor(hex: "#63514D")
-    case .sevenEleven: return UIColor(hex: "#FF8329")
-    case .miniStop: return UIColor(hex: "#003893")
-    case .eMart: return UIColor(hex: "#56555B")
+    case .cu: return UIColor(hex: "#652D8E")
+    case .gs: return UIColor(hex: "#62504E")
+    case .sevenEleven: return UIColor(hex: "#008061")
+    case .miniStop: return UIColor(hex: "#17469E")
+    case .eMart: return UIColor(hex: "#FFB71D")
     case .all: return UIColor(hex: "#030026")
     }
   }
 
   var fontColor: UIColor {
     switch self {
-    case .cu: return UIColor(hex: "#9DC92A")
-    case .gs: return UIColor(hex: "#00D7F1")
-    case .sevenEleven: return UIColor(hex: "#005B45")
-    case .miniStop: return UIColor(hex: "#F0F0F0")
-    case .eMart: return UIColor(hex: "#FFB41D")
+    case .cu: return UIColor(hex: "#FFFFFF")
+    case .gs: return UIColor(hex: "#FFFFFF")
+    case .sevenEleven: return UIColor(hex: "#FFFFFF")
+    case .miniStop: return UIColor(hex: "#FFFFFF")
+    case .eMart: return UIColor(hex: "#62656A")
     case .all: return UIColor.white
+    }
+  }
+
+  var badge: UIImage? {
+    switch self {
+    case .cu: return UIImage(named: "badge_cu")
+    case .gs: return UIImage(named: "badge_gs25")
+    case .sevenEleven: return UIImage(named: "badge_7eleven")
+    case .miniStop: return UIImage(named: "badge_ministop")
+    case .eMart: return UIImage(named: "badge_emart24")
+    case .all: return UIImage(named: "badge_cu")
     }
   }
 }

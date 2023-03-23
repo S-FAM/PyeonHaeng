@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "emart24_1x.png",
+      "filename" : "ministop_badge_1x.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "emart24_2x.png",
+      "filename" : "ministop_badge_2x.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "emart24_3x.png",
+      "filename" : "ministop_badge_3x.jpg",
       "idiom" : "universal",
       "scale" : "3x"
     }

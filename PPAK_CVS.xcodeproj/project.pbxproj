@@ -112,6 +112,7 @@
 		E59041DE2928FB8100135ECA /* SaleTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59041DD2928FB8100135ECA /* SaleTypeView.swift */; };
 		E5A877C028D4A34D002A2402 /* EventControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A877BF28D4A34D002A2402 /* EventControl.swift */; };
 		E5B249C32962CB6400081609 /* BookmarkPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B249C22962CB6400081609 /* BookmarkPopup.swift */; };
+		E5B61F1E29B182870031046C /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = E5B61F1D29B182870031046C /* SkeletonView */; };
 		E5B9965728E2872A00E39566 /* CVSDropdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B9965628E2872A00E39566 /* CVSDropdownView.swift */; };
 		E5B9965B28E2A16D00E39566 /* SortDropdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B9965A28E2A16D00E39566 /* SortDropdownView.swift */; };
 		E5C9025228E2DB480086BDE9 /* HomeViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C9025128E2DB480086BDE9 /* HomeViewReactor.swift */; };
@@ -233,6 +234,7 @@
 				A596FD782987F6E40029AF0A /* ReactorKit in Frameworks */,
 				A5932EA028E0435200457AD3 /* Lottie in Frameworks */,
 				A52F113B29A09D6E009FFE02 /* FirebaseRemoteConfig in Frameworks */,
+				E5B61F1E29B182870031046C /* SkeletonView in Frameworks */,
 				E5F9CCA228EF10EA0084CD63 /* RxGesture in Frameworks */,
 				BA27023F28CF60830039D9EA /* Alamofire in Frameworks */,
 				BA27023928CF60570039D9EA /* SnapKit in Frameworks */,
@@ -601,6 +603,7 @@
 				A52F113829A09D6E009FFE02 /* FirebaseMessaging */,
 				A52F113A29A09D6E009FFE02 /* FirebaseRemoteConfig */,
 				E517802F29A84FF80011C220 /* DeviceKit */,
+				E5B61F1D29B182870031046C /* SkeletonView */,
 			);
 			productName = PPAK_CVS;
 			productReference = E505D9E728CF5B4A00EEFC65 /* PPAK_CVS.app */;
@@ -642,6 +645,7 @@
 				A596FD762987F6E40029AF0A /* XCRemoteSwiftPackageReference "ReactorKit" */,
 				A52F113129A09D6D009FFE02 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				E517802E29A84FF80011C220 /* XCRemoteSwiftPackageReference "DeviceKit" */,
+				E5B61F1C29B182870031046C /* XCRemoteSwiftPackageReference "SkeletonView" */,
 			);
 			productRefGroup = E505D9E828CF5B4A00EEFC65 /* Products */;
 			projectDirPath = "";
@@ -1096,6 +1100,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		E5B61F1C29B182870031046C /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.9.0;
+			};
+		};
 		E5F9CCA028EF10EA0084CD63 /* XCRemoteSwiftPackageReference "RxGesture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture.git";
@@ -1181,6 +1193,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E517802E29A84FF80011C220 /* XCRemoteSwiftPackageReference "DeviceKit" */;
 			productName = DeviceKit;
+		};
+		E5B61F1D29B182870031046C /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E5B61F1C29B182870031046C /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
 		};
 		E5F9CCA128EF10EA0084CD63 /* RxGesture */ = {
 			isa = XCSwiftPackageProductDependency;

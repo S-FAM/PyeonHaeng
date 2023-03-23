@@ -8,7 +8,7 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
   // MARK: - Properties
   static let id = "BookmarkCollectionHeaderView"
 
-  private let mainLabel = UILabel().then {
+  let mainLabel = UILabel().then {
     $0.text = "찜"
     $0.textColor = .white
     $0.font = .appFont(family: .extraBold, size: 22)
@@ -36,9 +36,13 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
 
   let infoStack = UIStackView()
   let infoTouchView = UIView()
-  let topCurveView = TopCurveView()
   let searchBar = SearchBar()
   let pageControl = EventControl()
+
+  let topCurveView = UIImageView(
+    image: UIImage(named: "topCurveView")?
+      .withRenderingMode(.alwaysTemplate)
+  )
 
   // MARK: - Init
 
@@ -56,7 +60,7 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
   // MARK: - Setup
 
   private func setupStyles() {
-    topCurveView.backgroundColor = CVSType.all.bgColor
+    topCurveView.tintColor = CVSType.all.bgColor
     pageControl.focusedView.backgroundColor = CVSType.all.bgColor
   }
 
@@ -90,12 +94,12 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
 
     pageControl.snp.makeConstraints { make in
       make.leading.trailing.equalToSuperview().inset(40)
-      make.bottom.equalToSuperview().inset(110)
+      make.bottom.equalToSuperview().inset(125)
       make.height.equalTo(65)
     }
 
     searchBar.snp.makeConstraints { make in
-      make.bottom.equalToSuperview()
+      make.bottom.equalToSuperview().inset(25)
       make.leading.equalToSuperview().inset(40)
       make.trailing.equalTo(filterButton.snp.leading).offset(-13)
       make.height.equalTo(50)
@@ -109,7 +113,7 @@ final class BookmarkCollectionHeaderView: UICollectionReusableView {
 
     iconContainerView.snp.makeConstraints { make in
       make.top.leading.trailing.equalTo(safeAreaLayoutGuide)
-      make.bottom.equalTo(pageControl.snp.top)
+      make.height.equalTo(60)
     }
 
     cvsButton.snp.makeConstraints { make in

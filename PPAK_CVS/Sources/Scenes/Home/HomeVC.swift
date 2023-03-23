@@ -5,6 +5,7 @@ import RxSwift
 import RxCocoa
 import RxGesture
 import SnapKit
+import SkeletonView
 import Then
 
 final class HomeViewController: BaseViewController, View {
@@ -16,47 +17,51 @@ final class HomeViewController: BaseViewController, View {
     $0.contentInsetAdjustmentBehavior = .never
     $0.keyboardDismissMode = .onDrag
     $0.bounces = false
+    $0.isSkeletonable = true
     $0.dataSource = self
     $0.delegate = self
-    $0.register(HomeCollectionHeaderView.self,
-                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                withReuseIdentifier: HomeCollectionHeaderView.id)
-    $0.register(GoodsCell.self,
-                forCellWithReuseIdentifier: GoodsCell.id)
-    $0.register(LoadingCell.self,
-                forCellWithReuseIdentifier: LoadingCell.id)
+    $0.register(
+      HomeCollectionHeaderView.self,
+      forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+      withReuseIdentifier: HomeCollectionHeaderView.id)
+    $0.register(
+      GoodsCell.self,
+      forCellWithReuseIdentifier: GoodsCell.id)
+    $0.register(
+      LoadingCell.self,
+      forCellWithReuseIdentifier: LoadingCell.id)
   }
 
   override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
-  private let indicator = UIActivityIndicatorView()
   private let cvsDropdownView = CVSDropdownView()
   private let sortDropdownView = SortDropdownView()
   private var header: HomeCollectionHeaderView!
 
-  // MARK: - LifeCycle
+  // MARK: - LIFE CYCLE
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    reactor?.action.onNext(.viewDidLoad)
+  }
 
   // MARK: - Setup
 
   override func setupLayouts() {
     super.setupLayouts()
     view.addSubview(collectionView)
-    view.addSubview(indicator)
   }
 
   override func setupStyles() {
     super.setupStyles()
     navigationController?.setNavigationBarHidden(true, animated: true)
     view.backgroundColor = CVSType.all.bgColor
+    view.isSkeletonable = true
   }
 
   override func setupConstraints() {
     collectionView.snp.makeConstraints { make in
       make.leading.trailing.bottom.equalToSuperview()
       make.top.equalTo(view.safeAreaLayoutGuide)
-    }
-
-    indicator.snp.makeConstraints { make in
-      make.center.equalToSuperview()
     }
   }
 
@@ -92,9 +97,6 @@ final class HomeViewController: BaseViewController, View {
     guard let reactor = reactor else { return }
 
     // MARK: - Action
-
-    // 화면 최초 실행
-    reactor.action.onNext(.viewDidLoad)
 
     // 북마크 버튼 클릭
     header.bookmarkButton.rx.tap
@@ -203,27 +205,41 @@ final class HomeViewController: BaseViewController, View {
       .compactMap { $0.currentCVSType }
       .withUnretained(self)
       .bind { owner, cvsType in
+        owner.header.appIconImageView.tintColor = cvsType.fontColor
         owner.header.cvsButton.setImage(cvsType.image, for: .normal)
-        owner.header.topCurveView.backgroundColor = cvsType.bgColor
+        owner.header.topCurveView.tintColor = cvsType.bgColor
         owner.header.pageControl.focusedView.backgroundColor = cvsType.bgColor
+        owner.header.pageControl.labels.forEach { $0.textColor = cvsType.fontColor }
         owner.view.backgroundColor = cvsType.bgColor
       }
       .disposed(by: disposeBag)
 
-    // 인디케이터 애니메이션 제어
+    // 스켈레톤뷰 애니메이션 제어
     reactor.state
-      .map { $0.isLoading }
-      .bind(to: indicator.rx.isAnimating)
+      .map { $0.isSkeletonActive }
+      .distinctUntilChanged()
+      .bind(with: self) { owner, isLoading in
+        let skeletetonAnimation = SkeletonAnimationBuilder()
+          .makeSlidingAnimation(withDirection: .leftRight)
+
+        if isLoading {
+          owner.view.showAnimatedGradientSkeleton(
+            usingGradient: .init(baseColor: .systemGray6),
+            animation: skeletetonAnimation,
+            transition: .none
+          )
+        } else {
+          owner.view.hideSkeleton()
+        }
+      }
       .disposed(by: disposeBag)
 
-    // 새로운 상품 목록들로 업데이트
+    // ReloadData
     reactor.state
-      .map { $0.products }
-      .distinctUntilChanged()
-      .map { _ in Void() }
+      .map { $0.reloadData }
+      .filter { $0 }
       .withUnretained(self)
-      .map { $0.0 }
-      .bind { $0.collectionView.reloadData() }
+      .bind { $0.0.collectionView.reloadData() }
       .disposed(by: disposeBag)
 
     // 현재 SearchBar text
@@ -243,9 +259,35 @@ final class HomeViewController: BaseViewController, View {
   }
 }
 
-// MARK: - CollectionView Setup
+// MARK: - COLLECTIONVIEW DATASOURCE
 
-extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension HomeViewController: SkeletonCollectionViewDataSource {
+
+  // MARK: - SKELETONVIEW SETUP
+
+  func collectionSkeletonView(
+    _ skeletonView: UICollectionView,
+    cellIdentifierForItemAt indexPath: IndexPath
+  ) -> SkeletonView.ReusableCellIdentifier {
+    return GoodsCell.id
+  }
+
+  func collectionSkeletonView(
+    _ skeletonView: UICollectionView,
+    supplementaryViewIdentifierOfKind: String,
+    at indexPath: IndexPath
+  ) -> ReusableCellIdentifier? {
+    return HomeCollectionHeaderView.id
+  }
+
+  func collectionSkeletonView(
+    _ skeletonView: UICollectionView,
+    numberOfItemsInSection section: Int
+  ) -> Int {
+    return 20
+  }
+
+  // Cell 생성
   func collectionView(
     _ collectionView: UICollectionView,
     cellForItemAt indexPath: IndexPath
@@ -287,6 +329,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
   }
 
+  // 셀 갯수
   func collectionView(
     _ collectionView: UICollectionView,
     numberOfItemsInSection section: Int
@@ -295,12 +338,44 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     return products.count > 0 ? products.count + 1 : 0
   }
 
+  // 헤더 생성
+  func collectionView(
+    _ collectionView: UICollectionView,
+    viewForSupplementaryElementOfKind kind: String,
+    at indexPath: IndexPath
+  ) -> UICollectionReusableView {
+    guard let header = collectionView.dequeueReusableSupplementaryView(
+      ofKind: UICollectionView.elementKindSectionHeader,
+      withReuseIdentifier: HomeCollectionHeaderView.id,
+      for: indexPath
+    ) as? HomeCollectionHeaderView else { return UICollectionReusableView() }
+
+    if self.header == nil {
+      self.header = header
+      bindHeader()
+      setupDropdown()
+    }
+
+    return header
+  }
+
+  // 스크롤 감지
+  func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    cvsDropdownView.hideDropdown()
+    sortDropdownView.hideDropdown()
+  }
+}
+
+// MARK: - COLLECTIONVIEW FLOW LAYOUT
+
+extension HomeViewController: UICollectionViewDelegateFlowLayout {
+
   func collectionView(
     _ collectionView: UICollectionView,
     layout collectionViewLayout: UICollectionViewLayout,
     insetForSectionAt section: Int
   ) -> UIEdgeInsets {
-    return UIEdgeInsets(top: 24, left: 0, bottom: 16, right: 0)
+    return UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
   }
 
   func collectionView(
@@ -327,7 +402,11 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       height = indexPath.row == currentState.products.count ? 40 : 125
     }
 
-    return CGSize(width: width, height: height)
+    if currentState.isSkeletonActive {
+      return CGSize(width: width, height: 125)
+    } else {
+      return CGSize(width: width, height: height)
+    }
   }
 
   func collectionView(
@@ -346,36 +425,11 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
 
   func collectionView(
     _ collectionView: UICollectionView,
-    viewForSupplementaryElementOfKind kind: String,
-    at indexPath: IndexPath
-  ) -> UICollectionReusableView {
-    guard let header = collectionView.dequeueReusableSupplementaryView(
-      ofKind: UICollectionView.elementKindSectionHeader,
-      withReuseIdentifier: HomeCollectionHeaderView.id,
-      for: indexPath
-    ) as? HomeCollectionHeaderView else { return UICollectionReusableView() }
-
-    if self.header == nil {
-      self.header = header
-      bindHeader()
-      setupDropdown()
-    }
-
-    return header
-  }
-
-  func collectionView(
-    _ collectionView: UICollectionView,
     didSelectItemAt indexPath: IndexPath
   ) {
     guard let product = reactor?.currentState.products[indexPath.row] else { return }
 
     // 특정 제품 클릭
     reactor?.action.onNext(.didSelectItemAt(product))
-  }
-
-  func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-    cvsDropdownView.hideDropdown()
-    sortDropdownView.hideDropdown()
   }
 }
