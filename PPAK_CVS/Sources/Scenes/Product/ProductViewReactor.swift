@@ -37,6 +37,7 @@ final class ProductViewReactor: Reactor {
     var isBookmark: Bool = false
     var isShareButtonTapped: Bool = false
     var shareImage: UIImage?
+    var isHiddenAnimationView: Bool = false
   }
 
   var initialState = State()
@@ -68,6 +69,7 @@ final class ProductViewReactor: Reactor {
         .just(.setItem(image)),
         .just(.showShareWindow(false))
       ])
+
     }
   }
 
@@ -79,6 +81,12 @@ final class ProductViewReactor: Reactor {
       newState.model = model
 
     case .updateHistoryProduct(let models):
+      if models.isEmpty {
+        newState.isHiddenAnimationView = false
+      } else {
+        newState.isHiddenAnimationView = true
+      }
+
       newState.historyModels = models
 
     case .goToHomeVC:

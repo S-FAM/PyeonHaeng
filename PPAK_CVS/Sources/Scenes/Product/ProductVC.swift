@@ -75,6 +75,10 @@ final class ProductViewController: BaseViewController, View {
     setupAnimationView()
   }
 
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+  }
+
   override func setupLayouts() {
     super.setupLayouts()
     [navigationHeaderBarView, collectionView, animationContainerView].forEach {
@@ -208,6 +212,22 @@ final class ProductViewController: BaseViewController, View {
         owner.collectionView.reloadData()
       }
       .disposed(by: disposeBag)
+
+    reactor.state
+      .map { $0.isHiddenAnimationView }
+      .distinctUntilChanged()
+      .debug()
+      .bind(with: self) { owner, isHidden in
+        if isHidden {
+          owner.animationContainerView.isHidden = true
+          owner.animationView.stop()
+        } else {
+          owner.animationContainerView.isHidden = false
+          owner.animationView.play()
+        }
+      }
+      .disposed(by: disposeBag)
+
   }
 
   /// 공유버튼을 눌렀을 때 실행되는 메서드입니다.
