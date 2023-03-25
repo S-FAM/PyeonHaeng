@@ -7,6 +7,7 @@ import RxGesture
 import SnapKit
 import SkeletonView
 import Then
+import Lottie
 
 final class HomeViewController: BaseViewController, View {
 
@@ -30,6 +31,21 @@ final class HomeViewController: BaseViewController, View {
     $0.register(
       LoadingCell.self,
       forCellWithReuseIdentifier: LoadingCell.id)
+  }
+
+  private let animationContainerView = UIView().then {
+    $0.backgroundColor = .clear
+  }
+
+  private let animationView = LottieAnimationView(name: "noBookmark").then {
+    $0.contentMode = .scaleAspectFill
+    $0.loopMode = .loop
+  }
+
+  private let noBookmarkLabel = UILabel().then {
+    $0.textColor = .lightGray
+    $0.font = .appFont(family: .regular, size: 15)
+    $0.text = "해당하는 상품이 없습니다."
   }
 
   override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
@@ -87,6 +103,22 @@ final class HomeViewController: BaseViewController, View {
       make.width.equalTo(100)
       make.height.equalTo(80)
     }
+  }
+
+  private func setupAnimationView() {
+    let stack = UIStackView(arrangedSubviews: [
+      animationView,
+      noBookmarkLabel
+    ])
+    stack.axis = .vertical
+    stack.spacing = 40
+    stack.alignment = .center
+    self.animationContainerView.addSubview(stack)
+
+    stack.snp.makeConstraints { make in
+      make.center.equalToSuperview()
+    }
+
   }
 
   // MARK: - Event
@@ -354,6 +386,7 @@ extension HomeViewController: SkeletonCollectionViewDataSource {
       self.header = header
       bindHeader()
       setupDropdown()
+      setupAnimationView()
     }
 
     return header
