@@ -65,6 +65,7 @@ final class HomeViewController: BaseViewController, View {
   override func setupLayouts() {
     super.setupLayouts()
     view.addSubview(collectionView)
+
   }
 
   override func setupStyles() {
@@ -119,6 +120,17 @@ final class HomeViewController: BaseViewController, View {
       make.center.equalToSuperview()
     }
 
+//    self.animationContainerView.snp.makeConstraints { make in
+//      make.leading.trailing.bottom.equalTo(collectionView)
+//      make.bottom.equalTo(collectionView.snp.bottom).inset(165)
+//    }
+
+//    self.animationView.snp.makeConstraints { make in
+//      make.width.equalTo(165)
+//      make.height.equalTo(107)
+//    }
+//
+//    self.animationView.play()
   }
 
   // MARK: - Event
