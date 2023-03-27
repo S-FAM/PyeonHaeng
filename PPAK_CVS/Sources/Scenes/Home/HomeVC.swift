@@ -48,6 +48,12 @@ final class HomeViewController: BaseViewController, View {
     $0.text = "해당하는 상품이 없습니다."
   }
 
+  private let  stackView = UIStackView().then {
+    $0.axis = .vertical
+    $0.spacing = 40
+    $0.alignment = .center
+  }
+
   override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
   private let cvsDropdownView = CVSDropdownView()
   private let sortDropdownView = SortDropdownView()
@@ -64,7 +70,15 @@ final class HomeViewController: BaseViewController, View {
 
   override func setupLayouts() {
     super.setupLayouts()
-    view.addSubview(collectionView)
+    [collectionView, animationContainerView].forEach {
+      view.addSubview($0)
+    }
+
+    animationContainerView.addSubview(stackView)
+
+    [animationView, noBookmarkLabel].forEach {
+      stackView.addArrangedSubview($0)
+    }
 
   }
 
@@ -104,33 +118,21 @@ final class HomeViewController: BaseViewController, View {
       make.width.equalTo(100)
       make.height.equalTo(80)
     }
-  }
 
-  private func setupAnimationView() {
-    let stack = UIStackView(arrangedSubviews: [
-      animationView,
-      noBookmarkLabel
-    ])
-    stack.axis = .vertical
-    stack.spacing = 40
-    stack.alignment = .center
-    self.animationContainerView.addSubview(stack)
+    animationContainerView.snp.makeConstraints { make in
+      make.leading.trailing.bottom.equalToSuperview()
+      make.bottom.equalTo(collectionView.snp.bottom).inset(165)
+    }
 
-    stack.snp.makeConstraints { make in
+    animationView.snp.makeConstraints { make in
+      make.width.equalTo(165)
+      make.height.equalTo(107)
+    }
+
+    stackView.snp.makeConstraints { make in
       make.center.equalToSuperview()
     }
 
-//    self.animationContainerView.snp.makeConstraints { make in
-//      make.leading.trailing.bottom.equalTo(collectionView)
-//      make.bottom.equalTo(collectionView.snp.bottom).inset(165)
-//    }
-
-//    self.animationView.snp.makeConstraints { make in
-//      make.width.equalTo(165)
-//      make.height.equalTo(107)
-//    }
-//
-//    self.animationView.play()
   }
 
   // MARK: - Event
@@ -398,7 +400,6 @@ extension HomeViewController: SkeletonCollectionViewDataSource {
       self.header = header
       bindHeader()
       setupDropdown()
-      setupAnimationView()
     }
 
     return header
