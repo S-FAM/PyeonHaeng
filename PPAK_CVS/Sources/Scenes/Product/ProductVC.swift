@@ -53,8 +53,15 @@ final class ProductViewController: BaseViewController, View {
     $0.backgroundColor = .systemPurple
   }
 
+  private let stackView = UIStackView().then {
+    $0.axis = .vertical
+    $0.spacing = 40
+    $0.alignment = .center
+  }
+
   private let animationContainerView = UIView().then {
     $0.backgroundColor = .clear
+    $0.isHidden = true
   }
 
   private let animationView = LottieAnimationView(name: "noPreviousInfo").then {
@@ -72,11 +79,6 @@ final class ProductViewController: BaseViewController, View {
     super.viewDidLoad()
     collectionView.dataSource = self
     collectionView.delegate = self
-    setupAnimationView()
-  }
-
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
   }
 
   override func setupLayouts() {
@@ -92,6 +94,12 @@ final class ProductViewController: BaseViewController, View {
     [bookmarkButton, shareButton].forEach {
       featureStackView.addArrangedSubview($0)
     }
+
+    [animationView, noBookmarkLabel].forEach {
+      stackView.addArrangedSubview($0)
+    }
+
+    animationContainerView.addSubview(stackView)
   }
 
   override func setupConstraints() {
@@ -124,19 +132,8 @@ final class ProductViewController: BaseViewController, View {
       make.top.equalTo(navigationHeaderBarView.snp.bottom)
       make.leading.trailing.bottom.equalToSuperview()
     }
-  }
 
-  private func setupAnimationView() {
-    let stack = UIStackView(arrangedSubviews: [
-      animationView,
-      noBookmarkLabel
-    ])
-    stack.axis = .vertical
-    stack.spacing = 40
-    stack.alignment = .center
-    self.animationContainerView.addSubview(stack)
-
-    stack.snp.makeConstraints { make in
+    stackView.snp.makeConstraints { make in
       make.center.equalToSuperview()
     }
 
@@ -149,8 +146,6 @@ final class ProductViewController: BaseViewController, View {
       make.width.equalTo(165)
       make.height.equalTo(107)
     }
-
-    self.animationView.play()
   }
 
   override func setupStyles() {
@@ -227,7 +222,6 @@ final class ProductViewController: BaseViewController, View {
         }
       }
       .disposed(by: disposeBag)
-
   }
 
   /// 공유버튼을 눌렀을 때 실행되는 메서드입니다.
